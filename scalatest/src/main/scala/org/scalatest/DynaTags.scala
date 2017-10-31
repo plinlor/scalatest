@@ -20,12 +20,11 @@ import org.scalactic.Requirements._
 /**
  * Dynamic tags for a run.
  *
- * <p>
  * Instances of this class are passed to the <a href="Filter.html"><code>Filter</code></a> constructor to
  * support running selected suites and tests via dynamic tagging. For example, dynamic tags can be used
  * to rerun tests that failed previously, or tests selected via a wildcard from <a href="tools/Runner$.html"><code>Runner</code></a> or
  * the Scala interpreter.
- * </p>
+ * 
  *
  * @param suiteTags a map from String suite ID to a set of tags for that suite.
  * @param testTags a map from String suite ID to a map, whose keys are test names and values the tags for that test.

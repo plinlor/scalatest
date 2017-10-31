@@ -31,22 +31,20 @@ import org.scalatest.events.{TopOfClass, TopOfMethod}
  * <strong>Trait <code>fixture.SpecLike</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
  * <code>org.scalatest.fixture.FunSpec</code> instead.</strong>
  *
- * <p>
  * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
  * Thus in ScalaTest 3.0.0, class <code>org.scalatest.SpecLike</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
  * <code>RefSpecLike</code>, with the intention of later moving it to a separate module available only on the JVM. If the 
  * <code>org.scalatest.refspec._</code> package contained a <code>fixture</code> subpackage, then importing <code>org.scalatest.refspec._</code>
  * would import the name <code>fixture</code> as <code>org.scalatest.refspec.fixture</code>. This would likely be confusing for users,
  * who expect <code>fixture</code> to mean <code>org.scalatest.fixture</code>.
- * </p>
+ * 
  *
- * <p>
  * As a result this class has been deprecated and will <em>not</em>
  * be moved to package <code>org.scalatest.refspec</code>. Instead we recommend you rewrite any test classes that currently extend
  * <code>org.scalatest.fixture.SpecLike</code> to extend <a href="FunSpecLike.html"><code>org.scalatest.fixture.FunSpecLike</code></a> instead,
  * replacing any scope <code>object</code>
  * with a <code>describe</code> clause, and any test method with an <code>it</code> clause.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -238,12 +236,11 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    * An immutable <code>Set</code> of test names. If this <code>Spec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the name of each surrounding <em>scope object</em>, in order from outside in, and the name of the
    * test method itself, with all components separated by a space. For example, consider this <code>Spec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.refspec.RefSpec
@@ -260,20 +257,18 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    * }
    * </pre>
    *
-   * <p>
    * Invoking <code>testNames</code> on this <code>Spec</code> will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
    * <pre class="stExamples">
    * "A Stack (when not empty) must allow me to pop"
    * "A Stack (when not full) must allow me to push"
    * </pre>
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
    * @return the <code>Set</code> of test names
    */
@@ -288,10 +283,9 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    * from outside in, and the test method's name, with one space placed between each item. (See the documentation
    * for <code>testNames</code> for an example.)
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
    * @param args the <code>Args</code> for this run
@@ -325,9 +319,8 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   /**
    * The total number of tests that are expected to run when this <code>Spec</code>'s <code>run</code> method is invoked.
    *
-   * <p>
    * This trait's implementation of this method returns the sum of:
-   * </p>
+   * 
    *
    * <ul>
    * <li>the size of the <code>testNames</code> <code>List</code>, minus the number of tests marked as ignored and
@@ -337,10 +330,9 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    *     <code>nestedSuites</code></li>
    * </ul>
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
    * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
    * @return the expected number test count
@@ -354,20 +346,17 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    * A <code>Map</code> whose keys are <code>String</code> tag names to which tests in this <code>Spec</code> belong, and values
    * the <code>Set</code> of test names that belong to each tag. If this <code>Spec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
    * methods <code>test</code> and <code>ignore</code>. 
-   * </p>
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = {
     ensureScopesAndTestsRegistered()
@@ -394,25 +383,23 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    * Runs this <code>fixture.Spec</code>.
    *
    * <p>If <code>testName</code> is <code>None</code>, this trait's implementation of this method
-   * calls these two methods on this object in this order:</p>
+   * calls these two methods on this object in this order:
    *
    * <ol>
    * <li><code>runNestedSuites(report, stopper, tagsToInclude, tagsToExclude, configMap, distributor)</code></li>
    * <li><code>runTests(testName, report, stopper, tagsToInclude, tagsToExclude, configMap)</code></li>
    * </ol>
    *
-   * <p>
    * If <code>testName</code> is defined, then this trait's implementation of this method
    * calls <code>runTests</code>, but does not call <code>runNestedSuites</code>. This behavior
    * is part of the contract of this method. Subclasses that override <code>run</code> must take
    * care not to call <code>runNestedSuites</code> if <code>testName</code> is defined. (The
    * <code>OneInstancePerTest</code> trait depends on this behavior, for example.)
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.

@@ -31,19 +31,17 @@ import words.BehaveWord
  * a sister class to <code>org.scalatest.AsyncFunSpec</code> that can pass a
  * fixture object into its tests.
  *
- * <p>
  * <a href="AsyncFunSpec.html"><code>fixture.AsyncFunSpec</code></a> is a class,
  * not a trait, to minimize compile time given there is a slight compiler
  * overhead to mixing in traits compared to extending classes. If you need
  * to mix the behavior of <code>fixture.AsyncFunSpec</code> into some other
  * class, you can use this trait instead, because class
  * <code>fixture.AsyncFunSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="AsyncFunSpec.html">detailed
  * overview of <code>fixture.AsyncFunSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -109,9 +107,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * Class that, via an instance referenced from the <code>it</code> field,
    * supports test (and shared test) registration in <code>FunSpec</code>s.
    *
-   * <p>
    * This class supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * it("should be empty")
@@ -123,9 +120,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples, see the <a href="../FunSpec.html">main documentation for <code>FunSpec</code></a>.
-   * </p>
+   * 
    */
   protected final class ItWord {
 
@@ -164,19 +160,17 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
     /**
      * Supports the registration of shared tests.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * it should behave like nonFullStack(stackWithOneItem)
      *    ^
      * </pre>
      *
-     * <p>
      * For examples of shared tests, see the <a href="../Spec.html#SharedTests">Shared tests section</a>
      * in the main documentation for trait <code>FunSpec</code>.
-     * </p>
+     * 
      *
      * @param behaveWord the <code>BehaveWord</code>
      */
@@ -185,19 +179,17 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
     /**
      * Supports the registration of shared tests.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * it must behave like nonFullStack(stackWithOneItem)
      *    ^
      * </pre>
      *
-     * <p>
      * For examples of shared tests, see the <a href="../Spec.html#SharedTests">Shared tests section</a>
      * in the main documentation for trait <code>FunSpec</code>.
-     * </p>
+     * 
      *
      * @param behaveWord the <code>BehaveWord</code>
      */
@@ -207,9 +199,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
   /**
    * Supports test (and shared test) registration in <code>FunSpec</code>s.
    *
-   * <p>
    * This field supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * it("should be empty")
@@ -221,10 +212,9 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of the <code>it</code> field, see
    * the <a href="../FunSpec.html">main documentation for <code>FunSpec</code></a>.
-   * </p>
+   * 
    */
   protected val it = new ItWord
 
@@ -232,9 +222,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * Class that, via an instance referenced from the <code>they</code> field,
    * supports test (and shared test) registration in <code>FunSpec</code>s.
    *
-   * <p>
    * This class supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * they("should be empty")
@@ -246,9 +235,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples, see the <a href="../FunSpec.html">main documentation for <code>FunSpec</code></a>.
-   * </p>
+   * 
    */
   protected final class TheyWord {
 
@@ -285,19 +273,17 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
     /**
      * Supports the registration of shared tests.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * they should behave like nonFullStack(stackWithOneItem)
      *      ^
      * </pre>
      *
-     * <p>
      * For examples of shared tests, see the <a href="../Spec.html#SharedTests">Shared tests section</a>
      * in the main documentation for trait <code>FunSpec</code>.
-     * </p>
+     * 
      *
      * @param behaveWord the <code>BehaveWord</code>
      */
@@ -306,19 +292,17 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
     /**
      * Supports the registration of shared tests.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * they must behave like nonFullStack(stackWithOneItem)
      *      ^
      * </pre>
      *
-     * <p>
      * For examples of shared tests, see the <a href="../Spec.html#SharedTests">Shared tests section</a>
      * in the main documentation for trait <code>FunSpec</code>.
-     * </p>
+     * 
      *
      * @param behaveWord the <code>BehaveWord</code>
      */
@@ -328,9 +312,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
   /**
    * Supports test (and shared test) registration in <code>FunSpec</code>s.
    *
-   * <p>
    * This field supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * they("should be empty")
@@ -342,10 +325,9 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of the <code>it</code> field, see
    * the <a href="../FunSpec.html">main documentation for <code>FunSpec</code></a>.
-   * </p>
+   * 
    */
   protected val they = new TheyWord
 
@@ -423,15 +405,13 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * A <code>Map</code> whose keys are <code>String</code> tag names to which tests in this <code>FunSpec</code> belong, and values
    * the <code>Set</code> of test names that belong to each tag. If this <code>FunSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
    * methods <code>test</code> and <code>ignore</code>.
-   * </p>
+   * 
    *
-   * <p>
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
@@ -472,17 +452,14 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
   }
 
   /**
-   * <p>
    * Run zero to many of this <code>FunSpec</code>'s tests.
-   * </p>
+   * 
    *
-   * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
    * If <code>testName</code> is <code>Some</code>, this trait's implementation of this method
    * invokes <code>runTest</code> on this object with passed <code>args</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method takes an <code>args</code> that contains a <code>Set</code> of tag names that should be included (<code>tagsToInclude</code>), and a <code>Set</code>
    * that should be excluded (<code>tagsToExclude</code>), when deciding which of this <code>Suite</code>'s tests to execute.
    * If <code>tagsToInclude</code> is empty, all tests will be executed
@@ -491,9 +468,8 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * will be executed. However, if <code>testName</code> is <code>Some</code>, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
    * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
    * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. For more information on trait tags, see the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially execute.
    * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
@@ -502,7 +478,7 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
    * of this method checks whether the test should be run based on the <code>tagsToInclude</code> and <code>tagsToExclude</code> <code>Set</code>s.
    * If so, this implementation invokes <code>runTest</code> with passed <code>args</code>.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
    *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>FunSpec</code>.
@@ -519,12 +495,11 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * An immutable <code>Set</code> of test names. If this <code>FunSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space.
-   * </p>
+   * 
    *
    * @return the <code>Set</code> of test names
    */
@@ -539,19 +514,17 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
   /**
    * Supports shared test registration in <code>FunSpec</code>s.
    *
-   * <p>
    * This field supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * it should behave like nonFullStack(stackWithOneItem)
    *           ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of <cod>behave</code>, see the <a href="../FunSpec.html#SharedTests">Shared tests section</a>
    * in the main documentation for trait <code>FunSpec</code>.
-   * </p>
+   * 
    */
   protected val behave = new BehaveWord
 
@@ -562,10 +535,9 @@ trait AsyncFunSpecLike extends AsyncTestSuite with AsyncTestRegistration with In
    * a function from <code>FixtureParam</code> to <code>Any</code>, to enable pending tests to registered as by-name parameters
    * by methods that require a test function that takes a <code>FixtureParam</code>.
    *
-   * <p>
    * This method makes it possible to write pending tests as simply <code>(pending)</code>, without needing
    * to write <code>(fixture => pending)</code>.
-   * </p>
+   * 
    *
    * @param f a function
    * @return a function of <code>FixtureParam => Any</code>

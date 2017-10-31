@@ -20,12 +20,11 @@ import TripleEqualsSupport._
 /**
  * <strong>Trait <code>ConversionCheckedTripleEquals</code> has been deprecated and will be removed in a future version of Scalactic. Please use <code>TypeCheckedTripleEquals</code> with a type annotation instead.</strong>
  *
- * <p>
  * Trait <code>ConversionCheckedTripleEquals</code> has been deprecated because code that uses it can break if you 
  * change the equality policy to <code>TripleEquals</code>. For example, because <code>JavaConversions</code> provides
  * an implicit conversion between <code>java.util.Set</code> and <code>scala.collection.mutable.Set</code>,
  * an equality comparison under <code>ConversionCheckedTripleEquals</code> can yield <code>true</code>:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import collection.JavaConversions._
@@ -41,10 +40,9 @@ import TripleEqualsSupport._
  * res0: Boolean = true
  * </pre>
  *
- * <p>
  * If code written under <code>ConversionCheckedTripleEquals</code> is left unchanged, but the policy
  * is changed to <code>TripleEquals</code>, the equality comparison will now yield <code>false</code>:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt;  import TripleEquals._
@@ -54,23 +52,21 @@ import TripleEqualsSupport._
  * res1: Boolean = false
  * </pre>
  *
- * <p>
  * The above change from <code>true</code> to <code>false</code> happens without any warning
  * or complaint from the compiler. Thus it is quite error prone. A better way to achieve equality
  * comparisons after an implicit conversion is to do so <code>explicitly</code>, by forcing
  * the implicit conversion via a type annotation (following an expression with a colon and
  * the desired type). Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; mutable.Set.empty[String] === (new java.util.HashSet[String]: mutable.Set[String])
  * res3: Boolean = true
  * </pre>
  *
- * <p>
  * To get rid of the deprecation warning, you can use <code>TypeCheckedTripleEquals</code> instead of
  * <code>ConversionCheckedTripleEquals</code>, and add explicit type annotations where needed:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt;  import TypeCheckedTripleEquals._
@@ -111,9 +107,8 @@ trait ConversionCheckedTripleEquals extends LowPriorityConversionCheckedConstrai
 /**
  * <strong>Object <code>ConversionCheckedTripleEquals</code> has been deprecated and will be removed in a future version of Scalactic. Please use <code>TypeCheckedTripleEquals</code> with a type annotation instead.</strong>
  *
- * <p>
  * For more information and examples, please see the documentation for the <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEqals</code></a> companion trait.
- * </p>
+ * 
  */
 @deprecated("ConversionCheckedTripleEquals has been deprecated and will be removed in a future version of Scalactic. Please use TypeCheckedTripleEquals with a type annotation instead")
 object ConversionCheckedTripleEquals extends ConversionCheckedTripleEquals

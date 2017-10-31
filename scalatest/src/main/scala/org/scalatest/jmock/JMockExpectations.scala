@@ -22,7 +22,6 @@ import org.hamcrest.Matcher
  * Subclass of <code>org.jmock.Expectations</code> that provides <code>withArg</code>
  * alternatives to the <code>with</code> methods defined in its superclass.
  *
- * <p>
  * <code>JMockCycle</code>'s <code>expecting</code> method of passes an instance of this class
  * to the function passed into <code>expectations</code>. Because <code>JMockExpectations</code>
  * extends <code>org.jmock.Expectations</code>, all of the <code>Expectations</code> methods are
@@ -30,17 +29,16 @@ import org.hamcrest.Matcher
  * several overloaded <code>withArg</code> methods defined in this class. These <code>withArg</code> methods simply
  * invoke corresponding <code>with</code> methods on <code>this</code>. Because <code>with</code> is
  * a keyword in Scala, to invoke these directly you must surround them in back ticks, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * oneOf (mockCollaborator).documentAdded(`with`("Document"))
  * </pre>
  *
- * <p>
  * By importing the members of the <code>JMockExpectations</code> object passed to
  * a <code>JMockCycle</code>'s <code>executing</code> method, you can
  * instead call <code>withArg</code> with no back ticks needed:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * oneOf (mockCollaborator).documentAdded(withArg("Document"))

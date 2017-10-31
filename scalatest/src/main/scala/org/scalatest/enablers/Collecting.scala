@@ -25,29 +25,26 @@ import scala.language.higherKinds
  * Supertrait for typeclasses that enable <a href="../LoneElement.html"><code>loneElement</code></a> and <a href="../Inspectors.html">inspectors</a> syntax
  * for collections.
  *
- * <p>
  * A <code>Collecting[E, C]</code> provides access to the "collecting nature" of type <code>C</code> in such
  * a way that <code>loneElement</code> syntax can be used with type <code>C</code>. A <code>C</code>
  * can be any type of "collecting", a type that in some way collects or brings together elements of type <code>E</code>.
  * ScalaTest provides implicit implementations for several types. You can enable the <code>contain</code> matcher syntax
  * on your own type <code>U</code> by defining an <code>Collecting[E, U]</code> for the type and making it available implicitly.
- * </p>
  * 
- * <p>
+ * 
  * ScalaTest provides implicit <code>Collecting</code> instances for <code>scala.collection.GenTraversable</code>,
  * <code>Array</code>, <code>java.util.Collection</code> and <code>java.util.Map</code> in the
  * <code>Collecting</code> companion object.
- * </p>
+ * 
  */
 trait Collecting[E, C] {
 
   /**
    * Implements the <code>loneElement</code> syntax of trait <code>LoneElement</code>.
    *
-   * <p>
    * Returns the lone element contained in a collection, wrapped in a <code>Some</code>, or <code>None</code>  
    * if the collection contains either no elements or more than one element.
-   * </p>
+   * 
    *
    * @param collection a collection about which an assertion is being made
    * @return <code>Some[E]</code> if the collection contains one and only one element, <code>None</code> otherwise.

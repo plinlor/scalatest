@@ -22,10 +22,9 @@ package org.scalatest.matchers
  * property was <code>true</code>) and one field that provides
  * the name of the property.
  *
- * <p>
  * For an example of a <code>BePropertyMatchResult</code> in action, see the documentation for
  * <a href="BePropertyMatcher.html"><code>BePropertyMatcher</code></a>.
- * </p>
+ * 
  *
  * @param matches indicates whether or not the matcher matched (if the <code>Boolean</code> property was true, it was a match)
  * @param propertyName the name of the <code>Boolean</code> property that was matched against

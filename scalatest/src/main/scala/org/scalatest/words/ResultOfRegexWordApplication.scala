@@ -21,9 +21,8 @@ import scala.util.matching.Regex
  * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
  * the matchers DSL.
  *
- * <p>
  * The primary constructor enables the following syntax (with a passed <code>scala.util.matching.Regex</code>): 
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""".r)

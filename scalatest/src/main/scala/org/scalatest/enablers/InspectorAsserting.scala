@@ -30,10 +30,9 @@ import scala.util.{Try, Success, Failure}
  * Supertrait for <code>InspectorAsserting</code> typeclasses, which are used to implement and determine the result
  * type of <a href="../Inspectors.html"><code>Inspectors</code></a> methods such as <code>forAll</code>, <code>forBetween</code>, <em>etc</em>.
  *
- * <p>
  * Currently, an inspector expression will have result type <code>Assertion</code>, if the function passed has result type <code>Assertion</code>,
  * else it will have result type <code>Unit</code>.
- * </p>
+ * 
  */
 trait InspectorAsserting[T] {
   type Result

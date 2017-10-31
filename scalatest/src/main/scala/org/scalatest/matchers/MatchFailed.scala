@@ -29,9 +29,8 @@ object MatchFailed {
    * Extractor enabling patterns that match <code>MatchResult</code> having <code>matches</code> property value of <code>false</code>,
    * extracting the contained failure message.
    *
-   * <p>
    * For example, you can use this extractor to get the failure message of a <code>MatchResult</code> like this:
-   * </p>
+   * 
    *
    * <pre>
    * matchResult match {

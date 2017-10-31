@@ -22,11 +22,10 @@ import org.scalatest.events.Event
  * suite of tests and presents those results in some way to the user. Instances of this trait can
  * be called "report functions" or "reporters."
  *
- * <p>
  * Reporters receive test results via fifteen events.
  * Each event is fired to pass a particular kind of information to
  * the reporter. The events are:
- * </p>
+ * 
  *
  * <ul>
  * <li><a href="events/DiscoveryStarting.html"><code>DiscoveryStarting</code></a></li>
@@ -53,13 +52,11 @@ import org.scalatest.events.Event
  * <li><a href="events/NoteProvided.html"><code>NoteProvided</code></a></li>
  * </ul>
  *
- * <p>
  * Reporters may be implemented such that they only present some of the reported events to the user. For example, you could
  * define a reporter class that does nothing in response to <code>SuiteStarting</code> events.
  * Such a class would always ignore <code>SuiteStarting</code> events.
- * </p>
+ * 
  *
- * <p>
  * The term <em>test</em> as used in the <code>TestStarting</code>, <code>TestSucceeded</code>,
  * and <code>TestFailed</code> event names
  * is defined abstractly to enable a wide range of test implementations.
@@ -75,7 +72,6 @@ import org.scalatest.events.Event
  * may be reported via the <code>TestStarting</code>, <code>TestSucceeded</code>, and
  * <code>TestFailed</code> events.
  *
- * <p>
  * Likewise, the term <em>suite</em> as used in the <code>SuiteStarting</code>, <code>SuiteAborted</code>,
  * and <code>SuiteCompleted</code> event names
  * is defined abstractly to enable a wide range of suite implementations.
@@ -101,11 +97,10 @@ import org.scalatest.events.Event
  *
  * <h2>Extensibility</h2>
  *
- * <p>
  * You can create classes that extend <code>Reporter</code> to report test results in custom ways, and to
  * report custom information passed as an event "payload."
  * <code>Reporter</code> classes can handle events in any manner, including doing nothing.
- * </p>
+ * 
  *
  * @author Bill Venners
  */

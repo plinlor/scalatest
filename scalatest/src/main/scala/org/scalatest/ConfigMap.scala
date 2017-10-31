@@ -34,11 +34,10 @@ import scala.collection.GenTraversable
 /**
  * A map of configuration data.
  *
- * <p>
  * A <code>ConfigMap</code> can be populated from the <a href="tools/Runner$.html"><code>Runner</code></a> command line via <code>-D</code> 
  * arguments. <code>Runner</code> passes it to many methods where you can use it to configure your
  * test runs. For example, <code>Runner</code> passed the <code>ConfigMap</code> to:
- * </p>
+ * 
  * 
  * <ul>
  * <li>the <code>apply</code> method of <a href="Reporter.html"><code>Reporter</code></a>s via <code>RunStarting</code> events</li>
@@ -52,44 +51,39 @@ import scala.collection.GenTraversable
  * <li>the <code>afterEach(TestData)</code> method of <code>BeforeAndAfterEachTestData</code>
  * </ul>
  *
- * <p>
  * In addition to accessing the <code>ConfigMap</code> in overriden implementations of the above methods, you can also transform
  * and pass along a modified <code>ConfigMap</code>.
- * </p>
+ * 
  *
- * <p>
  * A <code>ConfigMap</code> maps string keys to values of any type, <em>i.e.</em>, it is a <code>Map[String, Any]</code>.
  * To get a configuration value in a variable of the actual type of that value, therefore, you'll need to perform an unsafe cast. If
  * this cast fails, you'll get an exception, which so long as the <code>ConfigMap</code> is used only in tests, will
  * result in either a failed or canceled test or aborted suite. To give such exceptions nice stack depths and error messages, and to
  * eliminate the need for using <code>asInstanceOf</code> in your test code, <code>ConfigMap</code> provides three
  * methods for accessing values at expected types.
- * </p>
+ * 
  *
- * <p>
  * The <code>getRequired</code> method returns the value bound to a key cast to a specified type, or throws <a href="exceptions/TestCanceledException.html"><code>TestCanceledException</code></a>
  * if either the key is not bound or is bound to an incompatible type. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val tempFileName: String = configMap.getRequired[String]("tempFileName")
  * </pre>
  *
- * <p>
  * The <code>getOptional</code> method returns the value bound to a key cast to a specified type, wrapped in a <code>Some</code>,
  * returns <code>None</code> if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
  * bound to an incompatible type. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val tempFileName: Option[String] = configMap.getOptional[String]("tempFileName")
  * </pre>
  *
- * <p>
  * The <code>getWithDefault</code> method returns the value bound to a key cast to a specified type,
  * returns a specified default value if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
  * either not bound or is bound to an incompatible type. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val tempFileName: String = configMap.getWithDefault[String]("tempFileName", "tmp.txt")
@@ -112,11 +106,10 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
   override def empty: ConfigMap = new ConfigMap(Map.empty[String, Any])
 
   /**
-   * <p>
    * Returns the value bound to a key cast to a specified type, wrapped in a <code>Some</code>,
    * returns <code>None</code> if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
    * bound to an incompatible type. Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val tempFileName: Option[String] = configMap.getOptional[String]("tempFileName")
@@ -131,11 +124,10 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
   }
 
   /**
-   * <p>
    * Returns the value bound to a key cast to the specified type <code>V</code>,
    * returns a specified default value if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
    * if either the key is not bound or is bound to an incompatible type. Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val tempFileName: String = configMap.getWithDefault[String]("tempFileName", "tmp.txt")
@@ -151,10 +143,9 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
   }
 
   /**
-   * <p>
    * Returns the value bound to a key cast to the specified type <code>V</code>, or throws <code>TestCanceledException</code>
    * if either the key is not bound or is bound to an incompatible type. Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val tempFileName: String = configMap.getRequired[String]("tempFileName")

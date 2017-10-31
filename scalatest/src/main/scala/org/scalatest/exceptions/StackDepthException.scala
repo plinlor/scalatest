@@ -144,14 +144,13 @@ abstract class StackDepthException(
   /**
    * An optional detail message for this <code>StackDepth</code> exception.
    *
-   * <p>
    * One reason this is lazy is to delay any searching of the stack trace until it is actually needed. It will
    * usually be needed, but not always. For example, exceptions thrown during a shrink phase of a failed property
    * will often be <code>StackDepthException</code>s, but whose <code>message</code> will never be used. Another related reason is to remove the need
    * to create a different exception before creating this one just for the purpose of searching through its stack
    * trace for the proper stack depth. Still one more reason is to allow the message to contain information about the
    * stack depth, such as the failed file name and line number.
-   * </p>
+   * 
    */
   lazy val message: Option[String] = messageFun(this)
  
@@ -160,14 +159,13 @@ abstract class StackDepthException(
   /**
    * The depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * <p>
    * One reason this is lazy is to delay any searching of the stack trace until it is actually needed. It will
    * usually be needed, but not always. For example, exceptions thrown during a shrink phase of a failed property
    * will often be <code>StackDepthException</code>s, but whose <code>failedCodeStackDepth</code> will never be used. Another reason is to remove the need
    * to create a different exception before creating this one just for the purpose of searching through its stack
    * trace for the proper stack depth. Still one more reason is to allow the message to contain information about the
    * stack depth, such as the failed file name and line number.
-   * </p>
+   * 
    */
   lazy val failedCodeStackDepth: Int = {
     val stackDepthFun =

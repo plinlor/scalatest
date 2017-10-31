@@ -109,11 +109,10 @@ import collection.immutable.TreeMap
  * 
  * </pre>
  *
- * <p>
  * If the expression passed to <code>assert</code> or <code>assume</code> spans more than one line, <code>DiagrammedAssertions</code> falls
  * back to the default style of error message, since drawing a diagram would be difficult. Here's an example showing how
  * <code>DiagrammedAssertions</code> will treat a multi-line assertion (<em>i.e.</em>, you don't get a diagram):
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; assert("hello".startsWith("h") &amp;&amp;
@@ -123,9 +122,8 @@ import collection.immutable.TreeMap
  *         ...
  * </pre>
  * 
- * <p>
  * Also, since an expression diagram essentially represents multi-line ascii art, if a clue string is provided, it appears <em>above</em> the diagram, not after it. It will often also show up in the diagram:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; assert(None.isDefined, "Don't do this at home")
@@ -161,15 +159,13 @@ trait DiagrammedAssertions extends Assertions {
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>TestFailedException</code>.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message that includes
    * a diagram showing expression values.
-   * </p>
+   * 
    *
-   * <p>
    * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assert
    * @throws TestFailedException if the condition is <code>false</code>.
@@ -185,10 +181,9 @@ trait DiagrammedAssertions extends Assertions {
    * specified <code>clue</code> as the exception's detail message and a
    * diagram showing expression values.
    *
-   * <p>
    * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assert
    * @param clue An objects whose <code>toString</code> method returns a message to include in a failure report.
@@ -202,15 +197,13 @@ trait DiagrammedAssertions extends Assertions {
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>TestCanceledException</code>.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message that includes
    * a diagram showing expression values.
-   * </p>
+   * 
    *
-   * <p>
    * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assume
    * @throws TestCanceledException if the condition is <code>false</code>.
@@ -226,10 +219,9 @@ trait DiagrammedAssertions extends Assertions {
    * specified <code>clue</code> as the exception's detail message and a
    * diagram showing expression values.
    *
-   * <p>
    * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assume
    * @param clue An objects whose <code>toString</code> method returns a message to include in a failure report.

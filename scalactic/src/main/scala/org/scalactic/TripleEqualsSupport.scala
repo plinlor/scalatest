@@ -21,39 +21,34 @@ import TripleEqualsSupport._
  * Trait that defines abstract methods used to enforce compile-time type constraints for equality comparisons, and defines <code>===</code> and <code>!==</code> operators
  * used by matchers.
  *
- * <p>
  * The abstract methods of this trait are selectively implemented as implicit by subclasses to enable a spectrum of type constraints for the
  * <code>===</code> and <code>!==</code> operators. As an illustration, if in the expression, <code>a === b</code>, the type of <code>a</code>
  * is <code>A</code> and <code>b</code> is <code>B</code>, the following three levels of compile-time checking can be obtained from
  * <code>TripleEqualsSupport</code> subtraits:
- * </p>
+ * 
  *
- * <p>
  * <b>Unchecked</b> - <code>A</code> and <code>B</code> can be any two types. This constraint level is available from
  * subtrait <a href="TripleEquals.html"><code>TripleEquals</code></a>.
- * </p>
  * 
- * <p>
+ * 
  * <b>Statically-checked</b> - <code>A</code> must be a subtype of <code>B</code>, or vice versa, or must cooperate such that the
  * equality laws stated in the <code>equals</code> contract are preserved.
  * This (intermediate) constraint level is available by using subtrait <a href="TripleEquals.html"><code>TripleEquals</code></a> and installing the <a href="http://www.scalactic.org/supersafe">SuperSafe Community Edition</a>
  * Scala compiler plugin.
- * </p>
  * 
- * <p>
+ * 
  * <b>Type-checked</b> - <code>A</code> must be a subtype of <code>B</code>, or vice versa.
  * (Both <code>A</code> and <code>B</code> can be the same type, because a type is considered a subtype
  * of itself.)
  * This (strongest) constraint level is available from subtrait <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>.
- * </p>
+ * 
  *
- * <p>
  * This trait defines all methods that need to be defined implicitly by the subtraits so that if multiple subtraits are used together, the inner-most
  * subtrait in scope can not only enable the implicits it needs by overriding or hiding those methods (currently-in-scope as regular, non-implicit
  * methods) and making
  * them implicit, it can also <em>disable</em> any implicits enabled by its sibling subtraits in enclosing scopes. For example, if your test class mixes
  * in <code>TypeCheckedTripleEquals</code>, inside your test class the following methods will be implicit:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>convertToCheckingEqualizer</code></li>
@@ -63,19 +58,16 @@ import TripleEqualsSupport._
  * <li><code>convertEquivalenceToBToAConstraint</code></li>
  * </ul>
  * 
- * <p>
  * If in the body of a test you want to turn off the type checking, you can import the members
  * of <code>TripleEquals</code> in the body of that test. This will not only hide
  * non-implicit methods <code>convertToEqualizer</code> <code>unconstrainedEquality</code> of <code>TypeCheckedTripleEquals</code>,
  * replacing those with implicit ones defined in <code>TripleEquals</code>, it will also hide the three methods made implicit in <code>TypeCheckedTripleEquals</code>
  * (and listed above), replacing them by <em>non-implicit</em> ones.
- * </p>
  * 
- * <p>
+ * 
  * In short, you should be able to select a primary constraint level via either a mixin or import, then change that in nested scopes
  * however you want, again either through a mixin or import, without getting any implicit conversion ambiguity. The innermost constraint level in scope
  * will always be in force.
- * <p>
  * 
  * @author Bill Venners
  */
@@ -91,9 +83,8 @@ trait TripleEqualsSupport {
    * assert(c !== d)
    * </pre>
    *
-   * <p>
    * You can also check numeric values against another with a tolerance. Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * assert(a === (2.0 +- 0.1))
@@ -168,9 +159,8 @@ trait TripleEqualsSupport {
    * assert(c !== d)
    * </pre>
    *
-   * <p>
    * You can also check numeric values against another with a tolerance. Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * assert(a === (2.0 +- 0.1))
@@ -234,10 +224,9 @@ trait TripleEqualsSupport {
    * Converts to an <a href="Equalizer.html"><code>Equalizer</code></a> that provides <code>===</code> and <code>!==</code> operators that
    * result in <code>Boolean</code> and enforce no type constraint.
    *
-   * <p>
    * This method is overridden and made implicit by subtrait <a href="TripleEquals.html"><code>TripleEquals</code></a> and overriden as non-implicit by the other
    * subtraits in this package.
-   * </p>
+   * 
    *
    * @param left the object whose type to convert to <code>Equalizer</code>.
    * @throws NullPointerException if <code>left</code> is <code>null</code>.
@@ -248,11 +237,10 @@ trait TripleEqualsSupport {
    * Converts to an <a href="CheckingEqualizer.html"><code>CheckingEqualizer</code></a> that provides <code>===</code> and <code>!==</code> operators
    * that result in <code>Boolean</code> and enforce a type constraint.
    *
-   * <p>
    * This method is overridden and made implicit by subtraits <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a> and
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>, and overriden as
    * non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param left the object whose type to convert to <code>CheckingEqualizer</code>.
    * @throws NullPointerException if <code>left</code> is <code>null</code>.
@@ -263,15 +251,13 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, with no type constraint enforced, given an
    * implicit <code>Equality[A]</code>.
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equality[A]</code>'s
    * <code>areEqual</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits <a href="TripleEquals.html"><code>TripleEquals</code></a> and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equalityOfA an <code>Equality[A]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @return an <code>A CanEqual B</code> instance whose <code>areEqual</code> method delegates to the <code>areEqual</code> method of
@@ -283,17 +269,15 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> for any two types <code>A</code> and <code>B</code>, enforcing the type constraint
    * that <code>A</code> must be a subtype of <code>B</code>, given an implicit <code>Equivalence[B]</code>.
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[A]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="LowPriorityTypeCheckedConstraint.html"><code>LowPriorityTypeCheckedConstraint</code></a> (extended by
    * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>), and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equivalenceOfB an <code>Equivalence[B]</code> type class to which the <code>Constraint.areEqual</code> method
    *    will delegate to determine equality.
@@ -307,23 +291,20 @@ trait TripleEqualsSupport {
    * Provides a <code>A CanEqual B</code> for any two types <code>A</code> and <code>B</code>, enforcing the type constraint
    * that <code>A</code> must be a subtype of <code>B</code>, given an <em>explicit</em> <code>Equivalence[B]</code>.
    *
-   * <p>
    * This method is used to enable the <a href="Explicitly.html"><code>Explicitly</code></a> DSL for
    * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a> by requiring an explicit <code>Equivalance[B]</code>, but
    * taking an implicit function that provides evidence that <code>A</code> is a subtype of </code>B</code>.
-   * </p>
+   * 
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[B]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="LowPriorityTypeCheckedConstraint.html"><code>LowPriorityTypeCheckedConstraint</code></a> (extended by
    * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>), and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equivalenceOfB an <code>Equivalence[B]</code> type class to which the <code>Constraint.areEqual</code> method
    *    will delegate to determine equality.
@@ -337,16 +318,14 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, enforcing the type constraint
    * that <code>B</code> must be a subtype of <code>A</code>, given an implicit <code>Equivalence[A]</code>.
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[A]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>) and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equalityOfA an <code>Equivalence[A]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @param ev evidence that <code>B</code> is a subype of </code>A</code>
@@ -359,28 +338,25 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, enforcing the type constraint
    * that <code>B</code> must be a subtype of <code>A</code>, given an <em>explicit</em> <code>Equivalence[A]</code>.
    *
-   * <p>
    * This method is used to enable the <a href="Explicitly.html"><code>Explicitly</code></a> DSL for
    * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a> by requiring an explicit <code>Equivalance[B]</code>, but
    * taking an implicit function that provides evidence that <code>A</code> is a subtype of </code>B</code>. For example, under <code>TypeCheckedTripleEquals</code>,
    * this method (as an implicit method), would be used to compile this statement:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * def closeEnoughTo1(num: Double): Boolean =
    *   (num === 1.0)(decided by forgivingEquality)
    * </pre>
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[A]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>) and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equalityOfA an <code>Equivalence[A]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @param ev evidence that <code>B</code> is a subype of </code>A</code>
@@ -393,17 +369,15 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, enforcing the type constraint that <code>A</code> is
    * implicitly convertible to <code>B</code>, given an implicit <code>Equivalence[B]</code>.
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[B]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="LowPriorityConversionCheckedConstraint.html"><code>LowPriorityConversionCheckedConstraint</code></a> (extended by
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>), and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equalityOfB an <code>Equivalence[B]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @param cnv an implicit conversion from <code>A</code> to </code>B</code>
@@ -416,23 +390,20 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, enforcing the type constraint that <code>A</code> is
    * implicitly convertible to <code>B</code>, given an <em>explicit</em> <code>Equivalence[B]</code>.
    *
-   * <p>
    * This method is used to enable the <a href="Explicitly.html"><code>Explicitly</code></a> DSL for
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a> by requiring an explicit <code>Equivalance[B]</code>, but
    * taking an implicit function that converts from <code>A</code> to </code>B</code>.
-   * </p>
+   * 
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[B]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="LowPriorityConversionCheckedConstraint.html"><code>LowPriorityConversionCheckedConstraint</code></a> (extended by
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>), and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equalityOfB an <code>Equivalence[B]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @param cnv an implicit conversion from <code>A</code> to </code>B</code>
@@ -445,16 +416,14 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, enforcing the type constraint that <code>B</code> is
    * implicitly convertible to <code>A</code>, given an implicit <code>Equivalence[A]</code>.
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[A]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>) and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equivalenceOfA an <code>Equivalence[A]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @param cnv an implicit conversion from <code>B</code> to </code>A</code>
@@ -467,28 +436,25 @@ trait TripleEqualsSupport {
    * Provides an <code>A CanEqual B</code> instance for any two types <code>A</code> and <code>B</code>, enforcing the type constraint that <code>B</code> is
    * implicitly convertible to <code>A</code>, given an <em>explicit</em> <code>Equivalence[A]</code>.
    *
-   * <p>
    * This method is used to enable the <a href="Explicitly.html"><code>Explicitly</code></a> DSL for
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a> by requiring an explicit <code>Equivalance[A]</code>, but
    * taking an implicit function that converts from <code>B</code> to </code>A</code>. For example, under <code>ConversionCheckedTripleEquals</code>,
    * this method (as an implicit method), would be used to compile this statement:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * def closeEnoughTo1(num: Double): Boolean =
    *   (num === 1.0)(decided by forgivingEquality)
    * </pre>
    *
-   * <p>
    * The returned <code>Constraint</code>'s <code>areEqual</code> method uses the implicitly passed <code>Equivalence[A]</code>'s
    * <code>areEquivalent</code> method to determine equality.
-   * </p>
+   * 
    *
-   * <p>
    * This method is overridden and made implicit by subtraits
    * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>) and
    * overriden as non-implicit by the other subtraits in this package.
-   * </p>
+   * 
    *
    * @param equivalenceOfA an <code>Equivalence[A]</code> type class to which the <code>Constraint.areEqual</code> method will delegate to determine equality.
    * @param cnv an implicit conversion from <code>B</code> to </code>A</code>
@@ -596,10 +562,9 @@ object TripleEqualsSupport {
      * Indicates whether the objects passed as <code>a</code> and <code>b</code> are equal by return the
      * result of invoking <code>areEqual(cnv(a), b)</code> on the passed <code>equalityOfB</code> object.
      *
-     * <p>
      * In other words, the <code>a</code> object of type <code>A</code> is first converted to a <code>B</code> via the passed conversion
      * function, <code>cnv</code>, then compared for equality with the <code>b</code> object.
-     * </p>
+     * 
      *
      * @param a a left-hand-side object being compared with another (right-hand-side one) for equality (<em>e.g.</em>, <code>a == b</code>)
      * @param b a right-hand-side object being compared with another (left-hand-side one) for equality (<em>e.g.</em>, <code>a == b</code>)
@@ -619,10 +584,9 @@ object TripleEqualsSupport {
      * Indicates whether the objects passed as <code>a</code> and <code>b</code> are equal by returning the
      * result of invoking <code>areEqual(a, cnv(b))</code> on the passed <code>equalityOfA</code> object.
      *
-     * <p>
      * In other words, the <code>b</code> object of type <code>B</code> is first converted to an <code>A</code> via the passed conversion
      * function, <code>cnv</code>, then compared for equality with the <code>a</code> object.
-     * </p>
+     * 
      *
      * @param a a left-hand-side object being compared with another (right-hand-side one) for equality (<em>e.g.</em>, <code>a == b</code>)
      * @param b a right-hand-side object being compared with another (left-hand-side one) for equality (<em>e.g.</em>, <code>a == b</code>)
@@ -633,10 +597,9 @@ object TripleEqualsSupport {
   /**
    * Facilitates the &ldquo;<code>should === (x += y)</code>&rdquo; and  &ldquo;<code>should !== (x += y)</code>&rdquo; syntax of ScalaTest's matchers DSL. 
    *  
-   * <p>
    * Instances of this class are created and returned by the <code>===</code> and <code>!==</code> methods of
    * trait <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>.
-   * </p>
+   * 
    *
    * @param spread the <code>Spread[T]</code> against which to compare the left-hand value
    * @param expectingEqual <code>true</code> if the result of a <code>===</code> invocation; <code>false</code> if the result of a <code>!==</code> invocation.
@@ -646,10 +609,9 @@ object TripleEqualsSupport {
   /**
    * Facilitates the &ldquo;<code>should ===</code>&rdquo; and  &ldquo;<code>should !==</code>&rdquo; syntax of ScalaTest's matchers DSL. 
    *  
-   * <p>
    * Instances of this class are created and returned by the <code>===</code> and <code>!==</code> methods of
    * trait <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>.
-   * </p>
+   * 
    *
    * @param right the right-hand side value for an equality assertion
    * @param expectingEqual <code>true</code> if the result of a <code>===</code> invocation; <code>false</code> if the result of a <code>!==</code> invocation.
@@ -661,10 +623,9 @@ object TripleEqualsSupport {
   /**
    * Class representing an spread (<em>i.e.</em>, range) between two numbers.
    * 
-   * <p>
    * The spread is expressed in terms of a <code>Numeric</code> <em>pivot</em> and <em>tolerance</em>.
    * The spread extends from <code>pivot - tolerance</code> to <code>pivot + tolerance</code>, inclusive.
-   * </p>
+   * 
    * 
    * @param pivot the pivot number at the center of the spread
    * @param tolerance the tolerance that determines the high and low point of the spread
@@ -691,18 +652,16 @@ object TripleEqualsSupport {
     /**
      * Returns <code>true</code> if the passed number, <code>n</code>, is within the spread represented by this <code>Spread</code> instance
      *
-     * <p>
      * The purpose of this method, which will likely be used only rarely, is to achieve symmetry around the <code>===</code> operator. The
      * <code>TripleEquals</code> trait (and its type-checking siblings <code>TypeCheckedTripleEquals</code> and <code>ConversionCheckedTripleEquals</code>) enable you to write:
-     * </p>
+     * 
      *
      * <pre>
      * a === (1.0 +- 0.1)
      * </pre>
      *
-     * <p>
      * This method ensures the following mirrored form means the same thing:
-     * </p>
+     * 
      *
      * <pre>
      * (1.0 +- 0.1) === a
@@ -715,18 +674,16 @@ object TripleEqualsSupport {
     /**
      * Returns <code>false</code> if the passed number, <code>n</code>, is within the spread represented by this <code>Spread</code> instance
      *
-     * <p>
      * The purpose of this method, which will likely be used only rarely, is to achieve symmetry around the <code>!==</code> operator. The
      * <code>TripleEquals</code> trait (and its type-checking siblings <code>TypeCheckedTripleEquals</code> and <code>ConversionCheckedTripleEquals</code>) enable you to write:
-     * </p>
+     * 
      *
      * <pre>
      * a !== (1.0 +- 0.1)
      * </pre>
      *
-     * <p>
      * This method ensures the following mirrored form means the same thing:
-     * </p>
+     * 
      *
      * <pre>
      * (1.0 +- 0.1) !== a

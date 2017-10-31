@@ -33,7 +33,6 @@ import org.scalactic._
  * <strong>This trait has been deprecated and will be removed in a later version of ScalaTest. Please use trait
  * <a href="TimeLimits.scala">TimeLimits</a> instead.</strong>
  *
- * <p>
  * <strong>
  * <code>TimeLimits</code> differs from <code>Timeouts</code> in two ways. First, its behavior is driven by a <a href=""><code>Timed</code></a>
  * typeclass, so that it can treat <code>Future</code>s (and <a href="FutureOutcome.html"><code>FutureOutcome</code></a>s) differently than
@@ -43,16 +42,15 @@ import org.scalactic._
  * For <code>Timeouts</code>, the default is <code>ThreadInterruptor</code>; For <code>Signaler</code>, the default is
  * <code>DoNotSignal</code>.
  * </strong>
- * </p>
+ * 
  *
  * Trait that provides a <code>failAfter</code> and <code>cancelAfter</code> construct, which allows you to specify a time limit for an
  * operation passed as a by-name parameter, as well as a way to interrupt it if the operation exceeds its time limit.
  *
- * <p>
  * The time limit is passed as the first parameter, as a <a href="../time/Span.html"><code>Span</code></a>. The operation is
  * passed as the second parameter. And an <a href="Interruptor.html"><code>Interruptor</code></a>, a strategy for interrupting the operation, is
  * passed as an implicit third parameter.  Here's a simple example of its use:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * failAfter(Span(100, Millis)) {
@@ -60,28 +58,23 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * The above code, after 100 milliseconds, will produce a <a href="../exceptions/TestFailedDueToTimeoutException.html"><code>TestFailedDueToTimeoutException</code></a> with a message
  * that indicates a timeout expired:
- * </p>
+ * 
  *
- * <p>
  * <code>The code passed to failAfter did not complete within 100 milliseconds.</code>
- * </p>
+ * 
  *
- * <p>
  * If you use <code>cancelAfter</code> in place of <code>failAfter</code>, a <a href="../exceptions/TestCanceledException.html"><code>TestCanceledException</code></a> with a message
  * that indicates a timeout expired:
- * </p>
+ * 
  *
- * <p>
  * <code>The code passed to cancelAfter did not complete within 100 milliseconds.</code>
- * </p>
+ * 
  *
- * <p>
  * If you prefer you can mix in or import the members of <a href="../time/SpanSugar.html"><code>SpanSugar</code></a> and place a units value after the integer timeout.
  * Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.time.SpanSugar._
@@ -95,10 +88,9 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * The code passed via the by-name parameter to <code>failAfter</code> or <code>cancelAfter</code> will be executed by the thread that invoked
  * <code>failAfter</code> or <code>cancelAfter</code>, so that no synchronization is necessary to access variables declared outside the by-name.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * var result = -1 // No need to make this volatile
@@ -108,24 +100,22 @@ import org.scalactic._
  * result should be (99)
  * </pre>
  *
- * <p>
  * The <code>failAfter</code> or <code>cancelAfter</code> method will create a timer that runs on a different thread than the thread that
  * invoked <code>failAfter</code> or <code>cancelAfter</code>, so that it can detect when the timeout has expired and attempt to <em>interrupt</em>
  * the main thread. Because different operations can require different interruption strategies, the <code>failAfter</code> or <code>cancelAfter</code>
  * method accepts an implicit third parameter of type <code>Interruptor</code> that is responsible for interrupting
  * the main thread.
- * </p>
+ * 
  *
  * <a name="interruptorConfig"></a><h2>Configuring <code>failAfter</code> or <code>cancelAfter</code> with an <code>Interruptor</code></h2>
  *
- * <p>
  * This trait declares an implicit <code>val</code> named <code>defaultInterruptor</code>,
  * initialized with a <a href="ThreadInterruptor$.html"><code>ThreadInterruptor</code></a>, which attempts to interrupt the main thread by invoking
  * <code>Thread.interrupt</code>. If you wish to use a different strategy, you can override this <code>val</code> (or hide
  * it, for example if you imported the members of <code>Timeouts</code> rather than mixing it in). Here's an example
  * in which the default interruption method is changed to <a href="DoNotInterrupt$.html"><code>DoNotInterrupt</code></a>, which does not attempt to
  * interrupt the main thread in any way:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * override val defaultInterruptor = DoNotInterrupt
@@ -134,22 +124,19 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * As with the default <code>Interruptor</code>, the above code will eventually produce a 
  * <code>TestFailedDueToTimeoutException</code> with a message that indicates a timeout expired. However, instead
  * of throwing the exception after approximately 100 milliseconds, it will throw it after approximately 500 milliseconds.
- * </p>
+ * 
  *
- * <p>
  * This illustrates an important feature of <code>failAfter</code> and <code>cancelAfter</code>: it will throw a
  * <code>TestFailedDueToTimeoutException</code> (or <code>TestCanceledException</code> in case of <code>cancelAfter</code>)
  * if the code passed as the by-name parameter takes longer than the specified timeout to execute, even if it
  * is allowed to run to completion beyond the specified timeout and returns normally.
- * </p>
  * 
- * <p>
+ * 
  * ScalaTest provides the following <code>Interruptor</code> implementations:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
@@ -202,11 +189,10 @@ import org.scalactic._
  * </tr>
  * </table>
  *
- * <p>
  * You may wish to create your own <code>Interruptor</code> in some situations. For example, if your operation is performing
  * a loop and can check a volatile flag each pass through the loop. You could in that case write an <code>Interruptor</code> that
  * sets that flag so that the next time around, the loop would exit.
- * </p>
+ * 
  * 
  * @author Chua Chee Seng
  * @author Bill Venners
@@ -217,10 +203,9 @@ trait Timeouts {
   /**
    * Implicit <code>Interruptor</code> value defining a default interruption strategy for the <code>failAfter</code> and <code>cancelAfter</code> method.
    *
-   * <p>
    * To change the default <code>Interruptor</code> configuration, override or hide this <code>val</code> with another implicit
    * <code>Interruptor</code>.
-   * </p>
+   * 
    */
   implicit val defaultInterruptor: Interruptor = ThreadInterruptor
 
@@ -229,30 +214,27 @@ trait Timeouts {
    * time limit is exceeded, and throwing <code>TestFailedDueToTimeoutException</code> if the time limit has been 
    * exceeded after the function completes.
    *
-   * <p>
    * If the function completes <em>before</em> the timeout expires:
-   * </p>
+   * 
    *
    * <ul>
    * <li>If the function returns normally, this method will return normally.</li>
    * <li>If the function completes abruptly with an exception, this method will complete abruptly with that same exception.</li>
    * </ul>
    *
-   * <p>
    * If the function completes <em>after</em> the timeout expires:
-   * </p>
+   * 
    *
    * <ul>
    * <li>If the function returns normally, this method will complete abruptly with a <code>TestFailedDueToTimeoutException</code>.</li>
    * <li>If the function completes abruptly with an exception, this method will complete abruptly with a <code>TestFailedDueToTimeoutException</code> that includes the exception thrown by the function as its cause.</li>
    * </ul>
    *
-   * <p>
    * If the interrupted status of the main test thread (the thread that invoked <code>failAfter</code>) was not invoked
    * when <code>failAfter</code> was invoked, but is set after the operation times out, it is reset by this method before
    * it completes abruptly with a <code>TestFailedDueToTimeoutException</code>. The interrupted status will be set by
    * <code>ThreadInterruptor</code>, the default <code>Interruptor</code> implementation.
-   * </p>
+   * 
    *
    * @param timeout the maximimum amount of time allowed for the passed operation
    * @param fun the operation on which to enforce the passed timeout
@@ -275,30 +257,27 @@ trait Timeouts {
    * time limit is exceeded, and throwing <code>TestCanceledException</code> if the time limit has been
    * exceeded after the function completes.
    *
-   * <p>
    * If the function completes <em>before</em> the timeout expires:
-   * </p>
+   * 
    *
    * <ul>
    * <li>If the function returns normally, this method will return normally.</li>
    * <li>If the function completes abruptly with an exception, this method will complete abruptly with that same exception.</li>
    * </ul>
    *
-   * <p>
    * If the function completes <em>after</em> the timeout expires:
-   * </p>
+   * 
    *
    * <ul>
    * <li>If the function returns normally, this method will complete abruptly with a <code>TestCanceledException</code>.</li>
    * <li>If the function completes abruptly with an exception, this method will complete abruptly with a <code>TestCanceledException</code> that includes the exception thrown by the function as its cause.</li>
    * </ul>
    *
-   * <p>
    * If the interrupted status of the main test thread (the thread that invoked <code>cancelAfter</code>) was not invoked
    * when <code>cancelAfter</code> was invoked, but is set after the operation times out, it is reset by this method before
    * it completes abruptly with a <code>TestCanceledException</code>. The interrupted status will be set by
    * <code>ThreadInterruptor</code>, the default <code>Interruptor</code> implementation.
-   * </p>
+   * 
    *
    * @param timeout the maximimum amount of time allowed for the passed operation
    * @param f the operation on which to enforce the passed timeout

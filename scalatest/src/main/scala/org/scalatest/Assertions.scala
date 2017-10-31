@@ -30,18 +30,16 @@ import org.scalactic.anyvals.NonEmptyArray
 /**
  * Trait that contains ScalaTest's basic assertion methods.
  *
- * <p>
  * You can use the assertions provided by this trait in any ScalaTest <code>Suite</code>,
  * because <a href="Suite.html"><code>Suite</code></a>
  * mixes in this trait. This trait is designed to be used independently of anything else in ScalaTest, though, so you
  * can mix it into anything. (You can alternatively import the methods defined in this trait. For details, see the documentation
  * for the <a href="Assertions$.html"><code>Assertions</code> companion object</a>.
- * </p>
+ * 
  *
- * <p>
  * In any Scala program, you can write assertions by invoking <code>assert</code> and passing in a <code>Boolean</code> expression,
  * such as:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val left = 2
@@ -49,7 +47,6 @@ import org.scalactic.anyvals.NonEmptyArray
  * assert(left == right)
  * </pre>
  *
- * <p>
  * If the passed expression is <code>true</code>, <code>assert</code> will return normally. If <code>false</code>,
  * Scala's <code>assert</code> will complete abruptly with an <code>AssertionError</code>. This behavior is provided by
  * the <code>assert</code> method defined in object <code>Predef</code>, whose members are implicitly imported into every
@@ -60,9 +57,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * which item in the stack trace represents
  * the line of test code that failed, which can help users more quickly find an offending line of code in a failing test.
  * In addition, ScalaTest's <code>assert</code> provides better error messages than Scala's <code>assert</code>.
- * <p>
  *
- * <p>
  * If you pass the previous <code>Boolean</code> expression, <code>left == right</code> to <code>assert</code> in a ScalaTest test,
  * a failure will be reported that, because <code>assert</code> is implemented as a macro,
  * includes reporting the left and right values.
@@ -75,17 +70,15 @@ import org.scalactic.anyvals.NonEmptyArray
  * assert(left == right)
  * </pre>
  *
- * <p>
  * The detail message in the thrown <code>TestFailedException</code> from this <code>assert</code>
  * will be: "2 did not equal 1".
- * </p>
+ * 
  *
- * <p>
  * ScalaTest's <code>assert</code> macro works by recognizing patterns in the AST of the expression passed to <code>assert</code> and,
  * for a finite set of common expressions, giving an error message that an equivalent ScalaTest matcher
  * expression would give. Here are some examples, where <code>a</code> is 1, <code>b</code> is 2, <code>c</code> is 3, <code>d</code>
  * is 4, <code>xs</code> is <code>List(a, b, c)</code>, and <code>num</code> is 1.0:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(a == b || c &gt;= d)
@@ -104,11 +97,10 @@ import org.scalactic.anyvals.NonEmptyArray
  * // Error message: Some(2) was not empty
  * </pre>
  * 
- * <p>
  * For expressions that are not recognized, the macro currently prints out a string
  * representation of the (desugared) AST and adds <code>"was false"</code>. Here are some examples of
  * error messages for unrecognized expressions:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(None.isDefined)
@@ -118,17 +110,15 @@ import org.scalactic.anyvals.NonEmptyArray
  * // Error message: xs.exists(((i: Int) =&gt; i.&gt;(10))) was false
  * </pre>
  * 
- * <p>
  * You can augment the standard error message by providing a <code>String</code> as a second argument
  * to <code>assert</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val attempted = 2
  * assert(attempted == 1, "Execution was attempted " + left + " times instead of 1 time")
  * </pre>
  *
- * <p>
  * Using this form of <code>assert</code>, the failure report will be more specific to your problem domain, thereby
  * helping you debug the problem. This <code>Assertions</code> trait also mixes in the
  * <a href="../scalactic/TripleEquals.html"><code>TripleEquals</code></a>, which gives you a <code>===</code> operator
@@ -136,7 +126,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * <a href="../scalactic/Tolerance.html"><code>Tolerance</code></a>, and enforce type constraints at compile time with
  * sibling traits <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a> and
  * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>.
- * </p>
+ * 
  *
  * <a name="expectedResults"></a>
  * <h2>Expected results</h2>
@@ -159,25 +149,22 @@ import org.scalactic.anyvals.NonEmptyArray
  * }
  * </pre>
  *
- * <p>
  * In this case, the expected value is <code>2</code>, and the code being tested is <code>a - b</code>. This assertion will fail, and
  * the detail message in the <code>TestFailedException</code> will read, "Expected 2, but got 3."
- * </p>
+ * 
  *
  * <a name="forcingFailures"></a>
  * <h2>Forcing failures</h2>
  *
- * <p>
  * If you just need the test to fail, you can write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * fail()
  * </pre>
  *
- * <p>
  * Or, if you want the test to fail with a message, write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * fail("I've got a bad feeling about this")
@@ -186,7 +173,6 @@ import org.scalactic.anyvals.NonEmptyArray
  * <a name="achievingSuccess"></a>
  * <h2>Achieving success</h2>
  *
- * <p>
  * In async style tests, you must end your test body with either <code>Future[Assertion]</code> or
  * <code>Assertion</code>. ScalaTest's assertions (including matcher expressions) have result type
  * <code>Assertion</code>, so ending with an assertion will satisfy the compiler.
@@ -194,7 +180,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * <em>not</em> end with type <code>Assertion</code>, however, you can fix the type error by placing
  * <code>succeed</code> at the end of the
  * test or function body:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * succeed // Has type Assertion
@@ -204,10 +190,9 @@ import org.scalactic.anyvals.NonEmptyArray
  * <a name="expectedExceptions"></a>
  * <h2>Expected exceptions</h2>
  *
- * <p>
  * Sometimes you need to test whether a method throws an expected exception under certain circumstances, such
  * as when invalid arguments are passed to the method. You can do this in the JUnit 3 style, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val s = "hi"
@@ -220,18 +205,16 @@ import org.scalactic.anyvals.NonEmptyArray
  * }
  * </pre>
  *
- * <p>
  * If <code>charAt</code> throws <code>IndexOutOfBoundsException</code> as expected, control will transfer
  * to the catch case, which does nothing. If, however, <code>charAt</code> fails to throw an exception,
  * the next statement, <code>fail()</code>, will be run. The <code>fail</code> method always completes abruptly with
  * a <code>TestFailedException</code>, thereby signaling a failed test.
- * </p>
+ * 
  *
- * <p>
  * To make this common use case easier to express and read, ScalaTest provides two methods:
  * <code>assertThrows</code> and <code>intercept</code>.
  * Here's how you use <code>assertThrows</code>:
- * </p>
+ * 
  *
  * <a name="assertThrowsMethod"></a>
  * <pre class="stHighlight">
@@ -241,17 +224,15 @@ import org.scalactic.anyvals.NonEmptyArray
  * }
  * </pre>
  *
- * <p>
  * This code behaves much like the previous example. If <code>charAt</code> throws an instance of <code>IndexOutOfBoundsException</code>,
  * <code>assertThrows</code> will return <code>Succeeded</code>. But if <code>charAt</code> completes normally, or throws a different
  * exception, <code>assertThrows</code> will complete abruptly with a <code>TestFailedException</code>.
- * </p>
+ * 
  *
- * <p>
  * The <code>intercept</code> method behaves the same as <code>assertThrows</code>, except that instead of returning <code>Succeeded</code>,
  * <code>intercept</code> returns the caught exception so that you can inspect it further if you wish. For example, you may need
  * to ensure that data contained inside the exception have expected values. Here's an example:
- * </p>
+ * 
  *
  * <a name="interceptMethod"></a>
  * <pre class="stHighlight">
@@ -266,62 +247,55 @@ import org.scalactic.anyvals.NonEmptyArray
  * <a name="checkingThatCodeDoesNotCompile"></a>
  * <h2>Checking that a snippet of code does or does not compile</h2>
  * 
- * <p>
  * Often when creating libraries you may wish to ensure that certain arrangements of code that
  * represent potential &ldquo;user errors&rdquo; do not compile, so that your library is more error resistant.
  * ScalaTest's <code>Assertions</code> trait includes the following syntax for that purpose:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assertDoesNotCompile("val a: String = 1")
  * </pre>
  *
- * <p>
  * If you want to ensure that a snippet of code does not compile because of a type error (as opposed
  * to a syntax error), use:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assertTypeError("val a: String = 1")
  * </pre>
  *
- * <p>
  * Note that the <code>assertTypeError</code> call will only succeed if the given snippet of code does not
  * compile because of a type error. A syntax error will still result on a thrown <code>TestFailedException</code>.
- * </p>
+ * 
  *
- * <p>
  * If you want to state that a snippet of code <em>does</em> compile, you can make that
  * more obvious with:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assertCompiles("val a: Int = 1")
  * </pre>
  *
- * <p>
  * Although the previous three constructs are implemented with macros that determine at compile time whether
  * the snippet of code represented by the string does or does not compile, errors 
  * are reported as test failures at runtime.
- * </p>
+ * 
  *
  * <a name="assumptions"></a>
  * <h2>Assumptions</h2>
  *
- * <p>
  * Trait <code>Assertions</code> also provides methods that allow you to <em>cancel</em> a test.
  * You would cancel a test if a resource required by the test was unavailable. For example, if a test
  * requires an external database to be online, and it isn't, the test could be canceled to indicate
  * it was unable to run because of the missing database. Such a test <em>assumes</em> a database is
  * available, and you can use the <code>assume</code> method to indicate this at the beginning of
  * the test, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assume(database.isAvailable)
  * </pre>
  *
- * <p>
  * For each overloaded <code>assert</code> method, trait <code>Assertions</code> provides an
  * overloaded <code>assume</code> method with an identical signature and behavior, except the
  * <code>assume</code> methods throw <a href="exceptions/TestCanceledException.html"><code>TestCanceledException</code></a> whereas the
@@ -330,7 +304,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * function, but throws <code>AssertionError</code>. And just as you can with <code>assert</code>,
  * you will get an error message extracted by a macro from the AST passed to <code>assume</code>, and can
  * optionally provide a clue string to augment this error message. Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assume(database.isAvailable, "The database was down again")
@@ -340,20 +314,18 @@ import org.scalactic.anyvals.NonEmptyArray
  * <a name="forcingCancelations"></a>
  * <h2>Forcing cancelations</h2>
  *
- * <p>
  * For each overloaded <code>fail</code> method, there's a corresponding <code>cancel</code> method
  * with an identical signature and behavior, except the <code>cancel</code> methods throw
  * <code>TestCanceledException</code> whereas the <code>fail</code> methods throw
  * <code>TestFailedException</code>. Thus if you just need to cancel a test, you can write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * cancel()
  * </pre>
  *
- * <p>
  * If you want to cancel the test with a message, just place the message in the parentheses:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * cancel("Can't run the test because no internet connection was found")
@@ -362,7 +334,6 @@ import org.scalactic.anyvals.NonEmptyArray
  * <a name="gettingAClue"></a>
  * <h2>Getting a clue</h2>
  *
- * <p>
  * If you want more information that is provided by default by the methods if this trait,
  * you can supply a "clue" string in one of several ways.
  * The extra information (or "clues") you provide will
@@ -370,26 +341,24 @@ import org.scalactic.anyvals.NonEmptyArray
  * <code>assert</code> and <code>assertResult</code> provide a way for a clue to be
  * included directly, <code>intercept</code> does not.
  * Here's an example of clues provided directly in <code>assert</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(1 + 1 === 3, "this is a clue")
  * </pre>
  *
- * <p>
  * and in <code>assertResult</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assertResult(3, "this is a clue") { 1 + 1 }
  * </pre>
  *
- * <p>
  * The exceptions thrown by the previous two statements will include the clue
  * string, <code>"this is a clue"</code>, in the exception's detail message.
  * To get the same clue in the detail message of an exception thrown
  * by a failed <code>intercept</code> call requires using <code>withClue</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * withClue("this is a clue") {
@@ -399,18 +368,16 @@ import org.scalactic.anyvals.NonEmptyArray
  * }
  * </pre>
  *
- * <p>
  * The <code>withClue</code> method will only prepend the clue string to the detail
  * message of exception types that mix in the <code>ModifiableMessage</code> trait.
  * See the documentation for <a href="ModifiableMessage.html"><code>ModifiableMessage</code></a> for more information.
  * If you wish to place a clue string after a block of code, see the documentation for
  * <a href="AppendedClues.html"><code>AppendedClues</code></a>.
- * </p>
+ * 
  *
- * <p>
  * <em>Note: ScalaTest's <code>assertTypeError</code> construct is in part inspired by the <code>illTyped</code> macro
  * of <a href="https://github.com/milessabin/shapeless" target="_blank">shapeless</a>.</em>
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -425,10 +392,9 @@ trait Assertions extends TripleEquals  {
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>TestFailedException</code>.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message
    * for expressions of this form:
-   * </p>
+   * 
    *
    * <ul>
    * <li>assert(a == b)</li>
@@ -454,13 +420,12 @@ trait Assertions extends TripleEquals  {
    * <li>assert(a.exists(_ == 8))</li>
    * </ul>
    *
-   * <p>
    * At this time, any other form of expression will get a <code>TestFailedException</code> with message saying the given
    * expression was false.  In the future, we will enhance this macro to give helpful error messages in more situations.
    * In ScalaTest 2.0, however, this behavior was sufficient to allow the <code>===</code> that returns <code>Boolean</code>
    * to be the default in tests. This makes <code>===</code> consistent between tests and production
    * code.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assert
    * @throws TestFailedException if the condition is <code>false</code>.
@@ -481,10 +446,9 @@ trait Assertions extends TripleEquals  {
    * appended with the <code>String</code> obtained by invoking <code>toString</code> on the
    * specified <code>clue</code> as the exception's detail message.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message
    * for expressions of this form:
-   * </p>
+   * 
    *
    * <ul>
    * <li>assert(a == b, "a good clue")</li>
@@ -510,13 +474,12 @@ trait Assertions extends TripleEquals  {
    * <li>assert(a.exists(_ == 8), "a good clue")</li>
    * </ul>
    *
-   * <p>
    * At this time, any other form of expression will just get a <code>TestFailedException</code> with message saying the given
    * expression was false.  In the future, we will enhance this macro to give helpful error messages in more situations.
    * In ScalaTest 2.0, however, this behavior was sufficient to allow the <code>===</code> that returns <code>Boolean</code>
    * to be the default in tests. This makes <code>===</code> consistent between tests and production
    * code.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assert
    * @param clue An objects whose <code>toString</code> method returns a message to include in a failure report.
@@ -530,10 +493,9 @@ trait Assertions extends TripleEquals  {
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>TestCanceledException</code>.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message
    * for expressions of this form:
-   * </p>
+   * 
    *
    * <ul>
    * <li>assume(a == b)</li>
@@ -559,13 +521,12 @@ trait Assertions extends TripleEquals  {
    * <li>assume(a.exists(_ == 8))</li>
    * </ul>
    *
-   * <p>
    * At this time, any other form of expression will just get a <code>TestCanceledException</code> with message saying the given
    * expression was false.  In the future, we will enhance this macro to give helpful error messages in more situations.
    * In ScalaTest 2.0, however, this behavior was sufficient to allow the <code>===</code> that returns <code>Boolean</code>
    * to be the default in tests. This makes <code>===</code> consistent between tests and production
    * code.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assume
    * @throws TestCanceledException if the condition is <code>false</code>.
@@ -580,10 +541,9 @@ trait Assertions extends TripleEquals  {
    * appended with <code>String</code> obtained by invoking <code>toString</code> on the
    * specified <code>clue</code> as the exception's detail message.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message
    * for expressions of this form:
-   * </p>
+   * 
    *
    * <ul>
    * <li>assume(a == b, "a good clue")</li>
@@ -609,13 +569,12 @@ trait Assertions extends TripleEquals  {
    * <li>assume(a.exists(_ == 8), "a good clue")</li>
    * </ul>
    *
-   * <p>
    * At this time, any other form of expression will just get a <code>TestCanceledException</code> with message saying the given
    * expression was false.  In the future, we will enhance this macro to give helpful error messages in more situations.
    * In ScalaTest 2.0, however, this behavior was sufficient to allow the <code>===</code> that returns <code>Boolean</code>
    * to be the default in tests. This makes <code>===</code> consistent between tests and production
    * code.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assume
    * @param clue An objects whose <code>toString</code> method returns a message to include in a failure report.
@@ -628,29 +587,26 @@ trait Assertions extends TripleEquals  {
    * Asserts that a given string snippet of code does not pass the Scala type checker, failing if the given
    * snippet does not pass the Scala parser.
    *
-   * <p>
    * Often when creating libraries you may wish to ensure that certain arrangements of code that
    * represent potential &ldquo;user errors&rdquo; do not compile, so that your library is more error resistant.
    * ScalaTest's <code>Assertions</code> trait includes the following syntax for that purpose:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * assertTypeError("val a: String = 1")
    * </pre>
    *
-   * <p>
    * Although <code>assertTypeError</code> is implemented with a macro that determines at compile time whether
    * the snippet of code represented by the passed string type checks, errors (<em>i.e.</em>, 
    * snippets of code that <em>do</em> type check) are reported as test failures at runtime.
-   * </p>
+   * 
    *
-   * <p>
    * Note that the difference between <code>assertTypeError</code> and <code>assertDoesNotCompile</code> is
    * that <code>assertDoesNotCompile</code> will succeed if the given code does not compile for any reason,
    * whereas <code>assertTypeError</code> will only succeed if the given code does not compile because of
    * a type error. If the given code does not compile because of a syntax error, for example, <code>assertDoesNotCompile</code>
    * will return normally but <code>assertTypeError</code> will throw a <code>TestFailedException</code>.
-   * </p>
+   * 
    *
    * @param code the snippet of code that should not type check
    */
@@ -659,29 +615,26 @@ trait Assertions extends TripleEquals  {
   /**
    * Asserts that a given string snippet of code does not pass either the Scala parser or type checker.
    *
-   * <p>
    * Often when creating libraries you may wish to ensure that certain arrangements of code that
    * represent potential &ldquo;user errors&rdquo; do not compile, so that your library is more error resistant.
    * ScalaTest's <code>Assertions</code> trait includes the following syntax for that purpose:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * assertDoesNotCompile("val a: String = \"a string")
    * </pre>
    *
-   * <p>
    * Although <code>assertDoesNotCompile</code> is implemented with a macro that determines at compile time whether
    * the snippet of code represented by the passed string doesn't compile, errors (<em>i.e.</em>,
    * snippets of code that <em>do</em> compile) are reported as test failures at runtime.
-   * </p>
+   * 
    *
-   * <p>
    * Note that the difference between <code>assertTypeError</code> and <code>assertDoesNotCompile</code> is
    * that <code>assertDoesNotCompile</code> will succeed if the given code does not compile for any reason,
    * whereas <code>assertTypeError</code> will only succeed if the given code does not compile because of
    * a type error. If the given code does not compile because of a syntax error, for example, <code>assertDoesNotCompile</code>
    * will return normally but <code>assertTypeError</code> will throw a <code>TestFailedException</code>.
-   * </p>
+   * 
    *
    * @param code the snippet of code that should not type check
    */
@@ -690,19 +643,17 @@ trait Assertions extends TripleEquals  {
   /**
    * Asserts that a given string snippet of code passes both the Scala parser and type checker.
    *
-   * <p>
    * You can use this to make sure a snippet of code compiles:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * assertCompiles("val a: Int = 1")
    * </pre>
    *
-   * <p>
    * Although <code>assertCompiles</code> is implemented with a macro that determines at compile time whether
    * the snippet of code represented by the passed string compiles, errors (<em>i.e.</em>,
    * snippets of code that <em>do not</em> compile) are reported as test failures at runtime.
-   * </p>
+   * 
    *
    * @param code the snippet of code that should compile
    */
@@ -716,16 +667,14 @@ trait Assertions extends TripleEquals  {
    * this method returns that exception. Else, whether the passed function returns normally
    * or completes abruptly with a different exception, this method throws <code>TestFailedException</code>.
    *
-   * <p>
    * Note that the type specified as this method's type parameter may represent any subtype of
    * <code>AnyRef</code>, not just <code>Throwable</code> or one of its subclasses. In
    * Scala, exceptions can be caught based on traits they implement, so it may at times make sense
    * to specify a trait that the intercepted exception's class must mix in. If a class instance is
    * passed for a type that could not possibly be used to catch an exception (such as <code>String</code>,
    * for example), this method will complete abruptly with a <code>TestFailedException</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Also note that the difference between this method and <code>assertThrows</code> is that this method
    * returns the expected exception, so it lets you perform further assertions on
    * that exception. By contrast, the <code>assertThrows</code> method returns <code>Succeeded</code>, which means it can
@@ -733,7 +682,7 @@ trait Assertions extends TripleEquals  {
    * of the code that nothing further is expected about the thrown exception other than its type.
    * The recommended usage is to use <code>assertThrows</code> by default, <code>intercept</code> only when you
    * need to inspect the caught exception further.
-   * </p>
+   * 
    *
    * @param f the function value that should throw the expected exception
    * @param classTag an implicit <code>ClassTag</code> representing the type of the specified
@@ -774,16 +723,14 @@ trait Assertions extends TripleEquals  {
    * this method returns <code>Succeeded</code>. Else, whether the passed function returns normally
    * or completes abruptly with a different exception, this method throws <code>TestFailedException</code>.
    *
-   * <p>
    * Note that the type specified as this method's type parameter may represent any subtype of
    * <code>AnyRef</code>, not just <code>Throwable</code> or one of its subclasses. In
    * Scala, exceptions can be caught based on traits they implement, so it may at times make sense
    * to specify a trait that the intercepted exception's class must mix in. If a class instance is
    * passed for a type that could not possibly be used to catch an exception (such as <code>String</code>,
    * for example), this method will complete abruptly with a <code>TestFailedException</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Also note that the difference between this method and <code>intercept</code> is that this method
    * does not return the expected exception, so it does not let you perform further assertions on
    * that exception. Instead, this method returns <code>Succeeded</code>, which means it can
@@ -791,7 +738,7 @@ trait Assertions extends TripleEquals  {
    * of the code that nothing further is expected about the thrown exception other than its type.
    * The recommended usage is to use <code>assertThrows</code> by default, <code>intercept</code> only when you
    * need to inspect the caught exception further.
-   * </p>
+   * 
    *
    * @param f the function value that should throw the expected exception
    * @param classTag an implicit <code>ClassTag</code> representing the type of the specified
@@ -829,11 +776,10 @@ trait Assertions extends TripleEquals  {
    * Trap and return any thrown exception that would normally cause a ScalaTest test to fail, or create and return a new <code>RuntimeException</code>
    * indicating no exception is thrown.
    *
-   * <p>
    * This method is intended to be used in the Scala interpreter to eliminate large stack traces when trying out ScalaTest assertions and
    * matcher expressions. It is not intended to be used in regular test code. If you want to ensure that a bit of code throws an expected
    * exception, use <code>intercept</code>, not <code>trap</code>. Here's an example interpreter session without <code>trap</code>:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; import org.scalatest._
@@ -881,41 +827,37 @@ trait Assertions extends TripleEquals  {
    *    at scala.tools.nsc.MainGenericRunner.main(MainGenericRunner.scala)
    * </pre>
    * 
-   * <p>
    * That's a pretty tall stack trace. Here's what it looks like when you use <code>trap</code>:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; trap { x shouldEqual 13 }
    * res1: Throwable = org.scalatest.exceptions.TestFailedException: 12 did not equal 13
    * </pre>
    *
-   * <p>
    * Much less clutter. Bear in mind, however, that if <em>no</em> exception is thrown by the
    * passed block of code, the <code>trap</code> method will create a new <a href="Assertions$$NormalResult.html"><code>NormalResult</code></a>
    * (a subclass of <code>Throwable</code> made for this purpose only) and return that. If the result was the <code>Unit</code> value, it
    * will simply say that no exception was thrown:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; trap { x shouldEqual 12 }
    * res2: Throwable = No exception was thrown.
    * </pre>
    *
-   * <p>
    * If the passed block of code results in a value other than <code>Unit</code>, the <code>NormalResult</code>'s <code>toString</code> will print the value:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; trap { "Dude!" }
    * res3: Throwable = No exception was thrown. Instead, result was: "Dude!"
    * </pre>
    *
-   * <p>
    * Although you can access the result value from the <code>NormalResult</code>, its type is <code>Any</code> and therefore not
    * very convenient to use. It is not intended that <code>trap</code> be used in test code. The sole intended use case for <code>trap</code> is decluttering
    * Scala interpreter sessions by eliminating stack traces when executing assertion and matcher expressions.
-   * </p>
+   * 
    */
   @deprecated("The trap method is no longer needed for demos in the REPL, which now abreviates stack traces, and will be removed in a future version of ScalaTest")
   def trap[T](f: => T): Throwable = {
@@ -1125,10 +1067,9 @@ trait Assertions extends TripleEquals  {
    * between it and the existing detail message (unless the detail message is
    * not defined).
    *
-   * <p>
    * This method allows you to add more information about what went wrong that will be
    * reported when a test fails. Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * withClue("(Employee's name was: " + employee.name + ")") {
@@ -1138,9 +1079,8 @@ trait Assertions extends TripleEquals  {
    * }
    * </pre>
    *
-   * <p>
    * If an invocation of <code>intercept</code> completed abruptly with an exception, the resulting message would be something like:
-   * </p>
+   * 
    *
    * <pre>
    * (Employee's name was Bob Jones) Expected IllegalArgumentException to be thrown, but no exception was thrown
@@ -1187,15 +1127,13 @@ trait Assertions extends TripleEquals  {
   /**
    * Throws <code>TestPendingException</code> to indicate a test is pending.
    *
-   * <p>
    * A <em>pending test</em> is one that has been given a name but is not yet implemented. The purpose of
    * pending tests is to facilitate a style of testing in which documentation of behavior is sketched
    * out before tests are written to verify that behavior (and often, the before the behavior of
    * the system being tested is itself implemented). Such sketches form a kind of specification of
    * what tests and functionality to implement later.
-   * </p>
+   * 
    *
-   * <p>
    * To support this style of testing, a test can be given a name that specifies one
    * bit of behavior required by the system being tested. The test can also include some code that
    * sends more information about the behavior to the reporter when the tests run. At the end of the test,
@@ -1205,25 +1143,23 @@ trait Assertions extends TripleEquals  {
    * the code of a pending test is executed just like any other test.) However, because the test completes abruptly
    * with <code>TestPendingException</code>, the test will be reported as pending, to indicate
    * the actual test, and possibly the functionality it is intended to test, has not yet been implemented.
-   * </p>
+   * 
    *
-   * <p>
    * Note: This method always completes abruptly with a <code>TestPendingException</code>. Thus it always has a side
    * effect. Methods with side effects are usually invoked with parentheses, as in <code>pending()</code>. This
    * method is defined as a parameterless method, in flagrant contradiction to recommended Scala style, because it 
    * forms a kind of DSL for pending tests. It enables tests in suites such as <code>FunSuite</code> or <code>FunSpec</code>
    * to be denoted by placing "<code>(pending)</code>" after the test name, as in:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * test("that style rules are not laws") (pending)
    * </pre>
    *
-   * <p>
    * Readers of the code see "pending" in parentheses, which looks like a little note attached to the test name to indicate
    * it is pending. Whereas "<code>(pending())</code> looks more like a method call, "<code>(pending)</code>" lets readers
    * stay at a higher level, forgetting how it is implemented and just focusing on the intent of the programmer who wrote the code.
-   * </p>
+   * 
    */
   def pending: Assertion with PendingStatement = { throw new TestPendingException }
 
@@ -1231,16 +1167,14 @@ trait Assertions extends TripleEquals  {
    * Execute the passed block of code, and if it completes abruptly, throw <code>TestPendingException</code>, else
    * throw <code>TestFailedException</code>.
    *
-   * <p>
    * This method can be used to temporarily change a failing test into a pending test in such a way that it will
    * automatically turn back into a failing test once the problem originally causing the test to fail has been fixed.
    * At that point, you need only remove the <code>pendingUntilFixed</code> call. In other words, a
    * <code>pendingUntilFixed</code> surrounding a block of code that isn't broken is treated as a test failure.
    * The motivation for this behavior is to encourage people to remove <code>pendingUntilFixed</code> calls when
    * there are no longer needed.
-   * </p>
+   * 
    *
-   * <p>
    * This method facilitates a style of testing in which tests are written before the code they test. Sometimes you may
    * encounter a test failure that requires more functionality than you want to tackle without writing more tests. In this
    * case you can mark the bit of test code causing the failure with <code>pendingUntilFixed</code>. You can then write more
@@ -1249,7 +1183,7 @@ trait Assertions extends TripleEquals  {
    * problem has been fixed). This will in turn cause <code>pendingUntilFixed</code> to throw <code>TestFailedException</code>
    * with a detail message explaining you need to go back and remove the <code>pendingUntilFixed</code> call as the problem orginally
    * causing your test code to fail has been fixed.
-   * </p>
+   * 
    *
    * @param f a block of code, which if it completes abruptly, should trigger a <code>TestPendingException</code> 
    * @throws TestPendingException if the passed block of code completes abruptly with an <code>Exception</code> or <code>AssertionError</code>
@@ -1273,14 +1207,13 @@ trait Assertions extends TripleEquals  {
   /**
    * The <code>Succeeded</code> singleton.
    *
-   * <p>
    * You can use <code>succeed</code> to solve a type error when an async test 
    * does not end in either <code>Future[Assertion]</code> or <code>Assertion</code>.
    * Because <code>Assertion</code> is a type alias for <code>Succeeded.type</code>,
    * putting <code>succeed</code> at the end of a test body (or at the end of a
    * function being used to map the final future of a test body) will solve
    * the type error.
-   * </p>
+   * 
    */
   final val succeed: Assertion = Succeeded
 }

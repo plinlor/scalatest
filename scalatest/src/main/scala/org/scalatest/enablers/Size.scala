@@ -18,13 +18,12 @@ package org.scalatest.enablers
 /**
  * Supertrait for <code>Size</code> typeclasses.
  *
- * <p>
  * Trait <code>Size</code> is a typeclass trait for objects that can be queried for size.
  * Objects of type T for which an implicit <code>Size[T]</code> is available can be used
  * with the <code>should have size</code> syntax.
  * In other words, this trait enables you to use the size checking
  * syntax with arbitrary objects. As an example, the following <code>Bridge</code> class:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
@@ -40,10 +39,9 @@ package org.scalatest.enablers
  * defined class Bridge
  * </pre>
  *
- * <p>
  * Out of the box you can't use the <code>should have size</code> syntax with <code>Bridge</code>,
  * because ScalaTest doesn't know that a bridge's span means its size:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val bridge = new Bridge(2000)
@@ -56,9 +54,8 @@ package org.scalatest.enablers
  *                          ^
  * </pre>
  *
- * <p>
  * You can teach this to ScalaTest, however, by defining an implicit <code>Size[Bridge]</code>.
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; implicit val sizeOfBridge: Size[Bridge] =
@@ -68,10 +65,9 @@ package org.scalatest.enablers
  * sizeOfBridge: org.scalatest.enablers.Size[Bridge] = $anon$1@3fa27a4a
  * </pre>
  *
- * <p>
  * With the implicit <code>Size[Bridge]</code> in scope, you can now use ScalaTest's <code>should have size</code>
  * syntax with <code>Bridge</code> instances:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; bridge should have size 2000

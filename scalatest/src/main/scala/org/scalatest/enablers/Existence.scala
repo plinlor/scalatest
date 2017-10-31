@@ -18,17 +18,15 @@ package org.scalatest.enablers
 /**
  * Supertrait for typeclasses that enable the <code>exist</code> matcher syntax.
  *
- * <p>
  * An <code>Existence[S]</code> provides access to the "existence nature" of type <code>S</code> in such
  * a way that <code>exist</code> matcher syntax can be used with type <code>S</code>. A <code>S</code>
  * can be any type for which the concept of existence makes sense, such as <code>java.io.File</code>. ScalaTest provides
  * implicit implementations for <code>java.io.File</code>. You can enable the <code>exist</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Existence[U]</code> for the type and making it available implicitly.
  * 
- * <p>
  * ScalaTest provides an implicit <code>Existence</code> instance for <code>java.io.File</code>
  * in the <code>Existence</code> companion object.
- * </p>
+ * 
  */
 trait Existence[-S] {
 

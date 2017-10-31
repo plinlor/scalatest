@@ -29,7 +29,6 @@ import org.scalatest.events.Ordinal
  * Class that tracks the progress of a series of <code>Ordinal</code>s produced by invoking
  * <code>next</code> and <code>nextNewOldPair</code> on the current <code>Ordinal</code>.
  *
- * <p>
  * Instances of this class are thread safe. Multiple threads can invoke <code>nextOrdinal</code>
  * and <code>nextTracker</code> concurrently. This facilitates multi-threaded tests that send
  * <code>infoProvided</code> reports concurrently. When using a <code>Dispatcher</code> to execute
@@ -37,7 +36,7 @@ import org.scalatest.events.Ordinal
  * thread. For example, if the optional <code>Dispatcher</code>  passed to <code>Suite</code>'s implementation
  * of <a href="Suite.html#lifecycle-methods"<code>runNestedSuites</code></a> is defined, that method will obtain a new <code>Tracker</code> by invoking
  * <code>nextTracker</code> for each nested suite it passes to the <code>Dispatcher</code>.
- * </p>
+ * 
  *
  * @param firstOrdinal the first <code>Ordinal</code> in the series of <code>Ordinal</code>s
  *        tracked by this <code>Tracker</code>, which will be used to initialize this <code>Tracker</code>'s
@@ -52,12 +51,11 @@ final class Tracker(firstOrdinal: Ordinal = new Ordinal(0)) {
   /**
    * Returns the next <code>Ordinal</code> in the series tracked by this <code>Tracker</code>.
    *
-   * <p>
    * This method saves the current <code>Ordinal</code> in a local variable, reassigns the current <code>Ordinal</code>
    * with the value returned by invoking <code>nextOrdinal</code> on the saved <code>Ordinal</code>, then
    * returns the saved <code>Ordinal</code>. As a result, if this method is invoked immediately after construction,
    * this method will return the <code>Ordinal</code> passed as <code>firstOrdinal</code>.
-   * </p>
+   * 
    *
    * @return the next <code>Ordinal</code> in the series
    */
@@ -74,14 +72,13 @@ final class Tracker(firstOrdinal: Ordinal = new Ordinal(0)) {
    * <code>nextNewOldPair</code> on the current <code>Ordinal</code>, and reassigns the current <code>Ordinal</code>
    * with the second element that was returned by the <code>nextNewOldPair</code> invocation.
    *
-   * <p>
    * The <code>Ordinal</code> series of the returned <code>Tracker</code> will be placed after all the
    * <code>Ordinal</code>s previously returned by invoking <code>nextOrdinal</code> on this <code>Tracker</code> and
    * before all the <code>Ordinal</code>s subsequently returned by invoking <code>nextOrdinal</code> on
    * this <code>Tracker</code> in the future. This method is intended to be used when executing nested suites
    * in parallel. Each nested suite passed to the <code>Distributor</code> will get its own <code>Tracker</code>
    * obtained by invoking <code>nextTracker</code> on the current thread's <code>Tracker</code>.
-   * </p>
+   * 
    *
    * @return the next <code>Tracker</code> in this series
    */

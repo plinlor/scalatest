@@ -69,12 +69,11 @@ final class HaveWord {
    *                  ^
    * </pre>
    *
-   * <p>
    * Currently, this method will produce a <code>Matcher[AnyRef]</code>, and if the
    * <code>AnyRef</code> passed to that matcher's <code>apply</code> method does not have the appropriate <code>size</code> property
    * structure, all will compile but a <code>TestFailedException</code> will result at runtime explaining the problem.
    * In a future ScalaTest release, this may be tightened so that all is statically checked at compile time.
-   * </p>
+   * 
    */
   def size(expectedSize: Long): MatcherFactory1[Any, Size] =
     new MatcherFactory1[Any, Size] {

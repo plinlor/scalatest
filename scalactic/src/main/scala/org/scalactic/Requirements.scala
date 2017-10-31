@@ -39,9 +39,8 @@ import reflect.macros.Context
  * 	...
  * </pre>
  * 
- * <p>
  * People write simply:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; require(idx &gt;= 0 &amp;&amp; idx &lt;= length)
@@ -50,12 +49,11 @@ import reflect.macros.Context
  * 	...
  * </pre>
  * 
- * <p>
  * Note that the detail message of the <code>IllegalArgumentException</code> thrown by the previous line of code is simply, <code>"requirement failed"</code>.
  * Such messages often end up in a log file or bug report, where a better error message can save time in debugging the problem.
  * By importing the members of <code>Requirements</code> (or mixing in its companion trait), you'll get a more helpful error message
  * extracted by a macro, whether or not a clue message is provided:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -75,10 +73,9 @@ import reflect.macros.Context
  * 	...
  * </pre>
  * 
- * <p>
  * The <code>requireState</code> method provides identical error messages to <code>require</code>, but throws
  * <code>IllegalStateException</code> instead of <code>IllegalArgumentException</code>:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; val connectionOpen = false
@@ -90,17 +87,15 @@ import reflect.macros.Context
  * 	...
  * </pre>
  * 
- * <p>
  * Thus, whereas the <code>require</code> methods throw the Java platform's standard exception indicating a passed argument
  * violated a precondition, <code>IllegalArgumentException</code>, the <code>requireState</code> methods throw the standard
  * exception indicating an object's method was invoked when the object was in an inappropriate state for that method,
  * <code>IllegalStateException</code>.
- * </p>
  * 
- * <p>
+ * 
  * The <code>requireNonNull</code> method takes one or more variables as arguments and throws <code>NullArgumentException</code>
  * with an error messages that includes the variable names if any are <code>null</code>. Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; val e: String = null
@@ -115,12 +110,11 @@ import reflect.macros.Context
  * 	...
  * </pre>
  * 
- * <p>
  * Although trait <code>Requirements</code> can help you debug problems that occur in production, bear in mind that a much
  * better alternative is to make it impossible for such events to occur at all. Use the type system to ensure that all
  * pre-conditions are met so that the compiler can find broken pre-conditions and point them out with compiler error messages.
  * When this is not possible or practical, however, trait <code>Requirements</code> is helpful.
- * </p>
+ * 
  */
 trait Requirements {
 
@@ -131,15 +125,13 @@ trait Requirements {
   /**
    * Require that a boolean condition is true about an argument passed to a method, function, or constructor.
    *
-   * <p>
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>IllegalArgumentException</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate an error message.
    * See the main documentation for this trait for examples.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to check as requirement
    * @throws IllegalArgumentException if the condition is <code>false</code>.
@@ -166,14 +158,12 @@ trait Requirements {
   /**
    * Require that a boolean condition is true about the state of an object on which a method has been invoked.
    *
-   * <p>
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>IllegalStateException</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate an error message.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to check as requirement
    * @throws IllegalStateException if the condition is <code>false</code>.
@@ -184,13 +174,12 @@ trait Requirements {
    * Require that a boolean condition about the state of an object on which a method has been
    * invoked, and described in the given <code>clue</code>, is true.
    *
-   * <p>
    * If the condition is <code>true</code>, this method returns normally.
    * Else, it throws <code>IllegalStateException</code> with the
    * <code>String</code> obtained by invoking <code>toString</code> on the
    * specified <code>clue</code> appended to the macro-generated error message
    * as the exception's detail message.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to check as a requirement
    * @param clue an object whose <code>toString</code> method returns a message to include in a failure report.
@@ -202,11 +191,10 @@ trait Requirements {
   /**
    * Require that all passed arguments are non-null.
    *
-   * <p>
    * If none of the passed arguments are <code>null</code>, this method returns normally.
    * Else, it throws <code>NullArgumentException</code> with an error message that includes the name
    * (as it appeared in the source) of each argument that was <code>null</code>.
-   * </p>
+   * 
    *
    * @param arguments arguments to check for <code>null</code> value
    * @throws NullArgumentException if any of the arguments are <code>null</code>.

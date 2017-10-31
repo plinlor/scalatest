@@ -24,7 +24,6 @@ import scala.collection.GenTraversable
 /**
  * Supertrait for typeclasses that enable <code>contain value</code> matcher syntax.
  *
- * <p>
  * A <code>ValueMapping[M]</code> provides access to the "value mapping nature" of type <code>M</code> in such
  * a way that <code>contain</code> <code>value</code> matcher syntax can be used with type <code>M</code>. An <code>M</code>
  * can be any type for which <code>contain</code> <code>value</code> syntax makes sense. ScalaTest provides implicit implementations
@@ -32,10 +31,9 @@ import scala.collection.GenTraversable
  * matcher syntax on your own type <code>U</code> by defining a <code>ValueMapping[U]</code> for the type and making it
  * available implicitly.
  *
- * <p>
  * ScalaTest provides implicit <code>ValueMapping</code> instances for <code>scala.collection.GenMap</code>,
  * and <code>java.util.Map</code> in the <a href="ValueMapping$.html"><code>ValueMapping</code> companion object</a>.
- * </p>
+ * 
  */
 trait ValueMapping[-M] {
 

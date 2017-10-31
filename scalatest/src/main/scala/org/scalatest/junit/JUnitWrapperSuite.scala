@@ -29,13 +29,11 @@ import org.junit.runner.notification.RunListener
 import org.scalatest.Suite
 
 /**
- * <p>
  * A wrapper to allow JUnit tests to be run by the ScalaTest runner.
- * </p>
+ * 
  *
- * <p>
  * Instances of this trait are not thread safe.
- * </p>
+ * 
  *
  * @param junitClassName Fully qualified name of the JUnit suite
  * @param loader Class loader to load the JUnit suite
@@ -144,12 +142,11 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
    * class, given this class's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
    * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param args the <code>Args</code> for this run
    *
@@ -165,12 +162,11 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
    * class, given this class's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTests</code>. Because this
    * trait does not actually use <code>runTests</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -187,12 +183,11 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
    * class, given this class's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTest</code>. Because this
    * trait does not actually use <code>runTest</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run

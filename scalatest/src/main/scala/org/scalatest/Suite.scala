@@ -296,31 +296,28 @@ import tools.SuiteDiscoveryHelper
  * A suite of tests. A <code>Suite</code> instance encapsulates a conceptual
  * suite (<em>i.e.</em>, a collection) of tests.
  *
- * <p>
  * This trait provides an interface composed of "lifecycle methods" that allow suites of tests to be run.
  * Its implementation enables a default way of writing and executing tests.  Subtraits and subclasses can
  * override <code>Suite</code>'s lifecycle methods to enable other ways of writing and executing tests.
- * </p>
+ * 
  *
  * <h2>Nested suites</h2>
  *
- * <p>
  * A <code>Suite</code> can refer to a collection of other <code>Suite</code>s,
  * which are called <em>nested</em> <code>Suite</code>s. Those nested  <code>Suite</code>s can in turn have
  * their own nested  <code>Suite</code>s, and so on. Large test suites can be organized, therefore, as a tree of
  * nested <code>Suite</code>s.
  * This trait's <code>run</code> method, in addition to invoking its
  * test methods, invokes <code>run</code> on each of its nested <code>Suite</code>s.
- * </p>
+ * 
  *
- * <p>
  * A <code>List</code> of a <code>Suite</code>'s nested <code>Suite</code>s can be obtained by invoking its
  * <code>nestedSuites</code> method. If you wish to create a <code>Suite</code> that serves as a
  * container for nested <code>Suite</code>s, whether or not it has test methods of its own, simply override <code>nestedSuites</code>
  * to return a <code>List</code> of the nested <code>Suite</code>s. Because this is a common use case, ScalaTest provides
  * a convenience <code>Suites</code> class, which takes a variable number of nested <code>Suite</code>s as constructor
  * parameters. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.suite.nested
@@ -359,19 +356,17 @@ import tools.SuiteDiscoveryHelper
  * )
  * </pre>
  *
- * <p>
  * If you now run <code>ASCIISuite</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new ASCIISuite)
  * </pre>
  *
- * <p>
  * You will see reports printed to the standard output that indicate the nested
  * suites&#8212;<code>ASuite</code>, <code>BSuite</code>, and
  * <code>CSuite</code>&#8212;were run:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * <span class="stGreen">ASCIISuite:
@@ -386,24 +381,21 @@ import tools.SuiteDiscoveryHelper
  * - c should have ASCII value 63 hex</span>
  * </pre>
  *
- * <p>
  * Note that <code>Runner</code> can discover <code>Suite</code>s automatically, so you need not
  * necessarily define nested <code>Suites</code> explicitly. See the <a href="tools/Runner$.html#membersOnlyWildcard">documentation
  * for <code>Runner</code></a> for more information.
- * </p>
+ * 
  *
  * <a name="configMapSection"></a><h2>The config map</h2>
  *
- * <p>
  * In some cases you may need to pass information to a suite of tests.
  * For example, perhaps a suite of tests needs to grab information from a file, and you want
  * to be able to specify a different filename during different runs.  You can accomplish this in ScalaTest by passing
  * the filename in a <em>config map</em> of key-value pairs, which is passed to <code>run</code> as a <a href="ConfigMap.html"><code>ConfigMap</code></a>.
  * The values in the config map are called "config objects," because they can be used to <em>configure</em>
  * suites, reporters, and tests.
- * </p>
+ * 
  *
- * <p>
  * You can specify a string config object is via the ScalaTest <code>Runner</code>, either via the command line
  * or ScalaTest's ant task.
  * (See the <a href="tools/Runner$.html#configMapSection">documentation for Runner</a> for information on how to specify 
@@ -414,11 +406,10 @@ import tools.SuiteDiscoveryHelper
  * <code>withFixture</code> in the traits in the <code>org.scalatest.fixture</code> package. (See the
  * <a href="fixture/Suite.html">documentation for <code>fixture.Suite</code></a>
  * for instructions on how to access the config map in tests.)
- * </p>
+ * 
  *
  * <h2>Executing suites in parallel</h2>
  *
- * <p>
  * The <code>run</code> method takes as one of its parameters an optional <a href="Distributor.html"><code>Distributor</code></a>. If 
  * a <code>Distributor</code> is passed in, this trait's implementation of <code>run</code> puts its nested
  * <code>Suite</code>s into the distributor rather than executing them directly. The caller of <code>run</code>
@@ -426,14 +417,13 @@ import tools.SuiteDiscoveryHelper
  * distributor. The <code>-P</code> command line parameter to <code>Runner</code>, for example, will cause
  * <code>Suite</code>s put into the <code>Distributor</code> to be run in parallel via a pool of threads.
  * If you wish to execute the tests themselves in parallel, mix in <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a>.
- * </p>
+ * 
  *
  * <a name="errorHandling"></a>
  * <h2>"Run-aborting" exceptions</h2>
  *
- * <p>
  * The Javadoc documentation for <code>java.lang.Error</code> states:
- * </p>
+ * 
  *
  * <blockquote>
  * An <code>Error</code> is a subclass of <code>Throwable</code> that indicates serious problems that a reasonable application
@@ -441,14 +431,13 @@ import tools.SuiteDiscoveryHelper
  * such errors are abnormal conditions.
  * </blockquote>
  *
- * <p>
  * Because <code>Error</code>s are used to denote serious errors, trait <code>Suite</code> and its subtypes in the ScalaTest API
  * do not always treat a test that completes abruptly with an <code>Error</code> as a test failure, but sometimes as an indication
  * that serious problems have arisen that should cause the run to abort. For example, if a test completes abruptly with an
  * <code>OutOfMemoryError</code>, it will not be reported as a test failure, but will instead cause the run to abort. Because not
  * everyone uses <code>Error</code>s only to represent serious
  * problems, however, ScalaTest only behaves this way for the following <em>run-aborting</em> exception types (and their subclasses):
- * </p>
+ * 
  *
  * <ul>
  * <li><code>java.lang.annotation.AnnotationFormatError</code></li>
@@ -461,27 +450,24 @@ import tools.SuiteDiscoveryHelper
  * <li><code>java.lang.VirtualMachineError</code></li>
  * </ul>
  *
- * <p>
  * The previous list includes all <code>Error</code>s that exist as part of Java 1.5 API, excluding <code>java.lang.AssertionError</code>.
  * ScalaTest does treat a thrown <code>AssertionError</code> as an indication of a test failure. In addition, any other
  * <code>Error</code> that is not an instance of a type mentioned in the previous list will be caught by the <code>Suite</code> traits
  * in the ScalaTest API and reported as the cause of a test failure. 
- * </p>
+ * 
  *
- * <p>
  * Although trait <code>Suite</code> and all its subtypes in the ScalaTest API consistently behave this way with regard to <code>Error</code>s,
  * this behavior is not required by the contract of <code>Suite</code>. Subclasses and subtraits that you define, for example, may treat all
  * <code>Error</code>s as test failures, or indicate errors in some other way that has nothing to do with exceptions.
- * </p>
+ * 
  *
  * <a name="lifecyle-methods"></a>
  * <h2>Extensibility</h2>
  *
- * <p>
  * Trait <code>Suite</code> provides default implementations of its methods that should
  * be sufficient for most applications, but many methods can be overridden when desired. Here's
  * a summary of the methods that are intended to be overridden:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>run</code> - override this method to define custom ways to run suites of
@@ -496,38 +482,34 @@ import tools.SuiteDiscoveryHelper
  * <li><code>expectedTestCount</code> - override this method to count this <code>Suite</code>'s expected tests in a custom way.</li>
  * </ul>
  *
- * <p>
  * For example, this trait's implementation of <code>testNames</code> performs reflection to discover methods starting with <code>test</code>,
  * and places these in a <code>Set</code> whose iterator returns the names in alphabetical order. If you wish to run tests in a different
  * order in a particular <code>Suite</code>, perhaps because a test named <code>testAlpha</code> can only succeed after a test named
  * <code>testBeta</code> has run, you can override <code>testNames</code> so that it returns a <code>Set</code> whose iterator returns
  * <code>testBeta</code> <em>before</em> <code>testAlpha</code>. (This trait's implementation of <code>run</code> will invoke tests
  * in the order they come out of the <code>testNames</code> <code>Set</code> iterator.)
- * </p>
+ * 
  *
- * <p>
  * Alternatively, you may not like starting your test methods with <code>test</code>, and prefer using <code>@Test</code> annotations in
  * the style of Java's JUnit 4 or TestNG. If so, you can override <code>testNames</code> to discover tests using either of these two APIs
  * <code>@Test</code> annotations, or one of your own invention. (This is in fact
  * how <code>org.scalatest.junit.JUnitSuite</code> and <code>org.scalatest.testng.TestNGSuite</code> work.)
- * </p>
+ * 
  *
- * <p>
  * Moreover, <em>test</em> in ScalaTest does not necessarily mean <em>test method</em>. A test can be anything that can be given a name,
  * that starts and either succeeds or fails, and can be ignored. In <code>org.scalatest.FunSuite</code>, for example, tests are represented
  * as function values. This
  * approach might look foreign to JUnit users, but may feel more natural to programmers with a functional programming background.
  * To facilitate this style of writing tests, <code>FunSuite</code> overrides <code>testNames</code>, <code>runTest</code>, and <code>run</code> such that you can 
  * define tests as function values.
- * </p>
+ * 
  *
- * <p>
  * You can also model existing JUnit 3, JUnit 4, or TestNG tests as suites of tests, thereby incorporating tests written in Java into a ScalaTest suite.
  * The "wrapper" classes in packages <code>org.scalatest.junit</code> and <code>org.scalatest.testng</code> exist to make this easy.
  * No matter what legacy tests you may have, it is likely you can create or use an existing <code>Suite</code> subclass that allows you to model those tests
  * as ScalaTest suites and tests and incorporate them into a ScalaTest suite. You can then write new tests in Scala and continue supporting
  * older tests in Java.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -545,133 +527,115 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * Executes one or more tests in this <code>Suite</code>, printing results to the standard output.
    *
-   * <p>
    * This method invokes <code>run</code> on itself, passing in values that can be configured via the parameters to this
    * method, all of which have default values. This behavior is convenient when working with ScalaTest in the Scala interpreter.
    * Here's a summary of this method's parameters and how you can use them:
-   * </p>
+   * 
    *
-   * <p>
    * <strong>The <code>testName</code> parameter</strong>
-   * </p>
+   * 
    *
-   * <p>
    * If you leave <code>testName</code> at its default value (of <code>null</code>), this method will pass <code>None</code> to
    * the <code>testName</code> parameter of <code>run</code>, and as a result all the tests in this suite will be executed. If you
    * specify a <code>testName</code>, this method will pass <code>Some(testName)</code> to <code>run</code>, and only that test
    * will be run. Thus to run all tests in a suite from the Scala interpreter, you can write:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute()
    * </pre>
    *
-   * <p>
    * (The above syntax actually invokes the overloaded parameterless form of <code>execute</code>, which calls this form with its default parameter values.)
    * To run just the test named <code>"my favorite test"</code> in a suite from the Scala interpreter, you would write:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute("my favorite test")
    * </pre>
    *
-   * <p>
    * Or:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(testName = "my favorite test")
    * </pre>
    *
-   * <p>
    * <strong>The <code>configMap</code> parameter</strong>
-   * </p>
+   * 
    *
-   * <p>
    * If you provide a value for the <code>configMap</code> parameter, this method will pass it to <code>run</code>. If not, the default value
    * of an empty <code>Map</code> will be passed. For more information on how to use a config map to configure your test suites, see
    * the <a href="#configMapSection">config map section</a> in the main documentation for this trait. Here's an example in which you configure
    * a run with the name of an input file:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(configMap = Map("inputFileName" -&gt; "in.txt")
    * </pre>
    *
-   * <p>
    * <strong>The <code>color</code> parameter</strong>
-   * </p>
+   * 
    *
-   * <p>
    * If you leave the <code>color</code> parameter unspecified, this method will configure the reporter it passes to <code>run</code> to print
    * to the standard output in color (via ansi escape characters). If you don't want color output, specify false for <code>color</code>, like this:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(color = false)
    * </pre>
    *
-   * <p>
    * <strong>The <code>durations</code> parameter</strong>
-   * </p>
+   * 
    *
-   * <p>
    * If you leave the <code>durations</code> parameter unspecified, this method will configure the reporter it passes to <code>run</code> to
    * <em>not</em> print durations for tests and suites to the standard output. If you want durations printed, specify true for <code>durations</code>,
    * like this:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(durations = true)
    * </pre>
    *
-   * <p>
    * <strong>The <code>shortstacks</code> and <code>fullstacks</code> parameters</strong>
-   * </p>
+   * 
    *
-   * <p>
    * If you leave both the <code>shortstacks</code> and <code>fullstacks</code> parameters unspecified, this method will configure the reporter
    * it passes to <code>run</code> to <em>not</em> print stack traces for failed tests if it has a stack depth that identifies the offending
    * line of test code. If you prefer a short stack trace (10 to 15 stack frames) to be printed with any test failure, specify true for
    * <code>shortstacks</code>:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(shortstacks = true)
    * </pre>
    *
-   * <p>
    * For full stack traces, set <code>fullstacks</code> to true:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(fullstacks = true)
    * </pre>
    *
-   * <p>
    * If you specify true for both <code>shortstacks</code> and <code>fullstacks</code>, you'll get full stack traces.
-   * </p>
+   * 
    *
-   * <p>
    * <strong>The <code>stats</code> parameter</strong>
-   * </p>
+   * 
    *
-   * <p>
    * If you leave the <code>stats</code> parameter unspecified, this method will <em>not</em> fire <code>RunStarting</code> and either <code>RunCompleted</code>
    * or <code>RunAborted</code> events to the reporter it passes to <code>run</code>.
    * If you specify true for <code>stats</code>, this method will fire the run events to the reporter, and the reporter will print the
    * expected test count before the run, and various statistics after, including the number of suites completed and number of tests that
    * succeeded, failed, were ignored or marked pending. Here's how you get the stats:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; (new ExampleSuite).execute(stats = true)
    * </pre>
    *
    *
-   * <p>
    * To summarize, this method will pass to <code>run</code>:
-   * </p>
+   * 
    * <ul>
    * <li><code>testName</code> - <code>None</code> if this method's <code>testName</code> parameter is left at its default value of <code>null</code>, else <code>Some(testName)</code>.
    * <li><code>reporter</code> - a reporter that prints to the standard output</li>
@@ -683,15 +647,13 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * <li><code>tracker</code> - a new <code>Tracker</code></li>
    * </ul>
    *
-   * <p>
    * Note:  In ScalaTest, the terms "execute" and "run" basically mean the same thing and
    * can be used interchangably. The reason this method isn't named <code>run</code> is that it takes advantage of
    * default arguments, and you can't mix overloaded methods and default arguments in Scala. (If named <code>run</code>,
    * this method would have the same name but different arguments than the main <a href="#run"><code>run</code> method</a> that
    * takes seven arguments. Thus it would overload and couldn't be used with default argument values.)
-   * </p>
+   * 
    *
-   * <p>
    * Design note: This method has two "features" that may seem unidiomatic. First, the default value of <code>testName</code> is <code>null</code>.
    * Normally in Scala the type of <code>testName</code> would be <code>Option[String]</code> and the default value would
    * be <code>None</code>, as it is in this trait's <code>run</code> method. The <code>null</code> value is used here for two reasons. First, in
@@ -702,16 +664,15 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * from an interpeter environment, such as the Scala REPL (Read-Evaluate-Print-Loop). In an interpreter environment, minimizing keystrokes is king.
    * A <code>String</code> type with a <code>null</code> default value lets users type <code>suite.execute("my test name")</code> rather than
    * <code>suite.execute(Some("my test name"))</code>, saving several keystrokes.
-   * </p>
+   * 
    *
-   * <p>
    * The second non-idiomatic feature is that <code>shortstacks</code> and <code>fullstacks</code> are all lower case rather than
    * camel case. This is done to be consistent with the <a href="Shell.html"><code>Shell</code></a>, which also uses those forms. The reason 
    * lower case is used in the <code>Shell</code> is to save keystrokes in an interpreter environment.  Most Unix commands, for
    * example, are all lower case, making them easier and quicker to type.  In the ScalaTest
    * <code>Shell</code>, methods like <code>shortstacks</code>, <code>fullstacks</code>, and <code>nostats</code>, <em>etc.</em>, are 
    * designed to be all lower case so they feel more like shell commands than methods.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param configMap a <code>Map</code> of key-value pairs that can be used by the executing <code>Suite</code> of tests.
@@ -826,11 +787,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * <strong>The parameterless <code>execute</code> method has been deprecated and will be removed in a future version
    * of ScalaTest. Please invoke <code>execute</code> with empty parens instead: <code>execute()</code>.</strong>
    *
-   * <p>
    * The original purpose of this method, which simply invokes the other overloaded form of <code>execute</code> with default parameter values,
    * was to serve as a mini-DSL for the Scala interpreter. It allowed you to execute a <code>Suite</code> in the
    * interpreter with a minimum of finger typing:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; org.scalatest.run(new SetSpec)
@@ -839,10 +799,9 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * <span class="stYellow">- should produce NoSuchElementException when head is invoked !!! IGNORED !!!</span>
    * </pre>
    *
-   * <p>
    * However it uses postfix notation, which is now behind a language feature import. Thus better to use
    * the other <code>execute</code> method or <code>org.scalatest.run</code>:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * (new ExampleSuite).execute()
@@ -861,30 +820,26 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * does not appear as a key in the returned <code>Map</code>. If this <code>Suite</code> contains no tests with tags, this
    * method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation of this method uses Java reflection to discover any Java annotations attached to its test methods. The
    * fully qualified name of each unique annotation that extends <code>TagAnnotation</code> is considered a tag. This trait's
    * implementation of this method, therefore, places one key/value pair into to the
    * <code>Map</code> for each test for which a tag annotation is discovered through reflection.
-   * </p>
    * 
-   * <p>
+   * 
    * In addition to test methods annotations, this trait's implementation will also auto-tag test methods with class level annotations.  
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    *
-   * <p>
    * Subclasses may override this method to define and/or discover tags in a custom manner, but overriding method implementations
    * should never return an empty <code>Set</code> as a value. If a test has no tags, its name should not appear as a key in the
    * returned <code>Map</code>.
-   * </p>
+   * 
    */
   def tags: Map[String, Set[String]] = Map.empty
 
   /**
    * A <code>Set</code> of test names. If this <code>Suite</code> contains no tests, this method returns an empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method returns an empty <code>Set</code>.
    */
   def testNames: Set[String] = Set.empty
@@ -942,10 +897,9 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * Run a test.
    *
-   * <p>
    * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
    * and has no other effect.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run
@@ -960,11 +914,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * Run zero to many of this <code>Suite</code>'s tests.
    *
-   * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
    * If <code>testName</code> is defined, this trait's implementation of this method 
    * invokes <code>runTest</code> on this object, passing in:
-   * </p>
+   * 
    *
    * <ul>
    * <li><code>testName</code> - the <code>String</code> value of the <code>testName</code> <code>Option</code> passed
@@ -974,7 +927,6 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * <li><code>configMap</code> - the <code>configMap</code> <code>Map</code> passed to this method, or one that wraps and delegates to it</li>
    * </ul>
    *
-   * <p>
    * This method takes a <code>Filter</code>, which encapsulates an optional <code>Set</code> of tag names that should be included
    * (<code>tagsToInclude</code>) and a <code>Set</code> that should be excluded (<code>tagsToExclude</code>), when deciding which
    * of this <code>Suite</code>'s tests to run.
@@ -989,9 +941,8 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * Note that this means that even if a test is marked as ignored, for example a test method in a <code>Suite</code> annotated with
    * <code>org.scalatest.Ignore</code>, if that test name is passed as <code>testName</code> to <code>runTest</code>, it will be invoked
    * despite the <code>Ignore</code> annotation.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially run.
    * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
@@ -1000,7 +951,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
    * of this method checks whether the test should be run based on the <code>Filter</code>.
    * If so, this implementation invokes <code>runTest</code>, passing in:
-   * </p>
+   * 
    *
    * <ul>
    * <li><code>testName</code> - the <code>String</code> name of the test to run (which will be one of the names in the <code>testNames</code> <code>Set</code>)</li>
@@ -1009,11 +960,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * <li><code>configMap</code> - the <code>configMap</code> passed to this method, or one that wraps and delegates to it</li>
    * </ul>
    *
-   * <p>
    * If a test is marked with the <code>org.scalatest.Ignore</code> tag, implementations
    * of this method are responsible for ensuring a <code>TestIgnored</code> event is fired for that test
    * and that <code>runTest</code> is not called for that test.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -1079,22 +1029,20 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * Runs this suite of tests.
    *
    * <p>If <code>testName</code> is <code>None</code>, this trait's implementation of this method
-   * calls these two methods on this object in this order:</p>
+   * calls these two methods on this object in this order:
    *
    * <ol>
    * <li><code>runNestedSuites</code></li>
    * <li><code>runTests</code></li>
    * </ol>
    *
-   * <p>
    * If <code>testName</code> is defined, then this trait's implementation of this method
    * calls <code>runTests</code>, but does not call <code>runNestedSuites</code>. This behavior
    * is part of the contract of this method. Subclasses that override <code>run</code> must take
    * care not to call <code>runNestedSuites</code> if <code>testName</code> is defined. (The
    * <code>OneInstancePerTest</code> trait depends on this behavior, for example.)
-   * </p>
+   * 
    *
-   * <p>
    * Subclasses and subtraits that override this <code>run</code> method can implement them without
    * invoking either the <code>runTests</code> or <code>runNestedSuites</code> methods, which
    * are invoked by this trait's implementation of this method. It is recommended, but not required,
@@ -1115,7 +1063,7 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * the attempt to mix <code>BeforeAndAfterEach</code> into a subclass of your subtrait
    * a compiler error. (It would fail to compile with a complaint that <code>BeforeAndAfterEach</code>
    * is trying to override <code>runTests</code>, which is a final method in your trait.) 
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -1159,7 +1107,6 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    *
    * Run zero to many of this <code>Suite</code>'s nested <code>Suite</code>s.
    *
-   * <p>
    * If the passed <code>distributor</code> is <code>None</code>, this trait's
    * implementation of this method invokes <code>run</code> on each
    * nested <code>Suite</code> in the <code>List</code> obtained by invoking <code>nestedSuites</code>.
@@ -1173,13 +1120,12 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * <code>Suite</code>s appear in the <code>List</code> returned by <code>nestedSuites</code>, passing
    * in a new <code>Tracker</code> obtained by invoking <code>nextTracker</code> on the <code>Tracker</code>
    * passed to this method.
-   * </p>
+   * 
    *
-   * <p>
    * Implementations of this method are responsible for ensuring <code>SuiteStarting</code> events
    * are fired to the <code>Reporter</code> before executing any nested <code>Suite</code>, and either <code>SuiteCompleted</code>
    * or <code>SuiteAborted</code> after executing any nested <code>Suite</code>.
-   * </p>
+   * 
    *
    * @param args the <code>Args</code> for this run
    * @return a <code>Status</code> object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
@@ -1267,13 +1213,12 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * A user-friendly suite name for this <code>Suite</code>.
    *
-   * <p>
    * This trait's
    * implementation of this method returns the simple name of this object's class. This
    * trait's implementation of <code>runNestedSuites</code> calls this method to obtain a
    * name for <code>Report</code>s to pass to the <code>suiteStarting</code>, <code>suiteCompleted</code>,
    * and <code>suiteAborted</code> methods of the <code>Reporter</code>.
-   * </p>
+   * 
    *
    * @return this <code>Suite</code> object's suite name.
    */
@@ -1282,7 +1227,6 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * A string ID for this <code>Suite</code> that is intended to be unique among all suites reported during a run.
    *
-   * <p>
    * This trait's
    * implementation of this method returns the fully qualified name of this object's class. 
    * Each suite reported during a run will commonly be an instance of a different <code>Suite</code> class,
@@ -1293,13 +1237,12 @@ trait Suite extends Assertions with Serializable { thisSuite =>
    * in your <code>Suite</code> subclass, perhaps by appending the pathname of the file to the fully qualified class name. 
    * That way if you run a suite of tests based on a directory full of these files, you'll have unique suite IDs for
    * each reported suite.
-   * </p>
+   * 
    *
-   * <p>
    * The suite ID is <em>intended</em> to be unique, because ScalaTest does not enforce that it is unique. If it is not
    * unique, then you may not be able to uniquely identify a particular test of a particular suite. This ability is used,
    * for example, to dynamically tag tests as having failed in the previous run when rerunning only failed tests.
-   * </p>
+   * 
    *
    * @return this <code>Suite</code> object's ID.
    */
@@ -1308,9 +1251,8 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * The total number of tests that are expected to run when this <code>Suite</code>'s <code>run</code> method is invoked.
    *
-   * <p>
    * This trait's implementation of this method returns the sum of:
-   * </p>
+   * 
    *
    * <ul>
    * <li>the size of the <code>testNames</code> <code>List</code>, minus the number of tests marked as ignored and
@@ -1364,11 +1306,10 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * Provides a <code>TestData</code> instance for the passed test name, given the passed config map.
    *
-   * <p>
    * This method is used to obtain a <code>TestData</code> instance to pass to <code>withFixture(NoArgTest)</code>
    * and <code>withFixture(OneArgTest)</code> and the <code>beforeEach</code> and <code>afterEach</code> methods
    * of trait <code>BeforeAndAfterEach</code>.
-   * </p>
+   * 
    *
    * @param testName the name of the test for which to return a <code>TestData</code> instance
    * @param theConfigMap the config map to include in the returned <code>TestData</code>

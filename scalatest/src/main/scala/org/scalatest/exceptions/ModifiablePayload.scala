@@ -18,7 +18,6 @@ package org.scalatest.exceptions
 /**
  * Trait implemented by <a href="PayloadField.html"><code>PayloadField</code></a> exception types that can modify their payload.
  *
- * <p>
  * This trait facilitates the <code>withPayload</code> construct provided by trait
  * <a href="../Payloads.html"><code>Payloads</code></a>. This construct enables a payload object (or modified
  * payload object) to be included as the payload of a thrown exception. The payload
@@ -26,7 +25,7 @@ package org.scalatest.exceptions
  * example, the payload included in a <a href="TestFailedException.html"><code>TestFailedException</code></a> will be included
  * as the payload of the resulting <a href="../events/TestFailed.html"><code>TestFailed</code></a> event. Here's an example in
  * which a GUI snapshot is included as a payload when a test fails:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * withPayload(generateGUISnapshot()) {
@@ -34,12 +33,11 @@ package org.scalatest.exceptions
  * }
  * </pre>
  *
- * <p>
  * Exception types that mix in this trait have a <code>modifyPayload</code> method, which
  * returns an exception identical to itself, except with the payload option replaced with
  * the result of invoking the passed function, supplying the current payload option
  * as the lone <code>Option[Any]</code> parameter.
- * </p>
+ * 
  */
 trait ModifiablePayload[T <: Throwable] { this: Throwable with PayloadField =>
   
@@ -49,10 +47,9 @@ trait ModifiablePayload[T <: Throwable] { this: Throwable with PayloadField =>
    * the result of invoking the passed function, <code>fun</code>, supplying the current payload option
    * as the lone <code>Option[Any]</code> parameter.
    *
-   * <p>
    * Implementations of this method may either mutate this exception or return
    * a new instance with the revised detail message.
-   * </p>
+   * 
    *
    * @param fun A function that returns the new payload option given the old one
    */

@@ -24,30 +24,27 @@ import org.scalatest.exceptions.TestFailedException
  * to <code>Either</code>, which will return the selected value of the <code>Either</code> if defined,
  * or throw <code>TestFailedException</code> if not.
  *
- * <p>
  * This construct allows you to express in one statement that an <code>Either</code> should be <em>left</em> or <em>right</em>
  * and that its value should meet some expectation. Here's are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * either1.right.value should be &gt; 9
  * either2.left.value should be ("Muchas problemas")
  * </pre>
  *
- * <p>
  * Or, using assertions instead of matcher expressions:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(either1.right.value &gt; 9)
  * assert(either2.left.value === "Muchas problemas")
  * </pre>
  *
- * <p>
  * Were you to simply invoke <code>right.get</code> or <code>left.get</code> on the <code>Either</code>, 
  * if the <code>Either</code> wasn't defined as expected (<em>e.g.</em>, it was a <code>Left</code> when you expected a <code>Right</code>), it
  * would throw a <code>NoSuchElementException</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val either: Either[String, Int] = Left("Muchas problemas")
@@ -55,13 +52,12 @@ import org.scalatest.exceptions.TestFailedException
  * either.right.get should be &gt; 9 // either.right.get throws NoSuchElementException
  * </pre>
  *
- * <p>
  * The <code>NoSuchElementException</code> would cause the test to fail, but without providing a <a href="exceptions/StackDepth.html">stack depth</a> pointing
  * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> (and a
  * few other ScalaTest exceptions), makes it quicker for
  * users to navigate to the cause of the failure. Without <code>EitherValues</code>, to get
  * a stack depth exception you would need to make two statements, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val either: Either[String, Int] = Left("Muchas problemas")
@@ -70,9 +66,8 @@ import org.scalatest.exceptions.TestFailedException
  * either.right.get should be &gt; 9
  * </pre>
  *
- * <p>
  * The <code>EitherValues</code> trait allows you to state that more concisely:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val either: Either[String, Int] = Left("Muchas problemas")

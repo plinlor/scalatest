@@ -85,12 +85,11 @@ abstract class PropertyCheckFailedException(
   /**
    * A list of names for the arguments that caused the property check to fail.
    *
-   * <p>
    * If the <code>optionalArgNames</code> class parameter is defined, this method returns
    * the <code>List[String]</code> contained in the <code>Some</code>. Otherwise, it returns
    * a list that gives <code>"arg0"</code> for the zeroeth argument, <code>"arg1"</code> for the
    * first argument, <code>"arg2"</code> for the second argument, and so on.
-   * </p>
+   * 
    */
   def argNames: List[String] =
     optionalArgNames match {

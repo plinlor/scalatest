@@ -24,17 +24,15 @@ import scala.collection.GenTraversable
 /**
  * Supertrait for typeclasses that enable the <code>be</code> <code>writable</code> matcher syntax.
  *
- * <p>
  * A <code>Writability[T]</code> provides access to the "writable nature" of type <code>T</code> in such
  * a way that <code>be</code> <code>writable</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
  * can be any type for which the concept of being writable makes sense, such as <code>java.io.File</code>. ScalaTest provides
  * implicit implementation for <code>java.io.File</code>. You can enable the <code>be</code> <code>writable</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Writability[U]</code> for the type and making it available implicitly.
  * 
- * <p>
  * ScalaTest provides an implicit <code>Writability</code> instance for <code>java.io.File</code> and arbitary
  * object with <code>isWritable()</code> or <code>isWritable</code> in the <a href="Writability$.html"><code>Writability</code> companion object</a>.
- * </p>
+ * 
  */
 trait Writability[-T] {
 

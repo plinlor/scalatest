@@ -29,7 +29,6 @@ import org.scalactic.source
  * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for your chosen style trait.</em>
  * </td></tr></table>
  * 
- * <p>
  * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
  * connections, <em>etc.</em>) tests use to do their work.
  * When multiple tests need to work with the same fixtures, it is important to try and avoid
@@ -38,11 +37,10 @@ import org.scalactic.source
  * Trait <code>BeforeAndAfter</code> offers one way to eliminate such code duplication:
  * a <code>before</code> clause that will register code to be run before each test,
  * and an <code>after</code> clause that will register code to be run after.
- * </p>
+ * 
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.beforeandafter
@@ -79,13 +77,11 @@ import org.scalactic.source
  * }
  * </pre>
  *
- * <p>
  * The <code>before</code> and <code>after</code> methods can each only be called once per <code>Suite</code>,
  * and cannot be invoked after <code>run</code> has been invoked.  If either of the registered before or after functions
  * complete abruptly with an exception, it will be reported as an aborted suite and no more tests will be attempted in that suite.
- * </p>
+ * 
  *
- * <p>
  * Note that the only way <code>before</code> and <code>after</code> code can communicate with test code is via some side-effecting mechanism, commonly by
  * reassigning instance <code>var</code>s or by changing the state of mutable objects held from instance <code>val</code>s (as in this example). If using
  * instance <code>var</code>s or mutable objects held from instance <code>val</code>s you wouldn't be able to run tests in parallel in the same instance
@@ -93,15 +89,13 @@ import org.scalactic.source
  * <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>. By running each test in its own instance of the class, each test has its own copy of the instance variables, so you
  * don't need to synchronize. Were you to mix <code>ParallelTestExecution</code> into the <code>ExampleSuite</code> above, the tests would run in parallel just fine
  * without any synchronization needed on the mutable <code>StringBuilder</code> and <code>ListBuffer[String]</code> objects.
- * </p>
+ * 
  *
- * <p>
  * Although <code>BeforeAndAfter</code> provides a minimal-boilerplate way to execute code before and after tests, it isn't designed to enable stackable
  * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you 
  * should use trait <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a> instead.
- * </p>
+ * 
  *
- * <p>
  * The advantage this trait has over <code>BeforeAndAfterEach</code> is that its syntax is more concise. 
  * The main disadvantage is that it is not stackable, whereas <code>BeforeAndAfterEach</code> is. <em>I.e.</em>, 
  * you can write several traits that extend <code>BeforeAndAfterEach</code> and provide <code>beforeEach</code> methods
@@ -111,7 +105,7 @@ import org.scalactic.source
  * the config map and test name via the <a href="TestData.html"><code>TestData</code></a> passed to its <code>beforeEach</code> and
  * <code>afterEach</code> methods, whereas <code>BeforeAndAfter</code>
  * gives you no access to the config map.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -124,12 +118,11 @@ trait BeforeAndAfter extends SuiteMixin { this: Suite =>
   /**
    * Registers code to be executed before each of this suite's tests.
    *
-   * <p>
    * This trait's implementation
    * of <code>runTest</code> executes the code passed to this method before running
    * each test. Thus the code passed to this method can be used to set up a test fixture
    * needed by each test.
-   * </p>
+   * 
    *
    * @throws NotAllowedException if invoked more than once on the same <code>Suite</code> or if
    *                             invoked after <code>run</code> has been invoked on the <code>Suite</code>
@@ -145,11 +138,10 @@ trait BeforeAndAfter extends SuiteMixin { this: Suite =>
   /**
    * Registers code to be executed after each of this suite's tests.
    *
-   * <p>
    * This trait's implementation of <code>runTest</code> executes the code passed to this method after running
    * each test. Thus the code passed to this method can be used to tear down a test fixture
    * needed by each test.
-   * </p>
+   * 
    *
    * @throws NotAllowedException if invoked more than once on the same <code>Suite</code> or if
    *                             invoked after <code>run</code> has been invoked on the <code>Suite</code>
@@ -165,15 +157,13 @@ trait BeforeAndAfter extends SuiteMixin { this: Suite =>
   /**
    * Run a test surrounded by calls to the code passed to <code>before</code> and <code>after</code>, if any.
    *
-   * <p>
    * This trait's implementation of this method ("this method") invokes
    * the function registered with <code>before</code>, if any,
    * before running each test and the function registered with <code>after</code>, if any,
    * after running each test. It runs each test by invoking <code>super.runTest</code>, passing along
    * the five parameters passed to it.
-   * </p>
    * 
-   * <p>
+   * 
    * If any invocation of the function registered with <code>before</code> completes abruptly with an exception, this
    * method will complete abruptly with the same exception. If any call to
    * <code>super.runTest</code> completes abruptly with an exception, this method
@@ -183,7 +173,7 @@ trait BeforeAndAfter extends SuiteMixin { this: Suite =>
    * method will nevertheless complete abruptly with the exception previously thrown by <code>super.runTest</code>.
    * If <code>super.runTest</code> returns normally, but the function registered with <code>after</code> completes abruptly with an
    * exception, this method will complete abruptly with the exception thrown by the function registered with <code>after</code>.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run

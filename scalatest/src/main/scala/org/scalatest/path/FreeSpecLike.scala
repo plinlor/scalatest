@@ -28,19 +28,17 @@ import Suite.autoTagClassAnnotations
  * tests by running each test in its own instance of the test class, and
  * for each test, only executing the <em>path</em> leading to that test.
  * 
- * <p>
  * <a href="FreeSpec.html"><code>path.FreeSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
  * behavior of <code>path.FreeSpec</code> into some other class, you can use this
  * trait instead, because class <code>path.FreeSpec</code> does nothing more than
  * extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="FreeSpec.html">detailed
  * overview of <code>path.FreeSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -159,10 +157,9 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
   /**
    * Class that supports the registration of tagged tests.
    *
-   * <p>
    * Instances of this class are returned by the <code>taggedAs</code> method of 
    * class <code>FreeSpecStringWrapper</code>.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -171,22 +168,20 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports tagged test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * This trait's implementation of this method will decide whether to register the text (passed to the constructor
      * of <code>ResultOfTaggedAsInvocationOnString</code>) and invoke the passed function
      * based on whether or not this is part of the current "test path." For the details on this process, see
      * the <a href="#howItExecutes">How it executes</a> section of the main documentation for
      * trait <code>org.scalatest.path.FreeSpec</code>.
-     * </p>
+     * 
      */
     def in(testFun: => Unit /* Assertion */): Unit = {
       registerTestToRun(specText, tags, "in", testFun _, pos)
@@ -195,16 +190,14 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports registration of tagged, pending tests.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) is (pending)
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the
      * <a href="../FreeSpec.html#pendingTests">Pending tests</a> section in the main documentation for
      * sister trait <code>org.scalatest.FreeSpec</code>.
@@ -213,7 +206,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
      * based on whether or not this is part of the current "test path." For the details on this process, see
      * the <a href="#howItExecutes">How it executes</a> section of the main documentation for
      * trait <code>org.scalatest.path.FreeSpec</code>.
-     * </p>
+     * 
      */
     def is(testFun: => PendingNothing): Unit = {
       registerTestToRun(specText, tags, "is", testFun _, pos)
@@ -222,22 +215,20 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports registration of tagged, ignored tests.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) ignore { ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the
      * <a href="../FreeSpec.html#ignoredTests">Ignored tests</a> section in the main documentation for sister
      * trait <code>org.scalatest.FreeSpec</code>. Note that a separate instance will be created for an ignored test,
      * and the path to the ignored test will be executed in that instance, but the test function itself will not
      * be executed. Instead, a <code>TestIgnored</code> event will be fired.
-     * </p>
+     * 
      */
     def ignore(testFun: => Unit /* Assertion */): Unit = {
       registerTestToIgnore(specText, tags, "ignore", testFun _, pos)
@@ -285,22 +276,20 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" in { ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * This trait's implementation of this method will decide whether to register the text (passed to the constructor
      * of <code>FreeSpecStringWrapper</code>) and invoke the passed function
      * based on whether or not this is part of the current "test path." For the details on this process, see
      * the <a href="#howItExecutes">How it executes</a> section of the main documentation for
      * trait <code>org.scalatest.path.FreeSpec</code>.
-     * </p>
+     * 
      */
     def in(f: => Unit /* Assertion */): Unit = {
       registerTestToRun(string, List(), "in", f _, pos)
@@ -309,22 +298,20 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports ignored test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" ignore { ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the
      * <a href="../FreeSpec.html#ignoredTests">Ignored tests</a> section in the main documentation for sister
      * trait <code>org.scalatest.FreeSpec</code>. Note that a separate instance will be created for an ignored test,
      * and the path to the ignored test will be executed in that instance, but the test function itself will not
      * be executed. Instead, a <code>TestIgnored</code> event will be fired.
-     * </p>
+     * 
      */
     def ignore(f: => Unit /* Assertion */): Unit = {
       registerTestToIgnore(string, List(), "ignore", f _, pos)
@@ -333,16 +320,14 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports pending test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" is (pending)
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the
      * <a href="../FreeSpec.html#pendingTests">Pending tests</a> section in the main documentation for
      * sister trait <code>org.scalatest.FreeSpec</code>.
@@ -351,7 +336,7 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
      * based on whether or not this is part of the current "test path." For the details on this process, see
      * the <a href="#howItExecutes">How it executes</a> section of the main documentation for
      * trait <code>org.scalatest.path.FreeSpec</code>.
-     * </p>
+     * 
      */
     def is(f: => PendingNothing): Unit = {
       registerTestToRun(string, List(), "is", f _, pos)
@@ -360,20 +345,18 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
     /**
      * Supports tagged test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the
      * <a href="../FreeSpec.html#taggingTests">Tagging tests</a> section in the main documentation for sister
      * trait <code>org.scalatest.FreeSpec</code>.
-     * </p>
+     * 
      */
     def taggedAs(firstTestTag: Tag, otherTestTags: Tag*): ResultOfTaggedAsInvocationOnString = {
       val tagList = firstTestTag :: otherTestTags.toList
@@ -393,20 +376,18 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
   /**
    * Supports shared test registration in <code>path.FreeSpec</code>s.
    *
-   * <p>
    * This field enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * behave like nonFullStack(stackWithOneItem)
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of <cod>behave</code>, see the
    * <a href="../FreeSpec.html#SharedTests">Shared tests section</a> in the main documentation for sister
    * trait <code>org.scalatest.FreeSpec</code>.
-   * </p>
+   * 
    */
   protected val behave = new BehaveWord
 
@@ -414,18 +395,16 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * An immutable <code>Set</code> of test names. If this <code>FreeSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the results of all tests, each run its its
    * own instance executing only the path to the test, are registered. For details on this process see the
    * <a href="#howItExecutes">How it executes</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space. For example, consider this <code>FreeSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.path
@@ -442,20 +421,18 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * }
    * </pre>
    *
-   * <p>
    * Invoking <code>testNames</code> on this <code>FreeSpec</code> will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
    * <pre>
    * "A Stack when not empty must allow me to pop"
    * "A Stack when not full must allow me to push"
    * </pre>
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    */
   final override def testNames: Set[String] = {
     ensureTestResultsRegistered(thisSuite)
@@ -466,21 +443,18 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * The total number of tests that are expected to run when this <code>path.FreeSpec</code>'s <code>run</code> method
    * is invoked.
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the results of all tests, each run its its
    * own instance executing only the path to the test, are registered. For details on this process see the
    * <a href="#howItExecutes">How it executes</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method returns the size of the <code>testNames</code> <code>List</code>, minus
    * the number of tests marked as ignored as well as any tests excluded by the passed <code>Filter</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
    * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
    */
@@ -492,22 +466,19 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
   /**
    * Runs a test.
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the results of all tests, each run its its
    * own instance executing only the path to the test, are registered. For details on this process see the
    * <a href="#howItExecutes">How it executes</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation reports the test results registered with the name specified by
    * <code>testName</code>. Each test's name is a concatenation of the text of all describers surrounding a test,
    * from outside in, and the test's  spec text, with one space placed between each item. (See the documentation
    * for <code>testNames</code> for an example.)
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
    * @param args the <code>Args</code> for this run
@@ -531,26 +502,22 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * belong, and values the <code>Set</code> of test names that belong to each tag. If this <code>path.FreeSpec</code>
    * contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the results of all tests, each run its its
    * own instance executing only the path to the test, are registered. For details on this process see the
    * <a href="#howItExecutes">How it executes</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed
    * to methods <code>test</code> and <code>ignore</code>.
-   * </p>
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    */
   final override def tags: Map[String, Set[String]] = {
     ensureTestResultsRegistered(thisSuite)
@@ -561,23 +528,21 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * Runs this <code>path.FreeSpec</code>, reporting test results that were registered when the tests
    * were run, each during the construction of its own instance.
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the results of all tests, each run its its
    * own instance executing only the path to the test, are registered. For details on this process see the
    * <a href="#howItExecutes">How it executes</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
    * <p>If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * will report the registered results for all tests except any excluded by the passed <code>Filter</code>.
    * If <code>testName</code> is defined, it will report the results of only that named test. Because a
    * <code>path.FreeSpec</code> is not allowed to contain nested suites, this trait's implementation of
    * this method does not call <code>runNestedSuites</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -598,10 +563,9 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * This lifecycle method is unused by this trait, and will complete abruptly with
    * <code>UnsupportedOperationException</code> if invoked.
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    */
   final protected override def runTests(testName: Option[String], args: Args): Status = {
     throw new UnsupportedOperationException
@@ -611,7 +575,6 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * This lifecycle method is unused by this trait, and is implemented to do nothing. If invoked, it will
    * just return immediately.
    *
-   * <p>
    * Nested suites are not allowed in a <code>path.FreeSpec</code>. Because
    * a <code>path.FreeSpec</code> executes tests eagerly at construction time, registering the results of
    * those test runs and reporting them later, the order of nested suites versus test runs would be different
@@ -621,19 +584,17 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * therefore, this is just not allowed. If you want to add nested suites to a <code>path.FreeSpec</code>, you can
    * instead wrap them all in a <a href="../Suites.html"><code>Suites</code></a> 
    * object and put them in whatever order you wish.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    */
   final protected override def runNestedSuites(args: Args): Status = SucceededStatus
 
   /**
    * Returns an empty list.
    *
-   * <p>
    * This lifecycle method is unused by this trait. If invoked, it will return an empty list, because
    * nested suites are not allowed in a <code>path.FreeSpec</code>. Because
    * a <code>path.FreeSpec</code> executes tests eagerly at construction time, registering the results of
@@ -644,12 +605,11 @@ trait FreeSpecLike extends org.scalatest.Suite with OneInstancePerTest with Info
    * therefore, this is just not allowed. If you want to add nested suites to a <code>path.FreeSpec</code>, you can
    * instead wrap them all in a <a href="../Suites.html"><code>Suites</code></a> 
    * object and put them in whatever order you wish.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method is  marked as final. For insight onto why, see the
    * <a href="#sharedFixtures">Shared fixtures</a> section in the main documentation for this trait.
-   * </p>
+   * 
    */
   final override def nestedSuites: collection.immutable.IndexedSeq[Suite] = Vector.empty
   

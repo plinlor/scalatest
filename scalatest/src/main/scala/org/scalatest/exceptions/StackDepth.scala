@@ -21,12 +21,11 @@ import org.scalactic.source
  * Trait that encapsulates the information required of an exception thrown by ScalaTest's assertions
  * and matchers, which includes a stack depth at which the failing line of test code resides.
  *
- * <p>
  * This trait exists so that it can be mixed into two exception superclasses, <a href="StackDepthException.html"><code>StackDepthException</code></a>,
  * from which extend several exceptions that do not depend on JUnit, and <a href="../junit/JUnitTestFailedError.html"><code>JUnitTestFailedError</code></a>, which
  * does depend on JUnit. The latter, which requires JUnit be in the classpath, ensures failed ScalaTest assertions are
  * reported as "failures," not "errors," by JUnit.
- * </p>
+ * 
  */
 trait StackDepth { this: Throwable =>
 
@@ -63,12 +62,11 @@ trait StackDepth { this: Throwable =>
    * for presenting to a user of the failing line.  It calls <code>failedCodeFileName</code> and
    * <code>failedCodeLineNumber</code> to get the failing filename and line number.
    *
-   * <p>
    * <code>failedCodeFileName</code> and <code>failedCodeLineNumber</code> will fall back to exception stack trace
    * when <code>Position</code> is not avaiable, this is the reason it is a <code>def</code> instead of a <code>val</code>,
    * because exceptions are mutable: their stack trace can be changed after the exception is created. This is done, for example,
    * by the <code>SeveredStackTraces</code> trait.
-   * </p>
+   * 
    *
    * @return a user-presentable string containing the filename and line number that caused the failed test
    */
@@ -104,10 +102,9 @@ trait StackDepth { this: Throwable =>
    * for presenting to a user, which is taken from this exception's <code>StackTraceElement</code> at the depth specified
    * by <code>failedCodeStackDepth</code>.
    *
-   * <p>
    * This is a <code>def</code> instead of a <code>val</code> because exceptions are mutable: their stack trace can
    * be changed after the exception is created. This is done, for example, by the <code>SeveredStackTraces</code> trait.
-   * </p>
+   * 
    *
    * @return a string containing the filename that caused the failed test
    */
@@ -126,10 +123,9 @@ trait StackDepth { this: Throwable =>
    * for presenting to a user, which is taken from this exception's <code>StackTraceElement</code> at the depth specified
    * by <code>failedCodeStackDepth</code>.
    *
-   * <p>
    * This is a <code>def</code> instead of a <code>val</code> because exceptions are mutable: their stack trace can
    * be changed after the exception is created. This is done, for example, by the <code>SeveredStackTraces</code> trait.
-   * </p>
+   * 
    *
    * @return a string containing the line number that caused the failed test
    */

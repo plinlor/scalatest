@@ -262,30 +262,27 @@ trait MatcherWords {
    *               ^
    * </pre>
    *
-   * <p>
    * The <code>left should equal (right)</code> syntax works by calling <code>==</code> on the <code>left</code>
    * value, passing in the <code>right</code> value, on every type except arrays. If both <code>left</code> and right are arrays, <code>deep</code>
    * will be invoked on both <code>left</code> and <code>right</code> before comparing them with <em>==</em>. Thus, even though this expression
    * will yield false, because <code>Array</code>'s <code>equals</code> method compares object identity:
-   * </p>
+   * 
    * 
    * <pre class="stHighlight">
    * Array(1, 2) == Array(1, 2) // yields false
    * </pre>
    *
-   * <p>
    * The following expression will <em>not</em> result in a <code>TestFailedException</code>, because ScalaTest will compare
    * the two arrays structurally, taking into consideration the equality of the array's contents:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Array(1, 2) should equal (Array(1, 2)) // succeeds (i.e., does not throw TestFailedException)
    * </pre>
    *
-   * <p>
    * If you ever do want to verify that two arrays are actually the same object (have the same identity), you can use the
    * <code>be theSameInstanceAs</code> syntax.
-   * </p>
+   * 
    *
    */
   def equal(right: Any): MatcherFactory1[Any, Equality] =

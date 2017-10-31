@@ -24,10 +24,9 @@ import org.scalatest.OutcomeOf.outcomeOf
  * Trait that provides each test with access to a new <code>Conductor</code> 
  * via methods.
  *
- * <p>
  * Here's an example of the use of this trait to test the <code>ArrayBlockingQueue</code>
  * concurrency abstraction from <code>java.util.concurrent</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.FunSuite
@@ -81,9 +80,8 @@ import org.scalatest.OutcomeOf.outcomeOf
  * }
  * </pre>
  *
- * <p>
  * For an explanation of how these tests work, see the documentation for <a href="Conductors.html"><code>Conductors</code></a>.
- * </p>
+ * 
  *
  * @author Josh Cough
  * @author Bill Venners
@@ -179,11 +177,10 @@ trait ConductorMethods extends TestSuiteMixin with Conductors { this: TestSuite 
    * and invokes <code>conduct</code> on the <code>Conductor</code>, if it
    * was not already invoked by the test.
    *
-   * <p>
    * This trait is stackable with other traits that override <code>withFixture(NoArgTest)</code>, because
    * instead of invoking the test function directly, it delegates responsibility for invoking the test
    * function to <code>super.withFixture(NoArgTest)</code>.
-   * </p>
+   * 
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {
     conductor.compareAndSet(conductor.get, new Conductor)

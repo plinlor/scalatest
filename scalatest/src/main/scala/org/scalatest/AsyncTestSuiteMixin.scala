@@ -20,10 +20,9 @@ package org.scalatest
  * Trait defining abstract "lifecycle" methods that are implemented in <a href="AsyncTestSuite.html#lifecycle-methods"><code>AsyncTestSuite</code></a>
  * and can be overridden in stackable modification traits.
  *
- * <p>
  * The main use case for this trait is to override <code>withFixture</code> in a mixin trait.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * trait Builder extends AsyncTestSuiteMixin { this: AsyncTestSuite =&gt;
@@ -46,7 +45,6 @@ trait AsyncTestSuiteMixin extends SuiteMixin { this: AsyncTestSuite =>
   /**
    * Run the passed test function in the context of a fixture established by this method.
    *
-   * <p>
    * This method should set up the fixture needed by the tests of the
    * current suite, invoke the test function, and if needed, register a callback
    * on the resulting <code>FutureOutcome</code> to perform any clean
@@ -55,7 +53,7 @@ trait AsyncTestSuiteMixin extends SuiteMixin { this: AsyncTestSuite =>
    * side effects, such as reassigning instance <code>var</code>s in this <code>Suite</code> or initializing
    * a globally accessible external database. If you want to avoid reassigning instance <code>var</code>s
    * you can use <a href="fixture/AsyncTestSuite.html">fixture.AsyncTestSuite</a>.
-   * </p>
+   * 
    *
    * @param test the no-arg async test function to run with a fixture
    */

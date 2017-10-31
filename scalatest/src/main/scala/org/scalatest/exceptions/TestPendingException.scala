@@ -18,15 +18,13 @@ package org.scalatest.exceptions
 /**
  * Exception thrown to indicate a test is pending.
  *
- * <p>
  * A <em>pending test</em> is one that has been given a name but is not yet implemented. The purpose of
  * pending tests is to facilitate a style of testing in which documentation of behavior is sketched
  * out before tests are written to verify that behavior (and often, the before the behavior of
  * the system being tested is itself implemented). Such sketches form a kind of specification of
  * what tests and functionality to implement later.
- * </p>
+ * 
  *
- * <p>
  * To support this style of testing, a test can be given a name that specifies one
  * bit of behavior required by the system being tested. The test can also include some code that
  * sends more information about the behavior to the reporter when the tests run. At the end of the test,
@@ -36,7 +34,7 @@ package org.scalatest.exceptions
  * the code of a pending test is executed just like any other test.) However, because the test completes abruptly
  * with <code>TestPendingException</code>, the test will be reported as pending, to indicate
  * the actual test, and possibly the functionality, has not yet been implemented.
- * </p>
+ * 
  *
  * @author Bill Venners
  */

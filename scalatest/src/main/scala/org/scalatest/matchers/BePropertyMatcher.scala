@@ -29,28 +29,25 @@ import scala.reflect.ClassTag
  * A <code>BePropertyMatcher</code> is, therefore, a function from the specified type, <code>T</code>, to
  * a <code>BePropertyMatchResult</code>.
  *
- * <p>
  * Although <code>BePropertyMatcher</code>
  * and <code>Matcher</code> represent similar concepts, they have no inheritance relationship
  * because <code>Matcher</code> is intended for use right after <code>should</code> or <code>must</code>
  * whereas <code>BePropertyMatcher</code> is intended for use right after <code>be</code>.
- * </p>
+ * 
  *
- * <p>
  * A <code>BePropertyMatcher</code> essentially allows you to write statically typed <code>Boolean</code>
  * property assertions similar to the dynamic ones that use symbols:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * tempFile should be a ('file) // dynamic: uses reflection
  * tempFile should be a (file)  // type safe: only works on Files; no reflection used
  * </pre>
  *
- * <p>
  * One good way to organize custom matchers is to place them inside one or more traits that
  * you can then mix into the suites or specs that need them. Here's an example that
  * includes two <code>BePropertyMatcher</code>s:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * trait CustomMatchers {
@@ -68,14 +65,13 @@ import scala.reflect.ClassTag
  * }
  * </pre>
  * 
- * <p>
  * Because the type parameter of these two <code>BePropertyMatcher</code>s is <code>java.io.File</code>, they 
  * can only be used with instances of that type. (The compiler will enforce this.) All they do is create a
  * <code>BePropertyMatchResult</code> whose <code>matches</code> field is <code>true</code> if and only if the <code>Boolean</code> property
  * is <code>true</code>. The second field, <code>propertyName</code>, is simply the string name of the property.
  * The <code>file</code> and <code>directory</code> <code>val</code>s create variables that can be used in
  * matcher expressions that test whether a <code>java.io.File</code> is a file or a directory. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class ExampleSpec extends RefSpec with Matchers with CustomMatchers {
@@ -98,20 +94,18 @@ import scala.reflect.ClassTag
  * }
  * </pre>
  *
- * <p>
  * These matches should succeed, but if for example the first match, <code>tempFile should be a (file)</code>, were to fail, you would get an error message like:
- * </p>
+ * 
  *
  * <pre class="stExamples">
  * /tmp/delme1234me was not a file
  * </pre>
  *
- * <p>
  * For more information on <code>BePropertyMatchResult</code> and the meaning of its fields, please
  * see the documentation for <a href="BePropertyMatchResult.html"><code>BePropertyMatchResult</code></a>. To understand why <code>BePropertyMatcher</code>
  * is contravariant in its type parameter, see the section entitled "Matcher's variance" in the
  * documentation for <a href="../Matcher.html"><code>Matcher</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
 */
@@ -138,10 +132,9 @@ trait BePropertyMatcher[-T] extends Function1[T, BePropertyMatchResult] {
   /**
    * Compose this <code>BePropertyMatcher</code> with the passed function, returning a new <code>BePropertyMatcher</code>.
    *
-   * <p>
    * This method overrides <code>compose</code> on <code>Function1</code> to
    * return a more specific function type of <code>BePropertyMatcher</code>.
-   * </p>
+   * 
    */
   override def compose[U](g: U => T): BePropertyMatcher[U] =
     new BePropertyMatcher[U] {

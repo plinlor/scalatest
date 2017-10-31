@@ -20,15 +20,13 @@ import org.testng.TestNG
 import org.testng.TestListenerAdapter
 
 /**
- * <p>
  * Suite that wraps existing TestNG test suites, described by TestNG XML config files. This class allows
  * existing TestNG tests written in Java to be run by ScalaTest.
- * </p>
+ * 
  *
- * <p>
  * One way to use this class is to extend it and provide a list of one or more
  * names of TestNG XML config file names to run. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class MyWrapperSuite extends TestNGWrapperSuite(
@@ -36,15 +34,13 @@ import org.testng.TestListenerAdapter
  * )
  * </pre>
  * 
- * <p>
  * You can also specify TestNG XML config files on <code>Runner</code>'s command line with <code>-t</code> parameters. See
  * the documentation for <code>Runner</code> for more information.
- * </p>
+ * 
  *
- * <p>
  * To execute <code>TestNGWrapperSuite</code>s with ScalaTest's <code>Runner</code>, you must include TestNG's jar file on the class path or runpath.
  * This version of <code>TestNGSuite</code> was tested with TestNG version 6.3.1.
- * </p>
+ * 
  *
  * @author Josh Cough
  */

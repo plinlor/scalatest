@@ -23,14 +23,12 @@ import org.scalactic._
 /**
  * Trait that contains ScalaTest's basic assertion methods, suitable for use with JUnit.
  *
- * <p>
  * The assertion methods provided in this trait look and behave exactly like the ones in
  * <a href="../Assertions.html"><code>Assertions</code></a>, except instead of throwing
  * <a href="../exceptions/TestFailedException.html"><code>TestFailedException</code></a> they throw
  * <a href="JUnitTestFailedError.html"><code>JUnitTestFailedError</code></a>,
  * which extends <code>junit.framework.AssertionFailedError</code>.
  *
- * <p>
  * JUnit 3 (release 3.8 and earlier) distinguishes between <em>failures</em> and <em>errors</em>.
  * If a test fails because of a failed assertion, that is considered a <em>failure</em>. If a test
  * fails for any other reason, either the test code or the application being tested threw an unexpected
@@ -39,19 +37,17 @@ import org.scalactic._
  * failures. Any other exception type is considered an error. The exception type thrown by the JUnit 3
  * assertion methods declared in <code>junit.framework.Assert</code> (such as <code>assertEquals</code>,
  * <code>assertTrue</code>, and <code>fail</code>) is, therefore, <code>AssertionFailedError</code>.
- * </p>
  * 
- * <p>
+ * 
  * In JUnit 4, <code>AssertionFailedError</code> was made to extend <code>java.lang.AssertionError</code>,
  * and the distinction between failures and errors was essentially dropped. However, some tools that integrate
  * with JUnit carry on this distinction, so even if you are using JUnit 4 you may want to use this
  * <code>AssertionsForJUnit</code> trait instead of plain-old ScalaTest
  * <a href="../Assertions.html"><code>Assertions</code></a>.
- * </p>
+ * 
  *
- * <p>
  * To use this trait in a JUnit 3 <code>TestCase</code>, you can mix it into your <code>TestCase</code> class, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import junit.framework.TestCase
@@ -67,9 +63,8 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * You can alternatively import the methods defined in this trait.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import junit.framework.TestCase
@@ -85,12 +80,11 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * For details on the importing approach, see the documentation
  * for the <a href="AssertionsForJUnit$.html"><code>AssertionsForJUnit</code> companion object</a>.
  * For the details on the <code>AssertionsForJUnit</code> syntax, see the Scaladoc documentation for
  * <a href="../Assertions.html"><code>org.scalatest.Assertions</code></a>
- * </p>
+ * 
  *
  * @author Bill Venners
  */

@@ -24,17 +24,15 @@ import scala.collection.GenTraversable
 /**
  * Supertrait for typeclasses that enable the <code>be readable</code> matcher syntax.
  *
- * <p>
  * A <code>Readability[T]</code> provides access to the "readable nature" of type <code>T</code> in such
  * a way that <code>be readable</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
  * can be any type for which the concept of being readable makes sense, such as <code>java.io.File</code>.
  * You can enable the <code>be readable</code> matcher syntax on your own type <code>U</code> by defining a
  * <code>Readability[U]</code> for the type and making it available implicitly.
  * 
- * <p>
  * ScalaTest provides an implicit <code>Readability</code> instance for <code>java.io.File</code> and arbitary
  * object with <code>isReadable()</code> or <code>isReadable</code> in the <code>Readability</code> companion object.
- * </p>
+ * 
  */
 trait Readability[-T] {
 

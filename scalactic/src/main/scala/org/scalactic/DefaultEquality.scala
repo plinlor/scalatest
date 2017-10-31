@@ -21,7 +21,7 @@ import org.scalactic.anyvals.NonEmptyArray
  * A default <code>Equality</code> type class implementation (which can be used for any type) whose
  * <code>areEqual</code> method compares the passed objects with <code>==</code>, calling <code>.deep</code>
  * first on any passed object that is an array.
- * </p>
+ * 
  */
 private[scalactic] final class DefaultEquality[A] extends Equality[A] {
 

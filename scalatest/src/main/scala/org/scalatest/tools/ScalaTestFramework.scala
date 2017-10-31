@@ -35,26 +35,23 @@ import org.scalatools.testing.{Framework => SbtFramework, _}
 /**
  * Class that makes ScalaTest tests visible to SBT (prior to version 0.13).
  *
- * <p>
  * To use ScalaTest in SBT, you should add ScalaTest as dependency in your SBT build file, the following shows an example
  * for using ScalaTest 2.0 with Scala 2.10.x project:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
  * </pre>
  *
- * <p>
  * To pass argument to ScalaTest from SBT, you can use <code>testOptions</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * testOptions in Test += Tests.Argument("-u", "target/junit")  // Use JUnitXmlReporter
  * </pre>
  *
- * <p>
  * If you are using multiple testing frameworks, you can pass arguments specific to ScalaTest only:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/junit") // Use JUnitXmlReporter
@@ -62,10 +59,9 @@ import org.scalatools.testing.{Framework => SbtFramework, _}
  *
  * <h3>Supported arguments</h3>
  *
- * <p>
  * Integration in SBT 0.13 supports same argument format as [[org.scalatest.tools.Runner <code>Runner</code>]],
  * except the following arguments:
- * </p>
+ * 
  *
  * <ul>
  *   <li><code>-R</code> -- runpath is not supported because test path and discovery is handled by SBT</li>

@@ -19,12 +19,11 @@ package org.scalactic
  * Provides three implicit methods that loosen the equality constraint defined by <code>TypeCheckedTripleEquals</code> 
  * for Scala <code>Traversable</code>s to one that more closely matches Scala's approach to <code>Traversable</code> equality.
  *
- * <p>
  * Scala's approach to <code>Traversable</code> equality is that if the objects being compared are ether both <code>Seq</code>s, both <code>Set</code>s,
  * or both <code>Map</code>s, the elements are compared to determine equality.
  * This means you could compare an immutable <code>Vector</code> and a mutable <code>ListBuffer</code> for equality, for instance, and get true so long as the
  * two <code>Seq</code>s contained the same elements in the same order. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import scala.collection.mutable.ListBuffer
@@ -34,10 +33,9 @@ package org.scalactic
  * res0: Boolean = true
  * </pre>
  *
- * <p>
  * Such a comparison would not, however, compile if you used <code>===</code> under <code>TypeCheckedTripleEquals</code>,
  * because <code>Vector</code> and <code>ListBuffer</code> are not in a subtype/supertype relationship:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -56,9 +54,8 @@ package org.scalactic
  *                            ^
  * </pre>
  *
- * <p>
  * If you mix or import the implicit conversion provided by <code>TraversableEqualityConstraint</code>, however, the comparison will be allowed:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import TraversableEqualityConstraints._
@@ -68,7 +65,6 @@ package org.scalactic
  * res2: Boolean = true
  * </pre>
  *
- * <p>
  * The equality constraints provided by this trait require that left and right sides are both subclasses of either <code>scala.collection.GenSeq</code>,
  * <code>scala.collection.GenSet</code>, or <code>scala.collection.GenMap</code>, and that
  * an <code>CanEqual</code> can be found for the element types for <code>Seq</code> and <code>Set</code>, or the key and value types for <code>Map</code>s. In
@@ -77,7 +73,7 @@ package org.scalactic
  * constraints for the element types, both of which are <code>Int</code>. By contrast, this
  * trait would not allow a <code>Vector[Int]</code> to be compared against a <code>ListBuffer[java.util.Date]</code>, because no equality constraint
  * will exist between the element types <code>Int</code> and <code>Date</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import java.util.Date
@@ -93,11 +89,10 @@ package org.scalactic
  *                            ^
  * </pre>
  *
- * <p>
  * This trait simply mixes together <a href="SeqEqualityConstraints.html"><code>SeqEqualityConstraints</code></a>,
  * <a href="SetEqualityConstraints.html"><code>SetEqualityConstraints</code></a>,
  * and <a href="MapEqualityConstraints.html"><code>MapEqualityConstraints</code></a>.
- * </p>
+ * 
  * 
  * @author Bill Venners
  */

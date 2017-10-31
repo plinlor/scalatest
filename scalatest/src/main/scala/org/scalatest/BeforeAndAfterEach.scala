@@ -26,7 +26,6 @@ package org.scalatest
  * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a></em> section in the documentation for your chosen style trait.
  * </td></tr></table>
  * 
- * <p>
  * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
  * connections, <em>etc.</em>) tests use to do their work.
  * When multiple tests need to work with the same fixtures, it is important to try and avoid
@@ -36,11 +35,10 @@ package org.scalatest
  * Trait <code>BeforeAndAfterEach</code> offers one way to eliminate such code duplication:
  * a <code>beforeEach</code> method that will be run before each test (like JUnit's <code>setUp</code>),
  * and an <code>afterEach</code> method that will be run after (like JUnit's <code>tearDown</code>).
- * </p>
+ * 
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.composingbeforeandaftereach
@@ -99,15 +97,13 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * To get the same ordering as <code>withFixture</code>, place your <code>super.beforeEach</code> call at the end of each
  * <code>beforeEach</code> method, and the <code>super.afterEach</code> call at the beginning of each <code>afterEach</code>
  * method, as shown in the previous example. It is a good idea to invoke <code>super.afterEach</code> in a <code>try</code>
  * block and perform cleanup in a <code>finally</code> clause, as shown in the previous example, because this ensures the
  * cleanup code is performed even if <code>super.afterEach</code> throws an exception.
- * </p>
+ * 
  *
- * <p>
  * The main advantage of <code>BeforeAndAfterEach</code> over <code>BeforeAndAfter</code> is that <code>BeforeAndAfterEach</code>.
  * enables trait stacking.
  * The main disadvantage of <code>BeforeAndAfterEach</code> compared to <code>BeforeAndAfter</code> is that <code>BeforeAndAfterEach</code>
@@ -115,7 +111,7 @@ package org.scalatest
  * of <code>BeforeAndAfterEach</code>.
  * If you want to make use of test data (the test name, config map, <em>etc.</em>) in your <code>beforeEach</code>
  * or <code>afterEach</code> method, use trait <a href="BeforeAndAfterEachTestData.html"><code>BeforeAndAfterEachTestData</code></a> instead.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -126,7 +122,6 @@ trait BeforeAndAfterEach extends SuiteMixin {
   /**
    * Defines a method to be run before each of this suite's tests.
    *
-   * <p>
    * This trait's implementation
    * of <code>runTest</code> invokes the overloaded form of this method that
    * takes a <code>configMap</code> before running
@@ -134,14 +129,13 @@ trait BeforeAndAfterEach extends SuiteMixin {
    * <code>beforeEach()</code> method. Thus this method can be used to set up a test fixture
    * needed by each test, when you don't need anything from the <code>configMap</code>.
    * This trait's implementation of this method does nothing.
-   * </p>
+   * 
    */
   protected def beforeEach() = ()
 
   /**
    * Defines a method to be run after each of this suite's tests.
    *
-   * <p>
    * This trait's implementation
    * of <code>runTest</code> invokes the overloaded form of this method that
    * takes a <code>configMap</code> map after running
@@ -149,22 +143,20 @@ trait BeforeAndAfterEach extends SuiteMixin {
    * <code>afterEach()</code> method. Thus this method can be used to tear down a test fixture
    * needed by each test, when you don't need anything from the <code>configMap</code>.
    * This trait's implementation of this method does nothing.
-   * </p>
+   * 
    */
   protected def afterEach() = ()
 
   /**
    * Run a test surrounded by calls to <code>beforeEach</code> and <code>afterEach</code>.
    *
-   * <p>
    * This trait's implementation of this method ("this method") invokes
    * <code>beforeEach(configMap)</code>
    * before running each test and <code>afterEach(configMap)</code>
    * after running each test. It runs each test by invoking <code>super.runTest</code>, passing along
    * the two parameters passed to it.
-   * </p>
    * 
-   * <p>
+   * 
    * If any invocation of <code>beforeEach</code> completes abruptly with an exception, this
    * method will complete abruptly with the same exception. If any call to
    * <code>super.runTest</code> completes abruptly with an exception, this method
@@ -173,7 +165,7 @@ trait BeforeAndAfterEach extends SuiteMixin {
    * method will nevertheless complete abruptly with the exception previously thrown by <code>super.runTest</code>.
    * If <code>super.runTest</code> returns normally, but <code>afterEach</code> completes abruptly with an
    * exception, this method will complete abruptly with the exception thrown by <code>afterEach</code>.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run

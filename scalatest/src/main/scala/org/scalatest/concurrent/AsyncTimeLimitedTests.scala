@@ -22,10 +22,9 @@ import org.scalatest._
 /**
  * Trait that when mixed into an asynchronous suite class establishes a time limit for its tests.
  *
- * <p>
  * This trait overrides <code>withFixture</code>, wrapping a <code>super.withFixture(test)</code> call
  * in a <code>failAfter</code> invocation, specifying a timeout obtained by invoking <code>timeLimit</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * failAfter(timeLimit) {
@@ -33,17 +32,15 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * Note that the <code>failAfter</code> method executes the body of the by-name passed to it using the same
  * thread that invoked <code>failAfter</code>. This means that the calling of <code>withFixture</code> method
  * will be run using the same thread, but the test body may be run using a different thread, depending on the
  * <code>executionContext</code> set at the <code>AsyncTestSuite</code> level.
- * </p>
+ * 
  *
- * <p>
  * The <code>timeLimit</code> field is abstract in this trait. Thus you must specify a time limit when you use it.
  * For example, the following code specifies that each test must complete within 200 milliseconds:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.AsyncFunSpec
@@ -70,18 +67,15 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * If you run the above <code>ExampleSpec</code>, the second test will fail with the error message:
- * </p>
+ * 
  *
- * <p>
  * <code>The test did not complete within the specified 200 millisecond time limit.</code>
- * </p>
+ * 
  *
- * <p>
  * Different from <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>, <code>AsyncTimeLimitedTests</code> does not
  * support <code>Interruptor</code> for now.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Chua Chee Seng

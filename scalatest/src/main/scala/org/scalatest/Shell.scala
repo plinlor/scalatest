@@ -35,10 +35,9 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * Trait whose instances provide a <a href="run$.html"><code>run</code></a> method and configuration fields that implement
  * the <em>ScalaTest shell</em>: its DSL for the Scala interpreter.
  *
- * <p>
  * The main command of the ScalaTest shell is <code>run</code>, which you can use to run a suite of tests.
  * The shell also provides several commands for configuring a call to <code>run</code>:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>color</code> (the default) - display results in color (green for success; red for failure; yellow for warning; blue for statistics)</li>
@@ -54,42 +53,36 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * <li><code>nostats</code> (the default) not display statistics before or after the run</li>
  * </ul>
  *
- * <p>
  * The default configuration is <code>color</code>, <code>nodurations</code>, <code>nostacks</code>, and <code>nostats</code>.
- * </p>
+ * 
  *
- * <p>
  * All of these commands are fields of trait <code>org.scalatest.Shell</code>. Each configuration command is a field that refers to
  * another <code>Shell</code> instance with every configuration parameter
  * the same except for the one you've asked to change. For example, <code>durations</code> provides a
  * <code>Shell</code> instance that has every parameter configured the same way, except with durations enabled. When you invoke
  * <code>run</code> on that, you will get a run with durations enabled and every other configuration parameter at its default value.
- * <p>
  *
- * <p>
  * The other useful "command"
  * to know about, though not technically part of the shell, is the <code>apply</code> factory method in the <a href="Suites$.html"><code>Suites</code></a> 
  * singleton object. This allows you to easily create composite suites out of nested suites, which you can then pass to <code>run</code>. This
  * will be demonstrated later in this documentation.
- * </p>
+ * 
  *
  * <h2>Using the ScalaTest shell</h2>
  *
- * <p>
  * The package object of the <code>org.scalatest</code> package, although it does not extend <code>Shell</code>, declares all the
  * same members as <code>Shell</code>. Its <code>run</code> method runs with all the <code>Shell</code> configuration parameters set
  * to their default values. A good way to use the ScalaTest shell, therefore, is to import the members of package <code>org.scalatest</code>:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> import org.scalatest._
  * import org.scalatest._</span>
  * </pre>
  *
- * <p>
  * One thing importing <code>org.scalatest._</code> allows you to do is access any of ScalaTest's classes and traits by shorter
  * names, for example:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> class ArithmeticSuite extends FunSuite with matchers.Matchers {
@@ -107,10 +100,9 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * defined class ArithmeticSuite</span>
  * </pre>
  *
- * <p>
  * But importing <code>org.scalatest._</code> also brings into scope the commands of the <code>Shell</code>, so you can, for
  * example, invoke <code>run</code> without qualification:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> run(new ArithmeticSuite)</span>
@@ -124,10 +116,9 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  *
  * <h2>Configuring a single run</h2>
  *
- * <p>
  * To configure a single run, you can prefix run by one or more configuration commands, separated by dots. For example, to enable
  * durations during a single run, you would write:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> durations.run(new ArithmeticSuite)</span>
@@ -139,9 +130,8 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * <span style="color: #cfc923">- division works (pending)</span>
  * </pre>
  *
- * <p>
  * To enable statistics during a single run, you would write:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> stats.run(new ArithmeticSuite)</span>
@@ -159,9 +149,8 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * <span style="color: #dd2233">*** 1 TEST FAILED ***</span>
  * </pre>
  *
- * <p>
  * And to enable both durations and statistics during a single run, you could write:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> durations.stats.run(new ArithmeticSuite)</span>
@@ -179,14 +168,12 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * <span style="color: #dd2233">*** 1 TEST FAILED ***</span>
  * </pre>
  *
- * <p>
  * The order doesn't matter when you are chaining multiple configuration commands. You'll get the same
  * result whether you write <code>durations.stats.run</code> or <code>stats.durations.run</code>.
- * </p>
+ * 
  *
- * <p>
  * To disable color, use <code>nocolor</code>:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> nocolor.run(new ArithmeticSuite)
@@ -198,9 +185,8 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * - division works (pending)</span>
  * </pre>
  *
- * <p>
  * To enable short stack traces during a single run, use <code>shortstacks</code>:
- * </p>
+ * 
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> shortstacks.run(new ArithmeticSuite)</span>
@@ -224,19 +210,15 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  *
  * <h2>Changing the default configuration</h2>
  *
- * <p>
  * If you want to change the default for multiple runs, you can import the members of your favorite <code>Shell</code> configuration. For example,
  * if you <em>always</em> like to run with durations and statistics enabled, you could write:
- * <p>
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> import stats.durations._
  * import stats.durations._</span>
  * </pre>
  *
- * <p>
  * Now anytime you run statistics and durations will, by default, be enabled:
- * <p>
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> run(new ArithmeticSuite)</span>
@@ -256,13 +238,11 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  *
  * <h2>Running multiple suites</h2>
  *
- * <p>
  * If you want to run multiple suites, you can use the factory method in the <a href="Suites$.html"><code>Suites</code></a> 
  * singleton object. If you wrap a comma-separated list of suite instances inside <code>Suites(...)</code>, for example,
  * you'll get a suite instance that contains no tests, but whose nested suites includes the suite instances you placed between
  * the parentheses. You can place <code>Suites</code> inside <code>Suites</code> to any level of depth, creating a tree of
  * suites to pass to <code>run</code>. Here's a (contrived) example in which <code>ArithmeticSuite</code> is executed four times:
- * <p>
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> run(Suites(new ArithmeticSuite, new ArithmeticSuite, Suites(new ArithmeticSuite, new ArithmeticSuite)))</span>
@@ -302,10 +282,8 @@ class ArithmeticSuite extends FunSuite with matchers.Matchers {
  * 
  * <h2>Running a single test</h2>
  *
- * <p>
  * The <code>run</code> command also allows you to specify the name of a test to run and/or a config map. You can run
  * a particular test in a suite, for example, by specifying the test name after the suite instance in your call to <code>run</code>, like this:
- * <p>
  *
  * <pre style="background-color: #2c415c; padding: 10px">
  * <span style="color: white">scala> run(new ArithmeticSuite, "addition works")</span>
@@ -369,13 +347,12 @@ sealed trait Shell {
   /**
    * Run the passed suite, optionally passing in a test name and config map. 
    *
-   * <p>
    * This method will invoke <code>execute</code> on the passed <code>suite</code>, passing in
    * the specified (or default) <code>testName</code> and <code>configMap</code> and a set of configuration values. A
    * particular <code>Shell</code> instance will always pass the same configuration values (<code>color</code>,
    * <code>durations</code>, <code>shortstacks</code>, <code>fullstacks</code>, and <code>stats</code>) to <code>execute</code> each time
    * this method is invoked.
-   * </p>
+   * 
    */
   def run(suite: Suite, testName: String = null, configMap: ConfigMap = ConfigMap.empty): Unit
 }

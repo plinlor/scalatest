@@ -20,13 +20,12 @@ package org.scalactic
  * one or both objects, then comparing the results using an &ldquo;after normalization&rdquo; equality referenced from
  * the <code>afterNormalizationEquality</code>  member. By default, the <code>afterNormalizationEquality</code> is 
  * an instance of <a href="Equality$.html"><code>Equality.default[A]</code></a>.
- * </p>
+ * 
  *
- * <p>
  * <code>NormalizingEquality</code> is returned by the <code>Explicitly</code> DSL's &ldquo;<code>after</code> <code>being</code>&rdquo;
  * syntax, using for the <code>afterNormalizationEquality</code> the implicit <code>Equality</code> in scope for the type
  * of <code>Uniformity</code> passed to <code>being</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL"> 
  * scala&gt; import org.scalactic._
@@ -48,11 +47,10 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
    * The <code>Equality</code> with which to determine equality after normalizing the left-hand and, if appropriate,
    * the right-hand values.
    *
-   * <p>
    * In this trait's implementation, this <code>val</code> is initialized with the result of invoking <code>Equality.default[A]</code>.
    * Thus default <code>Equality</code> is the default <code>afterNormalizationEquality</code>. This may be changed by overriding
    * <code>afterNormalizationEquality</code> in subclasses.
-   * </p>
+   * 
    */
   val afterNormalizationEquality: Equality[A] = Equality.default[A]
 
@@ -60,11 +58,10 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
    * Determines the equality of two objects by normalizing the left-hand value, <code>a</code>, and, if appropriate, the right-hand
    * value, <code>b</code>, then passing them to <code>areEqual</code> method of <code>afterNormalizationEquality</code>.
    *
-   * <p>
    * The left-hand value, <code>a</code>, is normalized by passing it to the <code>normalized</code> method of this
    * <code>NormalizingEquality</code>. The right-hand value, <code>b</code>, is normalized, if appropriate, by passing it
    * to the <code>normalizedOrSame</code> method of this <code>NormalizingEquality</code>.
-   * </p>
+   * 
    */
   final def areEqual(a: A, b: Any): Boolean = {
     afterNormalizationEquality.areEqual(normalized(a), normalizedOrSame(b))
@@ -73,9 +70,8 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
   /**
    * Returns a normalized form of the passed object.
    *
-   * <p>
    * If the passed object is already in normal form, this method may return the same instance passed.
-   * </p>
+   * 
    *
    * @tparam A the type of the object to normalize
    * @param a the object to normalize
@@ -87,13 +83,12 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
    * Indicates whether this <code>NormalizingEquality</code>'s <code>normalized</code> method can &ldquo;handle&rdquo; the passed object, if cast to the
    * appropriate type <code>A</code>.
    *
-   * <p>
    * If this method returns true for a particular passed object, it means that if the object is passed
    * to <code>normalizedOrSame</code>, that method will return the result of passing it to <code>normalized</code>.
    * It does not mean that the object will necessarily be <em>modified</em> when passed to <code>normalizedOrSame</code> or <code>normalized</code>.
    * For more information and examples, see the documentation for <code>normalizedCanHandle</code> in trait <a href="Uniformity.html"><code>Uniformity</code></a>,
    * which has the same contract.
-   * </p>
+   * 
    */
   def normalizedCanHandle(b: Any): Boolean
 
@@ -108,32 +103,29 @@ trait NormalizingEquality[A] extends Equality[A] { thisNormEq =>
   /**
    * Returns a new <code>NormalizingEquality</code> that combines this and the passed <code>Uniformity</code>.
    *
-   * <p>
    * The <code>normalized</code> and <code>normalizedOrSame</code> methods
    * of the <code>NormalizingEquality</code>'s returned by this method return a result 
    * obtained by forwarding the passed value first to this <code>NormalizingEquality</code>'s implementation of the method,
    * then passing that result to the passed <code>Uniformity</code>'s implementation of the method, respectively.
    * Essentially, the body of the composed <code>normalized</code> method is:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * uniformityPassedToAnd.normalized(uniformityOnWhichAndWasInvoked.normalized(a))
    * </pre>
    *
-   * <p>
    * And the body of the composed <code>normalizedOrSame</code> method is:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * uniformityPassedToAnd.normalizedOrSame(uniformityOnWhichAndWasInvoked.normalizedOrSame(a))
    * </pre>
    *
-   * <p>
    * The <code>normalizeCanHandle</code> method of the <code>NormalizingEquality</code> returned by this method returns a result 
    * obtained by anding the result of forwarding the passed value to this <code>NormalizingEquality</code>'s implementation of the method
    * with the result of forwarding it to the passed <code>Uniformity</code>'s implementation.
    * Essentially, the body of the composed <code>normalizeCanHandle</code> method is:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * normEqOnWhichAndWasInvoked.normalizeCanHandle(a) &amp;&amp; uniformityPassedToAnd.normalizeCanHandle(a)

@@ -20,12 +20,10 @@ package org.scalatest.fixture
  * A function that takes no parameters (<em>i.e.</em>, a <code>Function0</code> or "no-arg" function) and results in <code>Unit</code>, which when
  * invoked executes the body of the constructor of the class into which this trait is mixed.
  *
- * <p>
  * This trait extends <code>DelayedInit</code> and defines a <code>delayedInit</code> method that
  * saves the body of the constructor (passed to <code>delayedInit</code>) for later execution when <code>apply</code> is invoked.
- * </p>
+ * 
  *
- * <p>
  * This trait is somewhat magical and therefore may be challenging for your collegues to understand, so please use it as a last resort only when the
  * simpler options described in the "<a href="../FlatSpec.html#sharedFixtures">shared fixtures</a>" section of your chosen style trait won't do
  * the job. <code>NoArg</code> is
@@ -33,21 +31,19 @@ package org.scalatest.fixture
  * it is quite handy for its intended use case (described in the next paragraph).
  * One potential gotcha, for example, is that a subclass's constructor body could in theory be executed multiple times by simply invoking <code>apply</code> multiple
  * times. In the intended use case for this trait, however, the body will be executed only once.
- * </p>
+ * 
  *
- * <p>
  * The intended use case for this method is (relatively rare) situations in which you want to extend a different instance of the same class
  * for each test, with the body of the test inheriting the members of that class, and with code executed before and/or after
  * the body of the test.
- * </p>
+ * 
  *
- * <p>
  * For example, Akka's <code>TestKit</code> class takes an <code>ActorSystem</code>,
  * which must have a unique name. To run a suite of tests in parallel, each test must get its own <code>ActorSystem</code>, to
  * ensure the tests run in isolation. At the end of each test, the <code>ActorSystem</code> must be shutdown. With <code>NoArg</code>,
  * you can achieve this by first defining a class that extends <code>TestKit</code> and mixes in <code>NoArg</code>.
  * Here's an example taken with permission from the book <a href="http://www.artima.com/shop/akka_concurrency"><em>Akka Concurrency</em></a>, by Derek Wyatt:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import akka.actor.ActorSystem
@@ -77,12 +73,11 @@ package org.scalatest.fixture
  * }
  * </pre>
  *
- * <p>
  * Given this implementation of <code>ActorSys</code>, which will invoke <code>shutdown</code> after the constructor code
  * is executed, you can run each test in a suite in a subclass of <code>TestKit</code>, giving each test's <code>TestKit</code>
  * an <code>ActorSystem</code> with a unique name, allowing you to safely run those tests in parallel. Here's an example
  * from <em>Akka Concurrency</em>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class MyActorSpec extends fixture.WordSpec
@@ -113,12 +108,11 @@ package org.scalatest.fixture
  * }
  * </pre>
  *
- * <p>
  * <a href="UnitFixture.html"><code>UnitFixture</code></a> is used in this example, because in this case, the <code>fixture.WordSpec</code> feature enabling tests to be defined as
  * functions from fixture objects of type <code>FixtureParam</code> to <code>Unit</code> is not being used. Rather, only the secondary feature that enables
  * tests to be defined as functions from <em>no parameters</em> to <code>Unit</code> is being used. This secondary feature is described in the second-to-last
  * paragraph on the main Scaladoc documentation of <a href="WordSpec.html"><code>fixture.WordSpec</code></a>, which says:
- * </p>
+ * 
  *
  * <blockquote>
  * If a test doesn't need the fixture, you can indicate that by providing a no-arg instead of a one-arg function, ...
@@ -127,18 +121,16 @@ package org.scalatest.fixture
  * will not invoke <code>withFixture(OneArgTest)</code>. It will instead directly invoke <code>withFixture(NoArgTest)</code>.
  * </blockquote>
  *
- * <p>
  * Since <code>FixtureParam</code> is unused in this use case, it could 
  * be anything. Making it <code>Unit</code> will hopefully help readers more easily recognize that it is not being used.
- * </p>
+ * 
  *
- * <p>
  * Note: As of Scala 2.11, <code>DelayedInit</code> (which is used by <code>NoArg</code>) has been deprecated, to indicate it is buggy and should be avoided
  * if possible. Those in charge of the Scala compiler and standard library have promised that <code>DelayedInit</code> will not be removed from Scala
  * unless an alternate way to achieve the same goal is provided. Thus it <em>should</em> be safe to use <code>NoArg</code>, but if you'd rather
  * not you can achieve the same effect with a bit more boilerplate by extending (<code>() =&gt; Unit</code>) instead of <code>NoArg</code> and placing
  * your code in an explicit <code>body</code> method. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import akka.actor.ActorSystem
@@ -169,11 +161,10 @@ package org.scalatest.fixture
  * }
  * </pre>
  *
- * <p>
  * Using this version of <code>ActorSys</code> will require an explicit
  * <code>body</code> method in the tests:
  *
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class MyActorSpec extends fixture.WordSpec
@@ -230,11 +221,10 @@ trait NoArg extends DelayedInit with (() => Unit) {
    * This method exists to cause a compile-time type error if someone accidentally 
    * tries to mix this trait into a <code>Suite</code>.
    *
-   * <p>
    * This trait is intended to be mixed
    * into classes that are constructed within the body (or as the body) of tests, not mixed into <code>Suite</code>s themselves. For an example,
    * the the main Scaladoc comment for this trait.
-   * </p>
+   * 
    */
   final val styleName: Int = 0 // So can't mix into Suite
 }

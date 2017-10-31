@@ -25,7 +25,6 @@ package org.scalatest
  * use the usual approaches to accessing the config map because of the eager manner in which they run tests.</em>
  * </td></tr></table>
  * 
- * <p>
  * Each time <code>run</code> is invoked on an instance of <code>ConfigMapWrapperSuite</code>, this
  * suite will create a new instance of the suite to wrap, passing to the constructor the config map passed to
  * <code>run</code>. This way, if the same <code>ConfigMapWrapperSuite</code> instance is run multiple
@@ -33,9 +32,8 @@ package org.scalatest
  * for each config map. In addition to being passed to the wrapped suite's constructor, the config map passed
  * to the <code>ConfigMapWrapperSuite</code>'s <code>run</code> method will also be passed to the <code>run</code>
  * method of the newly created wrapped suite instance.
- * </p>
+ * 
  *
- * <p>
  * The config map is accessible inside a <code>Suite</code> in many ways. It is passed to <code>run</code>,
  * <code>runNestedSuites</code>, <code>runTests</code>, and <code>runTest</code>. It is also passed to
  * <code>withFixture</code>, accessible via a method on <a href="Suite$NoArgTest.html"><code>NoArgTest</code></a> and
@@ -48,9 +46,8 @@ package org.scalatest
  * represents one more way to get at the config map inside a suite of test: <code>ConfigMapWrapperSuite</code> will
  * pass the config map to the constructor of your suite class, bringing it easily into scope for tests and
  * helper methods alike.
- * </p>
+ * 
  *
- * <p>
  * Having the config map passed to the suite constructor might be more convenient in some cases, but in the case
  * of the <a href="path/package.html"><code>org.scalatest.path</code></a> traits, it is necessary if a test needs
  * information from a config map. The reason is that in a path trait, the test code is executed eagerly,
@@ -59,7 +56,7 @@ package org.scalatest
  * is too late to get the config map to the tests, which have already been executed. Using a <code>ConfigMapWrapperSuite</code> solves that problem.
  * By passing the config map to the constructor, it is available early enough for the running tests to use it.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest._

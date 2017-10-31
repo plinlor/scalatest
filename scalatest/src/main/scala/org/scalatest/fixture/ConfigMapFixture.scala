@@ -21,10 +21,9 @@ import org.scalatest._
  * Trait that when mixed into a <a href="Suite.html"><code>fixture.Suite</code></a> passes
  * the config map passed to <code>runTest</code> as a fixture into each test.
  *
- * <p>
  * Here's an example in which tests just check to make sure <code>"hello"</code> and <code>"world"</code>
  * are defined keys in the config map:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.configmapfixture
@@ -44,10 +43,9 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * If you run this class without defining <code>"hello"</code> and <code>"world"</code>
  * in the confg map, the tests will fail:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new ExampleSpec)
@@ -59,10 +57,9 @@ import org.scalatest._
  *   Map() did not contain key "world" (<console>:24)</span>
  * </pre>
  * 
- * <p>
  * If you do define <code>"hello"</code> and <code>"world"</code> keys
  * in the confg map, the tests will success:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new ExampleSpec, configMap = Map("hello" -&gt; "hi", "world" -&gt; "globe"))
@@ -85,11 +82,10 @@ trait ConfigMapFixture { this: fixture.TestSuite =>
    * Invoke the test function, passing to the the test function the <code>configMap</code>
    * obtained by invoking <code>configMap</code> on the passed <code>OneArgTest</code>.
    *
-   * <p>
    * To enable stacking of traits that define <code>withFixture(NoArgTest)</code>, this method does not
    * invoke the test function directly. Instead, it delegates responsibility for invoking the test function
    * to <code>withFixture(NoArgTest)</code>.
-   * </p>
+   * 
    *
    * @param test the <code>OneArgTest</code> to invoke, passing in the
    *   <code>configMap</code> fixture

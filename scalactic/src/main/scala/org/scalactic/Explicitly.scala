@@ -20,13 +20,11 @@ package org.scalactic
  * explicit specification of an <code>Equality[T]</code> or a <code>Uniformity[T]</code> where
  * <code>Equality[T]</code> is taken implicitly.
  *
- * <p>
  * The Explicitly DSL can be used with the <code>===</code> and <code>!==</code> operators of Scalactic
  * as well as the <code>should</code> <code>equal</code>, <code>be</code>, <code>contain</code>, and
  * <code>===</code> syntax of ScalaTest matchers. 
- * </p>
  * 
- * <p>
+ * 
  * If you want to customize equality for a type in general, you would likely want to place an
  * implicit <code>Equality[T]</code> for that type in scope (or in <code>T</code>'s companion object). That implicit
  * equality definition will then be picked
@@ -36,7 +34,7 @@ package org.scalactic
  * If you just want to use a custom equality for a single comparison, however, you may prefer to pass it explicitly. For
  * example, if you have an implicit
  * <code>Equality[String]</code> in scope, you can force a comparison to use the default equality with this syntax:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // In production code:
@@ -46,14 +44,13 @@ package org.scalactic
  * result should equal ("hello") (decided by defaultEquality)
  * </pre>
  *
- * <p>
  * The explicitly DSL also provides support for specifying a one-off equality that is based on a normalization. For
  * example, Scalactic offers a <a href="StringNormalizations.html"><code>StringNormalizations</code></a> trait that
  * provides methods such as <code>trimmed</code> and <code>lowerCased</code> that return
  * <code>Normalization[String]</code> instances that normalize by trimming and lower-casing, respectively. If you bring
  * those into scope by mixing in or importing the members of <code>StringNormalizations</code>, you could use the
  * explicitly DSL like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // In production code:
@@ -63,10 +60,9 @@ package org.scalactic
  * result should equal ("hello") (after being lowerCased and trimmed)
  * </pre>
  *
- * <p>
  * If you prefer not to use English-like DSLs in your production code, you can alternatively
  * not use the <code>Explicitly</code> trait and instead write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // To explicitly specify an Equality instance, just specify it:
@@ -149,11 +145,10 @@ trait Explicitly {
    * see the documentation for <a href="Explicitly.html"><code>Explicitly</code></a> for an overview of
    * the explicitly DSL.
    *
-   * <p>
    * Instances of this class are returned via the <code>decided</code> <code>by</code> <code>&lt;an Equality&gt;</code>
    * syntax, and enables <code>afterBeing</code> to be invoked on it. Here's an example, given an
    * <code>Equality[String]</code> named <code>myStringEquality</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * result should equal ("hello") (decided by myStringEquality afterBeing lowerCased)
@@ -196,11 +191,10 @@ trait Explicitly {
    * see the documentation for <a href="Explicitly.html"><code>Explicitly</code></a> for an overview of
    * the explicitly DSL.
    *
-   * <p>
    * Instances of this class are returned via the <code>decided</code> <code>by</code> <code>&lt;an Equivalence&gt;</code>
    * syntax, and enables <code>afterBeing</code> to be invoked on it. Here's an example, given an
    * <code> Equivalence[String]</code> named <code>myStringEquivalence</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * result should equal ("hello") (determined by myStringEquivalence afterBeing lowerCased)

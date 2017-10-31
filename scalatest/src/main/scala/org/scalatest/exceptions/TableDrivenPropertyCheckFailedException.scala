@@ -21,10 +21,9 @@ import org.scalactic.source
 /**
  * Exception that indicates a table-driven property check failed.
  *
- * <p>
  * For an introduction to using tables, see the documentation for trait
  * <a href="../prop/TableDrivenPropertyChecks.html">TableDrivenPropertyChecks</a>.
- * </p>
+ * 
  *
  * @param messageFun a function that returns a detail message, not optional) for this <code>TableDrivenPropertyCheckFailedException</code>.
  * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TableDrivenPropertyCheckFailedException</code> to be thrown.

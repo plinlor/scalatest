@@ -24,15 +24,13 @@ import scala.util.{Success, Failure}
 /**
  * Trait that causes tests to be run in pseudo-random order.
  *
- * <p>
  * Although the tests are run in pseudo-random order, events will be fired in the &ldquo;normal&rdquo; order for the <code>Suite</code>
  * that mixes in this trait, as determined by <code>runTests</code>. 
- * </p>
+ * 
  *
- * <p>
  * The purpose of this trait is to reduce the likelihood of unintentional order dependencies between tests
  * in the same test class.
- * </p>
+ * 
  *
  * @author Chee Seng
  */
@@ -45,7 +43,6 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
   /**
    * Modifies the behavior of <code>super.runTest</code> to facilitate pseudo-random order test execution.
    *
-   * <p>
    * If <code>runTestInNewInstance</code> is <code>false</code>, this is the test-specific (distributed)
    * instance, so this trait's implementation of this method simply invokes <code>super.runTest</code>,
    * passing along the same <code>testName</code> and <code>args</code> object, delegating responsibility
@@ -53,15 +50,13 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
    * (or completes abruptly by throwing an exception), it notifies <code>args.distributedTestSorter</code>
    * that it has completed running the test by invoking <code>completedTest</code> on it,
    * passing in the <code>testName</code>.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>runTestInNewInstance</code> is <code>true</code>, it notifies <code>args.distributedTestSorter</code>
    * that it is distributing the test by invoking <code>distributingTest</code> on it,
    * passing in the <code>testName</code>.  The test execution will be deferred to be run in pseudo-random order later.
-   * </p>
+   * 
    *
-   * <p>
    * Note: this trait's implementation of this method is <code>final</code> to ensure that
    * any other desired <code>runTest</code> behavior is executed by the same thread that executes
    * the test. For example, if you were to mix in <code>BeforeAndAfter</code> after
@@ -71,7 +66,7 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
    * traits like <code>BeforeAndAfter</code> can only be &lquot;super&rquot; to <code>RandomTestOrder</code>
    * and, therefore, that its <code>before</code> and <code>after</code> code will be run
    * by the same distributed thread that runs the test itself.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
    * @param args the <code>Args</code> for this run
@@ -106,7 +101,6 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
   /**
    * Construct a new instance of this <code>Suite</code>.
    *
-   * <p>
    * This trait's implementation of <code>runTests</code> invokes this method to create
    * a new instance of this <code>Suite</code> for each test. This trait's implementation
    * of this method uses reflection to call <code>this.getClass.newInstance</code>. This
@@ -119,12 +113,11 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
    * cases where a <code>Suite</code> class is explicitly defined without a public,
    * no-arg constructor, you will need to override this method to construct a new
    * instance of the <code>Suite</code> in some other way.
-   * </p>
+   * 
    *
-   * <p>
    * Here's an example of how you could override <code>newInstance</code> to construct
    * a new instance of an inner class:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest._
@@ -145,10 +138,9 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
    * of this <code>Suite</code> in parallel while sorting the events back into a more
    * user-friendly, sequential order.
    *
-   * <p>
    * The default implementation of this method returns the value specified via <code>-T</code> to
    * <a href="tools/Suite$.html"></code>Suite</code></a>, or 2 seconds, if no <code>-T</code> was supplied.
-   * </p>
+   * 
    *
    * @return a maximum amount of time to wait for events while resorting them into sequential order
    */
@@ -157,21 +149,19 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
   /**
    * Modifies the behavior of <code>super.run</code> to facilitate pseudo-random order test execution.
    *
-   * <p>
    * If both <code>testName</code> and <code>args.distributedTestSorter</code> are defined,
    * this trait's implementation of this method will create a "test-specific reporter" whose <code>apply</code>
    * method will invoke the <code>apply</code> method of the <code>DistributedTestSorter</code>, which takes
    * a test name as well as the event. It will then invoke <code>super.run</code> passing along
    * the same <code>testName</code> and an <code>Args</code> object that is the same except with the
    * original reporter replaced by the test-specific reporter.
-   * </p>
+   * 
    *
-   * <p>
    * If either <code>testName</code> or <code>args.distributedTestSorter</code> is empty, it will create <code>TestSortingReporter</code>
    * and override <code>args</code>'s <code>reporter</code> and <code>distributedTestSorter</code> with it.  It then call <code>super.run</code>
    * to delegate the run to super's implementation, and to collect all children suites in <code>suiteRunQueue</code>.  After <code>super.run</code>
    * completed, it then shuffle the order of the suites collected in <code>suiteRunQueue</code> and run them.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
    *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>Suite</code>.

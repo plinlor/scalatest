@@ -23,16 +23,14 @@ package org.scalatest
  * <code>apply</code> method) rather than executing the nested <code>Suite</code>s directly. It is then up to another thread or process
  * to execute those <code>Suite</code>s.
  *
- * <p>
  * If you have a set of nested <code>Suite</code>s that must be executed sequentially, you can mix in trait
  * <a href="SequentialNestedSuiteExecution.html"><code>SequentialNestedSuiteExecution</code></a>, which overrides <code>runNestedSuites</code> and
  * calls <code>super</code>'s <code>runNestedSuites</code> implementation, passing in <code>None</code> for the
  * <code>Distributor</code>.
- * </p>
  * 
- * <p>
+ * 
  * Implementations of this trait must be thread safe.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -41,12 +39,11 @@ trait Distributor {
   /**
    * Puts a <code>Suite</code> into the <code>Distributor</code>.
    *
-   * <p>
    * The <code>Distributor</code> can decide which, if any, of the passed <code>Args</code
    * to pass to the <code>Suite</code>'s apply method. For example, a <code>Distributor</code>
    * may pass itself wrapped in a <code>Some</code> in the <code>Args</code> it passes to the <code>Suite</code>'s <code>run</code>
    * method instead of the <code>args.distributor</code> value.
-   * </p>
+   * 
    *
    * @param suite the <code>Suite</code> to put into the <code>Distributor</code>.
    * @param args a <code>Args</code> containing objects that may be passed to the <code>Suite</code>'s

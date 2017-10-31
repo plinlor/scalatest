@@ -24,7 +24,6 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
  * Exception that indicates an action that is only allowed during a suite's test registration phase,
  * such as registering a test to run or ignore, was attempted after registration had already closed.
  *
- * <p>
  * In suites that register tests as functions, such as <a href="../FunSuite.html"><code>FunSuite</code></a> and <a href="../FunSpec.html"><code>FunSpec</code></a>, tests
  * are normally registered during construction. Although it is not the usual approach, tests can also
  * be registered after construction by invoking methods that register tests on the already constructed suite so
@@ -32,7 +31,7 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
  * As soon as <code>run</code> is invoked for the first time, registration of tests is "closed," meaning
  * that any further attempts to register a test will fail (and result in an instance of this exception class being thrown). This
  * can happen, for example, if an attempt is made to nest tests, such as in a <code>FunSuite</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * test("this test is fine") {
@@ -41,11 +40,10 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
  * }
  * </pre>
  *
- * <p>
  * This exception encapsulates information about the stack depth at which the line of code that made this attempt resides,
  * so that information can be presented to the user that makes it quick to find the problem line of code. (In other words,
  * the user need not scan through the stack trace to find the correct filename and line number of the offending code.)
- * </p>
+ * 
  *
  * @param message the exception's detail message
  * @param posOrStackDepthFun either a source position or a function that return the depth in the stack trace of this exception at which the line of code that attempted

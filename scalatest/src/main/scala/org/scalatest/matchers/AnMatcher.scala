@@ -24,33 +24,29 @@ import scala.reflect.ClassTag
  * Trait extended by matcher objects that can match a value of the specified type.
  * <code>AnMatcher</code> represents a noun that appears after the word <code>an</code>, thus a nounName is required.
  *
- * <p>
  * The value to match is passed to the <code>AnMatcher</code>'s <code>apply</code> method. The result is a <code>MatchResult</code>.
  * An <code>AnMatcher</code> is, therefore, a function from the specified type, <code>T</code>, to a <code>MatchResult</code>.
- * </p>
+ * 
  *
- * <p>
  * Although <code>AnMatcher</code>
  * and <code>Matcher</code> represent very similar concepts, they have no inheritance relationship
  * because <code>Matcher</code> is intended for use right after <code>should</code> or <code>must</code>
  * whereas <code>AnMatcher</code> is intended for use right after <code>an</code>.
- * </p>
+ * 
  *
- * <p>
  * As an example, you could create <code>AnMatcher[Int]</code>
  * called <code>oddNumber</code> that would match any odd <code>Int</code>, and one called <code>evenNumber</code> that would match
  * any even <code>Int</code>.
  * Given this pair of <code>AnMatcher</code>s, you could check whether an <code>Int</code> was odd or even number with expressions like:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * num should be an oddNumber
  * num should not be an evenNumber
  * </pre>
  *
- * <p>
  * Here's is how you might define the oddNumber and evenNumber <code>AnMatchers</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Using AnMatcher.apply method
@@ -68,9 +64,8 @@ import scala.reflect.ClassTag
  * }
  * </pre>
  *
- * <p>
  * Here's an rather contrived example of how you might use <code>oddNumber</code> and <code>evenNumber</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *
@@ -83,20 +78,18 @@ import scala.reflect.ClassTag
  * num1 should be an evenNumber
  * </pre>
  *
- * <p>
  * The last assertion in the above test will fail with this failure message:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * 1 was not an even number
  * </pre>
  *
- * <p>
  * For more information on <code>MatchResult</code> and the meaning of its fields, please
  * see the documentation for <a href="MatchResult.html"><code>MatchResult</code></a>. To understand why <code>AnMatcher</code>
  * is contravariant in its type parameter, see the section entitled "Matcher's variance" in the
  * documentation for <a href="Matcher.html"><code>Matcher</code></a>.
- * </p>
+ * 
  *
  * @tparam T The type used by this AnMatcher's apply method.
  * @author Bill Venners

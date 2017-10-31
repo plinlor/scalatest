@@ -22,12 +22,11 @@ import org.scalatest.exceptions.StackDepthException
 /**
  * Superclass for the possible outcomes of running a test.
  *
- * <p>
  * <code>Outcome</code> is the result type of the <code>withFixture</code> methods of traits
  * <a href="Suite.html#withFixture"><code>Suite</code></a> and <a href="fixture/Suite.html#withFixture"><code>fixture.Suite</code></a>, as well as their
  * <a href="Suite$NoArgTest.html"><code>NoArgTest</code></a> and <a href="fixture/Suite$OneArgTest.html"><code>OneArgTest</code></a> function types.
  * The four possible outcomes are:
- * </p>
+ * 
  *
  * <ul>
  * <li><a href="Succeeded$.html"><code>Succeeded</code></a> - indicates a test succeeded</li>
@@ -36,22 +35,20 @@ import org.scalatest.exceptions.StackDepthException
  * <li><a href="Pending$.html"><code>Pending</code></a> - indicates a test was pending</li>
  * </ul>
  *
- * <p>
  * Note that "ignored" does not appear as a type of <code>Outcome</code>, because tests are
  * marked as ignored on the outside and skipped over as the suite executes. So an ignored test never runs, and therefore
  * never has an outcome. By contrast, a test is determined to be pending by running the test
  * and observing the actual outcome. If the test body completes abruptly with a <code>TestPendingException</code>,
  * then the outcome was that the test was pending.
- * </p>
+ * 
  */
 sealed abstract class Outcome extends Product with Serializable {
 
   /**
    * Indicates whether this <code>Outcome</code> represents a test that succeeded.
    *
-   * <p>
    * This class's implementation of this method always returns <code>false</code>.
-   * </p>
+   * 
    *
    * @return true if this <code>Outcome</code> is an instance of <code>Succeeded</code>.
    */
@@ -60,9 +57,8 @@ sealed abstract class Outcome extends Product with Serializable {
   /**
    * Indicates whether this <code>Outcome</code> represents a test that failed.
    *
-   * <p>
    * This class's implementation of this method always returns <code>false</code>.
-   * </p>
+   * 
    *
    * @return true if this <code>Outcome</code> is an instance of <code>Failed</code>.
    */
@@ -71,9 +67,8 @@ sealed abstract class Outcome extends Product with Serializable {
   /**
    * Indicates whether this <code>Outcome</code> represents a test that was canceled.
    *
-   * <p>
    * This class's implementation of this method always returns <code>false</code>.
-   * </p>
+   * 
    *
    * @return true if this <code>Outcome</code> is an instance of <code>Canceled</code>.
    */
@@ -82,9 +77,8 @@ sealed abstract class Outcome extends Product with Serializable {
   /**
    * Indicates whether this <code>Outcome</code> represents a test that was pending.
    *
-   * <p>
    * This class's implementation of this method always returns <code>false</code>.
-   * </p>
+   * 
    *
    * @return true if this <code>Outcome</code> is an instance of <code>Pending</code>.
    */
@@ -100,9 +94,8 @@ sealed abstract class Outcome extends Product with Serializable {
   /**
    * Converts this <code>Outcome</code> to an <code>Option[Throwable]</code>.
    *
-   * <p>
    * This class's implementation of this method always returns <code>None</code>.
-   * </p>
+   * 
    *
    * @return a <code>Some</code> wrapping the contained exception if this <code>Outcome</code> is an instance of either <code>Failed</code> or <code>Canceled</code>.
    */
@@ -111,9 +104,8 @@ sealed abstract class Outcome extends Product with Serializable {
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
    *
-   * <p>
    * When this <code>Outcome</code> instance is not Succeeded, it behaves as followed:
-   * </p>
+   * 
    * 
    * <ul>
    *   <li>Failed(ex) - throws ex</li> 
@@ -149,9 +141,8 @@ object Outcome {
    * Enables collections of <code>Outcome</code>s to be flattened into a collections of contained exceptions.
    *
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; import org.scalatest._
@@ -175,10 +166,9 @@ object Outcome {
    *   TableFor2((x,square), (0,0), (1,1), (2,4), (3,8), (4,16), (5,26), (6,36))
    * </pre>
    *
-   * <p>
    * Given the above table, which includes some errors, you can obtain an <code>IndexedSeq</code> of the <code>Outcome</code>s
    * of executing an assertion on each row of the table with <code>outcomeOf</code>, like this:
-   * </p>
+   * 
    * 
    * <pre class="stREPL">
    * scala&gt; import OutcomeOf._
@@ -194,10 +184,9 @@ object Outcome {
    *   Failed(org.scalatest.exceptions.TestFailedException: 26 did not equal 25), Succeeded)
    * </pre>
    *
-   * <p>
    * Now you have a collection of all the outcomes, including successful ones. If you just want the <code>Failed</code> and <code>Canceled</code> outcomes, which
    * contain exceptions, you can filter out anything that isn't "exceptional," like this:
-   * </p>
+   * 
    * 
    * <pre class="stREPL">
    * scala&gt; outcomes.filter(_.isExceptional)
@@ -206,9 +195,8 @@ object Outcome {
    *   Failed(org.scalatest.exceptions.TestFailedException: 26 did not equal 25))
    * </pre>
    *
-   * <p>
    * But if you just wanted the contained exceptions, you can (thanks to this implicit method) invoke <code>flatten</code> on your collection:
-   * </p>
+   * 
    * 
    * <pre class="stREPL">
    * scala&gt; outcomes.flatten
@@ -240,11 +228,10 @@ object Outcome {
 /**
  * Superclass for the two outcomes of running a test that contain an exception: <code>Failed</code> and <code>Canceled</code>.
  *
- * <p>
  * This class provides a <code>toOption</code> method that returns a <code>Some</code> wrapping the contained exception, and
  * an <code>isExceptional</code> field with the value <code>true</code>. It's companion object provides an extractor that
  * enables patterns that match a test that either failed or canceled, as in:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * outcome match {
@@ -282,17 +269,15 @@ object Exceptional {
   /**
    * Creates an <code>Exceptional</code> instance given the passed <code>Throwable</code>.
    *
-   * <p>
    * If the passed <code>Throwable</code> is an instance of <code>TestCanceledException</code>, this
    * method will return <code>Canceled</code> containing that <code>TestCanceledException</code>. Otherwise,
    * it returns a <code>Failed</code> containing the <code>Throwable</code>.
-   * </p>
+   * 
    *
-   * <p>
    * For example, trait <a href="SeveredStackTraces.html"><code>SeveredStackTraces</code></a> uses this
    * factory method to sever the stack trace of the exception contained in either a <code>Failed</code> and <code>Canceled</code> 
    * like this:
-   * </p>
+   * 
    * 
    * <pre class="stHighlight">
    * abstract override def withFixture(test: NoArgTest): Outcome = {
@@ -315,11 +300,10 @@ object Exceptional {
    * Extractor enabling patterns that match both <code>Failed</code> and </code>Canceled</code> outcomes, 
    * extracting the contained exception.
    *
-   * <p>
    * For example, trait <a href="SeveredStackTraces.html"><code>SeveredStackTraces</code></a> uses this
    * extractor to sever the stack trace of the exception contained in either a <code>Failed</code> and <code>Canceled</code> 
    * like this:
-   * </p>
+   * 
    * 
    * <pre class="stHighlight">
    * abstract override def withFixture(test: NoArgTest): Outcome = {
@@ -345,23 +329,21 @@ object Exceptional {
 /**
  * Outcome for a test that succeeded.
  *
- * <p>
  * Note: the difference between this <code>Succeeded</code> object and the similarly named <a href="SucceededStatus$.html"><code>SucceededStatus</code></a>
  * object is that this object indicates one test (or assertion) succeeded, whereas the <code>SucceededStatus</code> object indicates the absence of any failed tests or
  * aborted suites during a run. Both are used as the result type of <a href="Suite.html#lifecycle-methods"><code>Suite</code></a> lifecycle methods, but <code>Succeeded</code>
  * is a possible result of <code>withFixture</code>, whereas <code>SucceededStatus</code> is a possible result of <code>run</code>, <code>runNestedSuites</code>,
  * <code>runTests</code>, or <code>runTest</code>. In short, <code>Succeeded</code> is always just about one test (or assertion), whereas <code>SucceededStatus</code> could be
  * about something larger: multiple tests or an entire suite.
- * </p>
+ * 
  */
 case object Succeeded extends Outcome with compatible.Assertion {
 
   /**
    * Indicates that this <code>Outcome</code> represents a test that succeeded.
    *
-   * <p>
    * This class's implementation of this method always returns <code>true</code>.
-   * </p>
+   * 
    *
    * @return true
    */
@@ -378,14 +360,13 @@ case object Succeeded extends Outcome with compatible.Assertion {
 /**
  * Outcome for a test that failed, containing an exception describing the cause of the failure.
  *
- * <p>
  * Note: the difference between this <code>Failed</code> class and the similarly named <a href="FailedStatus$.html"><code>FailedStatus</code></a>
  * object is that an instance of this class indicates one test failed, whereas the <code>FailedStatus</code> object indicates either one or more tests failed
  * and/or one or more suites aborted during a run. Both are used as the result type of <code>Suite</code> lifecycle methods, but <code>Failed</code>
  * is a possible result of <code>withFixture</code>, whereas <code>FailedStatus</code> is a possible result of <code>run</code>, <code>runNestedSuites</code>,
  * <code>runTests</code>, or <code>runTest</code>. In short, <code>Failed</code> is always just about one test, whereas <code>FailedStatus</code> could be
  * about something larger: multiple tests or an entire suite.
- * </p>
+ * 
  *
  * @param ex the <code>Throwable</code> contained in this <code>Failed</code>.
  */
@@ -397,9 +378,8 @@ case class Failed(exception: Throwable) extends Exceptional(exception) {
   /**
    * Indicates that this <code>Outcome</code> represents a test that failed.
    *
-   * <p>
    * This class's implementation of this method always returns <code>true</code>.
-   * </p>
+   * 
    *
    * @return true
    */
@@ -408,9 +388,8 @@ case class Failed(exception: Throwable) extends Exceptional(exception) {
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
    * 
-   * <p>
    * The implmentation of this class will re-throw the passed in exception. 
-   * </p>
+   * 
    */
   def toSucceeded: Succeeded.type = throw exception
 }
@@ -475,9 +454,8 @@ case class Canceled(exception: exceptions.TestCanceledException) extends Excepti
   /**
    * Indicates that this <code>Outcome</code> represents a test that was canceled.
    *
-   * <p>
    * This class's implementation of this method always returns <code>true</code>.
-   * </p>
+   * 
    *
    * @return true
    */
@@ -486,9 +464,8 @@ case class Canceled(exception: exceptions.TestCanceledException) extends Excepti
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
    * 
-   * <p>
    * The implmentation of this class will re-throw the passed in exception. 
-   * </p>
+   * 
    */
   def toSucceeded: Succeeded.type = throw exception
 }
@@ -540,11 +517,10 @@ object Canceled {
   /**
    * Creates a <code>Canceled</code> outcome given a string message.
    *
-   * <p>
    * For example, trait <code>CancelAfterFailure</code> uses this factory method to create
    * a <code>Canceled</code> status if a <code>cancelRemaining</code> flag is set, which will
    * be the case if a test failed previously while running the suite:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * abstract override def withFixture(test: NoArgTest): Outcome = {
@@ -594,9 +570,8 @@ case object Pending extends Outcome {
   /**
    * Indicates that this <code>Outcome</code> represents a test that was pending.
    *
-   * <p>
    * This class's implementation of this method always returns <code>true</code>.
-   * </p>
+   * 
    *
    * @return true
    */
@@ -605,9 +580,8 @@ case object Pending extends Outcome {
   /**
    * Converts this <code>Outcome</code> to a <code>Succeeded</code>.
    * 
-   * <p>
    * The implmentation of this class will throw <code>TestPendingException</code> with the passed in message. 
-   * </p>
+   * 
    */
   def toSucceeded: Succeeded.type = throw new exceptions.TestPendingException
 }

@@ -27,10 +27,9 @@ import java.util.ConcurrentModificationException
  * A <code>Doc</code> class that takes one XML node markup
  *  which will be returned from its <code>nestedSuites</code> method.
  *
- * <p>
  * For example, you can define a suite that always executes a list of
  * nested suites like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class StepsSuite extends Suites(
@@ -42,11 +41,10 @@ import java.util.ConcurrentModificationException
  * )
  * </pre>
  *
- * <p>
  * When <code>StepsSuite</code> is executed, it will execute its
  * nested suites in the passed order: <code>Step1Suite</code>, <code>Step2Suite</code>,
  * <code>Step3Suite</code>, <code>Step4Suite</code>, and <code>Step5Suite</code>.
- * </p>
+ * 
  *
  * @param suitesToNest a sequence of <code>Suite</code>s to nest.
  *

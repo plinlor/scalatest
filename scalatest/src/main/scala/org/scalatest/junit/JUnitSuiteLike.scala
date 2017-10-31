@@ -30,19 +30,17 @@ import collection.immutable.TreeSet
  * Implementation trait for class <code>JUnitSuite</code>, which represents
  * a suite of tests that can be run with either JUnit or ScalaTest.
  * 
- * <p>
  * <a href="JUnitSuite.html"><code>JUnitSuite</code></a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
  * behavior of <code>JUnitSuite</code> into some other class, you can use this
  * trait instead, because class <code>JUnitSuite</code> does nothing more than
  * extend this trait.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="JUnitSuite.html">detailed
  * overview of <code>JUnitSuite</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -56,12 +54,11 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
    * trait, given this trait's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
    * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param args the <code>Args</code> for this run
    *
@@ -77,12 +74,11 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
    * trait, given this trait's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTests</code>. Because this
    * trait does not actually use <code>runTests</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -99,12 +95,11 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
    * trait, given this traits's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTest</code>. Because this
    * trait does not actually use <code>runTest</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run
@@ -119,12 +114,11 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
    * Returns the set of test names that will be executed by JUnit when <code>run</code> is invoked
    * on an instance of this class, or the instance is passed directly to JUnit for running.
    *
-   * <p>
    * The iterator obtained by invoking <code>elements</code> on this
    * returned <code>Set</code> will produce the test names in their <em>natural order</em>, as determined by <code>String</code>'s
    * <code>compareTo</code> method. Nevertheless, this method is not consulted by JUnit when it
    * runs the tests, and JUnit may run the tests in any order.
-   * </p>
+   * 
    */
   override def testNames: Set[String] = {
 
@@ -154,12 +148,11 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
    * Returns the number of tests expected to be run by JUnit when <code>run</code> is invoked
    * on this <code>JUnitSuite</code>.
    *
-   * <p>
    * If <code>tagsToInclude</code> in the passed <code>Filter</code> is defined, this class's
    * implementation of this method returns 0. Else this class's implementation of this method
    * returns the size of the set returned by <code>testNames</code> on the current instance,
    * less the number of tests that were annotated with <code>org.junit.Ignore</code>.
-   * </p>
+   * 
    *
    * @param filter a <code>Filter</code> for test filtering
    * @return number of expected test count

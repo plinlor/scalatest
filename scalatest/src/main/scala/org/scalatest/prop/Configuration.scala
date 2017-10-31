@@ -56,9 +56,8 @@ trait Configuration {
   /**
    * Configuration object for property checks.
    *
-   * <p>
    * The default values for the parameters are:
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
    * <tr>
@@ -156,11 +155,10 @@ trait Configuration {
   /**
    * Abstract class defining a family of configuration parameters for property checks.
    * 
-   * <p>
    * The subclasses of this abstract class are used to pass configuration information to
    * the <code>forAll</code> methods of traits <code>PropertyChecks</code> (for ScalaTest-style
    * property checks) and <code>Checkers</code>(for ScalaCheck-style property checks).
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -178,11 +176,10 @@ trait Configuration {
    * A <code>PropertyCheckConfigParam</code> that specifies the maximum number of discarded
    * property evaluations allowed during property evaluation.
    *
-   * <p>
    * In <code>GeneratorDrivenPropertyChecks</code>, a property evaluation is discarded if it throws
    * <code>DiscardedEvaluationException</code>, which is produce by <code>whenever</code> clause that
    * evaluates to false. For example, consider this ScalaTest property check:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * // forAll defined in <code>GeneratorDrivenPropertyChecks</code>
@@ -194,15 +191,13 @@ trait Configuration {
    *
    * </pre>
    *
-   * <p>
    * In the above code, whenever a non-positive <code>n</code> is passed, the property function will complete abruptly
    * with <code>DiscardedEvaluationException</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Similarly, in <code>Checkers</code>, a property evaluation is discarded if the expression to the left
    * of ScalaCheck's <code>==></code> operator is false. Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * // forAll defined in <code>Checkers</code>
@@ -212,11 +207,10 @@ trait Configuration {
    *
    * </pre>
    *
-   * <p>
    * For either kind of property check, <code>MaxDiscarded</code> indicates the maximum number of discarded 
    * evaluations that will be allowed. As soon as one past this number of evaluations indicates it needs to be discarded,
    * the property check will fail.
-   * </p>
+   * 
    *
    * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
    *
@@ -244,12 +238,11 @@ trait Configuration {
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the maximum size should be greater than or equal to the minimum size. This requirement is
    * enforced by the <code>PropertyCheckConfig</code> constructor and the <code>forAll</code> methods of
    * traits <code>PropertyChecks</code> and <code>Checkers</code>. In other words, it is enforced at the point
    * both a maximum and minimum size are provided together.
-   * </p>
+   * 
    * 
    * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
    *
@@ -265,10 +258,9 @@ trait Configuration {
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the size range is added to minSize in order to calculate the maximum size passed to ScalaCheck.
    * Using a range allows compile-time checking of a non-negative number being specified.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -320,12 +312,11 @@ trait Configuration {
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the maximum size should be greater than or equal to the minimum size. This requirement is
    * enforced by the <code>PropertyCheckConfig</code> constructor and the <code>forAll</code> methods of
    * traits <code>PropertyChecks</code> and <code>Checkers</code>. In other words, it is enforced at the point
    * both a maximum and minimum size are provided together.
-   * </p>
+   * 
    * 
    * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
    */
@@ -336,10 +327,9 @@ trait Configuration {
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the size range is added to minSize in order to calculate the maximum size passed to ScalaCheck.
    * Using a range allows compile-time checking of a non-negative number being specified.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */

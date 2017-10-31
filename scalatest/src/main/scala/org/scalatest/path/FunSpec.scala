@@ -21,14 +21,13 @@ import org.scalatest._
  * A sister class to <code>org.scalatest.FunSpec</code> that isolates tests by running each test in its own
  * instance of the test class, and for each test, only executing the <em>path</em> leading to that test.
  *
- * <p>
  * Class <code>path.FunSpec</code> behaves similarly to class <code>org.scalatest.FunSpec</code>, except that tests
  * are isolated based on their path. The purpose of <code>path.FunSpec</code> is to facilitate writing
  * specification-style tests for mutable objects in a clear, boilerpate-free way. To test mutable objects, you need to
  * mutate them. Using a path class, you can make a statement in text, then implement that statement in code (including
  * mutating state), and nest and combine these test/code pairs in any way you wish. Each test will only see
  * the side effects of code that is in blocks that enclose the test. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.path
@@ -152,30 +151,25 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * Note that the above class is organized by writing a bit of specification text that opens a new block followed
  * by, at the top of the new block, some code that "implements" or "performs" what is described in the text. This is repeated as
  * the mutable object (here, a <code>ListBuffer</code>), is prepared for the enclosed tests. For example:
- * <p>
  *
  * <pre class="stHighlight">
  * describe("A ListBuffer") {
  *   val buf = ListBuffer.empty[Int]
  * </pre>
  *
- * <p>
  * Or:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * describe("when 2 is appended") {
  *   buf += 2
  * </pre>
  *
- * <p>
  * Note also that although each test mutates the <code>ListBuffer</code>, none of the other tests observe those
  * side effects:
- * <p>
  *
  * <pre class="stHighlight">
  * it("should contain 1") {
@@ -196,13 +190,12 @@ import org.scalatest._
  *     buf.remove(0) should equal (2)
  * </pre>
  *
- * <p>
  * This kind of isolation of tests from each other is a consequence of running each test in its own instance of the test
  * class, and can also be achieved by simply mixing <code>OneInstancePerTest</code> into a regular
  * <code>org.scalatest.FunSpec</code>. However, <code>path.FunSpec</code> takes isolation one step further: a test
  * in a <code>path.FunSpec</code> does not observe side effects performed outside tests in earlier blocks that do not
  * enclose it. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * describe("when 2 is removed") {
@@ -226,9 +219,8 @@ import org.scalatest._
  *     buf.remove(0) should equal (3)
  * </pre>
  *
- * <p>
  * Running the full <code>ExampleSpec</code>, shown above, in the Scala interpeter would give you:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala> import org.scalatest._
@@ -251,14 +243,12 @@ import org.scalatest._
  * - should have size 0 when created</span>
  * </pre>
  *
- * <p>
  * <em>Note: class <code>path.FunSpec</code>'s approach to isolation was inspired in part by the
  * <a href="https://github.com/orfjackal/specsy">specsy</a> framework, written by Esko Luontola.</em>
- * </p>
+ * 
  *
  * <a name="sharedFixtures"></a><h2>Shared fixtures</h2>
  *
- * <p>
  * A test <em>fixture</em> is objects or other artifacts (such as files, sockets, database
  * connections, <em>etc.</em>) used by tests to do their work.
  * If a fixture is used by only one test, then the definitions of the fixture objects can
@@ -270,18 +260,16 @@ import org.scalatest._
  * instance of the test class to <em>reach</em> the test (or put another way, the
  * code is along the "path to the test.") "Lexically after" means that the code needs to be executed to exit the
  * constructor after the test has been executed.
- * </p>
+ * 
  *
- * <p>
  * The reason lexical placement is the one and only one way to share fixtures in a <code>path.FunSpec</code> is because
  * all of its lifecycle methods are overridden and declared <code>final</code>. Thus you can't mix in <code>BeforeAndAfter</code> or
  * <code>BeforeAndAfterEach</code>, because both override <code>runTest</code>, which is <code>final</code> in
  * a <code>path.FunSpec</code>. You also can't override <code>withFixture</code>, because <code>path.FreeSpec</code>
  * extends <a href="../Suite.html"><code>Suite</code></a> not <a href="../TestSuite.html"><code>TestSuite</code></a>,
  * where <code>withFixture</code> is defined. In short:
- * </p>
+ * 
  *
- * <p>
  * <table style="border-collapse: collapse; border: 1px solid black; width: 70%; margin: auto">
  * <tr>
  * <th style="background-color: #CCCCCC; border-width: 1px; padding: 15px; text-align: left; border: 1px solid black; font-size: 125%; font-weight: bold">
@@ -290,9 +278,8 @@ import org.scalatest._
  * </th>
  * </tr>
  * </table>
- * </p>
+ * 
  *
- * <p>
  * The reason the life cycle methods are final, by the way, is to prevent users from attempting to combine
  * a <code>path.FunSpec</code>'s approach to isolation with other ways ScalaTest provides to share fixtures or
  * execute tests, because doing so could make the resulting test code hard to reason about. A
@@ -300,7 +287,7 @@ import org.scalatest._
  * way, users should be able to reason about the code.
  * To help you visualize how a <code>path.FunSpec</code> is executed, consider the following variant of
  * <code>ExampleSpec</code> that includes print statements:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.path
@@ -412,9 +399,8 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * Running the above version of <code>ExampleSpec</code> in the Scala interpreter will give you output similar to:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala> import org.scalatest._
@@ -502,17 +488,15 @@ import org.scalatest._
  * - should have size 0 when created</span>
  * </pre>
  *
- * <p>
  * Note that each test is executed in order of appearance in the <code>path.FunSpec</code>, and that only
  * those <code>println</code> statements residing in blocks that enclose the test being run are executed. Any
  * <code>println</code> statements in blocks that do not form the "path" to a test are not executed in the
  * instance of the class that executes that test.
- * </p>
+ * 
  *
  * <a name="howItExecutes"></a>
  * <h2>How it executes</h2>
  *
- * <p>
  * To provide its special brand of test isolation, <code>path.FunSpec</code> executes quite differently from its
  * sister class in <code>org.scalatest</code>. An <code>org.scalatest.FunSpec</code>
  * registers tests during construction and executes them when <code>run</code> is invoked. An
@@ -523,12 +507,10 @@ import org.scalatest._
  * a <code>path.FunSpec</code> will each time report the same results registered during construction. If you want
  * to run the tests of a <code>path.FunSpec</code> anew, you'll need to create a new instance and invoke
  * <code>run</code> on that.
- * <p>
  *
- * <p>
  * A <code>path.FunSpec</code> will create one instance for each "leaf" node it contains. The main kind of leaf node is
  * a test, such as:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // One instance will be created for each test
@@ -537,9 +519,8 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * However, an empty scope (a scope that contains no tests or nested scopes) is also a leaf node:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *  // One instance will be created for each empty scope
@@ -551,16 +532,14 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * The tests will be executed sequentially, in the order of appearance. The first test (or empty scope,
  * if that is first) will be executed when a class that mixes in <code>path.FunSpec</code> is
  * instantiated. Only the first test will be executed during this initial instance, and of course, only
  * the path to that test. Then, the first time the client uses the initial instance (by invoking one of <code>run</code>,
  * <code>expectedTestsCount</code>, <code>tags</code>, or <code>testNames</code> on the instance), the initial instance will,
  * before doing anything else, ensure that any remaining tests are executed, each in its own instance.
- * </p>
+ * 
  *
- * <p>
  * To ensure that the correct path is taken in each instance, and to register its test results, the initial
  * <code>path.FunSpec</code> instance must communicate with the other instances it creates for running any subsequent
  * leaf nodes. It does so by setting a thread-local variable prior to creating each instance (a technique
@@ -571,57 +550,50 @@ import org.scalatest._
  * leaf node, or discovers there are no other leaf nodes remaining to execute. It communicates the path to the next
  * leaf node, if any, and the result of running the test it did execute, if any, back to the initial instance. The
  * initial instance repeats this process until all leaf nodes have been executed and all test results registered.
- * </p>
+ * 
  *
  * <a name="ignoredTests"></a>
  * <h2>Ignored tests</h2>
  *
- * <p>
  * You mark a test as ignored in an <code>org.scalatest.path.FunSpec</code> in the same manner as in
  * an <code>org.scalatest.FunSpec</code>. Please see the <a href="../FunSpec.html#ignoredTests">Ignored tests</a> section
  * in its documentation for more information.
- * </p>
+ * 
  *
- * <p>
  * Note that a separate instance will be created for an ignored test,
  * and the path to the ignored test will be executed in that instance, but the test function itself will not
  * be executed. Instead, a <code>TestIgnored</code> event will be fired.
- * </p>
+ * 
  *
  * <a name="informers"></a>
  * <h2>Informers</h2>
  *
- * <p>
  * You output information using <code>Informer</code>s in an <code>org.scalatest.path.FunSpec</code> in the same manner
  * as in an <code>org.scalatest.FunSpec</code>. Please see the <a href="../FunSpec.html#informers">Informers</a>
  * section in its documentation for more information.
- * </p>
+ * 
  *
  * <a name="pendingTests"></a>
  * <h2>Pending tests</h2>
  *
- * <p>
  * You mark a test as pending in an <code>org.scalatest.path.FunSpec</code> in the same manner as in
  * an <code>org.scalatest.FunSpec</code>. Please see the <a href="../FunSpec.html#pendingTests">Pending tests</a>
  * section in its documentation for more information.
- * </p>
  * 
- * <p>
+ * 
  * Note that a separate instance will be created for a pending test,
  * and the path to the ignored test will be executed in that instance, as well as the test function (up until it
  * completes abruptly with a <code>TestPendingException</code>).
- * </p>
+ * 
  *
  * <a name="taggingTests"></a>
  * <h2>Tagging tests</h2>
  *
- * <p>
  * You can place tests into groups by tagging them in an <code>org.scalatest.path.FunSpec</code> in the same manner
  * as in an <code>org.scalatest.FunSpec</code>. Please see the <a href="../FunSpec.html#taggingTests">Tagging tests</a>
  * section in its documentation for more information.
- * </p>
+ * 
  *
- * <p>
  * Note that one difference between this class and its sister class
  * <code>org.scalatest.FunSpec</code> is that because tests are executed at construction time, rather than each
  * time run is invoked, an <code>org.scalatest.path.FunSpec</code> will always execute all non-ignored tests. When
@@ -630,9 +602,8 @@ import org.scalatest._
  * registered.) By contrast, because an <code>org.scalatest.FunSpec</code> only executes tests after <code>run</code>
  * has been called, and at that time the tags to include and exclude are known, only tests selected by the tags
  * will be executed.
- * </p>
  * 
- * <p>
+ * 
  * In short, in an <code>org.scalatest.FunSpec</code>, tests not selected by the tags to include
  * and exclude specified for the run (via the <code>Filter</code> passed to <code>run</code>) will not be executed.
  * In an <code>org.scalatest.path.FunSpec</code>, by contrast, all non-ignored tests will be executed, each
@@ -641,18 +612,16 @@ import org.scalatest._
  * you can sometimes exclude them during a run, you probably don't want to put them in a <code>path.FunSpec</code>. Because
  * in a <code>path.Freespec</code> the slow tests will be run regardless, with only their registered results not being <em>reported</em>
  * if you exclude slow tests during a run.)
- * </p>
+ * 
  *
  * <a name="SharedTests"></a><h2>Shared tests</h2>
- * <p>
  * You can factor out shared tests in an <code>org.scalatest.path.FunSpec</code> in the same manner as in
  * an <code>org.scalatest.FunSpec</code>. Please see the <a href="../FunSpec.html#SharedTests">Shared tests</a>
  * section in its documentation for more information.
- * </p>
+ * 
  *
  * <a name="nestedSuites"></a><h2>Nested suites</h2>
  *
- * <p>
  * Nested suites are not allowed in a <code>path.FunSpec</code>. Because
  * a <code>path.FunSpec</code> executes tests eagerly at construction time, registering the results of those test runs
  * and reporting them later when <code>run</code> is invoked, the order of nested suites versus test runs would be
@@ -665,19 +634,17 @@ import org.scalatest._
  * <a href="../Suites.html"><code>Suites</code></a> object. They will
  * be executed in the order of appearance (unless a <a href="../Distributor">Distributor</a> is passed, in which case
  * they will execute in parallel).
- * </p>
+ * 
 
- * </p>
+ * 
  *
  * <a name="durations"></a><h2>Durations</h2>
- * <p>
  * Many ScalaTest events include a duration that indicates how long the event being reported took to execute. For
  * example, a <code>TestSucceeded</code> event provides a duration indicating how long it took for that test
  * to execute. A <code>SuiteCompleted</code> event provides a duration indicating how long it took for that entire
  * suite of tests to execute.
- * </p>
+ * 
  *
- * <p>
  * In the test completion events fired by a <code>path.FunSpec</code> (<code>TestSucceeded</code>,
  * <code>TestFailed</code>, or <code>TestPending</code>), the durations reported refer
  * to the time it took for the tests to run. This time is registered with the test results and reported along
@@ -687,7 +654,7 @@ import org.scalatest._
  * by the entity that invokes <code>run</code> on the <code>path.FunSpec</code>.) As a result, the total time
  * for running the tests of a <code>path.FunSpec</code>, calculated by summing the durations of all the individual
  * test completion events, may be greater than the duration reported for executing the entire suite.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Chua Chee Seng

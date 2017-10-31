@@ -22,7 +22,6 @@ import org.scalactic.Requirements._
  * Filter whose <code>apply</code> method determines which of the passed tests to run and ignore based on tags to include and exclude passed as
  * as class parameters.
  *
- * <p>
  * This class handles the <code>org.scalatest.Ignore</code> tag specially, in that its <code>apply</code> method indicates which
  * tests should be ignored based on whether they are tagged with <code>org.scalatest.Ignore</code>. If
  * <code>"org.scalatest.Ignore"</code> is not passed in the <code>tagsToExclude</code> set, it will be implicitly added. However, if the 
@@ -35,7 +34,7 @@ import org.scalactic.Requirements._
  * <code>SlowAsMolasses</code> appears in the <code>tagsToExclude</code> set, the
  * <code>SlowAsMolasses</code> tag will "overpower" the <code>org.scalatest.Ignore</code> tag, and the
  * test will be filtered out entirely rather than being ignored.
- * </p>
+ * 
  *
  * @param tagsToInclude an optional <code>Set</code> of <code>String</code> tag names to include (<em>i.e.</em>, not filter out) when filtering tests
  * @param tagsToExclude a <code>Set</code> of <code>String</code> tag names to exclude (<em>i.e.</em>, filter out) when filtering tests
@@ -113,7 +112,6 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
   /**
    * Filter test names based on their tags.
    *
-   * <p>
    * Each tuple in the returned list contains a <code>String</code>
    * test name and a <code>Boolean</code> that indicates whether the test should be ignored. A test will be marked as ignored
    * if <code>org.scalatest.Ignore</code> is in its tags set, and either <code>tagsToInclude</code> is <code>None</code>, or
@@ -123,7 +121,7 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
    * appears in the <code>tagsToExclude</code> set, the <code>SlowAsMolasses</code> tag will
    * "overpower" the <code>org.scalatest.Ignore</code> tag, and this method will return
    * a list that does not include the test name.
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * for ((testName, ignoreTest) <- filter(testNames, tags))
@@ -178,7 +176,6 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
   /**
    * Filter one test name based on its tags.
    *
-   * <p>
    * The returned tuple contains a <code>Boolean</code>
    * that indicates whether the test should be filtered, and if not, a <code>Boolean</code> that
    * indicates whether the test should be ignored. A test will be marked as ignored
@@ -190,7 +187,7 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
    * appears in the <code>tagsToExclude</code> set, the <code>SlowAsMolasses</code> tag will
    * "overpower" the <code>org.scalatest.Ignore</code> tag, and this method will return
    * (true, false). 
-   * </p>
+   * 
    * 
    * <pre class="stHighlight">
    * val (filterTest, ignoreTest) = filter(testName, tags)
@@ -220,11 +217,10 @@ final class Filter private (val tagsToInclude: Option[Set[String]], val tagsToEx
    * Returns the number of tests that should be run after the passed <code>testNames</code> and <code>tags</code> have been filtered
    * with the <code>tagsToInclude</code> and <code>tagsToExclude</code> class parameters.
    *
-   * <p>
    * The result of this method may be smaller than the number of
    * elements in the list returned by <code>apply</code>, because the count returned by this method does not include ignored tests,
    * and the list returned by <code>apply</code> does include ignored tests.
-   * </p>
+   * 
    *
    * @param testNames test names to be filtered
    * @param tags a map from test name to tags, containing only test names included in the <code>testNames</code> set, and

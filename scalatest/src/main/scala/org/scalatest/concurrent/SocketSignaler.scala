@@ -21,10 +21,8 @@ import java.net.Socket
  * Strategy for signaling an operation in which <code>close</code> is called on the <code>java.net.Socket</code> passed to
  * the constructor.
  *
- * <p>
  * This class can be used for configuration when using traits <a href="TimeLimits.html"><code>TimeLimits</code></a>
  * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
  */
 class SocketSignaler(socket: Socket) extends Signaler {
 

@@ -30,19 +30,17 @@ import org.scalatest.Suite.autoTagClassAnnotations
  * a sister class to <a href="../AsyncFeatureSpec.html"><code>org.scalatest.AsyncFeatureSpec</code></a> that can pass a
  * fixture object into its tests.
  *
- * <p>
  * <a href="AsyncFeatureSpec.html"><code>fixture.AsyncFeatureSpec</code></a> is a class,
  * not a trait, to minimize compile time given there is a slight compiler
  * overhead to mixing in traits compared to extending classes. If you need
  * to mix the behavior of <code>fixture.AsyncFeatureSpec</code> into some other
  * class, you can use this trait instead, because class
  * <code>fixture.AsyncFeatureSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="AsyncFeatureSpec.html">detailed
  * overview of <code>fixture.AsyncFeatureSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -198,15 +196,13 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
    * A <code>Map</code> whose keys are <code>String</code> tag names to which tests in this <code>FeatureSpec</code> belong, and values
    * the <code>Set</code> of test names that belong to each tag. If this <code>FeatureSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
    * methods <code>test</code> and <code>ignore</code>.
-   * </p>
+   * 
    *
-   * <p>
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
@@ -248,17 +244,14 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
   }
 
   /**
-   * <p>
    * Run zero to many of this <code>FeatureSpec</code>'s tests.
-   * </p>
+   * 
    *
-   * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
    * If <code>testName</code> is <code>Some</code>, this trait's implementation of this method
    * invokes <code>runTest</code> on this object with passed <code>args</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method takes an <code>args</code> that contains a <code>Set</code> of tag names that should be included (<code>tagsToInclude</code>), and a <code>Set</code>
    * that should be excluded (<code>tagsToExclude</code>), when deciding which of this <code>Suite</code>'s tests to execute.
    * If <code>tagsToInclude</code> is empty, all tests will be executed
@@ -267,9 +260,8 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
    * will be executed. However, if <code>testName</code> is <code>Some</code>, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
    * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
    * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. For more information on trait tags, see the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially execute.
    * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
@@ -278,7 +270,7 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
    * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
    * of this method checks whether the test should be run based on the <code>tagsToInclude</code> and <code>tagsToExclude</code> <code>Set</code>s.
    * If so, this implementation invokes <code>runTest</code> with passed in <code>args</code>.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
    *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>fixture.FeatureSpec</code>.
@@ -294,12 +286,11 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
    * An immutable <code>Set</code> of test names. If this <code>FeatureSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space.
-   * </p>
+   * 
    *
    * @return the <code>Set</code> of test names
    */
@@ -318,22 +309,20 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
   /**
    * Registers shared scenarios.
    *
-   * <p>
    * This method enables the following syntax for shared scenarios in a <code>FeatureSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * ScenariosFor(nonEmptyStack(lastValuePushed))
    * </pre>
    *
-   * <p>
    * This method just provides syntax sugar intended to make the intent of the code clearer.
    * Because the parameter passed to it is
    * type <code>Unit</code>, the expression will be evaluated before being passed, which
    * is sufficient to register the shared scenarios. For examples of shared scenarios, see the
    * <a href="../FeatureSpec.html#SharedScenarios">Shared scenarios section</a> in the main documentation for
    * trait <code>FeatureSpec</code>.
-   * </p>
+   * 
    */
   protected def ScenariosFor(unit: Unit): Unit = {}
 
@@ -344,10 +333,9 @@ trait AsyncFeatureSpecLike extends AsyncTestSuite with AsyncTestRegistration wit
    * a function from <code>FixtureParam</code> to <code>Any</code>, to enable pending tests to registered as by-name parameters
    * by methods that require a test function that takes a <code>FixtureParam</code>.
    *
-   * <p>
    * This method makes it possible to write pending tests as simply <code>(pending)</code>, without needing
    * to write <code>(fixture => pending)</code>.
-   * </p>
+   * 
    *
    * @param f a function
    * @return a function of <code>FixtureParam => Any</code>

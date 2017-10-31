@@ -22,19 +22,17 @@ import Suite.autoTagClassAnnotations
  * Implementation trait for class <code>PropSpec</code>, which represents
  * a suite of property-based tests.
  * 
- * <p>
  * <a href="PropSpec.html"><code>PropSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
  * behavior of <code>PropSpec</code> into some other class, you can use this
  * trait instead, because class <code>PropSpec</code> does nothing more than
  * extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="PropSpec.html">detailed
  * overview of <code>PropSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -155,10 +153,9 @@ trait PropSpecLike extends TestSuite with TestRegistration with Informing with N
   /**
   * An immutable <code>Set</code> of test names. If this <code>PropSpec</code> contains no tests, this method returns an empty <code>Set</code>.
   *
-  * <p>
   * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's iterator will
   * return those names in the order in which the tests were registered.
-  * </p>
+  * 
   */
   override def testNames: Set[String] = {
     InsertionOrderSet(atomic.get.testNamesList)
@@ -200,16 +197,14 @@ trait PropSpecLike extends TestSuite with TestRegistration with Informing with N
    * A <code>Map</code> whose keys are <code>String</code> names of tagged tests and whose associated values are
    * the <code>Set</code> of tags for the test. If this <code>PropSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
    * methods <code>property</code> and <code>ignore</code>. 
-   * </p>
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
@@ -236,21 +231,19 @@ trait PropSpecLike extends TestSuite with TestRegistration with Informing with N
   /**
    * Registers shared tests.
    *
-   * <p>
    * This method enables the following syntax for shared tests in a <code>PropSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * propertiesFor(nonEmptyStack(lastValuePushed))
    * </pre>
    *
-   * <p>
    * This method just provides syntax sugar intended to make the intent of the code clearer.
    * Because the parameter passed to it is
    * type <code>Unit</code>, the expression will be evaluated before being passed, which
    * is sufficient to register the shared tests. For examples of shared tests, see the
    * <a href="#sharedTests">Shared tests section</a> in the main documentation for this trait.
-   * </p>
+   * 
    */
   protected def propertiesFor(unit: Unit): Unit = {}
   

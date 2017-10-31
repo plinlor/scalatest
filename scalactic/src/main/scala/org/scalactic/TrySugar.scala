@@ -29,11 +29,10 @@ import exceptions.ValidationFailedException
  * passes all the functions, or [[org.scalactic.exceptions.ValidationFailedException `ValidationFailedException`]] containing an error message
  * describing the first validation that failed.
  *
- * <p>
  * Here's an example validation method, which passes if the given <code>Int</code> is evenly
  * divisible by 10 (<em>i.e.</em>, the result will be [[org.scalactic.Pass <code>Pass</code>]]). If the value does not pass
  * this test, the result is a [[org.scalactic.Fail <code>Fail</code>]] containing a helpful error message string.
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -50,7 +49,6 @@ import exceptions.ValidationFailedException
  * isRound: (i: Int)org.scalactic.Validation[org.scalactic.ErrorMessage]
  * </pre>
  *
- * <p>
  * Validation will be attempted on a successful <code>Try</code>. If the validation succeeds, the
  * resulting <code>Try</code> will be the same successful <code>Try</code> with the same value. (A
  * "validation" only transforms the <code>Try</code> if the validation fails, otherwise it is the
@@ -59,7 +57,7 @@ import exceptions.ValidationFailedException
  * passes the validation (which checks whether 100 is evenly divisible by 10), therefore
  * the result of the <code>validating</code> call is the same successful <code>Try</code>
  * with the same value.
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val try100 = Try(100)
@@ -69,12 +67,11 @@ import exceptions.ValidationFailedException
  * round100: scala.util.Try[Int] = Success(100)
  * </pre>
  *
- * <p>
  * If validation fails, the successful <code>Try</code> will be transformed into a failed one, with
  * a <code>ValidationFailedException</code> that contains the error message
  * returned by the validation function. In the following example, 42 fails the validation because it
  * is not evenly divisible by 10:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val try42 = Try(42)
@@ -84,9 +81,8 @@ import exceptions.ValidationFailedException
  * round42: scala.util.Try[Int] = Failure(org.scalactic.exceptions.ValidationFailedException: 42 was not a round number)
  * </pre>
  *
- * <p>
  * If <code>validating</code> is called on a failed <code>Try</code>, it just returns the same failed <code>Try</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val tryEx = Try[Int] { throw new Exception("oops!") }
@@ -96,14 +92,13 @@ import exceptions.ValidationFailedException
  * roundEx: scala.util.Try[Int] = Failure(java.lang.Exception: oops!)
  * </pre>
  *
- * <p>
  * The <code>validating</code> method accepts one or more validation functions. If you 
  * pass more than one, they will be tried in order up until the first failure, whose
  * error message will appear in the <code>ValidationFailedException</code>. In other words,
  * <code>validating</code> will short circuit at the first error and return that. It
  * will not accumulate errors. For example, the following validation will short circuit
  * after the <code>isDivBy3</code> function fails:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; def isDivBy3(i: Int): Validation[ErrorMessage] =
@@ -118,9 +113,8 @@ import exceptions.ValidationFailedException
  * res0: scala.util.Try[Int] = Failure(org.scalactic.exceptions.ValidationFailedException: 100 was not divisible by 3)
  * </pre>
  *
- * <p>
  * Here are some examples of the <code>toOr</code> method:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; try100.toOr
@@ -139,9 +133,8 @@ trait TrySugar {
    * <code>validation</code> method, which takes one or more functions that validate
    * the <code>Future</code>'s value.
    *
-   * <p>
    * See the main documentation for trait [[org.scalactic.TrySugar `TrySugar`]] for more detail and examples.
-   * </p>
+   * 
    *
    * @param theTry the <code>Try</code> to which to add <code>toOr</code> and <code>validating</code> methods.
    */
@@ -157,9 +150,8 @@ trait TrySugar {
     /**
      * Validates a <code>Try</code> using the passed validation functions.
      *
-     * <p>
      * See the main documentation for trait [[org.scalactic.TrySugar `TrySugar`]] for more detail and examples.
-     * </p>
+     * 
      *
      * @param first the first validation function to apply
      * @param rest the subsequent validation functions to apply, if any

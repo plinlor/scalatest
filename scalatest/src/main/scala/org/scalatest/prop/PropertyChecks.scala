@@ -19,17 +19,15 @@ package prop
 /**
  * Trait that facilitates property checks on data supplied by tables and generators.
  *
- * <p>
  * This trait extends both <a href="TableDrivenPropertyChecks.html"><code>TableDrivenPropertyChecks</code></a> and
  * <a href="GeneratorDrivenPropertyChecks.html"><code>GeneratorDrivenPropertyChecks</code></a>. Thus by mixing in
  * this trait you can perform property checks on data supplied either by tables or generators. For the details of
  * table- and generator-driven property checks, see the documentation for each by following the links above.
- * </p>
+ * 
  *
- * <p>
  * For a quick example of using both table and generator-driven property checks in the same suite of tests, however,
  * imagine you want to test this <code>Fraction</code> class:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class Fraction(n: Int, d: Int) {
@@ -45,10 +43,9 @@ package prop
  * }
  * </pre>
  *
- * <p>
  * If you mix in <code>PropertyChecks</code>, you could use a generator-driven property check to test that the passed values for numerator and
  * denominator are properly normalized, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll { (n: Int, d: Int) =&gt;
@@ -70,10 +67,9 @@ package prop
  * }
  * </pre>
  *
- * <p>
  * And you could use a table-driven property check to test that all combinations of invalid values passed to the <code>Fraction</code> constructor
  * produce the expected <code>IllegalArgumentException</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val invalidCombos =

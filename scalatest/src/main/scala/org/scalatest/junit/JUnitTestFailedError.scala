@@ -26,7 +26,6 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepth
 /**
  * Exception that indicates a test failed.
  *
- * <p>
  * The purpose of this exception is to encapsulate the same stack depth information provided by
  * <a href="../exceptions/TestFailedException.html"><code>TestFailedException</code></a>, which is used
  * when running with ScalaTest, but be reported as
@@ -36,9 +35,8 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepth
  * the user that makes it quick to find the failing line of test code. (In other words, when
  * running with ScalaTest the user need not scan through the stack trace to find the correct filename
  * and line number of the failing test.)
- * </p>
+ * 
  *
- * <p>
  * JUnit distinguishes between <em>failures</em> and <em>errors</em>.
  * If a test fails because of a failed assertion, that is considered a <em>failure</em> in JUnit. If a test
  * fails for any other reason, either the test code or the application being tested threw an unexpected
@@ -46,9 +44,8 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepth
  * <a href="../exceptions/TestFailedException.html"><code>TestFailedException</code></a> in that it extends
  * <code>junit.framework.AssertionFailedError</code>. Instances of this class are thrown by the
  * assertions provided by <a href="AssertionsForJUnit.html"><code>AssertionsForJUnit</code></a>.
- * </p>
+ * 
  *
- * <p>
  * The way JUnit 3 (JUnit 3.8 and earlier releases) decided whether an exception represented a failure or error
  * is that only thrown <code>junit.framework.AssertionFailedError</code>s were considered failures. Any other
  * exception type was considered an error. The exception type thrown by the JUnit 3 assertion methods declared
@@ -57,7 +54,7 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepth
  * was made to extend <code>java.lang.AssertionError</code>, and the distinction between failures and errors
  * was essentially dropped. However, some tools that integrate with JUnit carry on this distinction, so even
  * if you are using JUnit 4 you may want to use <code>AssertionsForJUnit</code>.
- * </p>
+ * 
  *
  * @param message an optional detail message for this <code>TestFailedException</code>.
  * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestFailedException</code> to be thrown.

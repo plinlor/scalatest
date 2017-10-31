@@ -38,19 +38,17 @@ import org.scalactic.{Or, Good, Bad}
  *
  * Note: a <code>NumericString</code> contains only numeric digit characters.
  *
- * <p>
  * Because <code>NumericString</code> is an <code>AnyVal</code>
  * it will usually be as efficient as a <code>String</code>, being
  * boxed only when a <code>String</code> would have been boxed.
- * </p>
+ * 
  *
- * <p>
  * The <code>NumericString.apply</code> factory method is implemented in
  * terms of a macro that checks literals for validity at compile time. Calling
  * <code>NumericString.apply</code> with a literal <code>String</code> value
  * will either produce a valid <code>NumericString</code> instance at run
  * time or an error at compile time. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import anyvals._
@@ -65,14 +63,13 @@ import org.scalactic.{Or, Good, Bad}
  *                            ^
  * </pre>
  *
- * <p>
  * <code>NumericString.apply</code> cannot be used if the value being passed
  * is a variable (<em>i.e.</em>, not a literal), because the macro cannot
  * determine the validity of variables at compile time (just literals). If
  * you try to pass a variable to <code>NumericString.apply</code>, you'll
  * get a compiler error that suggests you use a different factory method,
  * <code>NumericString.from</code>, instead:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val x = "1"
@@ -84,13 +81,12 @@ import org.scalactic.{Or, Good, Bad}
  *                            ^
  * </pre>
  *
- * <p>
  * The <code>NumericString.from</code> factory method will inspect the value
  * at runtime and return an <code>Option[NumericString]</code>. If
  * the value is valid, <code>NumericString.from</code> will return a
  * <code>Some[NumericString]</code>, else it will return a <code>None</code>.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; NumericString.from(x)
@@ -2562,7 +2558,6 @@ final class NumericString private (val value: String) extends AnyVal {
    * the other factory or validation methods provided on this object instead:
    * `isValid`, `tryingValid`, `passOrElse`, `goodOrElse`, or `rightOrElse`.
    *
-   * <p>
    * This method will inspect the result of applying the given function to this
    * <code>NumericString</code>'s underlying <code>String</code> value and if
    * the result is a valid numeric string, it will return a
@@ -2570,9 +2565,8 @@ final class NumericString private (val value: String) extends AnyVal {
    * <code>String</code> value returned by the given function is
    * not a valid numeric string, so this method will throw
    * <code>AssertionError</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method differs from a vanilla <code>assert</code> or
    * <code>ensuring</code> call in that you get something you didn't already
    * have if the assertion succeeds: a <em>type</em> that promises a
@@ -2582,7 +2576,7 @@ final class NumericString private (val value: String) extends AnyVal {
    * <code>NumericString</code>'s value will produce a valid numeric string.
    * Instead of producing an invalid <code>NumericString</code>, this method
    * will signal an invalid result with a loud <code>AssertionError</code>.
-   * </p>
+   * 
    *
    * @param f the <code>String =&gt; String</code> function to apply to this
    *     <code>NumericString</code>'s underlying <code>String</code> value.
@@ -2611,7 +2605,6 @@ object NumericString {
    * A factory method that produces an <code>Option[NumericString]</code>
    * given a <code>String</code> value.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it is a numeric <code>String</code>, <em>i.e.</em>, one that doesn't
    * contain any non-digit characters, it will return a
@@ -2619,14 +2612,13 @@ object NumericString {
    * <code>Some</code>. Otherwise, the passed <code>String</code>
    * value is not a numeric string value, so this method will return
    * <code>None</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas <code>from</code>
    * inspects <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> to inspect, and if numeric, return
    *     wrapped in a <code>Some[NumericString]</code>.
@@ -2650,15 +2642,13 @@ object NumericString {
    * the other factory or validation methods provided on this object instead:
    * `isValid`, `tryingValid`, `passOrElse`, `goodOrElse`, or `rightOrElse`.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it is a valid numeric string, it will return a <code>NumericString</code>
    * representing that value.  Otherwise, the passed <code>String</code>
    * value is not a valid numeric string, so this method will throw
    * <code>AssertionError</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas this method inspects
@@ -2666,7 +2656,7 @@ object NumericString {
    * It differs from a vanilla <code>assert</code> or <code>ensuring</code>
    * call in that you get something you didn't already have if the assertion
    * succeeds: a <em>type</em> that promises a <code>String</code> is numeric.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> to inspect, and if numeric, return
    *     wrapped in a <code>NumericString</code>.
@@ -2694,7 +2684,6 @@ object NumericString {
    * A factory method that produces a <code>NumericString</code> given a
    * <code>String</code> value and a default <code>NumericString</code>.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it is a valid numeric string, <em>i.e.</em>, a <code>String</code>
    * containing only numeric digit characters (0-9), it will return a
@@ -2702,15 +2691,14 @@ object NumericString {
    * Otherwise, the passed <code>String</code> value contains non-digit
    * characters, so this method will return the passed <code>default</code>
    * value.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code>
    * factory method in that <code>apply</code> is implemented
    * via a macro that inspects <code>String</code> literals at
    * compile time, whereas <code>fromOrElse</code> inspects
    * <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> to inspect, and if numeric, return.
    * @param default the <code>NumericString</code> to return if the passed
@@ -2729,7 +2717,6 @@ object NumericString {
    * <code>NumericString</code> if passed a valid <code>String</code> literal,
    * otherwise a compile time error.
    *
-   * <p>
    * The macro that implements this method will inspect the specified
    * <code>String</code> expression at compile time. If the expression is a
    * numeric <code>String</code> literal, <em>i.e.</em>, it doesn't contain
@@ -2737,14 +2724,13 @@ object NumericString {
    * <code>NumericString</code> representing that value. Otherwise, the passed
    * <code>String</code> expression is either a literal that contains non-digit
    * characters, or is not a literal, so this method will give a compiler error.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>from</code> factory method
    * in that this method is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas <code>from</code>
    * inspects <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> literal expression to inspect at
    *     compile time, and if it is a numeric string, to return wrapped in a
@@ -2762,21 +2748,19 @@ object NumericString {
    * value, or if the given <code>String</code> is invalid, an
    * <code>AssertionError</code>, wrapped in a <code>Failure</code>.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it represents a numeric value, it will return a <code>NumericString</code>
    * representing that value, wrapped in a <code>Success</code>.
    * Otherwise, the passed <code>String</code> value is not numeric, so this
    * method will return an <code>AssertionError</code>, wrapped in a
    * <code>Failure</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas this method inspects
    * <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> to inspect, and if numeric, return
    *     wrapped in a <code>Success(NumericString)</code>.
@@ -2797,21 +2781,19 @@ object NumericString {
    * given <em>invalid</em> <code>String</code> value
    * to the given function <code>f</code>, wrapped in a <code>Fail</code>.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it is a numeric <code>String</code>, it will return a <code>Pass</code>.
    * Otherwise, the passed <code>String</code> value is non-numeric, so this
    * method will return a result of type <code>E</code> obtained by passing
    * the invalid <code>String</code> value to the given function <code>f</code>,
    * wrapped in a `Fail`.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas this method inspects
    * <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the `String` to validate that it is numeric.
    * @return a `Pass` if the specified `String` value is numeric,
@@ -2829,7 +2811,6 @@ object NumericString {
    * <code>String</code> value to the given function <code>f</code>, wrapped
    * in a <code>Bad</code>.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it is a numeric <code>String</code>, it will return a
    * <code>NumericString</code> representing that value, wrapped in a
@@ -2837,14 +2818,13 @@ object NumericString {
    * NOT numeric, so this method will return a result of type <code>B</code>
    * obtained by passing the invalid <code>String</code> value to the given
    * function <code>f</code>, wrapped in a `Bad`.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas this method inspects
    * <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> to inspect, and if numeric, return
    *     wrapped in a <code>Good(NumericString)</code>.
@@ -2863,7 +2843,6 @@ object NumericString {
    * <code>String</code> value to the given function <code>f</code>, wrapped
    * in a <code>Left</code>.
    *
-   * <p>
    * This method will inspect the passed <code>String</code> value and if
    * it is a numeric <code>String</code>, it will return a
    * <code>NumericString</code> representing that value, wrapped in a
@@ -2871,14 +2850,13 @@ object NumericString {
    * NOT numeric, so this method will return a result of type <code>L</code>
    * obtained by passing the invalid <code>String</code> value to the given
    * function <code>f</code>, wrapped in a `Left`.
-   * </p>
+   * 
    *
-   * <p>
    * This factory method differs from the <code>apply</code> factory method
    * in that <code>apply</code> is implemented via a macro that inspects
    * <code>String</code> literals at compile time, whereas this method inspects
    * <code>String</code> values at run time.
-   * </p>
+   * 
    *
    * @param value the <code>String</code> to inspect, and if numeric, return
    *     wrapped in a <code>Right(NumericString)</code>.

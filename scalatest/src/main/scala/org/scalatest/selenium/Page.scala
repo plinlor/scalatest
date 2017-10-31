@@ -18,10 +18,9 @@ package org.scalatest.selenium
 /**
  * Trait that facilitates using the <em>page object pattern</em> with the ScalaTest Selenium DSL.
  *
- * <p>
  * If you use the page object pattern, mixing trait <code>Page</code> into your page classes will allow you to use the <code>go to</code>
  * syntax with your page objects. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class HomePage extends Page {

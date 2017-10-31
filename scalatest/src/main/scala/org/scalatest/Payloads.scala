@@ -18,12 +18,10 @@ package org.scalatest
 /**
  * Trait facilitating the inclusion of a payload in a thrown ScalaTest exception.
  *
- * <p>
  * This trait includes a <code>withPayload</code> construct 
  * that enables a payload object (or modified
  * payload object) to be included as the payload of a thrown exception.
  *
- * <p>
  * Many ScalaTest events include an optional "payload" field that can be used
  * to pass information to a custom reporter. This trait facilitates such customization, 
  * by making it easy to insert a payload into a thrown exception, such as a <code>TestFailedException</code>.
@@ -31,7 +29,7 @@ package org.scalatest
  * ScalaTest looks for trait <code>Payload</code> and fires any payloads it finds in the relevant ScalaTest event
  * stimulated by the exception, such as a <a href="events/TestFailed.html"><code>TestFailed</code></a> event stimulated by a <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a>.
  * Here's an example in which a GUI snapshot is included as a payload when a test fails:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * withPayload(generateGUISnapshot()) {
@@ -49,12 +47,11 @@ trait Payloads {
    * replaces the current payload contained in the exception, if any, with the one passed
    * as the first parameter.
    *
-   * <p>
    * This method allows you to insert a payload into a thrown <code>Payload</code> exception (such as
    * a <code>TestFailedException</code>), so that payload can be included in events fired to a custom reporter
    * that can make use of the payload.  
    * Here's an example in which a GUI snapshot is included as a payload when a test fails:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * withPayload(generateGUISnapshot()) {

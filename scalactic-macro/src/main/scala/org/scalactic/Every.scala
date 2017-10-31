@@ -31,17 +31,15 @@ import scala.collection.mutable.ArrayBuffer
 /**
  * An ordered, immutable, non-empty collection of elements.
  *
- * <p>
  * Class <code>Every</code> has two and only two subtypes: <a href="One.html"><code>One</code></a> and <a href="Many.html"><code>Many</code></a>.
  * A <code>One</code> contains exactly one element. A <code>Many</code> contains two or more elements. Thus no way exists for an
  * <code>Every</code> to contain zero elements.
- * </p>
+ * 
  *
  * <h2>Constructing <code>Every</code>s</h2>
  *
- * <p>
  * You can construct an <code>Every</code> by passing one or more elements to the <code>Every.apply</code> factory method:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Every(1)
@@ -49,10 +47,9 @@ import scala.collection.mutable.ArrayBuffer
  * Every(1, 2, 3)
  * </pre>
  *
- * <p>
  * Alternatively you can pass one element to the <code>One.apply</code> factory method, or two or more elements to 
  * <code>Many.apply</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * One(1)
@@ -62,22 +59,20 @@ import scala.collection.mutable.ArrayBuffer
  *
  * <h2>Working with <code>Every</code>s</h2>
  *
- * <p>
  * <code>Every</code> does not extend Scala's <code>Seq</code> or <code>Traversable</code> traits because these require that
  * implementations may be empty. For example, if you invoke <code>tail</code> on a <code>Seq</code> that contains just one element,
  * you'll get an empty <code>Seq</code>:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; List(1).tail
  * res6: List[Int] = List()
  * </pre>
  *
- * <p>
  * On the other hand, many useful methods exist on <code>Seq</code> that when invoked on a non-empty <code>Seq</code> are guaranteed
  * to not result in an empty <code>Seq</code>. For convenience, <code>Every</code> defines a method corresponding to every such <code>Seq</code>
  * method. Here are some examples:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * Many(1, 2, 3).map(_ + 1)                  // Result: Many(2, 3, 4)
@@ -87,13 +82,12 @@ import scala.collection.mutable.ArrayBuffer
  * Every(-1, -2, 3, 4, 5).minBy(_.abs)       // Result: -1
  * </pre>
  *
- * <p>
  * <code>Every</code> does <em>not</em> currently define any methods corresponding to <code>Seq</code> methods that could result in
  * an empty <code>Seq</code>. However, an implicit converison from <code>Every</code> to <code>collection.immutable.IndexedSeq</code>
  * is defined in the <code>Every</code> companion object that will be applied if you attempt to call one of the missing methods. As a
  * result, you can invoke <code>filter</code> on an <code>Every</code>, even though <code>filter</code> could result
  * in an empty sequence&mdash;but the result type will be <code>collection.immutable.IndexedSeq</code> instead of <code>Every</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Every(1, 2, 3).filter(_ &lt; 10) // Result: Vector(1, 2, 3)
@@ -101,11 +95,10 @@ import scala.collection.mutable.ArrayBuffer
  * </pre>
  * 
  *
- * <p>
  * You can use <code>Every</code>s in <code>for</code> expressions. The result will be an <code>Every</code> unless
  * you use a filter (an <code>if</code> clause). Because filters are desugared to invocations of <code>filter</code>, the
  * result type will switch to a <code>collection.immutable.IndexedSeq</code> at that point. Here are some examples:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -134,11 +127,10 @@ import scala.collection.mutable.ArrayBuffer
  *
  * <h2>Motivation for <code>Every</code>s</h2>
  *
- * <p>
  * Although <code>Every</code> is a general-purpose, non-empty ordered collection, it was motivated by the desire to enable easy
  * accumulation of errors in <a href="Or.html"><code>Or</code></a>s. For examples of <code>Every</code> used in that use case, see the
  * <a href="Or.html#accumulatingErrors">Accumulating errors with <code>Or</code></a> section in the main documentation for <code>Or</code>.
- * </p>
+ * 
  *
  * @tparam T the type of elements contained in this <code>Every</code>
  */
@@ -172,10 +164,9 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Fold left: applies a binary operator to a start value, <code>z</code>, and all elements of this <code>Every</code>, going left to right.
    *
-   * <p>
    * Note: <code>/:</code> is alternate syntax for the <code>foldLeft</code> method; <code>z</code> <code>/:</code> <code>every</code> is the
    * same as <code>every</code> <code>foldLeft</code> <code>z</code>.
-   * </p>
+   * 
    *
    * @tparam B the result of the binary operator
    * @param z the start value
@@ -187,19 +178,17 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * op(...op(op(z, x_1), x_2), ..., x_n)
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>Every</code>. 
-   * </p>
+   * 
    */
   final def /:[B](z: B)(op: (B, T) => B): B = underlying./:(z)(op)
 
   /**
    * Fold right: applies a binary operator to all elements of this <code>Every</code> and a start value, going right to left.
    *
-   * <p>
    * Note: <code>:\</code> is alternate syntax for the <code>foldRight</code> method; <code>every</code> <code>:\</code> <code>z</code> is the same
    * as <code>every</code> <code>foldRight</code> <code>z</code>.
-   * </p>
+   * 
    *
    * @tparam B the result of the binary operator
    * @param z the start value
@@ -211,18 +200,16 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * op(x_1, op(x_2, ... op(x_n, z)...))
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>Every</code>. 
-   * </p>
+   * 
    */
   final def :\[B](z: B)(op: (T, B) => B): B = underlying.:\(z)(op)
 
   /**
    * Returns a new <code>Every</code> with the given element prepended.
    *
-   * <p>
    * Note that :-ending operators are right associative. A mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-   * </p>
+   * 
    *
    * @param element the element to prepend to this <code>Every</code>
    * @return a new <code>Every</code> consisting of <code>element</code> followed by all elements of this <code>Every</code>.
@@ -232,9 +219,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Returns a new <code>Every</code> with the given element appended.
    *
-   * <p>
    * Note a mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-   * </p>
+   * 
    *
    * @param element the element to append to this <code>Every</code>
    * @return a new <code>Every</code> consisting of all elements of this <code>Every</code> followed by <code>element</code>.
@@ -443,10 +429,9 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * Converts this <code>Every</code> of <code>Every</code>s into an <code>Every</code>
    * formed by the elements of the nested <code>Every</code>s.
    *
-   * <p>
    * Note: You cannot use this <code>flatten</code> method on an <code>Every</code> that contains a <code>GenTraversableOnce</code>s, because 
    * if all the nested <code>GenTraversableOnce</code>s were empty, you'd end up with an empty <code>Every</code>.
-   * </p>
+   * 
    *
    * @tparm B the type of the elements of each nested <code>Every</code>
    * @return a new <code>Every</code> resulting from concatenating all nested <code>Every</code>s.
@@ -456,9 +441,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Folds the elements of this <code>Every</code> using the specified associative binary operator.
    *
-   * <p>
    * The order in which operations are performed on elements is unspecified and may be nondeterministic. 
-   * </p>
+   * 
    *
    * @tparam U a type parameter for the binary operator, a supertype of T.
    * @param z a neutral element for the fold operation; may be added to the result an arbitrary number of
@@ -482,9 +466,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * op(...op(op(z, x_1), x_2), ..., x_n)
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>Every</code>. 
-   * </p>
+   * 
    */ 
   final def foldLeft[B](z: B)(op: (B, T) => B): B = underlying.foldLeft(z)(op)
 
@@ -501,9 +484,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * op(x_1, op(x_2, ... op(x_n, z)...))
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>Every</code>. 
-   * </p>
+   * 
    */
   final def foldRight[B](z: B)(op: (T, B) => B): B = underlying.foldRight(z)(op)
 
@@ -533,9 +515,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * (every.toVector partition f)(k) = xs filter (x =&gt; f(x) == k)
    * </pre>
    *
-   * <p>
    * That is, every key <code>k</code> is bound to an <code>Every</code> of those elements <code>x</code> for which <code>f(x)</code> equals <code>k</code>.
-   * </p>
+   * 
    */
   final def groupBy[K](f: T => K): Map[K, Every[T]] = {
     val mapKToVec = underlying.groupBy(f)
@@ -780,9 +761,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * The length of this <code>Every</code>.
    *
-   * <p>
    * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-   * </p>
+   * 
    *
    * @return the number of elements in this <code>Every</code>. 
    */
@@ -906,9 +886,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Iterates over distinct permutations. 
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Every('a', 'b', 'b').permutations.toList = Iterator(Many(a, b, b), Many(b, a, b), Many(b, b, a))
@@ -933,9 +912,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * The result of multiplying all the elements of this <code>Every</code>.
    *
-   * <p>
    * This method can be invoked for any <code>Every[T]</code> for which an implicit <code>Numeric[T]</code> exists.
-   * </p>
+   * 
    *
    * @return the product of all elements
    */
@@ -944,9 +922,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Reduces the elements of this <code>Every</code> using the specified associative binary operator.
    *
-   * <p>
    * The order in which operations are performed on elements is unspecified and may be nondeterministic. 
-   * </p>
+   * 
    *
    * @tparam U a type parameter for the binary operator, a supertype of T.
    * @param op a binary operator that must be associative.
@@ -965,9 +942,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * op(...op(op(x_1, x_2), x_3), ..., x_n)
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>Every</code>. 
-   * </p>
+   * 
    */
   final def reduceLeft[U >: T](op: (U, T) => U): U = underlying.reduceLeft(op)
 
@@ -977,7 +953,7 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * @tparam U the result type of the binary operator.
    * @param op the binary operator.
    * @return a <code>Some</code> containing the result of <code>reduceLeft(op)</code>
-   * </p>
+   * 
    */
   final def reduceLeftOption[U >: T](op: (U, T) => U): Option[U] = underlying.reduceLeftOption(op)
 
@@ -994,9 +970,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
    * op(x_1, op(x_2, ... op(x_{n-1}, x_n)...))
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>Every</code>. 
-   * </p>
+   * 
    */
   final def reduceRight[U >: T](op: (T, U) => U): U = underlying.reduceRight(op)
 
@@ -1022,9 +997,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * An iterator yielding elements in reverse order.
    *
-   * <p>
    * Note: <code>every.reverseIterator</code> is the same as <code>every.reverse.iterator</code>, but might be more efficient. 
-   * </p>
+   * 
    *
    * @return an iterator yielding the elements of this <code>Every</code> in reversed order 
    */
@@ -1033,9 +1007,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Builds a new <code>Every</code> by applying a function to all elements of this <code>Every</code> and collecting the results in reverse order.
    *
-   * <p>
    * Note: <code>every.reverseMap(f)</code> is the same as <code>every.reverse.map(f)</code>, but might be more efficient. 
-   * </p>
+   * 
    *
    * @tparam U the element type of the returned <code>Every</code>.
    * @param f the function to apply to each element. 
@@ -1068,13 +1041,11 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Computes a prefix scan of the elements of this <code>Every</code>.
    *
-   * <p>
    * Note: The neutral element z may be applied more than once. 
-   * </p>
+   * 
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Every(1, 2, 3).scan(0)(_ + _) == Every(0, 1, 3, 6)
@@ -1093,9 +1064,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Produces an <code>Every</code> containing cumulative results of applying the operator going left to right.
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Every(1, 2, 3).scanLeft(0)(_ + _) == Every(0, 1, 3, 6)
@@ -1113,9 +1083,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Produces an <code>Every</code> containing cumulative results of applying the operator going right to left.
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Every(1, 2, 3).scanRight(0)(_ + _) == Every(6, 5, 3, 0)
@@ -1163,9 +1132,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * The size of this <code>Every</code>.
    *
-   * <p>
    * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-   * </p>
+   * 
    *
    * @return the number of elements in this <code>Every</code>. 
    */
@@ -1185,10 +1153,9 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Sorts this <code>Every</code> according to a comparison function.
    *
-   * <p>
    * The sort is stable. That is, elements that are equal (as determined by <code>lt</code>) appear in the same order in the
    * sorted <code>Every</code> as in the original. 
-   * </p>
+   * 
    *
    * @param the comparison function that tests whether its first argument precedes its second argument in the desired ordering.
    * @return an <code>Every</code> consisting of the elements of this <code>Every</code> sorted according to the comparison function <code>lt</code>.
@@ -1198,10 +1165,9 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Sorts this <code>Every</code> according to an <code>Ordering</code>.
    *
-   * <p>
    * The sort is stable. That is, elements that are equal (as determined by <code>lt</code>) appear in the same order in the
    * sorted <code>Every</code> as in the original. 
-   * </p>
+   * 
    *
    * @param ord the <code>Ordering</code> to be used to compare elements.
    * @param the comparison function that tests whether its first argument precedes its second argument in the desired ordering.
@@ -1254,9 +1220,8 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * The result of summing all the elements of this <code>Every</code>.
    *
-   * <p>
    * This method can be invoked for any <code>Every[T]</code> for which an implicit <code>Numeric[T]</code> exists.
-   * </p>
+   * 
    *
    * @return the sum of all elements
    */
@@ -1324,10 +1289,9 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Converts this <code>Every</code> to a map.
    *
-   * <p>
    * This method is unavailable unless the elements are members of <code>Tuple2</code>, each <code>((K, V))</code> becoming a key-value pair
    * in the map. Duplicate keys will be overwritten by later keys.
-   * </p>
+   * 
    *
    * @return a map of type <code>immutable.Map[K, V]</code> containing all key/value pairs of type <code>(K, V)</code> of this <code>Every</code>. 
    */ 
@@ -1370,15 +1334,13 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Produces a new <code>Every</code> that contains all elements of this <code>Every</code> and also all elements of a given <code>Every</code>.
    *
-   * <p>
    * <code>everyX</code> <code>union</code> <code>everyY</code> is equivalent to <code>everyX</code> <code>++</code> <code>everyY</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Another way to express this is that <code>everyX</code> <code>union</code> <code>everyY</code> computes the order-presevring multi-set union
    * of <code>everyX</code> and <code>everyY</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
    * also work on multi-sets.
-   * </p>
+   * 
    *
    * @param that the <code>Every</code> to add.
    * @return a new <code>Every</code> that contains all elements of this <code>Every</code> followed by all elements of <code>that</code>.
@@ -1388,15 +1350,13 @@ sealed abstract class Every[+T] protected (underlying: Vector[T]) extends Partia
   /**
    * Produces a new <code>Every</code> that contains all elements of this <code>Every</code> and also all elements of a given <code>GenSeq</code>.
    *
-   * <p>
    * <code>everyX</code> <code>union</code> <code>ys</code> is equivalent to <code>everyX</code> <code>++</code> <code>ys</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Another way to express this is that <code>everyX</code> <code>union</code> <code>ys</code> computes the order-presevring multi-set union
    * of <code>everyX</code> and <code>ys</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
    * also work on multi-sets.
-   * </p>
+   * 
    *
    * @param that the <code>GenSeq</code> to add.
    * @return a new <code>Every</code> that contains all elements of this <code>Every</code> followed by all elements of <code>that</code> <code>GenSeq</code>.
@@ -1516,10 +1476,9 @@ object Every {
   /**
    * Implicit conversion from <code>Every</code> to immutable <code>IndexedSeq</code>.
    *
-   * <p>
    * One use case for this implicit conversion is to enable <code>GenSeq[Every]</code>s to be flattened.
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; Vector(Every(1, 2, 3), Every(3, 4), Every(5, 6, 7, 8)).flatten
@@ -1537,9 +1496,8 @@ object Every {
 /**
  * An <code>Every</code> that contains exactly one element.
  *
- * <p>
  * For more information and examples, see the main documentation for superclass <a href="Every.html"><code>Every</code></a>.
- * </p>
+ * 
  *
  * @tparam T the type of the element contained in this <code>One</code>
  * @param loneElement the lone element contained in this <code>One</code>
@@ -1576,9 +1534,8 @@ final case class One[+T](loneElement: T) extends Every[T](Vector(loneElement)) {
 /**
  * An <code>Every</code> that contains two or more elements.
  *
- * <p>
  * For more information and examples, see the main documentation for superclass <a href="Every.html"><code>Every</code></a>.
- * </p>
+ * 
  *
  * @tparam T the type of the element contained in this <code>Many</code>
  * @param firstElement the first element (with index 0) contained in this <code>Many</code>

@@ -24,18 +24,16 @@ import scala.collection.GenTraversable
 /**
  * Supertrait for typeclasses that enable <code>be empty</code> matcher syntax.
  *
- * <p>
  * An <code>Emptiness[T]</code> provides access to the "emptiness" of type <code>T</code> in such
  * a way that <code>be empty</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
  * can be any type that in some way can be empty. ScalaTest provides implicit implementations for several types. 
  * You can enable the <code>be empty</code> matcher syntax on your own type <code>U</code> by defining an <code>Emptiness[U]</code>
  * for the type and making it available implicitly.
  * 
- * <p>
  * ScalaTest provides implicit <code>Emptiness</code> instances for <code>scala.collection.GenTraversable</code>,
  * <code>java.util.Collection</code>, <code>java.util.Map</code>, <code>String</code>, <code>Array</code>, 
  * and <code>scala.Option</code> in the <code>Emptiness</code> companion object.
- * </p>
+ * 
  */
 trait Emptiness[-T] {
 

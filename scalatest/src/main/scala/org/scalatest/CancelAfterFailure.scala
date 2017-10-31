@@ -19,13 +19,11 @@ package org.scalatest
  * Trait that when mixed into a <a href="TestSuite.html"><code>TestSuite</code></a> cancels any remaining tests in that
  * <code>TestSuite</code> instance after a test fails.
  *
- * <p>
  * The intended use case for this trait is if you have a suite of long-running tests that are
  * related such that if one fails, you aren't interested in running the others, you can use this
  * trait to simply cancel any remaining tests, so you need not wait long for them to complete.
- * </p>
+ * 
  *
- * <p>
  * Note that this trait only cancels tests in the same <code>TestSuite</code> instance, because
  * it uses a private volatile instance variable as a flag to indicate whether or not a test has failed.
  * If you are running each test in its own instance, therefore, it would not cancel the
@@ -33,7 +31,7 @@ package org.scalatest
  * a final implementation of a method defined in <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>,
  * to prevent it from being mixed into any class that also mixes in <code>OneInstancePerTest</code>, 
  * including by mixing in <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> or a <a href="path/package.html">path trait</a>.
- * </p>
+ * 
  */
 trait CancelAfterFailure extends TestSuiteMixin { this: TestSuite =>
 

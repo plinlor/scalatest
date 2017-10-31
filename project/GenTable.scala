@@ -28,21 +28,18 @@ val scaladocForTableFor1VerbatimString = """
 /**
  * A table with 1 column.
  *
- * <p>
  * For an overview of using tables, see the documentation for trait
  * <a href="TableDrivenPropertyChecks.html">TableDrivenPropertyChecks</a>.
- * </p>
+ * 
  *
- * <p>
  * This table is a sequence of objects, where each object represents one row of the (one-column) table.
  * This table also carries with it a <em>heading</em> tuple that gives a string name to the
  * lone column of the table.
- * </p>
+ * 
  *
- * <p>
  * A handy way to create a <code>TableFor1</code> is via an <code>apply</code> factory method in the <code>Table</code>
  * singleton object provided by the <code>Tables</code> trait. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val examples =
@@ -61,11 +58,9 @@ val scaladocForTableFor1VerbatimString = """
  *   )
  * </pre>
  *
- * <p>
  * Because you supplied a list of non-tuple objects, the type you'll get back will be a <code>TableFor1</code>.
- * </p>
+ * 
  *
- * <p>
  * The table provides an <code>apply</code> method that takes a function with a parameter list that matches
  * the type of the objects contained in this table. The <code>apply</code> method will invoke the
  * function with the object in each row passed as the lone argument, in ascending order by index. (<em>I.e.</em>,
@@ -75,14 +70,13 @@ val scaladocForTableFor1VerbatimString = """
  * check succeeded for that row. If the function completes abruptly with an exception, that indicates the
  * property check failed and the <code>apply</code> method will complete abruptly with a
  * <code>TableDrivenPropertyCheckFailedException</code> that wraps the exception thrown by the supplied property function.
- * </p>
  * 
- * <p>
+ * 
  * The usual way you'd invoke the <code>apply</code> method that checks a property is via a <code>forAll</code> method
  * provided by trait <code>TableDrivenPropertyChecks</code>. The <code>forAll</code> method takes a <code>TableFor1</code> as its
  * first argument, then in a curried argument list takes the property check function. It invokes <code>apply</code> on
  * the <code>TableFor1</code>, passing in the property check function. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (examples) { (a) =>
@@ -90,11 +84,10 @@ val scaladocForTableFor1VerbatimString = """
  * }
  * </pre>
  *
- * <p>
  * Because <code>TableFor1</code> is a <code>Seq[(A)]</code>, you can use it as a <code>Seq</code>. For example, here's how
  * you could get a sequence of <a href="../Outcome.html"><code>Outcome</code></a>s for each row of the table, indicating whether a property check succeeded or failed
  * on each row of the table:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * for (row <- examples) yield {
@@ -102,24 +95,21 @@ val scaladocForTableFor1VerbatimString = """
  * }
  * </pre>
  *
- * <p>
  * Note: the <code>outcomeOf</code> method, contained in the <code>OutcomeOf</code> trait, will execute the supplied code (a by-name parameter) and
  * transform it to an <code>Outcome</code>. If no exception is thrown by the code, <code>outcomeOf</code> will result in a
  * <a href="../Succeeded\$.html"><code>Succeeded</code></a>, indicating the "property check"
  * succeeded. If the supplied code completes abruptly in an exception that would normally cause a test to fail, <code>outcomeOf</code> will result in
  * in a <a href="../Failed.html"><code>Failed</code></a> instance containing that exception. For example, the previous for expression would give you:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Vector(Succeeded, Succeeded, Succeeded, Succeeded, Succeeded, Succeeded, Succeeded,
  *     Failed(org.scalatest.TestFailedException: 7 equaled 7), Succeeded, Succeeded)
  * </pre>
  *
- * <p>
  * This shows that all the property checks succeeded, except for the one at index 7.
- * </p>
+ * 
  *
- * <p>
  * One other way to use a <code>TableFor1</code> is to test subsequent return values
  * of a stateful function. Imagine, for example, you had an object named <code>FiboGen</code>
  * whose <code>next</code> method returned the <em>next</em> fibonacci number, where next
@@ -130,17 +120,16 @@ val scaladocForTableFor1VerbatimString = """
  * you could create a <code>TableFor1</code> (a table with one column, which you could alternatively
  * think of as one row), in which each row represents
  * the next value you expect.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val first14FiboNums =
  *   Table("n", 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233)
  * </pre>
  *
- * <p>
  * Then in your <code>forAll</code> simply call the function and compare it with the
  * expected return value, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *  forAll (first14FiboNums) { n =>
@@ -190,22 +179,19 @@ val tableScaladocTemplate = """
 /**
  * A table with $n$ columns.
  *
- * <p>
  * For an introduction to using tables, see the documentation for trait
  * <a href="TableDrivenPropertyChecks.html">TableDrivenPropertyChecks</a>.
- * </p>
+ * 
  *
- * <p>
  * This table is a sequence of <code>Tuple$n$</code> objects, where each tuple represents one row of the table.
  * The first element of each tuple comprise the first column of the table, the second element of 
  * each tuple comprise the second column, and so on.  This table also carries with it
  * a <em>heading</em> tuple that gives string names to the columns of the table.
- * </p>
+ * 
  *
- * <p>
  * A handy way to create a <code>TableFor$n$</code> is via an <code>apply</code> factory method in the <code>Table</code>
  * singleton object provided by the <code>Tables</code> trait. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val examples =
@@ -215,11 +201,9 @@ $columnsOfIndexes$
  *   )
  * </pre>
  *
- * <p>
  * Because you supplied $n$ members in each tuple, the type you'll get back will be a <code>TableFor$n$</code>.
- * </p>
+ * 
  *
- * <p>
  * The table provides an <code>apply</code> method that takes a function with a parameter list that matches
  * the types and arity of the tuples contained in this table. The <code>apply</code> method will invoke the
  * function with the members of each row tuple passed as arguments, in ascending order by index. (<em>I.e.</em>,
@@ -229,14 +213,13 @@ $columnsOfIndexes$
  * check succeeded for that row. If the function completes abruptly with an exception, that indicates the
  * property check failed and the <code>apply</code> method will complete abruptly with a
  * <code>TableDrivenPropertyCheckFailedException</code> that wraps the exception thrown by the supplied property function.
- * </p>
  * 
- * <p>
+ * 
  * The usual way you'd invoke the <code>apply</code> method that checks a property is via a <code>forAll</code> method
  * provided by trait <code>TableDrivenPropertyChecks</code>. The <code>forAll</code> method takes a <code>TableFor$n$</code> as its
  * first argument, then in a curried argument list takes the property check function. It invokes <code>apply</code> on
  * the <code>TableFor$n$</code>, passing in the property check function. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (examples) { ($alphaLower$) =>
@@ -244,11 +227,10 @@ $columnsOfIndexes$
  * }
  * </pre>
  *
- * <p>
  * Because <code>TableFor$n$</code> is a <code>Seq[($alphaUpper$)]</code>, you can use it as a <code>Seq</code>. For example, here's how
  * you could get a sequence of <a href="../Outcome.html"><code>Outcome</code></a>s for each row of the table, indicating whether a property check succeeded or failed
  * on each row of the table:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * for (row <- examples) yield {
@@ -256,22 +238,20 @@ $columnsOfIndexes$
  * }
  * </pre>
  *
- * <p>
  * Note: the <code>outcomeOf</code> method, contained in the <code>OutcomeOf</code> trait, will execute the supplied code (a by-name parameter) and
  * transform it to an <code>Outcome</code>. If no exception is thrown by the code, <code>outcomeOf</code> will result in a
  * <a href="../Succeeded\$.html"><code>Succeeded</code></a>, indicating the "property check"
  * succeeded. If the supplied code completes abruptly in an exception that would normally cause a test to fail, <code>outcomeOf</code> will result in
  * in a <a href="../Failed.html"><code>Failed</code></a> instance containing that exception. For example, the previous for expression would give you:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Vector(Succeeded, Succeeded, Succeeded, Succeeded, Succeeded, Succeeded, Succeeded,
  *     Failed(org.scalatest.TestFailedException: 7 equaled 7), Succeeded, Succeeded)
  * </pre>
  *
- * <p>
  * This shows that all the property checks succeeded, except for the one at index 7.
- * </p>
+ * 
  *
  * @param heading a tuple containing string names of the columns in this table
  * @param rows a variable length parameter list of <code>Tuple$n$</code>s containing the data of this table
@@ -304,14 +284,13 @@ class TableFor$n$[$alphaUpper$](val heading: ($strings$), rows: ($alphaUpper$)*)
   /**
    * Applies the passed property check function to each row of this <code>TableFor$n$</code>.
    *
-   * <p>
    * If the property checks for all rows succeed (the property check function returns normally when passed
    * the data for each row), this <code>apply</code> method returns normally. If the property check function
    * completes abruptly with an exception for any row, this <code>apply</code> method wraps that exception
    * in a <code>TableDrivenPropertyCheckFailedException</code> and completes abruptly with that exception. Once
    * the property check function throws an exception for a row, this <code>apply</code> method will complete
    * abruptly immediately and subsequent rows will not be checked against the function.
-   * </p>
+   * 
    *
    * @param fun the property check function to apply to each row of this <code>TableFor$n$</code>
    */
@@ -363,10 +342,9 @@ val tableObjectPreamble = """
  * Trait containing the <code>Table</code> object, which offers one <code>apply</code> factory method for
  * each <code>TableForN</code> class, <code>TableFor1</code> through <code>TableFor22</code>.
  * 
- * <p>
  * For an introduction to using tables, see the documentation for trait
  * <a href="TableDrivenPropertyChecks.html">TableDrivenPropertyChecks</a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -375,9 +353,8 @@ trait Tables {
   /**
    * Object containing one <code>apply</code> factory method for each <code>TableFor&lt;n&gt;</code> class.
    * 
-   * <p>
    * For example, you could create a table of 5 rows and 2 colums like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.prop.Tables._
@@ -393,10 +370,9 @@ trait Tables {
    *   )
    * </pre>
    *
-   * <p>
    * Because you supplied 2 members in each tuple, the type you'll get back will be a <code>TableFor2</code>. If
    * you wanted a table with just one column you could write this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val moreExamples =
@@ -410,9 +386,8 @@ trait Tables {
    *   )
    * </pre>
    *
-   * <p>
    * Or if you wanted a table with 10 columns and 10 rows, you could do this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val multiplicationTable =
@@ -431,11 +406,10 @@ trait Tables {
    *   )
    * </pre>
    *
-   * <p>
    * The type of <code>multiplicationTable</code> would be <code>TableFor10</code>. You can pass the resulting
    * tables to a <code>forAll</code> method (defined in trait <code>PropertyChecks</code>), to perform a property
    * check with the data in the table. Or, because tables are sequences of tuples, you can treat them as a <code>Seq</code>.
-   * </p>
+   * 
    * 
    * @author Bill Venners
    */
@@ -490,16 +464,14 @@ import org.scalactic._
 /**
  * Trait containing methods that faciliate property checks against tables of data.
  *
- * <p>
  * This trait contains one <code>exists</code>, <code>forAll</code>, and <code>forEvery</code> method for each <code>TableForN</code> class, <code>TableFor1</code>
  * through <code>TableFor22</code>, which allow properties to be checked against the rows of a table. It also
  * contains a <code>wherever</code> method that can be used to indicate a property need only hold whenever some
  * condition is true.
- * </p>
+ * 
  *
- * <p>
  * For an example of trait <code>TableDrivenPropertyChecks</code> in action, imagine you want to test this <code>Fraction</code> class:
- * </p>
+ * 
  *  
  * <pre class="stHighlight">
  * class Fraction(n: Int, d: Int) {
@@ -515,7 +487,6 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * <code>TableDrivenPropertyChecks</code> allows you to create tables with
  * between 1 and 22 columns and any number of rows. You create a table by passing
  * tuples to one of the factory methods of object <code>Table</code>. Each tuple must have the 
@@ -525,14 +496,13 @@ import org.scalactic._
  * if the first tuple after the column names contains two <code>Int</code>s, all subsequent
  * tuples must contain two <code>Int</code> (<em>i.e.</em>, have type
  * <code>Tuple2[Int, Int]</code>).
- * </p>
+ * 
  *
- * <p>
  * To test the behavior of <code>Fraction</code>, you could create a table
  * of numerators and denominators to pass to the constructor of the
  * <code>Fraction</code> class using one of the <code>apply</code> factory methods declared
  * in <code>Table</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.prop.TableDrivenPropertyChecks._
@@ -554,9 +524,8 @@ import org.scalactic._
  *   )
  * </pre>
  *
- * <p>
  * You could then check a property against each row of the table using a <code>forAll</code> method, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.Matchers._
@@ -580,7 +549,6 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * Trait <code>TableDrivenPropertyChecks</code> provides 22 overloaded <code>exists</code>, <code>forAll</code>, and <code>forEvery</code> methods
  * that allow you to check properties using the data provided by a table. Each <code>exists</code>, <code>forAll</code>, and <code>forEvery</code>
  * method takes two parameter lists. The first parameter list is a table. The second parameter list
@@ -596,11 +564,9 @@ import org.scalactic._
  * which is thrown by the <code>whenever</code> method (also defined in this trait) to indicate
  * a condition required by the property function is not met by a row
  * of passed data, will simply cause <code>forAll</code> to skip that row of data.
- * <p>
  *
- * <p>
  * The full list of table methods are:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>exists</code> - succeeds if the assertion holds true for at least one element</li>
@@ -612,7 +578,6 @@ import org.scalactic._
  *
  * <a name="testingStatefulFunctions"></a><h2>Testing stateful functions</h2>
  *
- * <p>
  * One way to use a table with one column is to test subsequent return values
  * of a stateful function. Imagine, for example, you had an object named <code>FiboGen</code>
  * whose <code>next</code> method returned the <em>next</em> fibonacci number, where next
@@ -623,17 +588,16 @@ import org.scalactic._
  * you could create a <code>TableFor1</code> (a table with one column, which you could alternatively
  * think of as one row), in which each row represents
  * the next value you expect.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val first14FiboNums =
  *   Table("n", 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233)
  * </pre>
  *
- * <p>
  * Then in your <code>forAll</code> simply call the function and compare it with the
  * expected return value, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *  forAll (first14FiboNums) { n =>
@@ -643,7 +607,6 @@ import org.scalactic._
  *
  * <a name="testingMutables"></a><h2>Testing mutable objects</h2>
  *
- * <p>
  * If you need to test a mutable object, one way you can use tables is to specify
  * state transitions in a table. For example, imagine you wanted to test this mutable
  * <code>Counter</code> class:
@@ -658,13 +621,12 @@ import org.scalactic._
       }
  * </pre>
  *
- * <p>
  * A <code>Counter</code> keeps track of how many times its <code>click</code> method
  * is called. The count starts out at zero and increments with each <code>click</code>
  * invocation. You can also set the count to a specific value by calling <code>enter</code>
  * and passing the value in. And the <code>reset</code> method returns the count back to
  * zero. You could define the actions that initiate state transitions with case classes, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
       abstract class Action
@@ -673,9 +635,8 @@ import org.scalactic._
       case class Enter(n: Int) extends Action
  * </pre>
  *
- * <p>
  * Given these actions, you could define a state-transition table like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
       val stateTransitions =
@@ -693,11 +654,10 @@ import org.scalactic._
         )
  * </pre>
  *
- * <p>
  * To use this in a test, simply do a pattern match inside the function you pass
  * to <code>forAll</code>. Make a pattern for each action, and have the body perform that
  * action when there's a match. Then check that the actual value equals the expected value:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
       val counter = new Counter
@@ -713,12 +673,11 @@ import org.scalactic._
  *
  * <a name="invalidArgCombos"></a><h2>Testing invalid argument combinations</h2>
  * 
- * <p>
  * A table-driven property check can also be helpful to ensure that the proper exception is thrown when invalid data is
  * passed to a method or constructor. For example, the <code>Fraction</code> constructor shown above should throw <code>IllegalArgumentException</code>
  * if <code>Integer.MIN_VALUE</code> is passed for either the numerator or denominator, or zero is passed for the denominator. This yields the
  * following five combinations of invalid data:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><code>n</code></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><code>d</code></th></tr>
@@ -729,9 +688,8 @@ import org.scalactic._
  * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">a valid value</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">zero</td></tr>
  * </table>
  *
- * <p>
  * You can express these combinations in a table:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val invalidCombos =
@@ -745,9 +703,8 @@ import org.scalactic._
  *   )
  * </pre>
  * 
- * <p>
  * Given this table, you could check that all invalid combinations produce <code>IllegalArgumentException</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (invalidCombos) { (n: Int, d: Int) =>
@@ -757,7 +714,7 @@ import org.scalactic._
  * }
  * </pre>
  *
- * </p>
+ * 
  * @author Bill Venners
  */
 trait TableDrivenPropertyChecks extends Whenever with Tables {
@@ -876,11 +833,10 @@ val propertyCheckForEveryTemplateFor1 = """
    * Performs a property check by applying the specified property check function to each row
    * of the specified <code>TableFor1</code> and reporting every error.
    *
-   * <p>
    * The difference between <code>forEvery</code> and <code>forAll</code> is that
    * <code>forEvery</code> will continue to inspect all elements after first failure, and report all failures,
    * whereas <code>forAll</code> will stop on (and only report) the first failure.
-   * </p>
+   * 
    *
    * @param table the table of data with which to perform the property check
    * @param fun the property check function to apply to each row of data in the table
@@ -897,11 +853,10 @@ val propertyCheckForEveryTemplate = """
    * Performs a property check by applying the specified property check function to each row
    * of the specified <code>TableFor$n$</code> and reporting every error.
    *
-   * <p>
    * The difference between <code>forEvery</code> and <code>forAll</code> is that
    * <code>forEvery</code> will continue to inspect all elements after first failure, and report all failures,
    * whereas <code>forAll</code> will stop on (and only report) the first failure.
-   * </p>
+   * 
    *
    * @param table the table of data with which to perform the property check
    * @param fun the property check function to apply to each row of data in the table

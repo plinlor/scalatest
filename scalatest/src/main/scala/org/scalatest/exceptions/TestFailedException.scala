@@ -23,19 +23,17 @@ import org.scalactic.source
 /**
  * Exception that indicates a test failed.
  *
- * <p>
  * One purpose of this exception is to encapsulate information about
  * the stack depth at which the line of test code that failed resides, so that information can be presented to
  * the user that makes it quick to find the failing line of test code. (In other words, the user need not scan through the
  * stack trace to find the correct filename and line number of the failing test.)
- * </p>
+ * 
  *
- * <p>
  * Another purpose of this exception is to encapsulate a payload, an object to be included in a <a href="../events/TestFailed.html"><code>TestFailed</code></a> event
  * as its payload, so it can be consumed by a custom reporter that understands the payload. For example, tests could take a screen
  * shot image of a GUI when a test fails, and include that as a payload. A custom reporter could listen for such payloads and
  * display the screen shots to the user.
- * </p>
+ * 
  *
  * @param messageFun a function that produces an optional detail message for this <code>TestFailedException</code>.
  * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestFailedException</code> to be thrown.

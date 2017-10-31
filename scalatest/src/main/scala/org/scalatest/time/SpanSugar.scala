@@ -20,7 +20,6 @@ package org.scalatest.time
  * by invoking "units" methods such as <code>millis</code>, <code>seconds</code>, and <code>minutes</code>
  * on <code>Int</code>, <code>Long</code>, <code>Float</code>, and <code>Double</code>.
  * 
- * <p>
  * This trait enables you to specify a span of time in a clear, boilerplate-free way when you
  * need to provide an instance of <a href="Span.html"><code>Span</code></a>. This
  * can be used, for example, with the <code>failAfter</code> method of trait
@@ -29,7 +28,7 @@ package org.scalatest.time
  * timeouts when using traits <a href="../concurrent/Eventually.html"><code>Eventually</code></a>,
  * <a href="../concurrent/Futures.html"><code>Futures</code></a>,
  * <a href="../concurrent/Waiter.html"><code>Waiter</code></a>. Here are examples of each unit enabled by this trait:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
@@ -258,24 +257,22 @@ package org.scalatest.time
  * </tr>
  * </table>
  *
- * <p>
  * This trait is not the default way to specify <code>Span</code>s for two reasons. First, it adds
  * four implicits, which would give the compiler more work to do and may conflict with other implicits the
  * user has in scope. Instead, <code>Span</code> provides a clear, concise default way to specify time
  * spans that requires no implicits. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Second)
  * </pre>
  *
- * <p>
  * If you already have implicit conversions in scope that provide a similar syntax sugar for expression
  * time spans, you can use that by providing an implicit conversion from the result of those expressions
  * to <code>Span</code>. Note that because of implicit conversions in the <code>Span</code> companion object,
  * you can use a <code>scala.concurrent.duration.Duration</code> (including in its "sugary" form) where
  * a <code>Span</code> is needed, and vice versa.
- * </p>
+ * 
  */
 trait SpanSugar {
 

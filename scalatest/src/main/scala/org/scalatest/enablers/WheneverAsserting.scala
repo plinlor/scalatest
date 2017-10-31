@@ -23,10 +23,9 @@ import scala.concurrent.Future
   * Supertrait for <code>WheneverAsserting</code> typeclasses, which are used to implement and determine the result
   * type of [[org.scalatest.prop.Whenever Whenever]]'s <code>whenever</code> method.
   *
-  * <p>
   * Currently, an [[org.scalatest.prop.Whenever Whenever]] expression will have result type <code>Assertion</code>, if the function passed has result type <code>Assertion</code>,
   * else it will have result type <code>Unit</code>.
-  * </p>
+  * 
   */
 trait WheneverAsserting[T] {
   /**

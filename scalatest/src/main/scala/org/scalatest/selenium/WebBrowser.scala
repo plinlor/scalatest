@@ -77,12 +77,11 @@ import org.scalactic.source
  * }
  * </pre>
  * 
- * <p>
  * For convenience, however, ScalaTest provides a <code>WebBrowser</code> subtrait containing an implicit <code>WebDriver</code> for each
  * driver provided by Selenium. 
  * Thus a simpler way to use the <code>HtmlUnit</code> driver, for example, is to extend
  * ScalaTest's <a href="HtmlUnit.html"><code>HtmlUnit</code></a> trait, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalatest._
@@ -99,9 +98,8 @@ import org.scalactic.source
  * }
  * </pre>
  * 
- * <p>
  * The web driver traits provided by ScalaTest are:
- * </p>
+ * 
  * 
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Driver</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong><code>WebBrowser</code> subtrait</strong></th></tr>
@@ -149,24 +147,21 @@ import org.scalactic.source
  *
  * <h2>Navigation</h2>
  *
- * <p>
  * You can ask the browser to retrieve a page (go to a URL) like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * go to "http://www.artima.com"
  * </pre>
  * 
- * <p>
  * Note: If you are using the <em>page object pattern</em>, you can also go to a page using the <code>Page</code> instance, as
  * illustrated in the section on <a href="#pageObjects">page objects</a> below.
- * </p>
+ * 
  *
- * <p>
  * Once you have retrieved a page, you can fill in and submit forms, query for the values of page elements, and make assertions.  
  * In the following example, selenium will go to <code>http://www.google.com</code>, fill in the text box with
  * <code>Cheese!</code>, press the submit button, and wait for result returned from an AJAX call:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * go to "http://www.google.com"
@@ -177,25 +172,22 @@ import org.scalactic.source
  * eventually { pageTitle should be ("Cheese! - Google Search") }
  * </pre>
  * 
- * <p>
  * In the above example, the <code>"q"</code> used in &ldquo;<code>click on "q"</code>&rdquo; 
  * can be either the id or name of an element. ScalaTest's Selenium DSL will try to lookup by id first. If it cannot find 
  * any element with an id equal to <code>&quot;q&quot;</code>, it will then try lookup by name <code>&quot;q&quot;</code>.
- * </p>
  * 
- * <p>
+ * 
  * Alternatively, you can be more specific:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * click on id("q")   // to lookup by id "q" 
  * click on name("q") // to lookup by name "q" 
  * </pre>
  * 
- * <p>
  * In addition to <code>id</code> and <code>name</code>, you can use the following approaches to lookup elements, just as you can do with
  * Selenium's <code>org.openqa.selenium.By</code> class:
- * </p>
+ * 
  * 
  * <ul>
  *   <li><code>xpath</code></li>
@@ -206,30 +198,24 @@ import org.scalactic.source
  *   <li><code>tagName</code></li>
  * </ul>
  * 
- * <p>
  * For example, you can select by link text with:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * click on linkText("click here!")
  * </pre>
  * 
- * <p>
  * If an element is not found via any form of lookup, evaluation will complete abruptly with a <code>TestFailedException</code>.
- * <p>
  *
  * <h2>Getting and setting input element values</h2>
  * 
- * <p>
  * ScalaTest's Selenium DSL provides a clear, simple syntax for accessing and updating the values of input elements such as
  * text fields, radio buttons, checkboxes, selection lists, and the input types introduced in HTML5. If a requested element is not found, or if it is found but is
  * not of the requested type, an exception will immediately result causing the test to fail.
- * <p>
  *
- * <p>
  * The most common way to access field value is through the <code>value</code> property, which is supported by the following
  * input types:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
@@ -421,39 +407,34 @@ import org.scalactic.source
  * </tr>
  * </table>
  *
- * <p>
  * You can change a input field's value by assigning it via the <code>=</code> operator, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * textField("q").value = "Cheese!"
  * </pre>
  * 
- * <p>
  * And you can access a input field's value by simply invoking <code>value</code> on it:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * textField("q").value should be ("Cheese!")
  * </pre>
  * 
- * <p>
  * If the text field is empty, <code>value</code> will return an empty string (<code>""</code>).
- * </p>
  * 
- * <p>
+ * 
  * You can use the same syntax with other type of input fields by replacing <code>textField</code> with <code>Lookup Method</code> listed in table above,
  * for example to use text area:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * textArea("body").value = "I saw something cool today!"
  * textArea("body").value should be ("I saw something cool today!")
  * </pre>
  * 
- * <p>
  * or with a password field:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * pwdField("secret").value = "Don't tell anybody!"
@@ -462,11 +443,10 @@ import org.scalactic.source
  *
  * <h3>Alternate Way for Data Entry</h3>
  * 
- * <p>
  * An alternate way to enter data into a input fields is to use <code>enter</code> or <code>pressKeys</code>.
  * Although both of <code>enter</code> and <code>pressKeys</code> send characters to the active element, <code>pressKeys</code> can be used on any kind of
  * element, whereas <code>enter</code> can only be used on text entry fields, which include:
- * </p>
+ * 
  *
  * <ul>
  *   <li><code>textField</code></li>
@@ -478,26 +458,23 @@ import org.scalactic.source
  *   <li><code>urlField</code></li>
  * </ul>
  *
- * <p>
  * Another difference is that <code>enter</code> will clear the text field or area before sending the characters,
  * effectively replacing any currently existing text with the new text passed to <code>enter</code>. By contrast,
  * <code>pressKeys</code> does not do any clearing&#8212;it just appends more characters to any existing text.
  * You can backup with <code>pressKeys</code>, however, by sending explicit backspace characters, <code>"&#92;u0008"</code>.
- * </p>
  * 
- * <p>
+ * 
  * To use these commands, you must first click on the input field you are interested in
  * to give it the focus. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * click on "q"
  * enter("Cheese!")
  * </pre>
  * 
- * <p>
  * Here's a (contrived) example of using <code>pressKeys</code> with backspace to fix a typo:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * click on "q"              // q is the name or id of a text field or text area
@@ -508,9 +485,8 @@ import org.scalactic.source
  * 
  * <h3>Radio buttons</h3>
  * 
- * <p>
  * Radio buttons work together in groups. For example, you could have a group of radio buttons, like this:
- * </p>
+ * 
  * 
  * <pre>
  * &lt;input type="radio" id="opt1" name="group1" value="Option 1"&gt; Option 1&lt;/input&gt;
@@ -518,49 +494,43 @@ import org.scalactic.source
  * &lt;input type="radio" id="opt3" name="group1" value="Option 3"&gt; Option 3&lt;/input&gt;
  * </pre>
  * 
- * <p>
  * You can select an option in either of two ways:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * radioButtonGroup("group1").value = "Option 2"
  * radioButtonGroup("group1").selection = Some("Option 2")
  * </pre>
  *
- * <p>
  * Likewise, you can read the currently selected value of a group of radio buttons in two ways:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * radioButtonGroup("group1").value should be ("Option 2")
  * radioButtonGroup("group1").selection should be (Some("Option 2"))
  * </pre>
  * 
- * <p>
  * If the radio button has no selection at all, <code>selection</code> will return <code>None</code> whereas <code>value</code>
  * will throw a <code>TestFailedException</code>. By using <code>value</code>, you are indicating you expect a selection, and if there
  * isn't a selection that should result in a failed test.
- * </p>
  * 
- * <p>
+ * 
  * If you would like to work with <code>RadioButton</code> element directly, you can select it by calling <code>radioButton</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * click on radioButton("opt1")
  * </pre>
  * 
- * <p>
  * you can check if an option is selected by calling <code>isSelected</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * radioButton("opt1").isSelected should be (true)
  * </pre>
  * 
- * <p>
  * to get the value of radio button, you can call <code>value</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * radioButton("opt1").value should be ("Option 1")
@@ -568,25 +538,22 @@ import org.scalactic.source
  * 
  * <h3>Checkboxes</h3>
  * 
- * <p>
  * A checkbox in one of two states: selected or cleared. Here's how you select a checkbox:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * checkbox("cbx1").select()
  * </pre>
  * 
- * <p>
  * And here's how you'd clear one:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * checkbox("cbx1").clear()
  * </pre>
  * 
- * <p>
  * You can access the current state of a checkbox with <code>isSelected</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * checkbox("cbx1").isSelected should be (true)
@@ -594,9 +561,8 @@ import org.scalactic.source
  * 
  * <h3>Single-selection dropdown lists</h3>
  * 
- * <p>
  * Given the following single-selection dropdown list:
- * </p>
+ * 
  * 
  * <pre>
  * &lt;select id="select1"&gt;
@@ -606,44 +572,39 @@ import org.scalactic.source
  * &lt;/select&gt;
  * </pre>
  * 
- * <p>
  * You could select <code>Option 2</code> in either of two ways:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * singleSel("select1").value = "option2"
  * singleSel("select1").selection = Some("option2")
  * </pre>
  * 
- * <p>
  * To clear the selection, either invoke <code>clear</code> or set <code>selection</code> to <code>None</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * singleSel("select1").clear()
  * singleSel("select1").selection = None
  * </pre>
  * 
- * <p>
  * You can read the currently selected value of a single-selection list in the same manner as radio buttons:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * singleSel("select1").value should be ("option2")
  * singleSel("select1").selection should be (Some("option2"))
  * </pre>
  * 
- * <p>
  * If the single-selection list has no selection at all, <code>selection</code> will return <code>None</code> whereas <code>value</code>
  * will throw a <code>TestFailedException</code>. By using <code>value</code>, you are indicating you expect a selection, and if there
  * isn't a selection that should result in a failed test.
- * </p>
+ * 
  * 
  * <h3>Multiple-selection lists</h3>
  * 
- * <p>
  * Given the following multiple-selection list:
- * </p>
+ * 
  * 
  * <pre>
  * &lt;select name="select2" multiple="multiple"&gt;
@@ -653,44 +614,39 @@ import org.scalactic.source
  * &lt;/select&gt;
  * </pre>
  * 
- * <p>
  * You could select <code>Option 5</code> and <code>Option 6</code> like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * multiSel("select2").values = Seq("option5", "option6")
  * </pre>
  * 
- * <p>
  * The previous command would essentially clear all selections first, then select <code>Option 5</code> and <code>Option 6</code>.
  * If instead you want to <em>not</em> clear any existing selection, just additionally select <code>Option 5</code> and <code>Option 6</code>,
  * you can use the <code>+=</code> operator, like this.
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * multiSel("select2").values += "option5"
  * multiSel("select2").values += "option6"
  * </pre>
  * 
- * <p>
  * To clear a specific option, pass its name to <code>clear</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * multiSel("select2").clear("option5")
  * </pre>
  * 
- * <p>
  * To clear all selections, call <code>clearAll</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * multiSel("select2").clearAll()
  * </pre>
  * 
- * <p>
  * You can access the current selections with <code>values</code>, which returns an immutable <code>IndexedSeq[String]</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * multiSel("select2").values should have size 2
@@ -700,23 +656,20 @@ import org.scalactic.source
  * 
  * <h3>Clicking and submitting</h3>
  * 
- * <p>
  * You can click on any element with &ldquo;<code>click on</code>&rdquo; as shown previously:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * click on "aButton"
  * click on name("aTextField")
  * </pre>
  * 
- * <p>
  * If the requested element is not found, <code>click on</code> will throw an exception, failing the test.
- * </p>
  * 
- * <p>
+ * 
  * Clicking on a input element will give it the focus. If current focus is in on an input element within a form, you can submit the form by 
  * calling <code>submit</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * submit()
@@ -724,35 +677,31 @@ import org.scalactic.source
  * 
  * <h2>Switching</h2>
  * 
- * <p>
  * You can switch to a popup alert bo using the following code:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * switch to alertBox
  * </pre>
  * 
- * <p>
  * to switch to a frame, you could:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * switch to frame(0) // switch by index
  * switch to frame("name") // switch by name
  * </pre>
  * 
- * <p>
  * If you have reference to a window handle (can be obtained from calling windowHandle/windowHandles), you can switch to a particular 
  * window by:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * switch to window(windowHandle)
  * </pre>
  * 
- * <p>
  * You can also switch to active element and default content:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * switch to activeElement
@@ -761,17 +710,15 @@ import org.scalactic.source
  * 
  * <h2>Navigation history</h2>
  * 
- * <p>
  * In real web browser, you can press the 'Back' button to go back to previous page.  To emulate that action in your test, you can call <code>goBack</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * goBack()
  * </pre>
  * 
- * <p>
  * To emulate the 'Forward' button, you can call:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * goForward()
@@ -785,23 +732,21 @@ import org.scalactic.source
  * 
  * <h2>Cookies!</h2>
  * 
- * <p>To create a new cookie, you'll say:</p>
+ * <p>To create a new cookie, you'll say:
  * 
  * <pre class="stHighlight">
  * add cookie ("cookie_name", "cookie_value")
  * </pre>
  * 
- * <p>
  * to read a cookie value, you do:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * cookie("cookie_name").value should be ("cookie_value") // If value is undefined, throws TFE right then and there. Never returns null.
  * </pre>
  * 
- * <p>
  * In addition to the common use of name-value cookie, you can pass these extra fields when creating the cookie, available ways are:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * cookie(name: String, value: String)
@@ -821,17 +766,15 @@ import org.scalactic.source
  * cookie("cookie_name").isSecure  // Read cookie's isSecure flag
  * </pre>
  * 
- * <p>
  * In order to delete a cookie, you could use the following code: 
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * delete cookie "cookie_name"
  * </pre>
  * 
- * <p>
  * or to delete all cookies in the same domain:-
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * delete all cookies
@@ -845,10 +788,9 @@ import org.scalactic.source
  * 
  * <h2>Other useful element properties</h2>
  * 
- * <p>
  * All element types (<code>textField</code>, <code>textArea</code>, <code>radioButton</code>, <code>checkbox</code>, <code>singleSel</code>, <code>multiSel</code>) 
  * support the following useful properties:
- * </p>
+ * 
  * 
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Method</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Description</strong></th></tr>
@@ -929,32 +871,28 @@ import org.scalactic.source
  * 
  * <h2>Implicit wait</h2>
  * 
- * <p>
  * To set Selenium's implicit wait timeout, you can call the <code>implicitlyWait</code> method:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * implicitlyWait(Span(10, Seconds))
  * </pre>
  * 
- * <p>
  * Invoking this method sets the amount of time the driver will wait when searching for an element that is not immediately present. For
  * more information, see the documentation for method <code>implicitlyWait</code>.
- * </p>
+ * 
  *
  * <h2>Page source and current URL</h2>
  * 
- * <p>
  * It is possible to get the html source of currently loaded page, using:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * pageSource
  * </pre>
  * 
- * <p>
  * and if needed, get the current URL of currently loaded page:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * currentUrl
@@ -962,46 +900,40 @@ import org.scalactic.source
  * 
  * <h2>Screen capture</h2>
  * 
- * <p>
  * You can capture screen using the following code:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * val file = capture
  * </pre>
  * 
- * <p>
  * By default, the captured image file will be saved in temporary folder (returned by java.io.tmpdir property), with random file name 
  * ends with .png extension.  You can specify a fixed file name:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * capture to "MyScreenShot.png"
  * </pre>
  * 
- * <p>
  * or
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * capture to "MyScreenShot"
  * </pre>
  * 
- * <p>
  * Both will result in a same file name <code>MyScreenShot.png</code>.
- * </p>
  * 
- * <p>
+ * 
  * You can also change the target folder screenshot file is written to, by saying:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * setCaptureDir("/home/your_name/screenshots")
  * </pre>
  * 
- * <p>
  * If you want to capture a screenshot when something goes wrong (e.g. test failed), you can use <code>withScreenshot</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * withScreenshot {
@@ -1009,9 +941,8 @@ import org.scalactic.source
  * }
  * </pre>
  * 
- * <p>
  * In case the test code fails, you'll see the screenshot location appended to the error message, for example:
- * </p>
+ * 
  * 
  * <pre>
  * Expected gold but got silver; screenshot capture in /tmp/AbCdEfGhIj.png
@@ -1020,10 +951,9 @@ import org.scalactic.source
  * <a name="pageObjects"></a>
  * <h2>Using the page object pattern</h2>
  *
- * <p>
  * If you use the page object pattern, mixing trait <code>Page</code> into your page classes will allow you to use the <code>go to</code> 
  * syntax with your page objects. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class HomePage extends Page {
@@ -1036,9 +966,8 @@ import org.scalactic.source
  *
  * <h2>Executing JavaScript</h2>
  *
- * <p>
  * To execute arbitrary JavaScript, for example, to test some JavaScript functions on your page, pass it to <code>executeScript</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * go to (host + "index.html")
@@ -1048,9 +977,8 @@ import org.scalactic.source
  * result2 should be ("Hello ScalaTest")
  * </pre>
  *
- * <p>
  * To execute an asynchronous bit of JavaScript, pass it to <code>executeAsyncScript</code>. You can set the script timeout with <code>setScriptTimeout</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val script = """
@@ -1064,11 +992,10 @@ import org.scalactic.source
  *
  * <h2>Querying for elements</h2>
  *
- * <p>
  * You can query for arbitrary elements via <code>find</code> and <code>findAll</code>. The <code>find</code> method returns the first matching element, wrapped in a <code>Some</code>,
  * or <code>None</code> if no element is found. The <code>findAll</code> method returns an immutable <code>IndexedSeq</code> of all matching elements. If no elements match the query, <code>findAll</code>
  * returns an empty <code>IndexedSeq</code>. These methods allow you to perform rich queries using <code>for</code> expressions. Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val ele: Option[Element] = find("q")
@@ -1081,17 +1008,15 @@ import org.scalactic.source
  *
  * <h2>Cleaning up</h2>
  * 
- * <p>
  * To close the current browser window, and exit the driver if the current window was the only one remaining, use <code>close</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * close()
  * </pre>
  * 
- * <p>
  * To close all windows, and exit the driver, use <code>quit</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * quit()
@@ -1100,12 +1025,11 @@ import org.scalactic.source
  * <a name="alternateForms"></a>
  * <h2>Alternate forms</h2>
  * 
- * <p>
  * Although statements like &ldquo;<code>delete all cookies</code>&rdquo; fit well with matcher statements
  * like &ldquo;<code>title should be ("Cheese!")</code>&rdquo;, they do not fit as well
  * with the simple method call form of assertions. If you prefer, you can avoid operator notation
  * and instead use alternatives that take the form of plain-old method calls. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * goTo("http://www.google.com")
@@ -1116,9 +1040,8 @@ import org.scalactic.source
  * eventually(assert(pageTitle === "Cheese! - Google Search"))
  * </pre>
  * 
- * <p>
  * Here's a table showing the complete list of alternatives:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>operator notation</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>method call</strong></th></tr>
@@ -1198,19 +1121,17 @@ trait WebBrowser {
   /**
    * Wrapper class for a Selenium <code>WebElement</code>.
    *
-   * <p>
    * This class provides idiomatic Scala access to the services of an underlying <code>WebElement</code>.
    * You can access the wrapped <code>WebElement</code> via the <code>underlying</code> method.
-   * </p>
+   * 
    */
   sealed trait Element {
 
     /**
      * The XY location of the top-left corner of this <code>Element</code>.
      *
-     * <p>
      * This invokes <code>getLocation</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the location of the top-left corner of this element on the page
      */
@@ -1219,9 +1140,8 @@ trait WebBrowser {
     /**
      * The width/height size of this <code>Element</code>.
      *
-     * <p>
      * This invokes <code>getSize</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the size of the element on the page
      */
@@ -1230,9 +1150,8 @@ trait WebBrowser {
     /**
      * Indicates whether this <code>Element</code> is displayed.
      *
-     * <p>
      * This invokes <code>isDisplayed</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return <code>true</code> if the element is currently displayed
      */
@@ -1241,10 +1160,9 @@ trait WebBrowser {
     /**
      * Indicates whether this <code>Element</code> is enabled.
      *
-     * <p>
      * This invokes <code>isEnabled</code> on the underlying <code>WebElement</code>, which
      * will generally return <code>true</code> for everything but disabled input elements.
-     * </p>
+     * 
      *
      * @return <code>true</code> if the element is currently enabled
      */
@@ -1253,11 +1171,10 @@ trait WebBrowser {
     /**
      * Indicates whether this <code>Element</code> is selected.
      *
-     * <p>
      * This method, which invokes <code>isSelected</code> on the underlying <code>WebElement</code>,
      * is relevant only for input elements such as checkboxes, options in a single- or multiple-selection
      * list box, and radio buttons. For any other element it will simply return <code>false</code>.
-     * </p>
+     * 
      *
      * @return <code>true</code> if the element is currently selected or checked
      */
@@ -1266,12 +1183,11 @@ trait WebBrowser {
     /**
      * The tag name of this element.
      *
-     * <p>
      * This method invokes <code>getTagName</code> on the underlying <code>WebElement</code>.
      * Note it returns the name of the tag, not the value of the of the <code>name</code> attribute.
      * For example, it will return will return <code>"input"</code> for the element
      * <code>&lt;input name="city" /&gt;</code>, not <code>"city"</code>.
-     * </p>
+     * 
      *
      * @return the tag name of this element
      */
@@ -1286,10 +1202,9 @@ trait WebBrowser {
      * The attribute value of the given attribute name of this element, wrapped in a <code>Some</code>, or <code>None</code> if no
      * such attribute exists on this <code>Element</code>.
      *
-     * <p>
      * This method invokes <code>getAttribute</code> on the underlying <code>WebElement</code>, passing in the
      * specified <code>name</code>.
-     * </p>
+     * 
      *
      * @return the attribute with the given name, wrapped in a <code>Some</code>, else <code>None</code>
      */
@@ -1335,19 +1250,17 @@ trait WebBrowser {
   /**
    * Wrapper class for a Selenium <code>Cookie</code>.
    *
-   * <p>
    * This class provides idiomatic Scala access to the services of an underlying <code>Cookie</code>.
    * You can access the wrapped <code>Cookie</code> via the <code>underlying</code> method.
-   * </p>
+   * 
    */
   final class WrappedCookie(val underlying: Cookie) {
 
     /**
      * The domain to which this cookie is visible.
      *
-     * <p>
      * This invokes <code>getDomain</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * 
      *
      * @return the domain of this cookie
      */
@@ -1356,9 +1269,8 @@ trait WebBrowser {
     /**
      * The expire date of this cookie.
      *
-     * <p>
      * This invokes <code>getExpiry</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * 
      *
      * @return the expire date of this cookie
      */
@@ -1367,9 +1279,8 @@ trait WebBrowser {
     /**
      * The name of this cookie.
      *
-     * <p>
      * This invokes <code>getName</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * 
      *
      * @return the name of this cookie
      */
@@ -1378,9 +1289,8 @@ trait WebBrowser {
     /**
      * The path of this cookie.
      *
-     * <p>
      * This invokes <code>getPath</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * 
      *
      * @return the path of this cookie
      */
@@ -1389,9 +1299,8 @@ trait WebBrowser {
     /**
      * The value of this cookie.
      *
-     * <p>
      * This invokes <code>getValue</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * 
      *
      * @return the value of this cookie
      */
@@ -1400,9 +1309,8 @@ trait WebBrowser {
     /**
      * Indicates whether the cookie requires a secure connection.
      *
-     * <p>
      * This invokes <code>isSecure</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * 
      *
      * @return true if this cookie requires a secure connection.
      */
@@ -1412,9 +1320,8 @@ trait WebBrowser {
      * Returns the result of invoking <code>equals</code> on the underlying <code>Cookie</code>, passing
      * in the specified <code>other</code> object.
      *
-     * <p>
      * Two Selenium <code>Cookie</code>s are considered equal if their name and values are equal.
-     * </p>
+     * 
      *
      * @param other the object with which to compare for equality
      *
@@ -1447,9 +1354,8 @@ trait WebBrowser {
    * This field supports cookie deletion in ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This field enables the following syntax:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * delete all cookies
@@ -1462,11 +1368,10 @@ trait WebBrowser {
    * This sealed abstract class supports switching in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * One subclass of <code>SwitchTarget</code> exists for each kind of target that
    * can be switched to: active element, alert box, default content, frame (indentified by index,
    * name or id, or enclosed element), and window.
-   * </p>
+   * 
    */
   sealed abstract class SwitchTarget[T] {
 
@@ -1482,9 +1387,8 @@ trait WebBrowser {
    * This class supports switching to the currently active element in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to activeElement
@@ -1507,9 +1411,8 @@ trait WebBrowser {
    * This class supports switching to the alert box in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to alertBox
@@ -1532,9 +1435,8 @@ trait WebBrowser {
    * This class supports switching to the default content in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to defaultContent
@@ -1557,9 +1459,8 @@ trait WebBrowser {
    * This class supports switching to a frame by index in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to frame(0)
@@ -1591,9 +1492,8 @@ trait WebBrowser {
    * This class supports switching to a frame by name or ID in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to frame("name")
@@ -1675,9 +1575,8 @@ trait WebBrowser {
    * This class supports switching to a window by name or handle in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to window(windowHandle)
@@ -1740,9 +1639,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * textField("q").value should be ("Cheese!")
@@ -1763,9 +1661,8 @@ trait WebBrowser {
     /**
      * Gets this text field's value.
      *
-     * <p>
      * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the text field's value
      */
@@ -1791,9 +1688,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * textArea("q").value should be ("Cheese!")
@@ -1813,9 +1709,8 @@ trait WebBrowser {
     /**
      * Gets this text area's value.
      *
-     * <p>
      * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the text area's value
      */
@@ -1841,9 +1736,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * pwdField("q").value should be ("Cheese!")
@@ -1864,9 +1758,8 @@ trait WebBrowser {
     /**
      * Gets this password field's value.
      *
-     * <p>
      * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the password field's value
      */
@@ -1903,9 +1796,8 @@ trait WebBrowser {
     /**
      * Gets this field's value.
      *
-     * <p>
      * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the field's value
      */
@@ -1937,9 +1829,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * emailField("q").value should be ("foo@bar.com")
@@ -1956,9 +1847,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * colorField("q").value should be ("Cheese!")
@@ -1975,9 +1865,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * dateField("q").value should be ("2003-03-01")
@@ -1994,9 +1883,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * dateTimeField("q").value should be ("2003-03-01T12:13:14")
@@ -2013,9 +1901,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * dateTimeLocalField("q").value should be ("2003-03-01T12:13:14")
@@ -2032,9 +1919,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * monthField("q").value should be ("2003-04")
@@ -2051,9 +1937,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * numberField("q").value should be ("1.3")
@@ -2070,9 +1955,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * rangeField("q").value should be ("1.3")
@@ -2089,9 +1973,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * searchField("q").value should be ("google")
@@ -2108,9 +1991,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * telField("q").value should be ("911-911-9191")
@@ -2127,9 +2009,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * timeField("q").value should be ("12:13:14")
@@ -2146,9 +2027,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * urlField("q").value should be ("http://google.com")
@@ -2165,9 +2045,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * weekField("q").value should be ("1996-W16")
@@ -2184,9 +2063,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * radioButton(id("opt1")).value should be ("Option 1!")
@@ -2205,9 +2083,8 @@ trait WebBrowser {
     /**
      * Gets this radio button's value.
      *
-     * <p>
      * Invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the radio button's value
      */
@@ -2218,9 +2095,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * radioButtonGroup("group1").value should be ("Option 2")
@@ -2295,9 +2171,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * checkbox("cbx1").select()
@@ -2333,9 +2208,8 @@ trait WebBrowser {
     /**
      * Gets this checkbox's value.
      *
-     * <p>
      * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * 
      *
      * @return the checkbox's value
      */
@@ -2346,42 +2220,37 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * multiSel("select2").values += "option5"
    *                            ^
    * </pre>
    *
-   * <p>
    * Instances of this class are returned from the <code>values</code> method of <code>MultiSel</code>.
    * <code>MultiSelOptionSeq</code> is an immutable <code>IndexedSeq[String]</code> that wraps an underlying immutable <code>IndexedSeq[String]</code> and adds two
    * methods, <code>+</code> and <code>-</code>, to facilitate the <code>+=</code> syntax for setting additional options
    * of the <code>MultiSel</code>. The Scala compiler will rewrite:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * multiSel("select2").values += "option5"
    * </pre>
    *
-   * <p>
    * To:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * multiSel("select2").values = multiSel("select2").values + "option5"
    * </pre>
    *
-   * <p>
    * Thus, first a new <code>MultiSelOptionSeq</code> is created by invoking the <code>+</code> method on the <code>MultiSelOptionSeq</code>
    * returned by <code>values</code>, and that result is passed to the <code>values_=</code> method.
-   * </p>
+   * 
    *
-   * <p>
    * For symmetry, this class also offers a <code>-</code> method, which can be used to deselect an option, like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * multiSel("select2").values -= "option5"
@@ -2394,9 +2263,8 @@ trait WebBrowser {
     /**
      * Selects an element by its index in the sequence.
      *
-     * <p>
      * This method invokes <code>apply</code> on the underlying immutable <code>IndexedSeq[String]</code>, passing in <code>idx</code>, and returns the result.
-     * </p>
+     * 
      *
      * @param idx the index to select
      * @return the element of this sequence at index <code>idx</code>, where 0 indicates the first element
@@ -2406,9 +2274,8 @@ trait WebBrowser {
     /**
      * The length of this sequence.
      *
-     * <p>
      * This method invokes <code>length</code> on the underlying immutable <code>IndexedSeq[String]</code> and returns the result.
-     * </p>
+     * 
      *
      * @return the number of elements in this sequence
      */
@@ -2417,11 +2284,10 @@ trait WebBrowser {
     /**
      * Appends a string element to this sequence, if it doesn't already exist in the sequence.
      *
-     * <p>
      * If the string element already exists in this sequence, this method returns itself. If not,
      * this method returns a new <code>MultiSelOptionSeq</code> with the passed value appended to the
      * end of the original <code>MultiSelOptionSeq</code>.
-     * </p>
+     * 
      *
      * @param the string element to append to this sequence
      * @return a <code>MultiSelOptionSeq</code> that contains the passed string value
@@ -2436,11 +2302,10 @@ trait WebBrowser {
     /**
      * Removes a string element to this sequence, if it already exists in the sequence.
      *
-     * <p>
      * If the string element does not already exist in this sequence, this method returns itself. If the element
      * is contained in this sequence, this method returns a new <code>MultiSelOptionSeq</code> with the passed value
      * removed from the the original <code>MultiSelOptionSeq</code>, leaving any other elements in the same order.
-     * </p>
+     * 
      *
      * @param the string element to append to this sequence
      * @return a <code>MultiSelOptionSeq</code> that contains the passed string value
@@ -2457,9 +2322,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * singleSel.clear()
@@ -2540,9 +2404,8 @@ trait WebBrowser {
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * multiSel("select2").clear("option5")
@@ -2578,10 +2441,9 @@ trait WebBrowser {
     /**
      * Gets all selected values of this multiple selection list.
      *
-     * <p>
      * If the multiple selection list has no selections, ths method will
      * return an empty <code>IndexedSeq</code>.
-     * </p>
+     * 
      *
      * @return An <code>IndexedSeq</code> containing the currently selected values
      */
@@ -2593,10 +2455,9 @@ trait WebBrowser {
     /**
      * Clears any existing selections then sets all values contained in the passed <code>collection.Seq[String]</code>.
      *
-     * <p>
      * In other words, the <code>values_=</code> method <em>replaces</em> the current selections, if any, with
      * new selections defined by the passed <code>Seq[String]</code>.
-     * </p>
+     * 
      *
      * @param values a <code>Seq</code> of string values to select
      * @throws TestFailedException if a value contained in the passed <code>Seq[String]</code> is not
@@ -2631,9 +2492,8 @@ trait WebBrowser {
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * go to "http://www.artima.com"
@@ -2645,9 +2505,8 @@ trait WebBrowser {
     /**
      * Sends the browser to the passed URL.
      *
-     * <p>
      * This method enables syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * go to "http://www.artima.com"
@@ -2664,9 +2523,8 @@ trait WebBrowser {
     /**
      * Sends the browser to the URL contained in the passed <code>Page</code> object.
      *
-     * <p>
      * This method enables syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * go to homePage
@@ -2684,9 +2542,8 @@ trait WebBrowser {
   /**
    * Sends the browser to the passed URL.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * goTo("http://www.artima.com")
@@ -2702,9 +2559,8 @@ trait WebBrowser {
   /**
    * Sends the browser to the URL contained in the passed <code>Page</code> object.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * goTo(homePage)
@@ -2740,9 +2596,8 @@ trait WebBrowser {
   /**
    * Returns the source of the current page.
    *
-   * <p>
    * This method invokes <code>getPageSource</code> on the passed <code>WebDriver</code> and returns the result.
-   * </p>
+   * 
    *
    * @param driver the <code>WebDriver</code> with which to drive the browser
    * @return the source of the current page
@@ -2752,9 +2607,8 @@ trait WebBrowser {
   /**
    * Returns the URL of the current page.
    *
-   * <p>
    * This method invokes <code>getCurrentUrl</code> on the passed <code>WebDriver</code> and returns the result.
-   * </p>
+   * 
    *
    * @param driver the <code>WebDriver</code> with which to drive the browser
    * @return the URL of the current page
@@ -2765,10 +2619,9 @@ trait WebBrowser {
    * This trait is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * Subclasses of this trait define different ways of querying for elements, enabling
    * syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on id("q")
@@ -2785,9 +2638,8 @@ trait WebBrowser {
     /**
      * The query string for this query.
      *
-     * <p>
      * For example, the query string for <code>id("q")</code> is <code>"q"</code>.
-     * </p>
+     * 
      */
     val queryString: String
 
@@ -2795,11 +2647,10 @@ trait WebBrowser {
      * Returns the first <code>Element</code> selected by this query, or throws <code>TestFailedException</code>
      * if no <code>Element</code> is selected.
      *
-     * <p>
      * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
      * For example, if this query selects a text field, the class of the returned <code>Element</code> will
      * be <code>TextField</code>.
-     * </p>
+     * 
      *
      * @param driver the <code>WebDriver</code> with which to drive the browser
      * @return the <code>Element</code> selected by this query
@@ -2825,11 +2676,10 @@ trait WebBrowser {
      * Returns the first <code>Element</code> selected by this query, wrapped in a <code>Some</code>, or <code>None</code>
      * if no <code>Element</code> is selected.
      *
-     * <p>
      * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
      * For example, if this query selects a text field, the class of the returned <code>Element</code> will
      * be <code>TextField</code>.
-     * </p>
+     * 
      *
      * @param driver the <code>WebDriver</code> with which to drive the browser
      * @return the <code>Element</code> selected by this query, wrapped in a <code>Some</code>, or <code>None</code> if
@@ -2846,16 +2696,13 @@ trait WebBrowser {
     /**
      * Returns an <code>Iterator</code> over all <code>Element</code>s selected by this query.
      *
-     * <p>
      * The class of the <code>Element</code>s produced by the returned <code>Iterator</code> will be a
      * subtypes of <code>Element</code> if appropriate.  For example, if an <code>Element</code>representing
      * a text field is returned by the <code>Iterator</code>, the class of the returned <code>Element</code> will
      * be <code>TextField</code>.
-     * </p>
+     * 
      *
-     * <p>
      * If no <code>Elements</code> are selected by this query, this method will return an empty <code>Iterator</code> will be returned.
-     * <p>
      *
      * @param driver the <code>WebDriver</code> with which to drive the browser
      * @return the <code>Iterator</code> over all <code>Element</code>s selected by this query
@@ -2890,9 +2737,8 @@ trait WebBrowser {
   /**
    * An ID query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on id("q")
@@ -2906,9 +2752,8 @@ trait WebBrowser {
   /**
    * A name query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on name("q")
@@ -2922,9 +2767,8 @@ trait WebBrowser {
   /**
    * An XPath query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on xpath("???")
@@ -2939,9 +2783,8 @@ trait WebBrowser {
   /**
    * A class name query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on className("???")
@@ -2955,9 +2798,8 @@ trait WebBrowser {
   /**
    * A CSS selector query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on cssSelector("???")
@@ -2971,9 +2813,8 @@ trait WebBrowser {
   /**
    * A link text query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on linkText("???")
@@ -2987,9 +2828,8 @@ trait WebBrowser {
   /**
    * A partial link text query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on partialLinkText("???")
@@ -3003,9 +2843,8 @@ trait WebBrowser {
   /**
    * A tag name query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on tagName("???")
@@ -3019,9 +2858,8 @@ trait WebBrowser {
   /**
    * Returns an ID query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on id("q")
@@ -3035,9 +2873,8 @@ trait WebBrowser {
   /**
    * Returns a name query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on name("q")
@@ -3051,9 +2888,8 @@ trait WebBrowser {
   /**
    * Returns an XPath query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on xpath("???")
@@ -3067,9 +2903,8 @@ trait WebBrowser {
   /**
    * Returns a class name query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on className("???")
@@ -3083,9 +2918,8 @@ trait WebBrowser {
   /**
    * Returns a CSS selector query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on cssSelector("???")
@@ -3099,9 +2933,8 @@ trait WebBrowser {
   /**
    * Returns a link text query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on linkText("???")
@@ -3115,9 +2948,8 @@ trait WebBrowser {
   /**
    * Returns a partial link text query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on partialLinkText("???")
@@ -3131,9 +2963,8 @@ trait WebBrowser {
   /**
    * Returns a tag name query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on tagName("???")
@@ -3197,11 +3028,10 @@ trait WebBrowser {
    * Finds and returns the first element selected by the specified <code>Query</code>, wrapped
    * in a <code>Some</code>, or <code>None</code> if no element is selected.
    *
-   * <p>
    * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
    * For example, if the query selects a text field, the class of the returned <code>Element</code> will
    * be <code>TextField</code>.
-   * </p>
+   * 
    *
    * @param query the <code>Query</code> with which to search
    * @param driver the <code>WebDriver</code> with which to drive the browser
@@ -3214,16 +3044,14 @@ trait WebBrowser {
    * Finds and returns the first element selected by the specified string ID or name, wrapped
    * in a <code>Some</code>, or <code>None</code> if no element is selected. YYY
    *
-   * <p>
    * This method will try to lookup by id first. If it cannot find 
    * any element with an id equal to the specified <code>queryString</code>, it will then try lookup by name.
-   * </p>
+   * 
    *
-   * <p>
    * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
    * For example, if the query selects a text field, the class of the returned <code>Element</code> will
    * be <code>TextField</code>.
-   * </p>
+   * 
    *
    * @param queryString the string with which to search, first by ID then by name
    * @param driver the <code>WebDriver</code> with which to drive the browser
@@ -3242,16 +3070,13 @@ trait WebBrowser {
   /**
    * Returns an <code>Iterator</code> over all <code>Element</code>s selected by this query.
    *
-   * <p>
    * The class of the <code>Element</code>s produced by the returned <code>Iterator</code> will be a
    * subtypes of <code>Element</code> if appropriate.  For example, if an <code>Element</code>representing
    * a text field is returned by the <code>Iterator</code>, the class of the returned <code>Element</code> will
    * be <code>TextField</code>.
-   * </p>
+   * 
    *
-   * <p>
    * If no <code>Elements</code> are selected by this query, this method will return an empty <code>Iterator</code> will be returned.
-   * <p>
    *
    * @param query the <code>Query</code> with which to search
    * @param driver the <code>WebDriver</code> with which to drive the browser
@@ -3262,16 +3087,14 @@ trait WebBrowser {
   /**
    * Returns an <code>Iterator</code> over all <code>Element</code>s selected by the specified string ID or name 
    *
-   * <p>
    * This method will try to lookup by id first. If it cannot find 
    * any element with an id equal to the specified <code>queryString</code>, it will then try lookup by name.
-   * </p>
+   * 
    *
-   * <p>
    * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
    * For example, if the query selects a text field, the class of the returned <code>Element</code> will
    * be <code>TextField</code>.
-   * </p>
+   * 
    *
    * @param queryString the string with which to search, first by ID then by name
    * @param driver the <code>WebDriver</code> with which to drive the browser
@@ -3769,9 +3592,8 @@ trait WebBrowser {
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * click on "aButton"
@@ -3891,20 +3713,17 @@ trait WebBrowser {
   /**
    * Sets the amount of time the driver should wait when searching for an element that is not immediately present.
    *
-   * <p>
    * When searching for requested elements, Selenium will poll the page until the requested element (or at least one of multiple requested
    * elements) is found or this "implicit wait" timeout has expired.
    * If the timeout expires, Selenium will throw <code>NoSuchElementException</code>, which ScalaTest's Selenium DSL will wrap in a <code>TestFailedException</code>.
-   * </p>
+   * 
    *
-   * <p>
    * You can alternatively set this timeout to zero and use ScalaTest's <code>eventually</code> construct.
-   * </p>
+   * 
    *
-   * <p>
    * This method invokes <code>manage.timeouts.implicitlyWait</code> on the passed <code>WebDriver</code>. See the documentation of Selenium's
    * <code>WebDriver#Timeouts</code> interface for more information.
-   * </p>
+   * 
    *
    * @param timeout the time span to implicitly wait
    * @param driver the <code>WebDriver</code> on which to set the implicit wait
@@ -3940,9 +3759,8 @@ trait WebBrowser {
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * switch to alertBox
@@ -3966,9 +3784,8 @@ trait WebBrowser {
    * This value supports switching to the currently active element in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to activeElement
@@ -3981,9 +3798,8 @@ trait WebBrowser {
    * This value supports switching to the alert box in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to alertBox
@@ -3996,9 +3812,8 @@ trait WebBrowser {
    * This value supports switching to the default content in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to defaultContent
@@ -4011,9 +3826,8 @@ trait WebBrowser {
    * This method supports switching to a frame by index in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to frame(0)
@@ -4029,9 +3843,8 @@ trait WebBrowser {
    * This method supports switching to a frame by name or ID in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to frame("name")
@@ -4074,9 +3887,8 @@ trait WebBrowser {
    * This class supports switching to a window by name or handle in ScalaTest's Selenium DSL.
    * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
    * <pre>
    * switch to window(windowHandle)
@@ -4128,9 +3940,8 @@ trait WebBrowser {
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * add cookie("aName", "aValue") 
@@ -4186,9 +3997,8 @@ trait WebBrowser {
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * delete cookie "aName" 
@@ -4276,9 +4086,8 @@ trait WebBrowser {
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
    * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * capture
@@ -4404,13 +4213,11 @@ trait WebBrowser {
   /**
    * Executes JavaScript in the context of the currently selected frame or window.  The script fragment provided will be executed as the body of an anonymous function. 
    * 
-   * <p>
    * Within the script, you can use <code>document</code> to refer to the current document. Local variables will not be available once the script has finished executing, but global variables will.
-   * </p>
    * 
-   * <p>
+   * 
    * To return a value (e.g. if the script contains a return statement), then the following steps will be taken:
-   * </p>
+   * 
    * 
    * <ol>
    *   <li>For an HTML element, this method returns a WebElement</li>
@@ -4422,13 +4229,12 @@ trait WebBrowser {
    *   <li>Unless the value is null or there is no return value, in which null is returned</li>
    * </ol>
    *
-   * <p>
    * Script arguments must be a number, boolean, String, WebElement, or a List of any combination of these. An exception will
    * be thrown if the arguments do not meet these criteria. The arguments will be made available to the JavaScript via the "arguments" variable.
    * (Note that although this behavior is specified by <a href="http://selenium.googlecode.com/git/docs/api/java/org/openqa/selenium/JavascriptExecutor.html">Selenium's JavascriptExecutor Javadoc</a>,
    * it may still be possible for the underlying <code>JavascriptExecutor</code> implementation to return an objects of other types.
    * For example, <code>HtmlUnit</code> has been observed to return a <code>java.util.Map</code> for a Javascript object.)
-   * </p>
+   * 
    * 
    * @param script the JavaScript to execute
    * @param args the arguments to the script, may be empty
@@ -4445,9 +4251,8 @@ trait WebBrowser {
    * scripts executed with this method must explicitly signal they are finished by invoking the provided callback. This callback is always injected into 
    * the executed function as the last argument.
    * 
-   * <p>
    * The first argument passed to the callback function will be used as the script's result. This value will be handled as follows: 
-   * </p>
+   * 
    * 
    * <ol> 
    *   <li>For an HTML element, this method returns a WebElement</li>
@@ -4458,13 +4263,12 @@ trait WebBrowser {
    *   <li>Unless the value is null or there is no return value, in which null is returned</li>
    * </ol>
    * 
-   * <p>
    * Script arguments must be a number, boolean, String, WebElement, or a List of any combination of these. An exception will 
    * be thrown if the arguments do not meet these criteria. The arguments will be made available to the JavaScript via the "arguments" variable.
    * (Note that although this behavior is specified by <a href="http://selenium.googlecode.com/git/docs/api/java/org/openqa/selenium/JavascriptExecutor.html">Selenium's JavascriptExecutor Javadoc</a>,
    * it may still be possible for the underlying <code>JavascriptExecutor</code> implementation to return an objects of other types.
    * For example, <code>HtmlUnit</code> has been observed to return a <code>java.util.Map</code> for a Javascript object.)
-   * </p>
+   * 
    * 
    * @param script the JavaScript to execute
    * @param args the arguments to the script, may be empty
@@ -4532,10 +4336,9 @@ object WebBrowser extends WebBrowser
 /**
  * Trait declaring a <code>webDriver</code> field that enables tests to be abstracted across different kinds of <code>WebDriver</code>s.
  *
- * <p>
  * This trait enables you to place tests that you want to run in multiple browsers in a trait with a self type of
  * <code>WebBrowser with Driver</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * trait MyBrowserTests {
@@ -4558,10 +4361,9 @@ trait Driver { this: WebBrowser =>
   /**
    * An implicit <code>WebDriver</code>.
    *
-   * <p>
    * This abstract field is implemented by subtraits <code>HtmlUnit</code>, <code>FireFox</code>, <code>Safari</code>, <code>Chrome</code>,
    * and <code>InternetExplorer</code>.
-   * </p>
+   * 
    */
   implicit val webDriver: WebDriver
 }
@@ -4570,9 +4372,8 @@ trait Driver { this: WebBrowser =>
  * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for HTMLUnit (an <code>org.openqa.selenium.htmlunit.HtmlUnitDriver</code>), with JavaScript
  * enabled by default.
  *
- * <p>
  * Note: You can disable JavaScript with:
- * </p>
+ * 
  *
  * <pre>
  * webDriver.setJavascriptEnabled(false)
@@ -4584,9 +4385,8 @@ trait HtmlUnit extends WebBrowser with Driver with ScreenshotCapturer {
    * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for HTMLUnit (an <code>org.openqa.selenium.htmlunit.HtmlUnitDriver</code>), with JavaScript
    * enabled by default.
    *
-   * <p>
    * Note: You can disable JavaScript with:
-   * </p>
+   * 
    *
    * <pre>
    * webDriver.setJavascriptEnabled(false)
@@ -4614,20 +4414,18 @@ object HtmlUnit extends HtmlUnit
 /**
  * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Firefox (an <code>org.openqa.selenium.firefox.FirefoxDriver</code>).
  *
- * <p>
  * The <code>FirefoxDriver</code> uses the <code>FirefoxProfile</code> defined as <code>firefoxProfile</code>. By default this is just a <code>new FirefoxProfile</code>.
  * You can mutate this object to modify the profile, or override <code>firefoxProfile</code>.
- * </p>
+ * 
  */
 trait Firefox extends WebBrowser with Driver with ScreenshotCapturer {
 
   /**
    * The <code>FirefoxProfile</code> passed to the constructor of the <code>FirefoxDriver</code> returned by <code>webDriver</code>.
    *
-   * <p>
    * The <code>FirefoxDriver</code> uses the <code>FirefoxProfile</code> defined as <code>firefoxProfile</code>. By default this is just a <code>new FirefoxProfile</code>.
    * You can mutate this object to modify the profile, or override <code>firefoxProfile</code>.
-   * </p>
+   * 
    */
   val firefoxProfile = new FirefoxProfile()
 
@@ -4635,10 +4433,9 @@ trait Firefox extends WebBrowser with Driver with ScreenshotCapturer {
    * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Firefox (an <code>org.openqa.selenium.firefox.FirefoxDriver</code>), with a default
    * Firefox profile.
    *
-   * <p>
    * The <code>FirefoxDriver</code> uses the <code>FirefoxProfile</code> defined as <code>firefoxProfile</code>. By default this is just a <code>new FirefoxProfile</code>.
    * You can mutate this object to modify the profile, or override <code>firefoxProfile</code>.
-   * </p>
+   * 
    */
   implicit val webDriver: WebDriver = new FirefoxDriver(firefoxProfile)
 

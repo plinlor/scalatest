@@ -38,7 +38,6 @@ import org.scalatest.exceptions.NotAllowedException
  * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> or <a href="../MustMatchers.html"><code>MustMatchers</code></a> for an overview of
  * the matchers DSL.
  *
- * <p>
  * Class <code>BeWord</code> contains an <code>apply</code> method that takes a <code>Symbol</code>, which uses reflection
  * to find and access a <code>Boolean</code> property and determine if it is <code>true</code>.
  * If the symbol passed is <code>'empty</code>, for example, the <code>apply</code> method
@@ -46,7 +45,7 @@ import org.scalatest.exceptions.NotAllowedException
  * "empty", a public method named "empty", or a public method named "isEmpty". If a field, it must be of type <code>Boolean</code>.
  * If a method, it must take no parameters and return <code>Boolean</code>. If multiple candidates are found,
  * the <code>apply</code> method will select based on the following algorithm:
- * </p>
+ * 
  * 
  * <table class="stTable">
  * <tr><th class="stHeadingCell">Field</th><th class="stHeadingCell">Method</th><th class="stHeadingCell">"is" Method</th><th class="stHeadingCell">Result</th></tr>
@@ -73,17 +72,15 @@ final class BeWord {
    *                  ^
    * </pre>
    *
-   * <p>
    * Note that the less than operator will be invoked on <code>be</code> in this expression, not
    * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
    * in the matchers DSL, because the less than operator has a higher precedence than <code>should</code>.
    * Thus in the above case the first expression evaluated will be <code>be &lt; (7)</code>, which results
    * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * result should not (be &lt; (7))
@@ -112,17 +109,15 @@ final class BeWord {
    *                  ^
    * </pre>
    *
-   * <p>
    * Note that the greater than operator will be invoked on <code>be</code> in this expression, not
    * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
    * in the matchers DSL, because the greater than operator has a higher precedence than <code>should</code>.
    * Thus in the above case the first expression evaluated will be <code>be &gt; (7)</code>, which results
    * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * result should not (be &gt; (7))
@@ -151,17 +146,15 @@ final class BeWord {
    *                  ^
    * </pre>
    *
-   * <p>
    * Note that the less than or equal to operator will be invoked on <code>be</code> in this expression, not
    * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
    * in the matchers DSL, because the less than or equal to operator has a higher precedence than <code>should</code>.
    * Thus in the above case the first expression evaluated will be <code>be &lt;= (7)</code>, which results
    * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * result should not (be &lt;= (7))
@@ -190,17 +183,15 @@ final class BeWord {
    *                  ^
    * </pre>
    *
-   * <p>
    * Note that the greater than or equal to operator will be invoked on <code>be</code> in this expression, not
    * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
    * in the matchers DSL, because the greater than or equal to operator has a higher precedence than <code>should</code>.
    * Thus in the above case the first expression evaluated will be <code>be &gt;= (7)</code>, which results
    * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * result should not (be &gt;= (7))
@@ -228,10 +219,9 @@ final class BeWord {
    * should be, or shouldBe instead.
    * </strong>
    * 
-   * <p>
    * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
    * cases still compile, but silently wouldn't work.
-   * </p>
+   * 
    */
   @deprecated("The deprecation period for the be === syntax has expired. Please use should equal, should ===, shouldEqual, should be, or shouldBe instead.")
   def ===(right: Any)(implicit pos: source.Position): Matcher[Any] = {

@@ -21,9 +21,8 @@ import org.scalactic.source
  * Trait that contains methods named <code>given</code>, <code>when</code>, <code>then</code>, and <code>and</code>,
  * which take a string message and implicit <a href="Informer.html"><code>Informer</code></a>, and forward the message to the informer.
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.info
@@ -51,9 +50,8 @@ import org.scalactic.source
  * }
  * </pre>
  *
- * <p>
  * If you run this <code>SetSpec</code> from the interpreter, you will see the following output:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)

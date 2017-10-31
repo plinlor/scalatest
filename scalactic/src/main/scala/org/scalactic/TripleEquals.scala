@@ -30,12 +30,11 @@ import TripleEqualsSupport._
  * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>.
  * </td></tr></table>
  *
- * <p>
  * This trait will override or hide implicit methods defined by its sibling traits,
  * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a> or <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>,
  * and can therefore be used to temporarily turn of type checking in a limited scope. Here's an example, in which <code>TypeCheckedTripleEquals</code> will
  * cause a compiler error:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalactic._
@@ -59,7 +58,7 @@ import TripleEqualsSupport._
  *
  * Because <code>Int</code> and <code>Long</code> are not in a subtype/supertype relationship, comparing <code>1</code> and <code>1L</code> in the context
  * of <code>TypeCheckedTripleEquals</code> will generate a compiler error:
- * </p>
+ * 
  *
  * <pre>
  * Example.scala:9: error: types Int and Long do not adhere to the equality constraint selected for
@@ -71,10 +70,9 @@ import TripleEqualsSupport._
  * one error found
  * </pre>
  * 
- * <p>
  * You can &ldquo;turn off&rdquo; the type checking locally by importing the members of <code>TripleEquals</code> in
  * a limited scope:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * package org.scalactic.examples.tripleequals
@@ -99,23 +97,19 @@ import TripleEqualsSupport._
  * }
  * </pre>
  *
- * <p>
  * With the above change, the <code>Example.scala</code> file compiles fine. Type checking is turned off only inside the first <code>cmp</code> method that
  * takes an <code>Int</code> and a <code>Long</code>. <code>TypeCheckedTripleEquals</code> is still enforcing its type constraint, for example, for the <code>s === t</code>
  * expression in the other overloaded <code>cmp</code> method that takes strings.
- * </p>
  * 
- * <p>
+ * 
  * Because the methods in <code>TripleEquals</code> (and its siblings)<em>override</em> all the methods defined in
  * supertype <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>, you can achieve the same
  * kind of nested tuning of equality constraints whether you mix in traits, import from companion objects, or use some combination of both.
- * </p>
+ * 
  *
- * <p>
  * In short, you should be able to select a primary constraint level via either a mixin or import, then change that in nested scopes
  * however you want, again either through a mixin or import, without getting any implicit conversion ambiguity. The innermost constraint level in scope
  * will always be in force.
- * <p>
  *
  * @author Bill Venners
  */

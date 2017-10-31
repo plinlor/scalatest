@@ -25,10 +25,9 @@ package object concurrent {
    * <strong>The name <code>org.scalatest.concurrent.AsyncAssertions</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
    * its new name, <code>org.scalatest.concurrent.Waiters</code>, instead.</strong>
    *
-   * <p>
    * We deprecate this name because this is blocking while our new asynchronous style traits are not, thus could potentially cause some confusion.
    * Another reason is that this name sounds like it is a subclass of Assertions, while it is not.
-   * </p>
+   * 
    */
   @deprecated("Please use org.scalatest.concurrent.Waiters instead")
   type AsyncAssertions = Waiters
@@ -37,10 +36,9 @@ package object concurrent {
    * <strong>The name <code>org.scalatest.concurrent.AsyncAssertions</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
    * its new name, <code>org.scalatest.concurrent.Waiters</code>, instead.</strong>
    *
-   * <p>
    * We deprecate this name because this is blocking while our new asynchronous style traits are not, thus could potentially cause some confusion.
    * Another reason is that this name sounds like it is a subclass of Assertions, while it is not.
-   * </p>
+   * 
    */
   @deprecated("Please use org.scalatest.concurrent.Waiters instead")
   val AsyncAssertions = Waiters

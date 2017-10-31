@@ -20,22 +20,20 @@ import events.Event
 /**
  * A sorter for the events of a suite's distributed tests.
  *
- * <p>
  * This trait is used, for example, by <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> to sort the
  * events of tests back into sequential order, with a timeout if an event takes too long.
- * </p>
+ * 
  */
 trait DistributedTestSorter {
 
   /**
    * Indicates a test with the specified name is about to be distributed.
    *
-   * <p>
    * For example, trait <code>ParallelTestExecution</code> invokes this method prior to
    * passing a suite that will execute the specified test to the <code>Distributor</code>.
    * Even though the tests are run in parallel, the events for the tests will be reported
    * in the order this method is invoked.
-   * </p>
+   * 
    *
    * @throws IllegalArgumentException if the specified test name has already
    *     completed (was already passed to <code>distributingTest</code>), but its events

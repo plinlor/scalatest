@@ -20,11 +20,10 @@ import org.scalatest.Tag
 /**
  * Tag object that indicates a test is disk-intensive (<em>i.e.</em>, consumes a lot of disk-IO bandwidth when it runs).
  *
- * <p>
  * The corresponding tag annotation for this tag object is <code>org.scalatest.tags.Disk</code>.
  * This tag object can be used to tag test functions (in style traits other than <code>Spec</code>, in which tests are methods not functions) as being disk-intensive.
  * See the "tagging tests" section in the documentation for your chosen styles to see the syntax. Here's an example for <code>FlatSpec</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.tagobjects.disk

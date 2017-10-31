@@ -29,28 +29,25 @@ import scala.reflect.ClassTag
  * A <code>HavePropertyMatcher</code> is, therefore, a function from the specified type, <code>T</code>, to
  * a <code>HavePropertyMatchResult[P]</code>.
  *
- * <p>
  * Although <code>HavePropertyMatcher</code>
  * and <code>Matcher</code> represent similar concepts, they have no inheritance relationship
  * because <code>Matcher</code> is intended for use right after <code>should</code> or <code>must</code>
  * whereas <code>HavePropertyMatcher</code> is intended for use right after <code>have</code>.
- * </p>
+ * 
  *
- * <p>
  * A <code>HavePropertyMatcher</code> essentially allows you to write statically typed
  * property assertions similar to the dynamic ones that use symbols:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * book should have ('title ("Moby Dick")) // dynamic: uses reflection
  * book should have (title ("Moby Dick"))  // type safe: only works on Books; no reflection used
  * </pre>
  *
- * <p>
  * One good way to organize custom matchers is to place them inside one or more traits that
  * you can then mix into the suites or specs that need them. Here's an example that
  * includes two methods that produce <code>HavePropertyMatcher</code>s:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * case class Book(val title: String, val author: String)
@@ -81,7 +78,6 @@ import scala.reflect.ClassTag
  * }
  * </pre>
  * 
- * <p>
  * Each time the <code>title</code> method is called, it returns a new <code>HavePropertyMatcher[Book, String]</code> that
  * can be used to match against the <code>title</code> property of the <code>Book</code> passed to its <code>apply</code>
  * method. Because the type parameter of these two <code>HavePropertyMatcher</code>s is <code>Book</code>, they 
@@ -92,7 +88,7 @@ import scala.reflect.ClassTag
  * The third and fourth fields, <code>expectedValue</code> and <code>actualValue</code> indicate the expected and actual
  * values, respectively, for the property.
  * Here's an example that uses these <code>HavePropertyMatchers</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class ExampleSpec extends RefSpec with Matchers with CustomMatchers {
@@ -112,21 +108,19 @@ import scala.reflect.ClassTag
  * }
  * </pre>
  *
- * <p>
  * These matches should succeed, but if for example the first property, <code>title ("Moby Dick")</code>, were to fail, you would get an error message like:
- * </p>
+ * 
  *
  * <pre class="stExamples">
  * The title property had value "A Tale of Two Cities", instead of its expected value "Moby Dick",
  * on object Book(A Tale of Two Cities,Dickens)
  * </pre>
  *
- * <p>
  * For more information on <code>HavePropertyMatchResult</code> and the meaning of its fields, please
  * see the documentation for <a href="HavePropertyMatchResult.html"><code>HavePropertyMatchResult</code></a>. To understand why <code>HavePropertyMatcher</code>
  * is contravariant in its type parameter, see the section entitled "Matcher's variance" in the
  * documentation for <a href="../Matcher.html"><code>Matcher</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
 */
@@ -153,10 +147,9 @@ trait HavePropertyMatcher[-T, P] extends Function1[T, HavePropertyMatchResult[P]
   /**
    * Compose this <code>HavePropertyMatcher</code> with the passed function, returning a new <code>HavePropertyMatcher</code>.
    *
-   * <p>
    * This method overrides <code>compose</code> on <code>Function1</code> to
    * return a more specific function type of <code>HavePropertyMatcher</code>.
-   * </p>
+   * 
    */
   override def compose[U](g: U => T): HavePropertyMatcher[U, P] =
     new HavePropertyMatcher[U, P] {
@@ -177,10 +170,9 @@ object HavePropertyMatcher {
    * Factory method that creates a <code>HavePropertyMatcher[T]</code> from a
    * passed function of type <code>(T =&gt; HavePropertyMatchResult)</code>.
    *
-   * <p>
    * This allows you to create a <code>HavePropertyMatcher</code> in a slightly
    * more concise way, for example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    *  case class Person(name: String)

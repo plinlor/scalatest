@@ -20,13 +20,12 @@ package org.scalactic
  * one or both objects, then comparing the results using an &ldquo;after normalization&rdquo; <code>Equivalence</code> referenced from
  * the <code>afterNormalizationEquivalence</code>  member. By default, the <code>afterNormalizationEquivalence</code> is 
  * an instance of <a href="Equivalence$.html"><code>Equivalence.default[A]</code></a>.
- * </p>
+ * 
  *
- * <p>
  * <code>NormalizingEquivalence</code> is returned by the <code>Explicitly</code> DSL's &ldquo;<code>after</code> <code>being</code>&rdquo;
  * syntax, using for the <code>afterNormalizationEquivalence</code> the implicit <code>Equivalence</code> in scope for the type
  * of <code>Normalization</code> passed to <code>being</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL"> 
  * scala&gt; import org.scalactic._
@@ -47,11 +46,10 @@ trait NormalizingEquivalence[A] extends Equivalence[A] { thisNormEq =>
   /**
    * The <code>Equivalence</code> with which to determine equality after normalizing the left-hand and right-hand values.
    *
-   * <p>
    * In this trait's implementation, this <code>val</code> is initialized with the result of invoking <code>Equivalence.default[A]</code>.
    * Thus default <code>Equivalence</code> is the default <code>afterNormalizationEquivalence</code>. This may be changed by overriding
    * <code>afterNormalizationEquivalence</code> in subclasses.
-   * </p>
+   * 
    */
   val afterNormalizationEquivalence: Equivalence[A] = Equivalence.default[A]
 
@@ -59,10 +57,9 @@ trait NormalizingEquivalence[A] extends Equivalence[A] { thisNormEq =>
    * Determines the equality of two objects by normalizing the left-hand value, <code>a</code>, and the right-hand
    * value, <code>b</code>, then passing them to <code>areEquivalent</code> method of <code>afterNormalizationEquivalence</code>.
    *
-   * <p>
    * Both the left-hand value, <code>a</code>, and right-hand value, <code>b</code>, are normalized by passing them to the <code>normalized</code> method of this
    * <code>NormalizingEquivalence</code>.
-   * </p>
+   * 
    */
   final def areEquivalent(a: A, b: A): Boolean = {
     afterNormalizationEquivalence.areEquivalent(normalized(a), normalized(b))
@@ -71,9 +68,8 @@ trait NormalizingEquivalence[A] extends Equivalence[A] { thisNormEq =>
   /**
    * Returns a normalized form of the passed object.
    *
-   * <p>
    * If the passed object is already in normal form, this method may return the same instance passed.
-   * </p>
+   * 
    *
    * @tparam A the type of the object to normalize
    * @param a the object to normalize
@@ -84,12 +80,11 @@ trait NormalizingEquivalence[A] extends Equivalence[A] { thisNormEq =>
   /**
    * Returns a new <code>NormalizingEquivalence</code> that combines this and the passed <code>Normalization</code>.
    *
-   * <p>
    * The <code>normalized</code> method of the <code>NormalizingEquivalence</code>'s returned by this method returns a result 
    * obtained by forwarding the passed value first to this <code>NormalizingEquivalence</code>'s implementation of the method,
    * then passing that result to the passed <code>Normalization</code>'s implementation of the method.
    * Essentially, the body of the composed <code>normalized</code> method is:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * uniformityPassedToAnd.normalized(uniformityOnWhichAndWasInvoked.normalized(a))

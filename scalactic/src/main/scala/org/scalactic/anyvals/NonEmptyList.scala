@@ -31,26 +31,23 @@ import org.scalactic.Every
 /**
  * A non-empty list: an ordered, immutable, non-empty collection of elements with <code>LinearSeq</code> performance characteristics.
  *
- * <p>
  * The purpose of <code>NonEmptyList</code> is to allow you to express in a type that a <code>List</code> is non-empty, thereby eliminating the
  * need for (and potential exception from) a run-time check for non-emptiness. For a non-empty sequence with <code>IndexedSeq</code>
  * performance, see <a href="Every.html"><code>Every</code></a>.
- * </p>
+ * 
  * 
  * <h2>Constructing <code>NonEmptyList</code>s</h2>
  *
- * <p>
  * You can construct a <code>NonEmptyList</code> by passing one or more elements to the <code>NonEmptyList.apply</code> factory method:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * scala&gt; NonEmptyList(1, 2, 3)
  * res0: org.scalactic.anyvals.NonEmptyList[Int] = NonEmptyList(1, 2, 3)
  * </pre>
  *
- * <p>
  * Alternatively you can <em>cons</em> elements onto the <code>End</code> singleton object, similar to making a <code>List</code> starting with <code>Nil</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * scala&gt; 1 :: 2 :: 3 :: Nil
@@ -60,11 +57,10 @@ import org.scalactic.Every
  * res1: org.scalactic.NonEmptyList[Int] = NonEmptyList(1, 2, 3)
  * </pre>
  *
- * <p>
  * Note that although <code>Nil</code> is a <code>List[Nothing]</code>, <code>End</code> is
  * not a <code>NonEmptyList[Nothing]</code>, because no empty <code>NonEmptyList</code> exists. (A non-empty list is a series
  * of connected links; if you have no links, you have no non-empty list.)
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * scala&gt; val nil: List[Nothing] = Nil
@@ -80,22 +76,20 @@ import org.scalactic.Every
  *
  * <h2>Working with <code>NonEmptyList</code>s</h2>
  *
- * <p>
  * <code>NonEmptyList</code> does not extend Scala's <code>Seq</code> or <code>Traversable</code> traits because these require that
  * implementations may be empty. For example, if you invoke <code>tail</code> on a <code>Seq</code> that contains just one element,
  * you'll get an empty <code>Seq</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; List(1).tail
  * res6: List[Int] = List()
  * </pre>
  *
- * <p>
  * On the other hand, many useful methods exist on <code>Seq</code> that when invoked on a non-empty <code>Seq</code> are guaranteed
  * to not result in an empty <code>Seq</code>. For convenience, <code>NonEmptyList</code> defines a method corresponding to every such <code>Seq</code>
  * method. Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * NonEmptyList(1, 2, 3).map(_ + 1)                        // Result: NonEmptyList(2, 3, 4)
@@ -105,13 +99,12 @@ import org.scalactic.Every
  * NonEmptyList(-1, -2, 3, 4, 5).minBy(_.abs)              // Result: -1
  * </pre>
  *
- * <p>
  * <code>NonEmptyList</code> does <em>not</em> currently define any methods corresponding to <code>Seq</code> methods that could result in
  * an empty <code>Seq</code>. However, an implicit converison from <code>NonEmptyList</code> to <code>List</code>
  * is defined in the <code>NonEmptyList</code> companion object that will be applied if you attempt to call one of the missing methods. As a
  * result, you can invoke <code>filter</code> on an <code>NonEmptyList</code>, even though <code>filter</code> could result
  * in an empty sequence&mdash;but the result type will be <code>List</code> instead of <code>NonEmptyList</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * NonEmptyList(1, 2, 3).filter(_ &lt; 10) // Result: List(1, 2, 3)
@@ -119,11 +112,10 @@ import org.scalactic.Every
  * </pre>
  * 
  *
- * <p>
  * You can use <code>NonEmptyList</code>s in <code>for</code> expressions. The result will be an <code>NonEmptyList</code> unless
  * you use a filter (an <code>if</code> clause). Because filters are desugared to invocations of <code>filter</code>, the
  * result type will switch to a <code>List</code> at that point. Here are some examples:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalactic.anyvals._
@@ -191,10 +183,9 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Fold left: applies a binary operator to a start value, <code>z</code>, and all elements of this <code>NonEmptyList</code>, going left to right.
    *
-   * <p>
    * Note: <code>/:</code> is alternate syntax for the <code>foldLeft</code> method; <code>z</code> <code>/:</code> <code>non-empty list</code> is the
    * same as <code>non-empty list</code> <code>foldLeft</code> <code>z</code>.
-   * </p>
+   * 
    *
    * @tparam B the result of the binary operator
    * @param z the start value
@@ -206,19 +197,17 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * op(...op(op(z, x_1), x_2), ..., x_n)
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyList</code>. 
-   * </p>
+   * 
    */
   final def /:[B](z: B)(op: (B, T) => B): B = toList./:(z)(op)
 
   /**
    * Fold right: applies a binary operator to all elements of this <code>NonEmptyList</code> and a start value, going right to left.
    *
-   * <p>
    * Note: <code>:\</code> is alternate syntax for the <code>foldRight</code> method; <code>non-empty list</code> <code>:\</code> <code>z</code> is the same
    * as <code>non-empty list</code> <code>foldRight</code> <code>z</code>.
-   * </p>
+   * 
    *
    * @tparam B the result of the binary operator
    * @param z the start value
@@ -230,18 +219,16 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * op(x_1, op(x_2, ... op(x_n, z)...))
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyList</code>. 
-   * </p>
+   * 
    */
   final def :\[B](z: B)(op: (T, B) => B): B = toList.:\(z)(op)
 
   /**
    * Returns a new <code>NonEmptyList</code> with the given element prepended.
    *
-   * <p>
    * Note that :-ending operators are right associative. A mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-   * </p>
+   * 
    *
    * @param element the element to prepend to this <code>NonEmptyList</code>
    * @return a new <code>NonEmptyList</code> consisting of <code>element</code> followed by all elements of this <code>NonEmptyList</code>.
@@ -251,9 +238,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Adds an element to the beginning of this <code>NonEmptyList</code>.
    *
-   * <p>
    * Note that :-ending operators are right associative. A mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-   * </p>
+   * 
    *
    * @param element the element to prepend to this <code>NonEmptyList</code>
    * @return a <code>NonEmptyList</code> that contains <code>element</code> as first element and that continues with this <code>NonEmptyList</code>.
@@ -295,9 +281,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Returns a new <code>NonEmptyList</code> with the given element appended.
    *
-   * <p>
    * Note a mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-   * </p>
+   * 
    *
    * @param element the element to append to this <code>NonEmptyList</code>
    * @return a new <code>NonEmptyList</code> consisting of all elements of this <code>NonEmptyList</code> followed by <code>element</code>.
@@ -536,10 +521,9 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * Converts this <code>NonEmptyList</code> of <code>NonEmptyList</code>s into a <code>NonEmptyList</code>
    * formed by the elements of the nested <code>NonEmptyList</code>s.
    *
-   * <p>
    * Note: You cannot use this <code>flatten</code> method on a <code>NonEmptyList</code> that contains a <code>GenTraversableOnce</code>s, because 
    * if all the nested <code>GenTraversableOnce</code>s were empty, you'd end up with an empty <code>NonEmptyList</code>.
-   * </p>
+   * 
    *
    * @tparm B the type of the elements of each nested <code>NonEmptyList</code>
    * @return a new <code>NonEmptyList</code> resulting from concatenating all nested <code>NonEmptyList</code>s.
@@ -549,9 +533,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Folds the elements of this <code>NonEmptyList</code> using the specified associative binary operator.
    *
-   * <p>
    * The order in which operations are performed on elements is unspecified and may be nondeterministic. 
-   * </p>
+   * 
    *
    * @tparam U a type parameter for the binary operator, a supertype of T.
    * @param z a neutral element for the fold operation; may be added to the result an arbitrary number of
@@ -575,9 +558,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * op(...op(op(z, x_1), x_2), ..., x_n)
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyList</code>. 
-   * </p>
+   * 
    */ 
   final def foldLeft[B](z: B)(op: (B, T) => B): B = toList.foldLeft(z)(op)
 
@@ -594,9 +576,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * op(x_1, op(x_2, ... op(x_n, z)...))
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyList</code>. 
-   * </p>
+   * 
    */
   final def foldRight[B](z: B)(op: (T, B) => B): B = toList.foldRight(z)(op)
 
@@ -626,9 +607,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * (nonEmptyList.toList partition f)(k) = xs filter (x =&gt; f(x) == k)
    * </pre>
    *
-   * <p>
    * That is, every key <code>k</code> is bound to a <code>NonEmptyList</code> of those elements <code>x</code> for which <code>f(x)</code> equals <code>k</code>.
-   * </p>
+   * 
    */
   final def groupBy[K](f: T => K): Map[K, NonEmptyList[T]] = {
     val mapKToList = toList.groupBy(f)
@@ -914,9 +894,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * The length of this <code>NonEmptyList</code>.
    *
-   * <p>
    * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-   * </p>
+   * 
    *
    * @return the number of elements in this <code>NonEmptyList</code>. 
    */
@@ -1034,9 +1013,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Iterates over distinct permutations. 
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * NonEmptyList('a', 'b', 'b').permutations.toList = List(NonEmptyList(a, b, b), NonEmptyList(b, a, b), NonEmptyList(b, b, a))
@@ -1061,9 +1039,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * The result of multiplying all the elements of this <code>NonEmptyList</code>.
    *
-   * <p>
    * This method can be invoked for any <code>NonEmptyList[T]</code> for which an implicit <code>Numeric[T]</code> exists.
-   * </p>
+   * 
    *
    * @return the product of all elements
    */
@@ -1072,9 +1049,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Reduces the elements of this <code>NonEmptyList</code> using the specified associative binary operator.
    *
-   * <p>
    * The order in which operations are performed on elements is unspecified and may be nondeterministic. 
-   * </p>
+   * 
    *
    * @tparam U a type parameter for the binary operator, a supertype of T.
    * @param op a binary operator that must be associative.
@@ -1093,9 +1069,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * op(...op(op(x_1, x_2), x_3), ..., x_n)
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyList</code>. 
-   * </p>
+   * 
    */
   final def reduceLeft[U >: T](op: (U, T) => U): U = toList.reduceLeft(op)
 
@@ -1105,7 +1080,7 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * @tparam U the result type of the binary operator.
    * @param op the binary operator.
    * @return a <code>Some</code> containing the result of <code>reduceLeft(op)</code>
-   * </p>
+   * 
    */
   final def reduceLeftOption[U >: T](op: (U, T) => U): Option[U] = toList.reduceLeftOption(op)
 
@@ -1122,9 +1097,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
    * op(x_1, op(x_2, ... op(x_{n-1}, x_n)...))
    * </pre>
    *
-   * <p>
    * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyList</code>. 
-   * </p>
+   * 
    */
   final def reduceRight[U >: T](op: (T, U) => U): U = toList.reduceRight(op)
 
@@ -1148,9 +1122,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * An iterator yielding elements in reverse order.
    *
-   * <p>
    * Note: <code>nonEmptyList.reverseIterator</code> is the same as <code>nonEmptyList.reverse.iterator</code>, but might be more efficient. 
-   * </p>
+   * 
    *
    * @return an iterator yielding the elements of this <code>NonEmptyList</code> in reversed order 
    */
@@ -1159,9 +1132,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Builds a new <code>NonEmptyList</code> by applying a function to all elements of this <code>NonEmptyList</code> and collecting the results in reverse order.
    *
-   * <p>
    * Note: <code>nonEmptyList.reverseMap(f)</code> is the same as <code>nonEmptyList.reverse.map(f)</code>, but might be more efficient. 
-   * </p>
+   * 
    *
    * @tparam U the element type of the returned <code>NonEmptyList</code>.
    * @param f the function to apply to each element. 
@@ -1201,13 +1173,11 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Computes a prefix scan of the elements of this <code>NonEmptyList</code>.
    *
-   * <p>
    * Note: The neutral element z may be applied more than once. 
-   * </p>
+   * 
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * NonEmptyList(1, 2, 3).scan(0)(_ + _) == NonEmptyList(0, 1, 3, 6)
@@ -1226,9 +1196,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Produces a <code>NonEmptyList</code> containing cumulative results of applying the operator going left to right.
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * NonEmptyList(1, 2, 3).scanLeft(0)(_ + _) == NonEmptyList(0, 1, 3, 6)
@@ -1246,9 +1215,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Produces a <code>NonEmptyList</code> containing cumulative results of applying the operator going right to left.
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * NonEmptyList(1, 2, 3).scanRight(0)(_ + _) == NonEmptyList(6, 5, 3, 0)
@@ -1296,9 +1264,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * The size of this <code>NonEmptyList</code>.
    *
-   * <p>
    * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-   * </p>
+   * 
    *
    * @return the number of elements in this <code>NonEmptyList</code>. 
    */
@@ -1318,10 +1285,9 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Sorts this <code>NonEmptyList</code> according to a comparison function.
    *
-   * <p>
    * The sort is stable. That is, elements that are equal (as determined by <code>lt</code>) appear in the same order in the
    * sorted <code>NonEmptyList</code> as in the original. 
-   * </p>
+   * 
    *
    * @param the comparison function that tests whether its first argument precedes its second argument in the desired ordering.
    * @return a <code>NonEmptyList</code> consisting of the elements of this <code>NonEmptyList</code> sorted according to the comparison function <code>lt</code>.
@@ -1331,10 +1297,9 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Sorts this <code>NonEmptyList</code> according to an <code>Ordering</code>.
    *
-   * <p>
    * The sort is stable. That is, elements that are equal (as determined by <code>lt</code>) appear in the same order in the
    * sorted <code>NonEmptyList</code> as in the original. 
-   * </p>
+   * 
    *
    * @param ord the <code>Ordering</code> to be used to compare elements.
    * @param the comparison function that tests whether its first argument precedes its second argument in the desired ordering.
@@ -1403,9 +1368,8 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * The result of summing all the elements of this <code>NonEmptyList</code>.
    *
-   * <p>
    * This method can be invoked for any <code>NonEmptyList[T]</code> for which an implicit <code>Numeric[T]</code> exists.
-   * </p>
+   * 
    *
    * @return the sum of all elements
    */
@@ -1473,10 +1437,9 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Converts this <code>NonEmptyList</code> to a map.
    *
-   * <p>
    * This method is unavailable unless the elements are members of <code>Tuple2</code>, each <code>((K, V))</code> becoming a key-value pair
    * in the map. Duplicate keys will be overwritten by later keys.
-   * </p>
+   * 
    *
    * @return a map of type <code>immutable.Map[K, V]</code> containing all key/value pairs of type <code>(K, V)</code> of this <code>NonEmptyList</code>. 
    */ 
@@ -1527,15 +1490,13 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Produces a new <code>NonEmptyList</code> that contains all elements of this <code>NonEmptyList</code> and also all elements of a given <code>Every</code>.
    *
-   * <p>
    * <code>nonEmptyListX</code> <code>union</code> <code>everyY</code> is equivalent to <code>nonEmptyListX</code> <code>++</code> <code>everyY</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Another way to express this is that <code>nonEmptyListX</code> <code>union</code> <code>everyY</code> computes the order-presevring multi-set union
    * of <code>nonEmptyListX</code> and <code>everyY</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
    * also work on multi-sets.
-   * </p>
+   * 
    *
    * @param that the <code>Every</code> to add.
    * @return a new <code>NonEmptyList</code> that contains all elements of this <code>NonEmptyList</code> followed by all elements of <code>that</code> <code>Every</code>.
@@ -1545,15 +1506,13 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Produces a new <code>NonEmptyList</code> that contains all elements of this <code>NonEmptyList</code> and also all elements of a given <code>NonEmptyList</code>.
    *
-   * <p>
    * <code>nonEmptyListX</code> <code>union</code> <code>nonEmptyListY</code> is equivalent to <code>nonEmptyListX</code> <code>++</code> <code>nonEmptyListY</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Another way to express this is that <code>nonEmptyListX</code> <code>union</code> <code>nonEmptyListY</code> computes the order-presevring multi-set union
    * of <code>nonEmptyListX</code> and <code>nonEmptyListY</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
    * also work on multi-sets.
-   * </p>
+   * 
    *
    * @param that the <code>NonEmptyList</code> to add.
    * @return a new <code>NonEmptyList</code> that contains all elements of this <code>NonEmptyList</code> followed by all elements of <code>that</code>.
@@ -1563,15 +1522,13 @@ final class NonEmptyList[+T] private (val toList: List[T]) extends AnyVal {
   /**
    * Produces a new <code>NonEmptyList</code> that contains all elements of this <code>NonEmptyList</code> and also all elements of a given <code>GenSeq</code>.
    *
-   * <p>
    * <code>nonEmptyListX</code> <code>union</code> <code>ys</code> is equivalent to <code>nonEmptyListX</code> <code>++</code> <code>ys</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Another way to express this is that <code>nonEmptyListX</code> <code>union</code> <code>ys</code> computes the order-presevring multi-set union
    * of <code>nonEmptyListX</code> and <code>ys</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
    * also work on multi-sets.
-   * </p>
+   * 
    *
    * @param that the <code>GenSeq</code> to add.
    * @return a new <code>NonEmptyList</code> that contains all elements of this <code>NonEmptyList</code> followed by all elements of <code>that</code> <code>GenSeq</code>.
@@ -1689,10 +1646,9 @@ object NonEmptyList {
   /**
    * Implicit conversion from <code>NonEmptyList</code> to <code>List</code>.
    *
-   * <p>
    * One use case for this implicit conversion is to enable <code>GenSeq[NonEmptyList]</code>s to be flattened.
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; Vector(NonEmptyList(1, 2, 3), NonEmptyList(3, 4), NonEmptyList(5, 6, 7, 8)).flatten

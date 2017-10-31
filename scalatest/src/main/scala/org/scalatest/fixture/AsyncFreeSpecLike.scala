@@ -31,19 +31,17 @@ import words.BehaveWord
  * a sister class to <code>org.scalatest.AsyncFreeSpec</code> that can pass a
  * fixture object into its tests.
  *
- * <p>
  * <a href="AsyncFreeSpec.html"><code>fixture.AsyncFreeSpec</code></a> is a class,
  * not a trait, to minimize compile time given there is a slight compiler
  * overhead to mixing in traits compared to extending classes. If you need
  * to mix the behavior of <code>fixture.AsyncFreeSpec</code> into some other
  * class, you can use this trait instead, because class
  * <code>fixture.AsyncFreeSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="AsyncFreeSpec.html">detailed
  * overview of <code>fixture.AsyncFreeSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */

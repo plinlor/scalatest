@@ -21,12 +21,11 @@ import org.scalatest.fixture
 /**
  * Trait that will pass a new <code>JMockCycle</code> into any test that needs one.
  *
- * <p>
  * This trait, which must be mixed into a <code>fixture.Suite</code>, defines the
  * <code>Fixture</code> type to be <code>JMockCycle</code> and defines a
  * <code>withFixture</code> method that instantiates a new <code>JMockCycle</code>
  * and passes it to the test function.
- * </p>
+ * 
  *
  * @author Bill Venners
  */

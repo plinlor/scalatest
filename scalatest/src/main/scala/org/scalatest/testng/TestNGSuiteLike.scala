@@ -32,19 +32,17 @@ import events.MotionToSuppress
  * Implementation trait for class <code>TestNGSuite</code>, which represents
  * a suite of tests that can be run with either TestNG or ScalaTest.
  * 
- * <p>
  * <a href="TestNGSuite.html"><code>TestNGSuite</code></a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
  * behavior of <code>TestNGSuite</code> into some other class, you can use this
  * trait instead, because class <code>TestNGSuite</code> does nothing more than
  * extend this trait.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="TestNGSuite.html">detailed
  * overview of <code>TestNGSuite</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -416,12 +414,11 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
    * trait, given this trait's <code>run</code> method delegates to TestNG to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
    * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param args the <code>Args</code> for this run
    *
@@ -437,12 +434,11 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
    * trait, given this trait's <code>run</code> method delegates to TestNG to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTests</code>. Because this
    * trait does not actually use <code>runTests</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -459,12 +455,11 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
    * trait, given this trait's <code>run</code> method delegates to TestNG to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTest</code>. Because this
    * trait does not actually use <code>runTest</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run

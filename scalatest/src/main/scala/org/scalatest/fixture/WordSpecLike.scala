@@ -31,19 +31,17 @@ StringVerbBlockRegistration, SubjectWithAfterWordRegistration}
  * a sister class to <a href="../WordSpec.html"><code>org.scalatest.WordSpec</code></a> that can pass a
  * fixture object into its tests.
  *
- * <p>
  * <a href="WordSpec.html"><code>fixture.WordSpec</code></a> is a class,
  * not a trait, to minimize compile time given there is a slight compiler
  * overhead to mixing in traits compared to extending classes. If you need
  * to mix the behavior of <code>fixture.WordSpec</code> into some other
  * class, you can use this trait instead, because class
  * <code>fixture.WordSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="WordSpec.html">detailed
  * overview of <code>fixture.WordSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -264,10 +262,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Class that supports the registration of tagged tests.
    *
-   * <p>
    * Instances of this class are returned by the <code>taggedAs</code> method of
    * class <code>WordSpecStringWrapper</code>.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -276,18 +273,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports tagged test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { fixture => ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -298,18 +293,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports tagged test registration, for tests that don't take a fixture.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { () => ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -320,18 +313,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports registration of tagged, pending tests.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) is (pending)
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -342,18 +333,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports registration of tagged, ignored tests.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) ignore { fixture => ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -364,18 +353,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports registration of tagged, ignored tests that take no fixture parameter.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) ignore { () => ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -389,13 +376,12 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * methods <code>when</code>, <code>which</code>, <code>in</code>, <code>is</code>, <code>taggedAs</code>
    * and <code>ignore</code> to be invoked on <code>String</code>s.
    *
-   * <p>
    * This class provides much of the syntax for <code>fixture.WordSpec</code>, however, it does not add
    * the verb methods (<code>should</code>, <code>must</code>, and <code>can</code>) to <code>String</code>.
    * Instead, these are added via the <code>ShouldVerb</code>, <code>MustVerb</code>, and <code>CanVerb</code>
    * traits, which <code>fixture.WordSpec</code> mixes in, to avoid a conflict with implicit conversions provided
    * in <code>Matchers</code> and <code>MustMatchers</code>.
-   * </p>
+   * 
    *
    * @param string the string that is wrapped
    *
@@ -406,18 +392,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" in { fixture => ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -428,18 +412,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports registration of tests that take no fixture.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" in { () => ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -450,18 +432,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports pending test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" is (pending)
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -472,18 +452,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports ignored test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" ignore { fixture => ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -494,18 +472,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports registration of ignored tests that take no fixture.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" ignore { () => ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param testFun the test function
      */
@@ -517,18 +493,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports tagged test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { fixture => ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param firstTestTag the first mandatory test tag
      * @param otherTestTags the others additional test tags
@@ -542,18 +516,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Registers a <code>when</code> clause.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
      *           ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param f the function which is the body of the scope
      */
@@ -568,9 +540,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Registers a <code>when</code> clause that is followed by an <em>after word</em>.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * val theUser = afterWord("the user")
@@ -579,9 +550,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *           ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param resultOfAfterWordApplication a <code>ResultOfAfterWordApplication</code>
      */
@@ -592,18 +562,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Registers a <code>that</code> clause.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "a rerun button" that {
      *                  ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param f the function which is the body of the scope
      */
@@ -618,18 +586,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Registers a <code>which</code> clause.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "a rerun button," which {
      *                  ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param f the function which is the body of the scope
      */
@@ -644,18 +610,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Registers a <code>that</code> clause.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "a rerun button," that {
      *                  ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param resultOfAfterWordApplication a <code>ResultOfAfterWordApplication</code>
      */
@@ -666,18 +630,16 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Registers a <code>which</code> clause.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "a rerun button," which {
      *                  ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="WordSpec.html">main documentation</a> for trait <code>fixture.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param resultOfAfterWordApplication a <code>ResultOfAfterWordApplication</code>
      */
@@ -689,7 +651,6 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Class whose instances are <em>after word</em>s, which can be used to reduce text duplication.
    *
-   * <p>
    * If you are repeating a word or phrase at the beginning of each string inside
    * a block, you can "move the word or phrase" out of the block with an after word.
    * You create an after word by passing the repeated word or phrase to the <code>afterWord</code> method.
@@ -698,7 +659,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * <code>which</code>. (You can't place one after <code>in</code> or <code>is</code>, the
    * words that introduce a test.) Here's an example that has after words used in all three
    * places:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.fixture
@@ -723,9 +684,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * }
    * </pre>
    *
-   * <p>
    * Running the previous <code>fixture.WordSpec</code> in the Scala interpreter would yield:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala> (new ScalaTestGUISpec).run()
@@ -743,11 +703,10 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the use of <em>after words</em>.
      *
-     * <p>
      * This method transforms a block of code into a <code>ResultOfAfterWordApplication</code>, which
      * is accepted by <code>when</code>, <code>should</code>, <code>must</code>, <code>can</code>, and <code>which</code>
      * methods.  For more information, see the <a href="../WordSpec.html#AfterWords">main documentation</code></a> for trait <code>org.scalatest.WordSpec</code>.
-     * </p>
+     * 
      *
      * @param f the function to be transformed into <code>ResultOfAfterWordApplication</code>
      * @return an new instance of <code>ResultOfAfterWordApplication</code>
@@ -758,7 +717,6 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Creates an <em>after word</em> that an be used to reduce text duplication.
    *
-   * <p>
    * If you are repeating a word or phrase at the beginning of each string inside
    * a block, you can "move the word or phrase" out of the block with an after word.
    * You create an after word by passing the repeated word or phrase to the <code>afterWord</code> method.
@@ -767,7 +725,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * <code>which</code>. (You can't place one after <code>in</code> or <code>is</code>, the
    * words that introduce a test.) Here's an example that has after words used in all three
    * places:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.fixture
@@ -792,9 +750,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * }
    * </pre>
    *
-   * <p>
    * Running the previous <code>fixture.WordSpec</code> in the Scala interpreter would yield:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala> (new ScalaTestGUISpec).run()
@@ -818,9 +775,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Class that supports shorthand scope registration via the instance referenced from <code>WordSpecLike</code>'s <code>it</code> field.
    *
-   * <p>
    * This class enables syntax such as the following test registration:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "A Stack" when { ... }
@@ -829,19 +785,17 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of the <code>it</code> field, see the main documentation
    * for <code>WordSpec</code>.
-   * </p>
+   * 
    */
   protected final class ItWord {
 
     /**
      * Supports the registration of scope with <code>should</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
@@ -850,10 +804,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *    ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -864,9 +817,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the registration of scope with <code>must</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
@@ -875,10 +827,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *    ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -889,9 +840,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the registration of scope with <code>can</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "A Stack" when { ... }
@@ -900,10 +850,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *    ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -914,9 +863,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the registration of scope with <code>when</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "A Stack" should { ... }
@@ -925,10 +873,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *    ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -940,9 +887,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Supports shorthand scope registration in <code>WordSpecLike</code>s.
    *
-   * <p>
    * This field enables syntax such as the following test registration:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "A Stack" when { ... }
@@ -951,19 +897,17 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of the <code>it</code> field, see the main documentation
    * for <code>WordSpec</code>.
-   * </p>
+   * 
    */
   protected val it = new ItWord
 
   /**
    * Class that supports shorthand scope registration via the instance referenced from <code>WordSpecLike</code>'s <code>they</code> field.
    *
-   * <p>
    * This class enables syntax such as the following test registration:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "Basketball players" when { ... }
@@ -972,19 +916,17 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of the <code>they</code> field, see the main documentation
    * for <code>WordSpec</code>.
-   * </p>
+   * 
    */
   protected final class TheyWord {
 
     /**
      * Supports the registration of scope with <code>should</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "Basketball players" when { ... }
@@ -993,10 +935,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *      ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -1007,9 +948,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the registration of scope with <code>must</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "Basketball players" when { ... }
@@ -1018,10 +958,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *      ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -1032,9 +971,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the registration of scope with <code>can</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "Basketball players" when { ... }
@@ -1043,10 +981,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *      ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -1057,9 +994,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
     /**
      * Supports the registration of scope with <code>when</code> in a <code>WordSpecLike</code>.
      *
-     * <p>
      * This method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "Basketball players" should { ... }
@@ -1068,10 +1004,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
      *      ^
      * </pre>
      *
-     * <p>
      * For examples of scope registration, see the <a href="WordSpec.html">main documentation</a>
      * for <code>WordSpec</code>.
-     * </p>
+     * 
      *
      * @param right the body function
      */
@@ -1083,9 +1018,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Supports shorthand scope registration in <code>WordSpecLike</code>s.
    *
-   * <p>
    * This field enables syntax such as the following test registration:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "A Stack" when { ... }
@@ -1094,10 +1028,9 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of the <code>they</code> field, see the main documentation
    * for <code>WordSpec</code>.
-   * </p>
+   * 
    */
   protected val they = new TheyWord
 
@@ -1116,22 +1049,20 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Supports the registration of subjects.
    *
-   * <p>
    * For example, this method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "A Stack" should { ...
    *           ^
    * </pre>
    *
-   * <p>
    * This function is passed as an implicit parameter to a <code>should</code> method
    * provided in <code>ShouldVerb</code>, a <code>must</code> method
    * provided in <code>MustVerb</code>, and a <code>can</code> method
    * provided in <code>CanVerb</code>. When invoked, this function registers the
    * subject and executes the block.
-   * </p>
+   * 
    */
   protected implicit val subjectRegistrationFunction: StringVerbBlockRegistration =
     new StringVerbBlockRegistration {
@@ -1141,9 +1072,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Supports the registration of subject descriptions with after words.
    *
-   * <p>
    * For example, this method enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * def provide = afterWord("provide")
@@ -1152,13 +1082,12 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    *                              ^
    * </pre>
    *
-   * <p>
    * This function is passed as an implicit parameter to a <code>should</code> method
    * provided in <code>ShouldVerb</code>, a <code>must</code> method
    * provided in <code>MustVerb</code>, and a <code>can</code> method
    * provided in <code>CanVerb</code>. When invoked, this function registers the
    * subject and executes the block.
-   * </p>
+   * 
    */
   protected implicit val subjectWithAfterWordRegistrationFunction: SubjectWithAfterWordRegistration =
     new SubjectWithAfterWordRegistration {
@@ -1183,15 +1112,13 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * A <code>Map</code> whose keys are <code>String</code> tag names to which tests in this <code>WordSpec</code> belong, and values
    * the <code>Set</code> of test names that belong to each tag. If this <code>fixture.WordSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
    * methods <code>test</code> and <code>ignore</code>.
-   * </p>
+   * 
    *
-   * <p>
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
@@ -1229,17 +1156,14 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   }
 
   /**
-   * <p>
    * Run zero to many of this <code>WordSpec</code>'s tests.
-   * </p>
+   * 
    *
-   * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
    * If <code>testName</code> is <code>Some</code>, this trait's implementation of this method
    * invokes <code>runTest</code> on this object with passed <code>args</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method takes an <code>args</code> that contains a <code>Set</code> of tag names that should be included (<code>tagsToInclude</code>), and a <code>Set</code>
    * that should be excluded (<code>tagsToExclude</code>), when deciding which of this <code>Suite</code>'s tests to execute.
    * If <code>tagsToInclude</code> is empty, all tests will be executed
@@ -1248,9 +1172,8 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * will be executed. However, if <code>testName</code> is <code>Some</code>, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
    * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
    * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. For more information on trait tags, see the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially execute.
    * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
@@ -1259,7 +1182,7 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
    * of this method checks whether the test should be run based on the <code>tagsToInclude</code> and <code>tagsToExclude</code> <code>Set</code>s.
    * If so, this implementation invokes <code>runTest</code> with passed <code>args</code>.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
    *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>WordSpec</code>.
@@ -1275,12 +1198,11 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
    * An immutable <code>Set</code> of test names. If this <code>fixture.WordSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space.
-   * </p>
+   * 
    *
    * @return the <code>Set</code> of test names
    */
@@ -1295,19 +1217,17 @@ trait WordSpecLike extends TestSuite with TestRegistration with ShouldVerb with 
   /**
    * Supports shared test registration in <code>fixture.WordSpec</code>s.
    *
-   * <p>
    * This field enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * behave like nonFullStack(stackWithOneItem)
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of <cod>behave</code>, see the <a href="../WordSpec.html#SharedTests">Shared tests section</a>
    * in the main documentation for trait <code>org.scalatest.WordSpec</code>.
-   * </p>
+   * 
    */
   protected val behave = new BehaveWord
 

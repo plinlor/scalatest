@@ -20,22 +20,20 @@ package org.scalatest
  * Trait defining abstract "lifecycle" methods that are implemented in <a href="Suite.html#lifecycle-methods"><code>Suite</code></a> and can
  * be overridden in stackable modification traits.
  *
- * <p>
  * The main purpose of <code>SuiteMixin</code> is to differentiate core <code>Suite</code>
  * style traits, such as <a href="Spec.html"><code>Spec</code></a>, <a href="FunSuite.html"><code>FunSuite</code></a>, and <a href="FunSpec.html"><code>FunSpec</code></a> from stackable
  * modification traits for <code>Suite</code>s such as <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a>, <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>,
  * and <a href="SequentialNestedSuiteExecution.html"><code>SequentialNestedSuiteExecution</code></a>. Because these stackable traits extend <code>SuiteMixin</code>
  * instead of <code>Suite</code>, you can't define a suite by simply extending one of the stackable traits:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class MySuite extends BeforeAndAfterEach // Won't compile
  * </pre>
  *
- * <p>
  * Instead, you need to extend a core <code>Suite</code> trait and mix the stackable <code>BeforeAndAfterEach</code> trait
  * into that, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class MySuite extends FunSuite with BeforeAndAfterEach // Compiles fine
@@ -96,13 +94,12 @@ trait SuiteMixin { this: Suite =>
   /**
    * A user-friendly suite name for this <code>Suite</code>.
    *
-   * <p>
    * This trait's
    * implementation of this method returns the simple name of this object's class. This
    * trait's implementation of <code>runNestedSuites</code> calls this method to obtain a
    * name for <code>Report</code>s to pass to the <code>suiteStarting</code>, <code>suiteCompleted</code>,
    * and <code>suiteAborted</code> methods of the <code>Reporter</code>.
-   * </p>
+   * 
    *
    * @return this <code>Suite</code> object's suite name.
    */
@@ -111,11 +108,10 @@ trait SuiteMixin { this: Suite =>
   /**
    * A string ID for this <code>Suite</code> that is intended to be unique among all suites reported during a run.
    *
-   * <p>
    * The suite ID is <em>intended</em> to be unique, because ScalaTest does not enforce that it is unique. If it is not
    * unique, then you may not be able to uniquely identify a particular test of a particular suite. This ability is used,
    * for example, to dynamically tag tests as having failed in the previous run when rerunning only failed tests.
-   * </p>
+   * 
    *
    * @return this <code>Suite</code> object's ID.
    */
@@ -124,11 +120,10 @@ trait SuiteMixin { this: Suite =>
   /**
    * Provides a <code>TestData</code> instance for the passed test name, given the passed config map.
    *
-   * <p>
    * This method is used to obtain a <code>TestData</code> instance to pass to <code>withFixture(NoArgTest)</code>
    * and <code>withFixture(OneArgTest)</code> and the <code>beforeEach</code> and <code>afterEach</code> methods
    * of trait <code>BeforeAndAfterEach</code>.
-   * </p>
+   * 
    *
    * @param testName the name of the test for which to return a <code>TestData</code> instance
    * @param theConfigMap the config map to include in the returned <code>TestData</code>
@@ -139,11 +134,10 @@ trait SuiteMixin { this: Suite =>
   /**
   * A <code>Set</code> of test names. If this <code>Suite</code> contains no tests, this method returns an empty <code>Set</code>.
   *
-  * <p>
   * Although subclass and subtrait implementations of this method may return a <code>Set</code> whose iterator produces <code>String</code>
   * test names in a well-defined order, the contract of this method does not required a defined order. Subclasses are free to
   * implement this method and return test names in either a defined or undefined order.
-  * </p>
+  * 
   */
   def testNames: Set[String]
 
@@ -159,11 +153,10 @@ trait SuiteMixin { this: Suite =>
    * does not appear as a key in the returned <code>Map</code>. If this <code>Suite</code> contains no tests with tags, this
    * method returns an empty <code>Map</code>.
    *
-   * <p>
    * Subclasses may override this method to define and/or discover tags in a custom manner, but overriding method implementations
    * should never return an empty <code>Set</code> as a value. If a test has no tags, its name should not appear as a key in the
    * returned <code>Map</code>.
-   * </p>
+   * 
    */
   def tags: Map[String, Set[String]]
 
@@ -182,11 +175,10 @@ trait SuiteMixin { this: Suite =>
   /**
    * This suite's style name.
    *
-   * <p>
    * This lifecycle method provides a string that is used to determine whether this suite object's
    * style is one of the <a href="tools/Runner$.html#specifyingChosenStyles">chosen styles</a> for
    * the project.
-   * </p>
+   * 
    */
   val styleName: String
 }

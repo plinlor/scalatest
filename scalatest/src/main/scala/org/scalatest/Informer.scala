@@ -20,7 +20,6 @@ import org.scalactic.source
 /**
  * Trait to which custom information about a running suite of tests can be reported.
  * 
- * <p>
  * An <code>Informer</code> is essentially
  * used to wrap a <code>Reporter</code> and provide easy ways to send custom information
  * to that <code>Reporter</code> via an <code>InfoProvided</code> event.
@@ -29,13 +28,12 @@ import org.scalactic.source
  * The <code>Informer</code> will forward the passed <code>message</code> string to the
  * <a href="Reporter.html"><code>Reporter</code></a> as the <code>message</code> parameter, and the optional
  * payload object as the <code>payload</code> parameter, of an <a href="InfoProvided.html"><code>InfoProvided</code></a> event.
- * </p>
+ * 
  *
- * <p>
  * Here's an example in which the <code>Informer</code> is used both directly via <code>info</code>
  * method of trait <a href="FlatSpec.html"><code>FlatSpec</code></a> and indirectly via the methods of
  * trait <a href="GivenWhenThen.html"><code>GivenWhenThen</code></a>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.info
@@ -63,9 +61,8 @@ import org.scalactic.source
  * }
  * </pre>
  *
- * <p>
  * If you run this <code>SetSpec</code> from the interpreter, you will see the following output:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)

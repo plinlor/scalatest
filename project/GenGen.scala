@@ -27,21 +27,18 @@ val scaladocForTableFor1VerbatimString = """
 /**
  * A table with 1 column.
  *
- * <p>
  * For an overview of using tables, see the documentation for trait
  * <a href="TableDrivenPropertyChecks.html">TableDrivenPropertyChecks</a>.
- * </p>
+ * 
  *
- * <p>
  * This table is a sequence of objects, where each object represents one row of the (one-column) table.
  * This table also carries with it a <em>heading</em> tuple that gives a string name to the
  * lone column of the table.
- * </p>
+ * 
  *
- * <p>
  * A handy way to create a <code>TableFor1</code> is via an <code>apply</code> factory method in the <code>Table</code>
  * singleton object provided by the <code>Tables</code> trait. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val examples =
@@ -60,11 +57,9 @@ val scaladocForTableFor1VerbatimString = """
  *   )
  * </pre>
  *
- * <p>
  * Because you supplied a list of non-tuple objects, the type you'll get back will be a <code>TableFor1</code>.
- * </p>
+ * 
  *
- * <p>
  * The table provides an <code>apply</code> method that takes a function with a parameter list that matches
  * the type of the objects contained in this table. The <code>apply</code> method will invoke the
  * function with the object in each row passed as the lone argument, in ascending order by index. (<em>I.e.</em>,
@@ -74,14 +69,13 @@ val scaladocForTableFor1VerbatimString = """
  * check succeeded for that row. If the function completes abruptly with an exception, that indicates the
  * property check failed and the <code>apply</code> method will complete abruptly with a
  * <code>TableDrivenPropertyCheckFailedException</code> that wraps the exception thrown by the supplied property function.
- * </p>
  * 
- * <p>
+ * 
  * The usual way you'd invoke the <code>apply</code> method that checks a property is via a <code>forAll</code> method
  * provided by trait <code>TableDrivenPropertyChecks</code>. The <code>forAll</code> method takes a <code>TableFor1</code> as its
  * first argument, then in a curried argument list takes the property check function. It invokes <code>apply</code> on
  * the <code>TableFor1</code>, passing in the property check function. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (examples) { (a) =>
@@ -89,11 +83,10 @@ val scaladocForTableFor1VerbatimString = """
  * }
  * </pre>
  *
- * <p>
  * Because <code>TableFor1</code> is a <code>Seq[(A)]</code>, you can use it as a <code>Seq</code>. For example, here's how
  * you could get a sequence of <a href="../Outcome.html"><code>Outcome</code></a>s for each row of the table, indicating whether a property check succeeded or failed
  * on each row of the table:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * for (row <- examples) yield {
@@ -101,24 +94,21 @@ val scaladocForTableFor1VerbatimString = """
  * }
  * </pre>
  *
- * <p>
  * Note: the <code>outcomeOf</code> method, contained in the <code>OutcomeOf</code> trait, will execute the supplied code (a by-name parameter) and
  * transform it to an <code>Outcome</code>. If no exception is thrown by the code, <code>outcomeOf</code> will result in a
  * <a href="../Succeeded\$.html"><code>Succeeded</code></a>, indicating the "property check"
  * succeeded. If the supplied code completes abruptly in an exception that would normally cause a test to fail, <code>outcomeOf</code> will result in
  * in a <a href="../Failed.html"><code>Failed</code></a> instance containing that exception. For example, the previous for expression would give you:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Vector(Succeeded, Succeeded, Succeeded, Succeeded, Succeeded, Succeeded, Succeeded,
  *     Failed(org.scalatest.TestFailedException: 7 equaled 7), Succeeded, Succeeded)
  * </pre>
  *
- * <p>
  * This shows that all the property checks succeeded, except for the one at index 7.
- * </p>
+ * 
  *
- * <p>
  * One other way to use a <code>TableFor1</code> is to test subsequent return values
  * of a stateful function. Imagine, for example, you had an object named <code>FiboGen</code>
  * whose <code>next</code> method returned the <em>next</em> fibonacci number, where next
@@ -129,17 +119,16 @@ val scaladocForTableFor1VerbatimString = """
  * you could create a <code>TableFor1</code> (a table with one column, which you could alternatively
  * think of as one row), in which each row represents
  * the next value you expect.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val first14FiboNums =
  *   Table("n", 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233)
  * </pre>
  *
- * <p>
  * Then in your <code>forAll</code> simply call the function and compare it with the
  * expected return value, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *  forAll (first14FiboNums) { n =>
@@ -186,16 +175,14 @@ import org.scalactic._
 /**
  * Trait containing methods that faciliate property checks against generated data using ScalaCheck.
  *
- * <p>
  * This trait contains <code>forAll</code> methods that provide various ways to check properties using
  * generated data. Use of this trait requires that ScalaCheck be on the class path when you compile and run your tests.
  * It also contains a <code>wherever</code> method that can be used to indicate a property need only hold whenever
  * some condition is true.
- * </p>
+ * 
  *
- * <p>
  * For an example of trait <code>GeneratorDrivenPropertyChecks</code> in action, imagine you want to test this <code>Fraction</code> class:
- * </p>
+ * 
  *  
  * <pre class="stHighlight">
  * class Fraction(n: Int, d: Int) {
@@ -211,10 +198,9 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * To test the behavior of <code>Fraction</code>, you could mix in or import the members of <code>GeneratorDrivenPropertyChecks</code>
  * (and <code>Matchers</code>) and check a property using a <code>forAll</code> method, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll { (n: Int, d: Int) =>
@@ -236,7 +222,6 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * Trait <code>GeneratorDrivenPropertyChecks</code> provides overloaded <code>forAll</code> methods
  * that allow you to check properties using the data provided by a ScalaCheck generator. The simplest form
  * of <code>forAll</code> method takes two parameter lists, the second of which is implicit. The first parameter list
@@ -248,9 +233,8 @@ import org.scalactic._
  * worry about them. Same for <code>Shrink</code> objects, which are provided by ScalaCheck's <code>org.scalacheck.Shrink</code> companion
  * object. Most often you can simply pass a property function to <code>forAll</code>, and the compiler will grab the implicit
  * values provided by ScalaCheck.
- * </p>
+ * 
  *
- * <p>
  * The <code>forAll</code> methods use the supplied <code>Arbitrary</code> generators to generate example
  * arguments and pass them to the property function, and
  * generate a <code>GeneratorDrivenPropertyCheckFailedException</code> if the function
@@ -260,16 +244,15 @@ import org.scalactic._
  * which is thrown by the <code>whenever</code> method (defined in trait <code>Whenever</code>, which this trait extends) to indicate
  * a condition required by the property function is not met by a row
  * of passed data, will simply cause <code>forAll</code> to discard that row of data.
- * </p>
+ * 
  *
  * <a name="supplyingArgumentNames"></a><h2>Supplying argument names</h2>
  *
- * <p>
  * You can optionally specify string names for the arguments passed to a property function, which will be used
  * in any error message when describing the argument values that caused the failure. To supply the names, place them in a comma separated list
  * in parentheses after <code>forAll</code> before the property function (a curried form of <code>forAll</code>). Here's
  * an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll ("a", "b") { (a: String, b: String) =>
@@ -277,9 +260,8 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * When this fails, you'll see an error message that includes this:
- * </p>
+ * 
  *
  * <pre>
  * Occurred when passed generated values (
@@ -288,10 +270,9 @@ import org.scalactic._
  * )
  * </pre>
  *
- * <p>
  * When you don't supply argument names, the error message will say <code>arg0</code>, <code>arg1</code>, <em>etc.</em>.
  * For example, this property check:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll { (a: String, b: String) =>
@@ -299,9 +280,8 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * Will fail with an error message that includes:
- * </p>
+ * 
  *
  * <pre>
  * Occurred when passed generated values (
@@ -312,15 +292,13 @@ import org.scalactic._
  *
  * <a name="supplyingGenerators"></a><h2>Supplying generators</h2>
  *
- * <p>
  * ScalaCheck provides a nice library of compositors that makes it easy to create your own custom generators. If you
  * want to supply custom generators to a property check, place them in parentheses after <code>forAll</code>, before
  * the property check function (a curried form of <code>forAll</code>).
- * </p>
+ * 
  *
- * <p>
  * For example, to create a generator of even integers between (and including) -2000 and 2000, you could write this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalacheck.Gen
@@ -328,30 +306,27 @@ import org.scalactic._
  * val evenInts = for (n <- Gen.choose(-1000, 1000)) yield 2 * n
  * </pre>
  *
- * <p>
  * Given this generator, you could use it on a property check like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (evenInts) { (n) => n % 2 should equal (0) }
  * </pre>
  *
- * <p>
  * Custom generators are necessary when you want to pass data types not supported by ScalaCheck's arbitrary generators,
  * but are also useful when some of the values in the full range for the passed types are not valid. For such values you
  * would use a <code>whenever</code> clause. In the <code>Fraction</code> class shown above, neither the passed numerator or
  * denominator can be <code>Integer.MIN_VALUE</code>, and the passed denominator cannot be zero. This shows up in the
  * <code>whenever</code> clause like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *   whenever (d != 0 && d != Integer.MIN_VALUE
  *       && n != Integer.MIN_VALUE) { ...
  * </pre>
  *
- * <p>
  * You could in addition define generators for the numerator and denominator that only produce valid values, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val validNumers =
@@ -360,9 +335,8 @@ import org.scalactic._
  *   for (d <- validNumers if d != 0) yield d
  * </pre>
  *
- * <p>
  * You could then use them in the property check like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (validNumers, validDenoms) { (n: Int, d: Int) =>
@@ -384,21 +358,19 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * Note that even if you use generators that don't produce the invalid values, you still need the
  * <code>whenever</code> clause. The reason is that once a property fails, ScalaCheck will try and shrink
  * the values to the smallest values that still cause the property to fail. During this shrinking process ScalaCheck
  * may pass invalid values. The <code>whenever</code> clause is still needed to guard against those values. (The
  * <code>whenever</code> clause also clarifies to readers of the code exactly what the property is in a succinct
  * way, without requiring that they find and understand the generator definitions.)
- * </p>
+ * 
  *
  * <a name="supplyingGeneratorsAndArgNames"></a><h2>Supplying both generators and argument names</h2>
  *
- * <p>
  * If you want to supply both generators and named arguments, you can do so by providing a list of <code>(&lt;generator&gt;, &lt;name&gt;)</code> pairs
  * in parentheses after <code>forAll</code>, before the property function. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll ((validNumers, "n"), (validDenoms, "d")) { (n: Int, d: Int) =>
@@ -420,9 +392,8 @@ import org.scalactic._
  * }
  * </pre>
  *
- * <p>
  * Were this property check to fail, it would mention the names n and d in the error message, like this:
- * </p>
+ * 
  *
  * <pre>
  * Occurred when passed generated values (
@@ -433,11 +404,10 @@ import org.scalactic._
  *
  * <a name="propCheckConfig"></a><h2>Property check configuration</h2>
  *
- * <p>
  * The property checks performed by the <code>forAll</code> methods of this trait can be flexibly configured via the services
  * provided by supertrait <code>Configuration</code>.  The five configuration parameters for property checks along with their 
  * default values and meanings are described in the following table:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
@@ -508,7 +478,6 @@ import org.scalactic._
  * </tr>
  * </table>
  *
- * <p>
  * The <code>forAll</code> methods of trait <code>GeneratorDrivenPropertyChecks</code> each take a <code>PropertyCheckConfiguration</code>
  * object as an implicit parameter. This object provides values for each of the five configuration parameters. Trait <code>Configuration</code>
  * provides an implicit <code>val</code> named <code>generatorDrivenConfig</code> with each configuration parameter set to its default value. 
@@ -523,41 +492,37 @@ import org.scalactic._
  *   PropertyCheckConfiguration(minSize = 10, sizeRange = 10)
  * </pre>
  *
- * <p>
  * Or, hide it by declaring a variable of the same name in whatever scope you want the changed values to be in effect:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * implicit val generatorDrivenConfig =
  *   PropertyCheckConfiguration(minSize = 10, sizeRange = 10)
  * </pre>
  *
- * <p>
  * In addition to taking a <code>PropertyCheckConfiguration</code> object as an implicit parameter, the <code>forAll</code> methods of trait
  * <code>GeneratorDrivenPropertyChecks</code> also take a variable length argument list of <code>PropertyCheckConfigParam</code>
  * objects that you can use to override the values provided by the implicit <code>PropertyCheckConfiguration</code> for a single <code>forAll</code>
  * invocation. For example, if you want to set <code>minSuccessful</code> to 500 for just one particular <code>forAll</code> invocation,
  * you can do so like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * forAll (minSuccessful(500)) { (n: Int, d: Int) => ...
  * </pre>
  *
- * <p>
  * This invocation of <code>forAll</code> will use 500 for <code>minSuccessful</code> and whatever values are specified by the 
  * implicitly passed <code>PropertyCheckConfiguration</code> object for the other configuration parameters.
  * If you want to set multiple configuration parameters in this way, just list them separated by commas:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * forAll (minSuccessful(500), maxDiscardedFactor(0.6)) { (n: Int, d: Int) => ...
  * </pre>
  *
- * <p>
  * If you are using an overloaded form of <code>forAll</code> that already takes an initial parameter list, just
  * add the configuration parameters after the list of generators, names, or generator/name pairs, as in:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * // If providing argument names
@@ -573,9 +538,8 @@ import org.scalactic._
  *   (n: Int, d: Int) => ...
  * </pre>
  *
- * <p>
  * For more information, see the documentation for supertrait <a href="Configuration.html"><code>Configuration</code></a>.
- * </p>
+ * 
  * 
  * @author Bill Venners
  */
@@ -586,11 +550,10 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with explicitly passed parameter values.
    *
-   * <p>
    * This method creates a <code>ConfiguredPropertyCheck</code> object that has six overloaded apply methods
    * that take a function. Thus it is used with functions of all six arities.
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String) =>
@@ -629,11 +592,10 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the 
    * <code>PropertyGenConfig</code> object passed implicitly to its <code>apply</code> methods with parameter values passed to its constructor.
    *
-   * <p>
    * Instances of this class are returned by trait <code>GeneratorDrivenPropertyChecks</code> <code>forAll</code> method that accepts a variable length
    * argument list of <code>PropertyCheckConfigParam</code> objects. Thus it is used with functions of all six arities.
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String) =>
@@ -661,17 +623,15 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * }
    * </pre>
    *
-   * <p>
    * In the first example above, the <code>ConfiguredPropertyCheck</code> object is returned by:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10))
    * </pre>
    *
-   * <p>
    * The code that follows is an invocation of one of the <code>ConfiguredPropertyCheck</code> <code>apply</code> methods:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * { (a: String) =>
@@ -691,9 +651,8 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String) =>
@@ -735,9 +694,8 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String, b: String) =>
@@ -780,9 +738,8 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String, b: String, c: String) =>
@@ -826,9 +783,8 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String, b: String, c: String, d: String) =>
@@ -873,9 +829,8 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String, b: String, c: String, d: String, e: String) =>
@@ -921,9 +876,8 @@ trait GeneratorDrivenPropertyChecks extends Whenever with Configuration {
    * supplied by implicitly passed generators, modifying the values in the implicitly passed 
    * <code>PropertyGenConfig</code> object with parameter values passed to this object's constructor.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll (minSize(1), maxSize(10)) { (a: String, b: String, c: String, d: String, e: String, f: String) =>
@@ -972,9 +926,8 @@ val propertyCheckForAllTemplate = """
    * Performs a property check by applying the specified property check function to arguments
    * supplied by implicitly passed generators.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll { ($namesAndTypes$) =>
@@ -1015,9 +968,8 @@ $arbShrinks$,
    * Performs a property check by applying the specified property check function with the specified
    * argument names to arguments supplied by implicitly passed generators.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * forAll ($argNames$) { ($namesAndTypes$) =>
@@ -1058,9 +1010,8 @@ $arbShrinks$,
    * Performs a property check by applying the specified property check function to arguments
    * supplied by the specified generators.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalacheck.Gen
@@ -1108,9 +1059,8 @@ $shrinks$,
    * Performs a property check by applying the specified property check function to named arguments
    * supplied by the specified generators.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalacheck.Gen

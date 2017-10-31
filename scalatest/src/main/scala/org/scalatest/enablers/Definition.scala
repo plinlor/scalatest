@@ -18,17 +18,15 @@ package org.scalatest.enablers
 /**
  * Supertrait for typeclasses that enable the <code>be defined</code> matcher syntax.
  *
- * <p>
  * A <code>Definition[T]</code> provides access to the "definition nature" of type <code>S</code> in such
  * a way that <code>be defined</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
  * can be any type for which the concept of being defined makes sense, such as <code>scala.Option</code>. ScalaTest provides
  * implicit implementation for <code>scala.Option</code>. You can enable the <code>be defined</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Definition[U]</code> for the type and making it available implicitly.
  * 
- * <p>
  * ScalaTest provides an implicit <code>Definition</code> instance for <code>scala.Option</code>,
  * arbitary object with <code>isDefined()</code> or <code>isDefined</code> in the <code>Definition</code> companion object.
- * </p>
+ * 
  */
 trait Definition[-T] {
 

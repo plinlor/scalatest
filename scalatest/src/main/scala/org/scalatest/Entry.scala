@@ -19,7 +19,6 @@ package org.scalatest
  * A case class implementation of <code>java.util.Map.Entry</code> to make it easier to
  * test Java <code>Map</code>s with ScalaTest <a href="Matchers.html">Matchers</a>.
  *
- * <p>
  * In Java, <code>java.util.Map</code> is not a subtype of <code>java.util.Collection</code>, and does not
  * actually define an element type. You can ask a Java <code>Map</code> for an &ldquo;entry set&rdquo;
  * via the <code>entrySet</code> method, which will return the <code>Map</code>'s key/value pairs
@@ -28,7 +27,7 @@ package org.scalatest
  * ScalaTest matchers allows you to treat a Java <code>Map</code> as a collection of <code>Entry</code>,
  * and defines this convenience implementation of <code>java.util.Map.Entry</code>.
  * Here's how you use it:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * javaMap should contain (Entry(2, 3))

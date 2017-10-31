@@ -56,10 +56,9 @@ package org.scalatest.testng
  * }
  * </pre>
  *
- * <p>
  * To execute <code>TestNGSuite</code>s with ScalaTest's <code>Runner</code>, you must include TestNG's jar file on the class path or runpath.
  * This version of <code>TestNGSuite</code> was tested with TestNG version 6.3.1.
- * </p>
+ * 
  *
  * @author Josh Cough
  * @author Bill Venners

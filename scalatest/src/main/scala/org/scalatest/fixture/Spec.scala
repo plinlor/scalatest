@@ -25,22 +25,20 @@ import org.scalatest.events.{TopOfClass, TopOfMethod}
  * <strong>Class <code>fixture.Spec</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
  * <code>org.scalatest.fixture.FunSpec</code> instead.</strong>
  *
- * <p>
  * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
  * Thus in ScalaTest 3.0.0, class <code>org.scalatest.Spec</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
  * <code>RefSpec</code>, with the intention of later moving it to a separate module available only on the JVM. If the 
  * <code>org.scalatest.refspec._</code> package contained a <code>fixture</code> subpackage, then importing <code>org.scalatest.refspec._</code>
  * would import the name <code>fixture</code> as <code>org.scalatest.refspec.fixture</code>. This would likely be confusing for users,
  * who expect <code>fixture</code> to mean <code>org.scalatest.fixture</code>.
- * </p>
+ * 
  *
- * <p>
  * As a result this class has been deprecated and will <em>not</em>
  * be moved to package <code>org.scalatest.refspec</code>. Instead we recommend you rewrite any test classes that currently extend
  * <code>org.scalatest.fixture.Spec</code> to extend <a href="FunSpec.html"><code>org.scalatest.fixture.FunSpec</code></a> instead,
  * replacing any scope <code>object</code>
  * with a <code>describe</code> clause, and any test method with an <code>it</code> clause.
- * </p>
+ * 
  *
  * @author Bill Venners
  */

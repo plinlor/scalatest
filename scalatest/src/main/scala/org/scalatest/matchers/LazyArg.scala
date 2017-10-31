@@ -19,7 +19,6 @@ package org.scalatest.matchers
 /**
  * Transforms a given object's <code>toString</code> with a given function lazily.
  *
- * <p>
  * This class is intended to be used with the <code>mapResult</code> method of
  * <a href="MatcherProducers.html"><code>MatcherProducers</code></a>, which you can use to 
  * modify error messages when composing matchers. This class exists to enable those error messages
@@ -30,19 +29,17 @@ package org.scalatest.matchers
  * until and unless an error message is actually needed, to minimize unecessary creation and concatenation
  * of strings. The <code>LazyArg</code> class enables this same performance optimization when composing
  * matchers.
- * </p>
+ * 
  *
- * <p>
  * The other design goal of <code>LazyArg</code> is to make the internal <code>arg</code> available for inspection
  * in an IDE. In a future version of ScalaTest, the <code>args</code> of <code>MatchResult</code> that were used
  * to create the error message will be included in the <code>TestFailedException</code>, so they can be inspected
  * in IDEs. This is why the <code>arg</code> field of <code>LazyArg</code> is public.
- * </p>
+ * 
  *
- * <p>
  * For an example of using <code>LazyArg</code>, see the <a href="Matcher.html#composingMatchers">Composing matchers</a>
  * section in the main documentation for trait <code>Matcher</code>.
- * </p>
+ * 
  *
  * @param arg the argument
  * @param f a function that given the <code>arg</code> will produce a <code>String</code>

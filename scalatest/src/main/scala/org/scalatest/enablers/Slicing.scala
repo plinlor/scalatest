@@ -20,13 +20,12 @@ package org.scalatest.enablers
 /**
  * Typeclass that enables for aggregations certain <code>contain</code> syntax in the ScalaTest matchers DSL.
  *
- * <p>
  * An <code>Aggregating[A]</code> provides access to the "aggregating nature" of type <code>A</code> in such
  * a way that relevant <code>contain</code> matcher syntax can be used with type <code>A</code>. An <code>A</code>
  * can be any type of <em>aggregation</em>&#8212;an object that in some way aggregates or brings together other objects. ScalaTest provides
  * implicit implementations for several types out of the box in the
  * <a href="Aggregating$.html"><code>Aggregating</code> companion object</a>:
- * </p>
+ * 
  * 
  * <ul>
  * <li><code>scala.collection.GenTraversable</code></li>
@@ -36,9 +35,7 @@ package org.scalatest.enablers
  * <li><code>java.util.Map</code></li>
  * </ul>
  * 
- * <p>
  * The <code>contain</code> syntax enabled by this trait is:
- * <p>
  * 
  * <ul>
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>atLeastOneOf</code> <code>(1, 2, 3)</code></li>
@@ -48,16 +45,14 @@ package org.scalatest.enablers
  * <li><code>result</code> <code>should</code> <code>contain</code> <code>theSameElementsAs</code> <code>(List(1, 2, 3))</code></li>
  * </ul>
  * 
- * <p>
  * You can enable the <code>contain</code> matcher syntax enabled by <code>Aggregating</code> on your own
  * type <code>U</code> by defining an <code>Aggregating[U]</code> for the type and making it available implicitly.
- * </p>
+ * 
  *
- * <p>
  * Note, for an explanation of the difference between <code>Containing</code> and <code>Aggregating</code>, both of which
  * enable <code>contain</code> matcher syntax, see the <a href="Containing.html#containingVersusAggregating">Containing
  * versus Aggregating</a> section of the main documentation for trait <code>Containing</code>.
- * </p>
+ * 
  */
 private[scalatest] trait Slicing[-A] {
 

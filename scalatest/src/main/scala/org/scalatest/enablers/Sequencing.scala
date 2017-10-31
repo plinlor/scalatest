@@ -24,13 +24,12 @@ import scala.annotation.tailrec
 /**
  * Typeclass that enables for sequencing certain <code>contain</code> syntax in the ScalaTest matchers DSL.
  *
- * <p>
  * An <code>Sequencing[A]</code> provides access to the "sequenching nature" of type <code>A</code> in such
  * a way that relevant <code>contain</code> matcher syntax can be used with type <code>A</code>. An <code>A</code>
  * can be any type of <em>sequencing</em>&#8212;an object that in some way brings together other objects in order.
  * ScalaTest provides implicit implementations for several types out of the box in the
  * <a href="Sequencing$.html"><code>Sequencing</code> companion object</a>:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>scala.collection.GenSeq</code></li>
@@ -43,9 +42,7 @@ import scala.annotation.tailrec
  * <li><code>String</code></li>
  * </ul>
  *
- * <p>
  * The <code>contain</code> syntax enabled by this trait is:
- * <p>
  *
  * <ul>
  * <li><code>result should contain inOrder (1, 2, 3)</code></li>
@@ -53,10 +50,9 @@ import scala.annotation.tailrec
  * <li><code>result should contain theSameElementsInOrderAs List(1, 2, 3)</code></li>
  * </ul>
  *
- * <p>
  * You can enable the <code>contain</code> matcher syntax enabled by <code>Sequencing</code> on your own
  * type <code>U</code> by defining an <code>Sequencing[U]</code> for the type and making it available implicitly.
- * </p>
+ * 
  */
 trait Sequencing[-S] {
 

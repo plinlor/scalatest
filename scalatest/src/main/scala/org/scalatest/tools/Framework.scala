@@ -36,30 +36,26 @@ import Suite.mergeMap
 
 
 /**
- * <p>
  * This class is ScalaTest's implementation of the new Framework API that is supported in sbt 0.13.
- * </p>
+ * 
  *
- * <p>
  * To use ScalaTest in sbt, you should add ScalaTest as dependency in your sbt build file, the following shows an example
  * for using ScalaTest 2.0 with Scala 2.10.x project:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
  * </pre>
  *
- * <p>
  * To pass argument to ScalaTest from sbt, you can use <code>testOptions</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * testOptions in Test += Tests.Argument("-h", "target/html")  // Use HtmlReporter
  * </pre>
  *
- * <p>
  * If you are using multiple testing frameworks, you can pass arguments specific to ScalaTest only:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-h", "target/html") // Use HtmlReporter
@@ -67,10 +63,9 @@ import Suite.mergeMap
  *
  * <h3>Supported arguments</h3>
  *
- * <p>
  * Integration in sbt 0.13 supports same argument format as [[org.scalatest.tools.Runner <code>Runner</code>]],
  * except the following arguments:
- * </p>
+ * 
  *
  * <ul>
  *   <li><code>-R</code> -- runpath is not supported because test path and discovery is handled by sbt</li>
@@ -86,10 +81,9 @@ import Suite.mergeMap
  *
  * <h3>New Features of New Framework API</h3>
  *
- * <p>
  * <a href="https://github.com/sbt/test-interface">New Framework API</a> supports a number of new features that ScalaTest has utilized to support a better testing
  * experience in sbt.  The followings are summary of new features supported by the new Framework API:
- * </p>
+ * 
  *
  * <ul>
  *   <li>Specified behavior of single instance of <code>Runner</code> per project run (non-fork), and a new <code>done</code> method</li>
@@ -102,64 +96,56 @@ import Suite.mergeMap
  *
  * <h3>Specified behavior of single instance of <code>Runner</code> per project run (non-fork), and a new <code>done</code> method</h3>
  *
- * <p>
  * In new Framework API, it is now a specified behavior that <code>Framework</code>'s <code>runner</code> method will be called
  * to get a <code>Runner</code> instance once per project run.  Arguments will be passed when calling <code>Framework</code>'s <code>runner</code>
  * and this gives ScalaTest a good place to perform setup tasks, such as initializing <code>Reporter</code>s.
- * </p>
+ * 
  *
- * <p>
  * There's also a new <code>done</code> on <code>Runner</code> interface, which in turns provide a good spot for ScalaTest to perform
  * cleanup tasks, such as disposing the <code>Reporter</code>s.  [[org.scalatest.tools.HtmlReporter <code>HtmlReporter</code>]] depends
  * on this behavior to generate its <code>index.html</code>.  In addition, <code>done</code> can return framework-specific summary text
  * for sbt to render at the end of the project run, which allows ScalaTest to return its own summary text.
- * </p>
+ * 
  *
  * <h3>API to return nested <code>Suite</code>s as sbt <code>Task</code>s</h3>
  *
- * <p>
  * In new Framework API, a new concept of <a href="https://github.com/sbt/test-interface/blob/master/src/main/java/sbt/testing/Task.java"><code>Task</code></a>
  * was introduced. A <code>Task</code> has an <code>execute</code> method that can return more <code>Task</code>s for execution.  ScalaTest does not utilize this
  * feature, it always return empty array for sub-tasks.
- * </p>
+ * 
  *
  * <h3>API to support test execution in <code>fork</code> mode</h3>
  *
- * <p>
  * Forking was added to sbt since version 0.12, you can find documentation for forking support in sbt at <a href="http://www.scala-sbt.org/0.13.0/docs/Detailed-Topics/Forking.html">Forking in sbt</a>.
- * </p>
+ * 
  *
- * <p>
  * Although forking is already available in sbt since 0.12, there's no support in old Framework API, until it is added in new Framework API that is supported in
  * sbt 0.13.  With API provided with new Framework API, ScalaTest creates real <code>Reporter</code>s in the main process, and uses <code>SocketReporter</code>
  * in forked process to send events back to the main process, and get processed by real <code>Reporter</code>s at the main process.  All of this is transparent
  * to any custom <code>Reporter</code> implementation, as only one instance of the custom <code>Reporter</code> will be created to process the events, regardless
  * of whether the tests run in same or forked process.
- * </p>
+ * 
  *
  * <h3>Selector API to selectively run tests</h3>
  *
- * <p>
  * New Framework API includes a set of comprehensive API to select tests for execution.  Though new Framework API supports fine-grained test selection, current
  * sbt's <code>test-only</code> and <code>test-quick</code> supports up to suite level selection only, or <code>SuiteSelector</code> as defined in new Framework API.
  * This <code>Framework</code> implementation already supports <code>SuiteSelector</code>, <code>NestedSuiteSelector</code>, <code>TestSelector</code> and
  * <code>NestedTestSelector</code>, which should work once future sbt version supports them.
- * </p>
+ * 
  *
  * <h3>Added new <code>Ignored</code>, <code>Canceled</code> and <code>Pending</code> status</h3>
  *
- * <p>
  * Status <code>Ignored</code>, <code>Canceled</code> and <code>Pending</code> are added to new Framework API, and they match perfectly with ScalaTest's ignored
  * tests (now reported as <code>Ignored</code> instead of <code>Skipped</code>), as well as canceled and pending tests newly added in ScalaTest 2.0.
- * </p>
+ * 
  *
  * <h3>Added sbt Tagging support</h3>
  *
- * <p>
  * Sbt supports <a href="http://www.scala-sbt.org/release/docs/Detailed-Topics/Parallel-Execution.html#tagging-tasks">task tagging</a>, but has no support in old
  * Framework API for test frameworks to integrate it.  New Framework API supports it, and you can now use the following annotations to annotate your suite for sbt
  * built-in resource tags:
- * </p>
+ * 
  *
  * <ul>
  *   <li>[[org.scalatest.tags.CPU <code>CPU</code>]]</li>
@@ -167,13 +153,11 @@ import Suite.mergeMap
  *   <li>[[org.scalatest.tags.Network <code>Network</code>]]</li>
  * </ul>
  *
- * <p>
  * They will be mapped to corresponding resource tag <code>CPU</code>, <code>Disk</code> and <code>Network</code> in sbt.
- * </p>
+ * 
  *
- * <p>
  * You can also define custom tag, which you'll need to write it as Java annotation:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import java.lang.annotation.Target;
@@ -186,9 +170,8 @@ import Suite.mergeMap
  * public @interface Custom {}
  * </pre>
  *
- * <p>
  * which will be translated to <code>Tags.Tag("custom")</code> in sbt.
- * </p>
+ * 
  *
  * @author Chee Seng
  */

@@ -89,7 +89,7 @@ package org.scalactic
  * Provides <code>Equality</code> and <code>Equivalence</code> instances for <code>Numeric</code> types that 
  * compare for equality with a given tolerance.
  *
- * <p>Here's an example:</p>
+ * <p>Here's an example:
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._

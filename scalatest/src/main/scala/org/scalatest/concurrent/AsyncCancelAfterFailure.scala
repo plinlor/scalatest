@@ -42,11 +42,10 @@ AFTER MOVING, DROP THE .. in the link to AsyncTestSuite below
  * Trait that when mixed into a <a href="../AsyncTestSuite.html"><code>AsyncTestSuite</code></a> cancels any remaining tests in that
  * <code>AsyncTestSuite</code> instance after a test fails.
  *
- * <p>
  * The intended use case for this trait is if you have a suite of long-running tests that are
  * related such that if one fails, you aren't interested in running the others, you can use this
  * trait to simply cancel any remaining tests, so you need not wait long for them to complete.
- * </p>
+ * 
  *
  */
 trait AsyncCancelAfterFailure extends AsyncTestSuiteMixin { this: AsyncTestSuite =>

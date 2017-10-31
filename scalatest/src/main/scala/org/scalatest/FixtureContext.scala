@@ -19,14 +19,12 @@ package org.scalatest
  * Marker trait for fixture-context objects, that enables them
  * to be used in testing styles that require type <code>Assertion</code>
  *
- * <p>
  * A fixture-context object is a way to share fixtures between different
  * tests that is most useful when different tests need different combinations
  * of fixture objects. The fixture-context object technique is only
  * appropriate if you don't need to clean up the fixtures after using them.
- * </p>
+ * 
  *
- * <p>
  * To use this technique, you define instance variables intialized with fixture
  * objects in traits and/or classes, then in each test instantiate an object that
  * contains just the fixture objects needed by the test. Traits allow you to mix
@@ -34,7 +32,7 @@ package org.scalatest
  * allow you to pass data in via a constructor to configure the fixture objects.
  * Here's an example <code>FlatSpec</code> in which fixture objects are partitioned
  * into two traits and each test just mixes together the traits it needs:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.flatspec.fixturecontext
@@ -75,11 +73,10 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Extending <code>FixtureContext</code>, which extends trait <code>org.scalatest.compatible.Assertion</code> makes
  * it more convenient to use fixture-context objects in styles, such as async styles, that require test bodies
  * to have type <code>Assertion</code>.
- * </p>
+ * 
  */
 trait FixtureContext extends compatible.Assertion
 

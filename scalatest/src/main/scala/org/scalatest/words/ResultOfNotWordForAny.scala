@@ -154,10 +154,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    * should be, or shouldBe instead.
    * </strong>
    *
-   * <p>
    * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
    * cases still compile, but silently wouldn't work.
-   * </p>
+   * 
    */
   @deprecated("The deprecation period for the be === syntax has expired. Please use should equal, should ===, shouldEqual, should be, or shouldBe instead.")
   def be(comparison: TripleEqualsInvocation[_]): Matcher[Any] = {
@@ -965,10 +964,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    *
-   * <p>
    * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
    * or a <code>scala.util.matching.Regex</code>.
-   * </p>
+   * 
    */
   def fullyMatch(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = fullyMatchRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
@@ -986,10 +984,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    *
-   * <p>
    * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
    * or a <code>scala.util.matching.Regex</code>.
-   * </p>
+   * 
    */
   def include(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = includeRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
@@ -1022,10 +1019,9 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
    *                   ^
    * </pre>
    *
-   * <p>
    * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
    * or a <code>scala.util.matching.Regex</code>.
-   * </p>
+   * 
    */
   def startWith(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = startWithRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)

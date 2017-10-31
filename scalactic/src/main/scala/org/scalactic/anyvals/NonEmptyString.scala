@@ -31,26 +31,23 @@ import org.scalactic.Every
 /**
   * A non-empty list: an ordered, immutable, non-empty collection of elements with <code>LinearSeq</code> performance characteristics.
   *
-  * <p>
   * The purpose of <code>NonEmptyString</code> is to allow you to express in a type that a <code>String</code> is non-empty, thereby eliminating the
   * need for (and potential exception from) a run-time check for non-emptiness. For a non-empty sequence with <code>IndexedSeq</code>
   * performance, see <a href="Every.html"><code>Every</code></a>.
-  * </p>
+  * 
   *
   * <h2>Constructing <code>NonEmptyString</code>s</h2>
   *
-  * <p>
   * You can construct a <code>NonEmptyString</code> by passing one or more elements to the <code>NonEmptyString.apply</code> factory method:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * scala&gt; NonEmptyString(1, 2, 3)
   * res0: org.scalactic.anyvals.NonEmptyString[Int] = NonEmptyString(1, 2, 3)
   * </pre>
   *
-  * <p>
   * Alternatively you can <em>cons</em> elements onto the <code>End</code> singleton object, similar to making a <code>String</code> starting with <code>Nil</code>:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * scala&gt; 1 :: 2 :: 3 :: Nil
@@ -60,11 +57,10 @@ import org.scalactic.Every
   * res1: org.scalactic.NonEmptyString[Int] = NonEmptyString(1, 2, 3)
   * </pre>
   *
-  * <p>
   * Note that although <code>Nil</code> is a <code>String[Nothing]</code>, <code>End</code> is
   * not a <code>NonEmptyString[Nothing]</code>, because no empty <code>NonEmptyString</code> exists. (A non-empty list is a series
   * of connected links; if you have no links, you have no non-empty list.)
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * scala&gt; val nil: String[Nothing] = Nil
@@ -80,22 +76,20 @@ import org.scalactic.Every
   *
   * <h2>Working with <code>NonEmptyString</code>s</h2>
   *
-  * <p>
   * <code>NonEmptyString</code> does not extend Scala's <code>Seq</code> or <code>Traversable</code> traits because these require that
   * implementations may be empty. For example, if you invoke <code>tail</code> on a <code>Seq</code> that contains just one element,
   * you'll get an empty <code>Seq</code>:
-  * </p>
+  * 
   *
   * <pre class="stREPL">
   * scala&gt; String(1).tail
   * res6: String[Int] = String()
   * </pre>
   *
-  * <p>
   * On the other hand, many useful methods exist on <code>Seq</code> that when invoked on a non-empty <code>Seq</code> are guaranteed
   * to not result in an empty <code>Seq</code>. For convenience, <code>NonEmptyString</code> defines a method corresponding to every such <code>Seq</code>
   * method. Here are some examples:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * NonEmptyString(1, 2, 3).map(_ + 1)                        // Result: NonEmptyString(2, 3, 4)
@@ -105,13 +99,12 @@ import org.scalactic.Every
   * NonEmptyString(-1, -2, 3, 4, 5).minBy(_.abs)              // Result: -1
   * </pre>
   *
-  * <p>
   * <code>NonEmptyString</code> does <em>not</em> currently define any methods corresponding to <code>Seq</code> methods that could result in
   * an empty <code>Seq</code>. However, an implicit converison from <code>NonEmptyString</code> to <code>String</code>
   * is defined in the <code>NonEmptyString</code> companion object that will be applied if you attempt to call one of the missing methods. As a
   * result, you can invoke <code>filter</code> on an <code>NonEmptyString</code>, even though <code>filter</code> could result
   * in an empty sequence&mdash;but the result type will be <code>String</code> instead of <code>NonEmptyString</code>:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * NonEmptyString(1, 2, 3).filter(_ &lt; 10) // Result: String(1, 2, 3)
@@ -119,11 +112,10 @@ import org.scalactic.Every
   * </pre>
   *
   *
-  * <p>
   * You can use <code>NonEmptyString</code>s in <code>for</code> expressions. The result will be an <code>NonEmptyString</code> unless
   * you use a filter (an <code>if</code> clause). Because filters are desugared to invocations of <code>filter</code>, the
   * result type will switch to a <code>String</code> at that point. Here are some examples:
-  * </p>
+  * 
   *
   * <pre class="stREPL">
   * scala&gt; import org.scalactic.anyvals._
@@ -183,10 +175,9 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Fold left: applies a binary operator to a start value, <code>z</code>, and all elements of this <code>NonEmptyString</code>, going left to right.
     *
-    * <p>
     * Note: <code>/:</code> is alternate syntax for the <code>foldLeft</code> method; <code>z</code> <code>/:</code> <code>non-empty string</code> is the
     * same as <code>non-empty string</code> <code>foldLeft</code> <code>z</code>.
-    * </p>
+    * 
     *
     * @tparam B the result of the binary operator
     * @param z the start value
@@ -198,19 +189,17 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * op(...op(op(z, x_1), x_2), ..., x_n)
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyString</code>. 
-    * </p>
+    * 
     */
   final def /:[B](z: B)(op: (B, Char) => B): B = theString./:(z)(op)
 
   /**
     * Fold right: applies a binary operator to all elements of this <code>NonEmptyString</code> and a start value, going right to left.
     *
-    * <p>
     * Note: <code>:\</code> is alternate syntax for the <code>foldRight</code> method; <code>non-empty string</code> <code>:\</code> <code>z</code> is the same
     * as <code>non-empty string</code> <code>foldRight</code> <code>z</code>.
-    * </p>
+    * 
     *
     * @tparam B the result of the binary operator
     * @param z the start value
@@ -222,18 +211,16 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * op(x_1, op(x_2, ... op(x_n, z)...))
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyString</code>. 
-    * </p>
+    * 
     */
   final def :\[B](z: B)(op: (Char, B) => B): B = theString.:\(z)(op)
 
   /**
     * Returns a new <code>NonEmptyString</code> with the given character prepended.
     *
-    * <p>
     * Note that :-ending operators are right associative. A mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-    * </p>
+    * 
     *
     * @param c the character to prepend to this <code>NonEmptyString</code>
     * @return a new <code>NonEmptyString</code> consisting of <code>c</code> followed by all characters of this <code>NonEmptyString</code>.
@@ -243,9 +230,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Returns a new <code>NonEmptyString</code> with the given character appended.
     *
-    * <p>
     * Note a mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-    * </p>
+    * 
     *
     * @param c the character to append to this <code>NonEmptyString</code>
     * @return a new <code>NonEmptyString</code> consisting of all characters of this <code>NonEmptyString</code> followed by the given <code>c</code>.
@@ -488,9 +474,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Folds the characters of this <code>NonEmptyString</code> using the specified associative binary operator.
     *
-    * <p>
     * The order in which operations are performed on characters is unspecified and may be nondeterministic.
-    * </p>
+    * 
     *
     * @param z a neutral character for the fold operation; may be added to the result an arbitrary number of
     *     times, and must not change the result (<em>e.g.</em>, <code>Nil</code> for list concatenation,
@@ -513,9 +498,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * op(...op(op(z, x_1), x_2), ..., x_n)
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyString</code>. 
-    * </p>
+    * 
     */
   final def foldLeft[B](z: B)(op: (B, Char) => B): B = theString.foldLeft(z)(op)
 
@@ -532,9 +516,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * op(x_1, op(x_2, ... op(x_n, z)...))
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyString</code>. 
-    * </p>
+    * 
     */
   final def foldRight[B](z: B)(op: (Char, B) => B): B = theString.foldRight(z)(op)
 
@@ -564,9 +547,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * (nonEmptyString.toString partition f)(k) = xs filter (x =&gt; f(x) == k)
     * </pre>
     *
-    * <p>
     * That is, every key <code>k</code> is bound to a <code>NonEmptyString</code> of those elements <code>x</code> for which <code>f(x)</code> equals <code>k</code>.
-    * </p>
+    * 
     */
   final def groupBy[K](f: Char => K): Map[K, NonEmptyString] = {
     val mapKToString = theString.groupBy(f)
@@ -851,9 +833,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * The length of this <code>NonEmptyString</code>.
     *
-    * <p>
     * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-    * </p>
+    * 
     *
     * @return the number of characters in this <code>NonEmptyString</code>.
     */
@@ -977,9 +958,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Iterates over distinct permutations. 
     *
-    * <p>
     * Here's an example:
-    * </p>
+    * 
     *
     * <pre class="stHighlight">
     * NonEmptyString("abb").permutations.toList == list(NonEmptyString("abb"), NonEmptyString("bab"), NonEmptyString("bba"))
@@ -1004,9 +984,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * The result of multiplying all the characters of this <code>NonEmptyString</code>.
     *
-    * <p>
     * This method can be invoked for any <code>NonEmptyString</code> for which an implicit <code>Numeric[T]</code> exists.
-    * </p>
+    * 
     *
     * @return the product of all elements
     */
@@ -1015,9 +994,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Reduces the elements of this <code>NonEmptyString</code> using the specified associative binary operator.
     *
-    * <p>
     * The order in which operations are performed on characters is unspecified and may be nondeterministic.
-    * </p>
+    * 
     *
     * @param op a binary operator that must be associative.
     * @return the result of applying reduce operator <code>op</code> between all the characters of this <code>NonEmptyString</code>.
@@ -1034,9 +1012,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * op(...op(op(x_1, x_2), x_3), ..., x_n)
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the characters of this <code>NonEmptyString</code>.
-    * </p>
+    * 
     */
   final def reduceLeft(op: (Char, Char) => Char): Char = theString.reduceLeft(op)
 
@@ -1045,7 +1022,7 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     *
     * @param op the binary operator.
     * @return a <code>Some</code> containing the result of <code>reduceLeft(op)</code>
-    * </p>
+    * 
     */
   final def reduceLeftOption(op: (Char, Char) => Char): Option[Char] = theString.reduceLeftOption(op)
 
@@ -1061,9 +1038,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
     * op(x_1, op(x_2, ... op(x_{n-1}, x_n)...))
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyString</code>. 
-    * </p>
+    * 
     */
   final def reduceRight(op: (Char, Char) => Char): Char = theString.reduceRight(op)
 
@@ -1086,9 +1062,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * An iterator yielding characters in reverse order.
     *
-    * <p>
     * Note: <code>nonEmptyString.reverseIterator</code> is the same as <code>nonEmptyString.reverse.iterator</code>, but might be more efficient. 
-    * </p>
+    * 
     *
     * @return an iterator yielding the characters of this <code>NonEmptyString</code> in reversed order
     */
@@ -1097,9 +1072,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Builds a new <code>GenIterable</code> by applying a function to all characters of this <code>NonEmptyString</code> and collecting the results in reverse order.
     *
-    * <p>
     * Note: <code>nonEmptyString.reverseMap(f)</code> is the same as <code>nonEmptyString.reverse.map(f)</code>, but might be more efficient. 
-    * </p>
+    * 
     *
     * @tparam U the element type of the returned <code>GenIterable</code>.
     * @param f the function to apply to each character.
@@ -1138,13 +1112,11 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Computes a prefix scan of the characters of this <code>NonEmptyString</code>.
     *
-    * <p>
     * Note: The neutral character z may be applied more than once.
-    * </p>
+    * 
     *
-    * <p>
     * Here are some examples:
-    * </p>
+    * 
     *
     * <pre class="stHighlight">
     * NonEmptyString("123").scan(0)(_ + _) == NonEmptyString(0, 1, 3, 6)
@@ -1162,9 +1134,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Produces a <code>NonEmptyString</code> containing cumulative results of applying the operator going left to right.
     *
-    * <p>
     * Here are some examples:
-    * </p>
+    * 
     *
     * <pre class="stHighlight">
     * NonEmptyString("123").scanLeft(0)(_ + _.toString.toInt) == Vector(0, 1, 3, 6)
@@ -1182,9 +1153,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Produces a <code>NonEmptyString</code> containing cumulative results of applying the operator going right to left.
     *
-    * <p>
     * Here are some examples:
-    * </p>
+    * 
     *
     * <pre class="stHighlight">
     * NonEmptyString("123").scanRight(0)(_.toString.toInt + _) == NonEmptyString(6, 5, 3, 0)
@@ -1232,9 +1202,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * The size of this <code>NonEmptyString</code>.
     *
-    * <p>
     * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-    * </p>
+    * 
     *
     * @return the number of characters in this <code>NonEmptyString</code>.
     */
@@ -1254,10 +1223,9 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Sorts this <code>NonEmptyString</code> according to a comparison function.
     *
-    * <p>
     * The sort is stable. That is, characters that are equal (as determined by <code>lt</code>) appear in the same order in the
     * sorted <code>NonEmptyString</code> as in the original. 
-    * </p>
+    * 
     *
     * @param lt the comparison function that tests whether its first argument precedes its second argument in the desired ordering.
     * @return a <code>NonEmptyString</code> consisting of the elements of this <code>NonEmptyString</code> sorted according to the comparison function <code>lt</code>.
@@ -1267,10 +1235,9 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Sorts this <code>NonEmptyString</code> according to an <code>Ordering</code>.
     *
-    * <p>
     * The sort is stable. That is, elements that are equal (as determined by <code>lt</code>) appear in the same order in the
     * sorted <code>NonEmptyString</code> as in the original. 
-    * </p>
+    * 
     *
     * @param ord the <code>Ordering</code> to be used to compare elements.
     * @return a <code>NonEmptyString</code> consisting of the characters of this <code>NonEmptyString</code> sorted according to the ordering defined by <code>ord</code>.
@@ -1338,9 +1305,8 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * The result of summing all the characters of this <code>NonEmptyString</code>.
     *
-    * <p>
     * This method can be invoked for any <code>NonEmptyString</code> for which an implicit <code>Numeric[Char]</code> exists.
-    * </p>
+    * 
     *
     * @return the sum of all elements
     */
@@ -1401,10 +1367,9 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Converts this <code>NonEmptyString</code> to a map.
     *
-    * <p>
     * This method is unavailable unless the elements are members of <code>Tuple2</code>, each <code>((K, V))</code> becoming a key-value pair
     * in the map. Duplicate keys will be overwritten by later keys.
-    * </p>
+    * 
     *
     * @return a map of type <code>immutable.Map[Int, Char]</code> containing all index/character pairs of type <code>(Int, Char)</code> of this <code>NonEmptyString</code>.
     */
@@ -1449,15 +1414,13 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Produces a new <code>NonEmptyString</code> that contains all characters of this <code>NonEmptyString</code> and also all characters of a given <code>Every</code>.
     *
-    * <p>
     * <code>nonEmptyStringX</code> <code>union</code> <code>everyY</code> is equivalent to <code>nonEmptyStringX</code> <code>++</code> <code>everyY</code>.
-    * </p>
+    * 
     *
-    * <p>
     * Another way to express this is that <code>nonEmptyStringX</code> <code>union</code> <code>everyY</code> computes the order-presevring multi-set union
     * of <code>nonEmptyStringX</code> and <code>everyY</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
     * also work on multi-sets.
-    * </p>
+    * 
     *
     * @param that the <code>Every</code> to add.
     * @return a new <code>NonEmptyString</code> that contains all characters of this <code>NonEmptyString</code> followed by all characters of <code>that</code> <code>Every</code>.
@@ -1467,15 +1430,13 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Produces a new <code>NonEmptyString</code> that contains all characters of this <code>NonEmptyString</code> and also all characters of a given <code>NonEmptyString</code>.
     *
-    * <p>
     * <code>nonEmptyStringX</code> <code>union</code> <code>nonEmptyStringY</code> is equivalent to <code>nonEmptyStringX</code> <code>++</code> <code>nonEmptyStringY</code>.
-    * </p>
+    * 
     *
-    * <p>
     * Another way to express this is that <code>nonEmptyStringX</code> <code>union</code> <code>nonEmptyStringY</code> computes the order-presevring multi-set union
     * of <code>nonEmptyStringX</code> and <code>nonEmptyStringY</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
     * also work on multi-sets.
-    * </p>
+    * 
     *
     * @param that the <code>NonEmptyString</code> to add.
     * @return a new <code>NonEmptyString</code> that contains all elements of this <code>NonEmptyString</code> followed by all characters of <code>that</code>.
@@ -1485,15 +1446,13 @@ final class NonEmptyString private (val theString: String) extends AnyVal {
   /**
     * Produces a new <code>NonEmptyString</code> that contains all characters of this <code>NonEmptyString</code> and also all characters of a given <code>GenSeq</code>.
     *
-    * <p>
     * <code>nonEmptyStringX</code> <code>union</code> <code>ys</code> is equivalent to <code>nonEmptyStringX</code> <code>++</code> <code>ys</code>.
-    * </p>
+    * 
     *
-    * <p>
     * Another way to express this is that <code>nonEmptyStringX</code> <code>union</code> <code>ys</code> computes the order-presevring multi-set union
     * of <code>nonEmptyStringX</code> and <code>ys</code>. This <code>union</code> method is hence a counter-part of <code>diff</code> and <code>intersect</code> that
     * also work on multi-sets.
-    * </p>
+    * 
     *
     * @param that the <code>GenSeq</code> to add.
     * @return a new <code>NonEmptyString</code> that contains all elements of this <code>NonEmptyString</code> followed by all elements of <code>that</code> <code>GenSeq</code>.
@@ -1634,10 +1593,9 @@ object NonEmptyString {
   /**
     * Implicit conversion from <code>NonEmptyString</code> to <code>GenTraversableOnce[Char]</code>.
     *
-    * <p>
     * One use case for this implicit conversion is to enable <code>GenSeq[NonEmptyString]</code>s to be flattened.
     * Here's an example:
-    * </p>
+    * 
     *
     * <pre class="stREPL">
     * scala&gt; Vector(NonEmptyString("123"), NonEmptyString("34"), NonEmptyString("5678")).flatten

@@ -21,13 +21,12 @@ import org.scalatest._
  * Trait that when mixed into a <code>fixture.Suite</code> passes
  * the unit value as a fixture into each test.
  *
- * <p>
  * Since a unit value is unlikely to be of much use to a test, this trait is useful
  * when the unit value fixture is actually never passed into any tests. Instead
  * each test in the <a href="Suite.html"><code>fixture.Suite</code></a> is defined as a <em>no-arg</em> function; no tests are defined as one-arg functions.
  * This should be quite rare, but occasionally can be useful.
  * For an example, see the main documentation for trait <a href="NoArg.html"><code>NoArg</code></a>.
- * </p>
+ * 
 */
 trait UnitFixture { this: fixture.TestSuite =>
 
@@ -39,11 +38,10 @@ trait UnitFixture { this: fixture.TestSuite =>
   /**
    * Invoke the test function, passing <code>()</code>, the unit value, to the the test function.
    *
-   * <p>
    * To enable stacking of traits that define <code>withFixture(NoArgTest)</code>, this method does not
    * invoke the test function directly. Instead, it delegates responsibility for invoking the test function
    * to <code>withFixture(NoArgTest)</code>.
-   * </p>
+   * 
    *
    * @param test the <code>OneArgTest</code> to invoke, passing in the unit value
    * @return an <code>Outcome</code> instance

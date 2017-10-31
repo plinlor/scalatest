@@ -20,7 +20,6 @@ import org.scalactic.source
 /**
  * Trait providing an <code>apply</code> method to which alert messages about a running suite of tests can be reported.
  * 
- * <p>
  * An <code>Alerter</code> is essentially
  * used to wrap a <code>Reporter</code> and provide easy ways to send alert messages
  * to that <code>Reporter</code> via an <code>AlertProvided</code> event.
@@ -29,12 +28,11 @@ import org.scalactic.source
  * The <code>Alerter</code> will forward the passed alert <code>message</code> string to the
  * <a href="Reporter.html"><code>Reporter</code></a> as the <code>message</code> parameter, and the optional
  * payload object as the <code>payload</code> parameter, of an <a href="AlertProvided.html"><code>AlertProvided</code></a> event.
- * </p>
+ * 
  *
- * <p>
  * For insight into the differences between <code>Alerter</code>, <code>Notifier</code>, and <code>Informer</code>, see the
  * main documentation for trait <a href="Alerting.html"><code>Alerting</code></a>.
- * </p>
+ * 
  */
 trait Alerter {
 

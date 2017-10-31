@@ -57,10 +57,9 @@ trait Timed[T] {
  * Companion object for <code>Timed</code> typeclass that offers three implicit providers: one for <code>FutureOutcome</code>,
  * one for <code>Future</code> of any type, and one for any other type.
  *
- * <p>
  * The details are in the documentation for the implicit providers themselves (methods <code>timed</code>, <code>timedFutureOf</code>,
  * and <code>timedFutureOutcome</code>), but in short if a time limit is exceeded:
- * </p>
+ * 
  *
  * <ul>
  * <li>if the type <code>T</code> in <code>Timed[T]</code> is <code>FutureOutcome</code>
@@ -69,7 +68,7 @@ trait Timed[T] {
  * <code>TestFailedDueToTimeoutException</code> or a <code>TestCanceledException</code>.</li>
  * <li>otherwise, the <code>timeoutAfter</code> method will itself complete abruptly with either <code>TestFailedDueToTimeoutException</code>
  * or <code>TestCanceledException.</li>
- * </p>
+ * 
  */
 object Timed {
 
@@ -88,27 +87,24 @@ below:
   /**
    * Implicit method that provides <code>Timed</code> implementation for any <code>T</code>.
    *
-   * <p>
    * If the function completes <em>before</em> the timeout expires:
-   * </p>
+   * 
    *
    * <ul>
    * <li>If the function returns normally, this method will return normally.</li>
    * <li>If the function completes abruptly with an exception, this method will complete abruptly with that same exception.</li>
    * </ul>
    *
-   * <p>
    * If the function completes <em>after</em> the timeout expires:
-   * </p>
+   * 
    *
    * <ul>
    * <li>If the function returns normally, this method will complete abruptly with a <code>StackDepthException</code> created from <code>exceptionFun</code>.</li>
    * <li>If the function completes abruptly with an exception, this method will complete abruptly with a <code>StackDepthException</code> created from <code>exceptionFun</code> that includes the exception thrown by the function as its cause.</li>
    * </ul>
    *
-   * <p>
    * This implementation will start a timer that when the time limit is exceeded while the passed in function <code>f</code> is still running, it will attempt to call the passed in <code>Signaler</code> to signal/interrupt the running function <code>f</code>.
-   * </p>
+   * 
    */
   implicit def timed[T]: Timed[T] =
     new Timed[T] {
@@ -158,27 +154,24 @@ below:
   /**
    * Implicit method that provides <code>Timed</code> implementation for any <code>Future[T]</code>.
    *
-   * <p>
     * If the asynchronous function completes <em>before</em> the timeout expires:
-    * </p>
+    * 
     *
     * <ul>
     * <li>If the function returns normally, the <code>Future</code> will be completed with the return value of the function.</li>
     * <li>If the function completes abruptly with an exception, this method will complete the <code>Future</code> with that same exception.</li>
     * </ul>
     *
-    * <p>
     * If the asynchronous function completes <em>after</em> the timeout expires:
-    * </p>
+    * 
     *
     * <ul>
     * <li>If the function returns normally, this method will complete the <code>Future</code> with a <code>StackDepthException</code> created from <code>exceptionFun</code>.</li>
     * <li>If the function completes abruptly with an exception, this method will complete the <code>Future</code> with a <code>StackDepthException</code> created from <code>exceptionFun</code> that includes the exception thrown by the function as its cause.</li>
     * </ul>
    *
-   * <p>
    * This implementation will start a timer that when the time limit is exceeded while the passed in asynchronous function <code>f</code> is still running, it will attempt to call the passed in <code>Signaler</code> to signal/interrupt the running function <code>f</code>.
-   * </p>
+   * 
    */
   implicit def timedFutureOf[T](implicit executionContext: ExecutionContext): Timed[Future[T]] =
     new Timed[Future[T]] {
@@ -259,9 +252,8 @@ below:
   /**
     * Implicit method that provides <code>Timed</code> implementation for <code>FutureOutcome</code>.
     *
-    * <p>
     * If the asynchronous function completes <em>before</em> the timeout expires:
-    * </p>
+    * 
     *
     * <ul>
     * <li>If the function returns normally, the <code>FutureOutcome</code> will be completed with the <code>Outcome</code> returned from the function.</li>
@@ -271,18 +263,16 @@ below:
     * <li>If the function completes abruptly with a non-run-aborting exception, this method will fail the <code>FutureOutcome</code> with <code>ExecutionException</code> that contains the thrown exception.</li>
     * </ul>
     *
-    * <p>
     * If the asynchronous function completes <em>after</em> the timeout expires:
-    * </p>
+    * 
     *
     * <ul>
     * <li>If the function returns normally, this method will complete the <code>FutureOutcome</code> with a <code>Outcome</code> that's mapped from the exception thrown from <code>exceptionFun</code>.</li>
     * <li>If the function completes abruptly with an exception, this method will complete the <code>FutureOutcome</code> with <code>Outcome</code> that's mapped from the exception thrown from <code>exceptionFun</code> that includes the exception thrown by the function as its cause.</li>
     * </ul>
     *
-    * <p>
     * This implementation will start a timer that when the time limit is exceeded while the passed in asynchronous function <code>f</code> is still running, it will attempt to call the passed in <code>Signaler</code> to signal/interrupt the running function <code>f</code>.
-    * </p>
+    * 
     */
   implicit def timedFutureOutcome(implicit executionContext: ExecutionContext): Timed[FutureOutcome] =
     new Timed[FutureOutcome] {

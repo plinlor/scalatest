@@ -39,12 +39,11 @@ import scala.collection.mutable.HashSet
 /**
  * A <code>Suite</code> that is also a <code>junit.framework.TestCase</code>. 
  *
- * <p>
  * A <code>JUnit3Suite</code> may be run by either JUnit 3 (such as JUnit 3.8) or ScalaTest's runner. You write it the way
  * you write a JUnit 3 <code>TestCase</code>. Tests are methods that start with <code>test</code>, take no parameters, and
  * have a <code>Unit</code> return type. You manage fixtures with methods <code>setUp</code> and <code>tearDown</code>.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.junit.JUnit3Suite
@@ -75,14 +74,12 @@ import scala.collection.mutable.HashSet
  * }
  * </pre>
  * 
- * <p>
  * You can use either JUnit's assertions, inherited from <code>TestCase</code>, or ScalaTest's, inherited from <code>AssertionsForJUnit</code>.
- * </p>
+ * 
  *
- * <p>
  * When writing JUnit 3 tests in Scala, you should keep in mind that JUnit 3 will not run tests that have a return type other than
  * <code>Unit</code>. Thus it is best to explicitly state the <code>Unit</code> result type, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * def testGoodIdea(): Unit = { // result type will be Unit
@@ -90,9 +87,8 @@ import scala.collection.mutable.HashSet
  * }
  * </pre>
  *
- * <p>
  * Instead of this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * def testBadIdea() = { // result type will be inferred
@@ -100,11 +96,10 @@ import scala.collection.mutable.HashSet
  * }
  * </pre>
  *
- * <p>
  * If the <code>testBadIdea</code> method ends in an expression that has a result type other than <code>Unit</code>, the Scala
  * compiler will infer a result type to the <code>testBadIdea</code> method to be the same non-<code>Unit</code> type. As a "result,"
  * JUnit 3 will not discover or run the <code>testBadIdea</code> method at all.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -117,12 +112,11 @@ class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuit
    * Returns the set of test names that will be executed by JUnit when <code>run</code> is invoked
    * on an instance of this class, or the instance is passed directly to JUnit for running.
    *
-   * <p>
    * The iterator obtained by invoking <code>elements</code> on this
    * returned <code>Set</code> will produce the test names in their <em>natural order</em>, as determined by <code>String</code>'s
    * <code>compareTo</code> method. Nevertheless, this method is not consulted by JUnit when it
    * runs the tests, and JUnit may run the tests in any order.
-   * </p>
+   * 
    */
   override def testNames: Set[String] = {
 
@@ -158,11 +152,10 @@ class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuit
    * Returns the number of tests expected to be run by JUnit when <code>run</code> is invoked
    * on this <code>Suite</code>.
    *
-   * <p>
    * If <code>tagsToInclude</code> in the passed <code>Filter</code> is defined, this class's
    * implementation of this method returns 0. Else this class's implementation of this method
    * returns the size of the set returned by <code>testNames</code> on the current instance.
-   * </p>
+   * 
    */
   override def expectedTestCount(filter: Filter) =
     if (filter.tagsToInclude.isDefined) 0 else testNames.size
@@ -172,12 +165,11 @@ class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuit
    * class, given this class's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
    * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param args the <code>Args</code> for this run
    *
@@ -193,12 +185,11 @@ class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuit
    * class, given this class's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTests</code>. Because this
    * trait does not actually use <code>runTests</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -215,12 +206,11 @@ class JUnit3Suite extends TestCase with Suite with AssertionsForJUnit { thisSuit
    * class, given this class's <code>run</code> method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
    * to mix in a trait that overrides <code>runTest</code>. Because this
    * trait does not actually use <code>runTest</code>, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
    * @param args the <code>Args</code> for this run

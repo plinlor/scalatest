@@ -30,19 +30,17 @@ import words.BehaveWord
  * in which tests are nested inside text clauses denoted with the dash
  * operator (<code>-</code>).
  *
- * <p>
  * <a href="AsyncFreeSpec.html"><code>AsyncFreeSpec</code></a> is a class, not a trait,
  * to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
  * behavior of <code>AsyncFreeSpec</code> into some other class, you can use this
  * trait instead, because class <code>AsyncFreeSpec</code> does nothing more than
  * extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="AsyncFreeSpec.html">detailed
  * overview of <code>AsyncFreeSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -176,10 +174,9 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
   /**
    * Class that supports the registration of tagged tests.
    *
-   * <p>
    * Instances of this class are returned by the <code>taggedAs</code> method of
    * class <code>FreeSpecStringWrapper</code>.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -188,18 +185,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports tagged test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def in(testFun: => Future[compatible.Assertion]): Unit = {
       registerTestToRun(specText, tags, testFun _, pos)
@@ -208,18 +203,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports registration of tagged, pending tests.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) is (pending)
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def is(testFun: => PendingStatement): Unit = {
       registerPendingTestToRun(specText, tags, testFun _, pos)
@@ -228,18 +221,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports registration of tagged, ignored tests.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) ignore { ... }
      *                                       ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def ignore(testFun: => Future[compatible.Assertion]): Unit = {
       registerTestToIgnore(specText, tags, "ignore", testFun _, pos)
@@ -279,18 +270,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" in { ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def in(f: => Future[compatible.Assertion]): Unit = {
       registerTestToRun(string, List(), f _, pos)
@@ -299,18 +288,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports ignored test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" ignore { ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def ignore(f: => Future[compatible.Assertion]): Unit = {
       registerTestToIgnore(string, List(), "ignore", f _, pos)
@@ -319,18 +306,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports pending test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" is (pending)
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def is(f: => PendingStatement): Unit = {
       registerPendingTestToRun(string, List(), f _, pos)
@@ -339,18 +324,16 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
     /**
      * Supports tagged test registration.
      *
-     * <p>
      * For example, this method supports syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * "complain on peek" taggedAs(SlowTest) in { ... }
      *                    ^
      * </pre>
      *
-     * <p>
      * For more information and examples of this method's use, see the <a href="FreeSpec.html">main documentation</a> for trait <code>FreeSpec</code>.
-     * </p>
+     * 
      */
     def taggedAs(firstTestTag: Tag, otherTestTags: Tag*): ResultOfTaggedAsInvocationOnString = {
       val tagList = firstTestTag :: otherTestTags.toList
@@ -371,16 +354,14 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
    * A <code>Map</code> whose keys are <code>String</code> names of tagged tests and whose associated values are
    * the <code>Set</code> of tags for the test. If this <code>FreeSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
    * <code>taggedAs</code>.
-   * </p>
+   * 
    *
-   * <p>
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
@@ -422,11 +403,10 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
   /**
    * Run zero to many of this <code>FreeSpec</code>'s tests.
    *
-   * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
    * If <code>testName</code> is <code>Some</code>, this trait's implementation of this method
    * invokes <code>runTest</code> on this object, passing in:
-   * </p>
+   * 
    *
    * <ul>
    * <li><code>testName</code> - the <code>String</code> value of the <code>testName</code> <code>Option</code> passed
@@ -436,7 +416,6 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
    * <li><code>configMap</code> - the <code>configMap</code> passed to this method, or one that wraps and delegates to it</li>
    * </ul>
    *
-   * <p>
    * This method takes a <code>Set</code> of tag names that should be included (<code>tagsToInclude</code>), and a <code>Set</code>
    * that should be excluded (<code>tagsToExclude</code>), when deciding which of this <code>Suite</code>'s tests to execute.
    * If <code>tagsToInclude</code> is empty, all tests will be executed
@@ -445,9 +424,8 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
    * will be executed. However, if <code>testName</code> is <code>Some</code>, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
    * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
    * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. For more information on trait tags, see the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially execute.
    * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
@@ -456,7 +434,7 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
    * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
    * of this method checks whether the test should be run based on the <code>tagsToInclude</code> and <code>tagsToExclude</code> <code>Set</code>s.
    * If so, this implementation invokes <code>runTest</code>, passing in:
-   * </p>
+   * 
    *
    * <ul>
    * <li><code>testName</code> - the <code>String</code> name of the test to run (which will be one of the names in the <code>testNames</code> <code>Set</code>)</li>
@@ -482,12 +460,11 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
    * An immutable <code>Set</code> of test names. If this <code>FreeSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space. For example, consider this <code>FreeSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.FreeSpec
@@ -504,10 +481,9 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
    * }
    * </pre>
    *
-   * <p>
    * Invoking <code>testNames</code> on this <code>FreeSpec</code> will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
    * <pre>
    * "A Stack when not empty must allow me to pop"
@@ -525,19 +501,17 @@ trait AsyncFreeSpecLike extends AsyncTestSuite with AsyncTestRegistration with I
   /**
    * Supports shared test registration in <code>FreeSpec</code>s.
    *
-   * <p>
    * This field enables syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * behave like nonFullStack(stackWithOneItem)
    * ^
    * </pre>
    *
-   * <p>
    * For more information and examples of the use of <cod>behave</code>, see the <a href="#sharedTests">Shared tests section</a>
    * in the main documentation for this trait.
-   * </p>
+   * 
    */
   protected val behave = new BehaveWord
 

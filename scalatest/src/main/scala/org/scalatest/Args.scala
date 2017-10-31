@@ -21,9 +21,8 @@ import org.scalactic.Requirements._
  * Arguments bundle passed to four of ScalaTest's lifecycle methods: <code>run</code>, <code>runNestedSuites</code>,
  * <code>runTests</code>, and <code>runTest</code>.
  *
- * <p>
  * The signatures of these methods, defined in trait <a href="Suite.html"><code>Suite</code></a>, are:
- * </p>
+ * 
  *
  * <pre>
  * def run(testName: Option[String], args: Args)
@@ -32,10 +31,9 @@ import org.scalactic.Requirements._
  * def runTest(testName: String, args: Args)
  * </pre>
  *
- * <p>
  * The purpose of bundling these arguments into an <code>Args</code> object instead of passing them in individually is to make the signature
  * of these four lifecycle methods easier to read, write, and remember, as well as to make the methods more pleasant to override in user code.
- * </p>
+ * 
  * 
  * @param reporter the <code>Reporter</code> to which results will be reported
  * @param stopper the <code>Stopper</code> that will be consulted to determine whether to stop execution early.

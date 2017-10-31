@@ -55,14 +55,12 @@ package org.scalatest.junit;
  * }
  * </pre>
  *
- * <p>
  * To execute <code>JUnitSuite</code>s with ScalaTest's <code>Runner</code>, you must include JUnit's jar file on the class path or runpath.
  * This version of <code>JUnitSuite</code> was tested with JUnit version 4.10.
- * </p>
+ * 
  *
- * <p>
  * Instances of this class are not thread safe.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Daniel Watson

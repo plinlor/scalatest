@@ -23,16 +23,14 @@ import org.apache.tools.ant.AntClassLoader
 import org.apache.tools.ant.taskdefs.Java
 
 /**
- * <p>
  * An ant task to run ScalaTest. Instructions on how to specify various
  * options are below.  See the main documentation for object <a href="Runner$.html"><code>Runner</code></a> class for a description
  * of what each of the options does.
- * </p>
+ * 
  *
- * <p>
  * To use the ScalaTest ant task, you must first define it in your ant file using <code>taskdef</code>.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre>
  *  &lt;path id="scalatest.classpath"&gt;
@@ -51,11 +49,10 @@ import org.apache.tools.ant.taskdefs.Java
  *  &lt;/target&gt;
  * </pre>
  *
- * <p>
  * Note that you only need the <code>scala-actors.jar</code> if you are using ScalaTest version 1.9.1 or earlier
  * with Scala 2.10 or later.
  * Once defined, you use the task by specifying information in a <code>scalatest</code> element:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest ...&gt;
@@ -63,10 +60,9 @@ import org.apache.tools.ant.taskdefs.Java
  *   &lt;/scalatest&gt;
  * </pre>
  *
- * <p>
  * You can place key value pairs into the <a href="Runner$.html#configMapSection">config map</a> using nested <code>&lt;config&gt;</code> elements,
  * like this:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
@@ -74,18 +70,16 @@ import org.apache.tools.ant.taskdefs.Java
  *     &lt;config name="server" value="192.168.1.188"/&gt;
  * </pre>
  *
- * <p>
  * You can specify a <a href="Runner$.html#specifyingARunpath">runpath</a> using either a <code>runpath</code> attribute and/or nested
  * <code>&lt;runpath&gt;</code> elements, using standard ant path notation:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest runpath="serviceuitest-1.1beta4.jar:myjini"&gt;
  * </pre>
  *
- * <p>
  * or
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
@@ -95,20 +89,18 @@ import org.apache.tools.ant.taskdefs.Java
  *     &lt;/runpath&gt;
  * </pre>
  *
- * <p>
  * To add a URL to your runpath, use a <code>&lt;runpathurl&gt;</code> element
  * (since ant paths don't support URLs):
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
  *     &lt;runpathurl url="http://foo.com/bar.jar"/&gt;
  * </pre>
  *
- * <p>
  * You can specify <a href="Runner$.html#specifyingReporters">reporters</a> using nested <code>&lt;reporter&gt;</code> elements, where the <code>type</code>
  * attribute must be one of the following:
- * </p>
+ * 
  *
  * <ul>
  *   <li>  <code>graphic</code>          </li>
@@ -121,11 +113,10 @@ import org.apache.tools.ant.taskdefs.Java
  *   <li>  <code>reporterclass</code>    </li>
  * </ul>
  *
- * <p>
  * Each may include a <code>config</code> attribute to specify the <a href="Runner$.html#configuringReporters">reporter configuration</a>.
  * Types <code>file</code>, <code>memory</code>, <code>junitxml</code>, <code>html</code>, and <code>reporterclass</code>
  * require additional attributes (the css attribute is optional for the html reporter):
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
@@ -137,10 +128,9 @@ import org.apache.tools.ant.taskdefs.Java
  *     &lt;reporter type="reporterclass" classname="my.ReporterClass"/&gt;
  * </pre>
  *
- * <p>
  * Specify <a href="Runner$.html#specifyingTagsToIncludeAndExclude">tags to include and/or exclude</a> using <code>&lt;tagsToInclude&gt;</code> and
  * <code>&lt;tagsToExclude&gt;</code> elements, like this:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
@@ -155,34 +145,30 @@ import org.apache.tools.ant.taskdefs.Java
  *     &lt;/tagsToExclude&gt;
  * </pre>
  *
- * <p>
  * Tags to include or exclude can also be specified using attributes
  * tagsToInclude and tagsToExclude, with arguments specified as whitespace-
  * delimited lists.
- * </p>
+ * 
  *
- * <p>
  * To specify <a href="Runner$.html#selectingSuitesAndTests">suites to run</a>, use either a <code>suite</code> attribute or nested
  * <code>&lt;suite&gt;</code> elements:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest suite="com.artima.serviceuitest.ServiceUITestkit"&gt;
  * </pre>
  *
- * <p>
  * or
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
  *     &lt;suite classname="com.artima.serviceuitest.ServiceUITestkit"/&gt;
  * </pre>
  *
- * <p>
  * To specify <a href="Runner$.html#selectingSuitesAndTests">tests to run</a>, use nested <code>&lt;test&gt;</code> elements with
  * either a 'name' or 'substring' attribute:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
@@ -190,27 +176,24 @@ import org.apache.tools.ant.taskdefs.Java
  *     &lt;test substring="hello"/&gt;
  * </pre>
  *
- * <p>
  * To specify suites using <a href="Runner$.html#membersOnlyWildcard">members-only or wildcard</a> package names, use
  * either the <code>membersonly</code> or <code>wildcard</code> attributes, or nested
  * <code>&lt;membersonly&gt;</code> or <code>&lt;wildcard&gt;</code> elements:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest membersonly="com.artima.serviceuitest"&gt;
  * </pre>
  *
- * <p>
  * or
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest wildcard="com.artima.joker"&gt;
  * </pre>
  *
- * <p>
  * or
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
@@ -218,73 +201,65 @@ import org.apache.tools.ant.taskdefs.Java
  *     &lt;wildcard package="com.artima.joker"/&gt;
  * </pre>
  *
- * <p>
  * Use attribute <code>suffixes="[pipe-delimited list of suffixes]"</code>
  * to specify that only classes whose names end in one of the specified <a href="Runner$.html#specifyingSuffixesToDiscover">suffixes</a>
  * should be included in discovery searches for Suites to test.  This can
  * be used to improve discovery time or to limit the scope of a test. E.g.:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest suffixes="Spec|Suite"&gt;
  * </pre>
  *
- * <p>
  * Use attribute <code>testsfile="[file name]"</code> or nested
  * <testsfile> elements to specify files containing a list of
  * tests to be run.  This is used to rerun failed/canceled tests
  * listed in files written by the memory reporter.  E.g.:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest testsfile="target/memory.out"&gt;
  * </pre>
  *
- * <p>
  * or
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest&gt;
  *     &lt;testsfile filename="target/memory.out"/&gt;
  * </pre>
  *
- * <p>
  * Use attribute <code>parallel="true"</code> to specify <a href="Runner$.html#executingSuitesInParallel">parallel execution</a> of suites.
  * (If the <code>parallel</code> attribute is left out or set to false, suites will be executed sequentially by one thread.)
  * When <code>parallel</code> is true, you can include an optional <code>sortSuites</code> attribute to request that events be sorted on-the-fly so that
  * events for the same suite are reported together, with a timeout, (<em>e.g.</em>, <code>sortSuites="true"</code>),
  * and an optional <code>numthreads</code> attribute to specify the number
  * of threads to be created in thread pool (<em>e.g.</em>, <code>numthreads="10"</code>).
- * </p>
+ * 
  *
- * <p>
  * Use attribute <code>haltonfailure="true"</code> to cause ant to fail the
  * build if there's a test failure.
- * </p>
+ * 
  *
- * <p>
  * Use attribute <code>fork="true"</code> to cause ant to run the tests in
  * a separate process.
- * </p>
+ * 
  *
- * <p>
  * When <code>fork</code> is <code>true</code>, attribute <code>maxmemory</code> may be used to specify
  * the maximum memory size that will be passed to the forked jvm.&nbsp; For example, the following setting
  * will cause <code>"-Xmx1280M"</code> to be passed to the java command used to
  * run the tests.
- * </p>
+ * 
  *
  * <pre>
  *   &lt;scalatest maxmemory="1280M"&gt;
  * </pre>
  *
- * <p>
  * When <code>fork</code> is true, nested <code>&lt;jvmarg&gt;</code> elements may be used
  * to pass additional arguments to the forked jvm.
  * For example, if you are running into 'PermGen space' memory errors,
  * you could add the following <code>jvmarg</code> to bump up the JVM's <code>MaxPermSize</code> value:
- * </p>
+ * 
  *
  * <pre>
  *   &lt;jvmarg value="-XX:MaxPermSize=128m"/&gt;

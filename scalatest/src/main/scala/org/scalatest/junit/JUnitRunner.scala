@@ -44,10 +44,9 @@ import org.junit.runner.Description
  * }
  * </pre>
  *
- * <p>
  * This <code>RunWith</code> annotation will enable the <code>MySuite</code> class
  * to be run by JUnit 4.
- * </p>
+ * 
  *
  * @param suiteClass suite class to be run
  *

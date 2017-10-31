@@ -31,15 +31,13 @@ import org.scalactic.{source, Prettifier}
  * Implementation trait for class <code>RefSpec</code>, which facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD), in which tests
  * are methods, optionally nested inside singleton objects defining textual scopes.
  * 
- * <p>
  * <a href="RefSpec.html"><code>RefSpec</code></a> is a class, not a trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the behavior of <code>RefSpec</code>
  * into some other class, you can use this trait instead, because class <code>RefSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="RefSpec.html">detailed overview of <code>RefSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -212,12 +210,11 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
    * An immutable <code>Set</code> of test names. If this <code>RefSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space. For example, consider this <code>RefSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.RefSpec
@@ -234,10 +231,9 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
    * }
    * </pre>
    *
-   * <p>
    * Invoking <code>testNames</code> on this <code>RefSpec</code> will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
    * <pre class="stExamples">
    * "A Stack (when not empty) must allow me to pop"
@@ -297,18 +293,16 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
    * A <code>Map</code> whose keys are <code>String</code> names of tagged tests and whose associated values are
    * the <code>Set</code> of tags for the test. If this <code>RefSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation of this method uses Java reflection to discover any Java annotations attached to its test methods. The
    * fully qualified name of each unique annotation that extends <code>TagAnnotation</code> is considered a tag. This trait's
    * implementation of this method, therefore, places one key/value pair into to the
    * <code>Map</code> for each test for which a tag annotation is discovered through reflection.
-   * </p>
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = {
     ensureScopesAndTestsRegistered()

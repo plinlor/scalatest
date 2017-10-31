@@ -26,11 +26,10 @@ import exceptions.ValidationFailedException
  * passes all the functions, or [[org.scalactic.exceptions.ValidationFailedException `ValidationFailedException`]] containing an error message
  * describing the first validation that failed.
  *
- * <p>
  * Here's an example validation method, which passes if the given <code>Int</code> is evenly
  * divisible by 10 (<em>i.e.</em>, the result will be [[org.scalactic.Pass <code>Pass</code>]]). If the value does not pass
  * this test, the result is a [[org.scalactic.Fail <code>Fail</code>]] containing a helpful error message string.
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -50,7 +49,6 @@ import exceptions.ValidationFailedException
  * isRound: (i: Int)org.scalactic.Validation[org.scalactic.ErrorMessage]
  * </pre>
  *
- * <p>
  * Validation will be attempted on a successful <code>Try</code>. If the validation succeeds, the
  * resulting <code>Future</code> will be the same successful <code>Future</code> with the same value. (A
  * "validation" only transforms the <code>Future</code> if the validation fails, otherwise it is the
@@ -59,7 +57,7 @@ import exceptions.ValidationFailedException
  * passes the validation (which checks whether 100 is evenly divisible by 10), therefore
  * the result of the <code>validating</code> call is the same successful <code>Future</code>
  * with the same value.
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val fut100 = Future(100)
@@ -75,12 +73,11 @@ import exceptions.ValidationFailedException
  * res1: Option[scala.util.Try[Int]] = Some(Success(100))
  * </pre>
  *
- * <p>
  * If validation fails, the successful <code>Future</code> will be transformed into a failed one, with
  * a <code>ValidationFailedException</code> that contains the error message
  * returned by the validation function. In the following example, 42 fails the validation because it
  * is not evenly divisible by 10:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val fut42 = Future(42)
@@ -96,9 +93,8 @@ import exceptions.ValidationFailedException
  * res3: Option[scala.util.Try[Int]] = Some(Failure(org.scalactic.exceptions.ValidationFailedException: 42 was not a round number))
  * </pre>
  *
- * <p>
  * If <code>validating</code> is called on a failed <code>Future</code>, it just returns the same failed <code>Future</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val futEx = Future[Int] { throw new Exception("oops!") }
@@ -114,14 +110,13 @@ import exceptions.ValidationFailedException
  * res5: Option[scala.util.Try[Int]] = Some(Failure(java.lang.Exception: oops!))
  * </pre>
  *
- * <p>
  * The <code>validating</code> method accepts one or more validation functions. If you 
  * pass more than one, they will be tried in order up until the first failure, whose
  * error message will appear in the <code>ValidationFailedException</code>. In other words,
  * <code>validating</code> will short circuit at the first error and return that. It
  * will not accumulate errors. For example, the following validation will short circuit
  * after the <code>isDivBy3</code> function fails:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; def isDivBy3(i: Int): Validation[ErrorMessage] =
@@ -146,9 +141,8 @@ trait FutureSugar {
    * <code>Future</code>, which takes one or more functions that validate
    * the <code>Future</code>'s value.
    *
-   * <p>
    * See the main documentation for trait [[org.scalactic.FutureSugar `FutureSugar`]] for more detail and examples.
-   * </p>
+   * 
    *
    * @param theFuture the <code>Future</code> to which to add a <code>validating</code> method.
    */
@@ -157,9 +151,8 @@ trait FutureSugar {
     /**
      * Validates a <code>Future</code> using the passed validation functions.
      *
-     * <p>
      * See the main documentation for trait [[org.scalactic.FutureSugar `FutureSugar`]] for more detail and examples.
-     * </p>
+     * 
      *
      * @param first the first validation function to apply
      * @param rest the subsequent validation functions to apply, if any

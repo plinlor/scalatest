@@ -22,10 +22,9 @@ import org.scalactic.exceptions.NullArgumentException
  * A <code>Suite</code> class that takes zero to many <code>Suite</code>s in its constructor,
  *  which will be returned from its <code>nestedSuites</code> method.
  *
- * <p>
  * For example, you can define a suite that always executes a list of
  * nested suites like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class StepsSuite extends Suites(
@@ -37,13 +36,12 @@ import org.scalactic.exceptions.NullArgumentException
  * )
  * </pre>
  *
- * <p>
  * If <code>StepsSuite</code> is executed sequentially, it will execute its
  * nested suites in the passed order: <code>Step1Suite</code>, <code>Step2Suite</code>,
  * <code>Step3Suite</code>, <code>Step4Suite</code>, and <code>Step5Suite</code>.
  * If <code>StepsSuite</code> is executed in parallel, the nested suites will
  * be executed concurrently.
- * </p>
+ * 
  *
  * @param suitesToNest a sequence of <code>Suite</code>s to nest.
  *
@@ -83,9 +81,8 @@ class Suites(suitesToNest: Suite*) extends Suite { thisSuite =>
  * Companion object to class <code>Suites</code> that offers an <code>apply</code> factory method
  * for creating a <code>Suites</code> instance.
  *
- * <p>
  * One use case for this object is to run multiple specification-style suites in the Scala interpreter, like this:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; Suites(new MyFirstSuite, new MyNextSuite).execute()

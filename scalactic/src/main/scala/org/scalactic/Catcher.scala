@@ -55,7 +55,6 @@ val InternalServerError =
 /**
  * Convenience class for extractors that match and return <code>Throwable</code>s based on a type and <code>Boolean</code> condition.
  *
- * <p>
  * Class <code>Catcher</code> was motivated by the need to catch
  * and handle exceptions based on more than just the exception's type as a strategy for dealing with
  * "flickering" tests&#8212;tests that usually pass, but occasionally fail. The best strategy for dealing with
@@ -63,9 +62,8 @@ val InternalServerError =
  * such cases allowing the test to continue flickering can distract the team by requiring them to
  * spend time inspecting failures to determine whether or not they are flickers or real failures that need
  * attention. Worse, with enough flickers, team members can stop checking all failures and not notice real ones.
- * </p>
+ * 
  *
- * <p>
  * One strategy for dealing with flickers you can't practically fix is to catch exceptions that are causing individual flickers
  * and cancel the test when you detect them. Often this means you will need to insert a catch clause in a particular spot, or a pattern
  * match if in a <code>withFixture</code>, looking for a particular exception with a particular message or other identifying attribute. If
@@ -73,7 +71,7 @@ val InternalServerError =
  * it is handy to create an extractor to detect the problem. This <code>Catcher</code> class provides
  * a factory method that takes a partial function from <code>Throwable</code> to <code>Boolean</code> and produces such an extractor.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val InternalServerError =
@@ -82,9 +80,8 @@ val InternalServerError =
  *   }
  * </pre>
  * 
- * <p>
  * Using this <code>Catcher</code> in a ScalaTest <code>withFixture</code> method would look like:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * override def withFixture(test: NoArgTest) = {

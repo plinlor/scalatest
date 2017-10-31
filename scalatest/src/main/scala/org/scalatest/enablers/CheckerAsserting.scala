@@ -34,10 +34,9 @@ import org.scalatest.exceptions.StackDepth
  * Supertrait for <code>CheckerAsserting</code> typeclasses, which are used to implement and determine the result
  * type of [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]]'s <code>apply</code> and <code>forAll</code> method.
  *
- * <p>
  * Currently, an [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]] expression will have result type <code>Assertion</code>, if the function passed has result type <code>Assertion</code>,
  * else it will have result type <code>Unit</code>.
- * </p>
+ * 
  */
 trait CheckerAsserting[T] {
   /**

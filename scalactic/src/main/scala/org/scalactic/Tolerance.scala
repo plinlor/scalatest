@@ -21,10 +21,9 @@ import TripleEqualsSupport.Spread
  * Trait containing an implicit conversion that adds a <code>+-</code> method to <code>Numeric</code> types, which enables
  * spreads to be expressed in terms of a <em>pivot</em> and <em>tolerance</em>.
  *
- * <p>
  * For example, the <code>TripleEquals</code> trait (and its type-checking siblings <code>TypeCheckedTripleEquals</code> and
  * <code>ConversionCheckedTripleEquals</code>) enable you to write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * a === (1.0 +- 0.1)

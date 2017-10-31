@@ -22,11 +22,10 @@ import org.scalatest.FutureOutcome
 /**
  * Supertrait for <code>Futureistic</code> typeclasses.
  *
- * <p>
  * Trait <code>Futureistic</code> is a typeclass trait for objects that can be used with
  * the <code>complete</code>-<code>lastly</code> syntax of trait
  * <a href="../CompleteLastly.html"><code>CompleteLastly</code></a>.
- * </p>
+ * 
  */
 trait Futuristic[T] {
 
@@ -35,11 +34,10 @@ trait Futuristic[T] {
    * returning a new instance of the same futuristic type that completes after the passed
    * futuristic and the subsequent cleanup function execution completes.
    *
-   * <p>
    * The futuristic returned by this method will have the same result as the original futuristic passed to <code>withCleanup</code>,
    * unless the cleanup code throws an exception. If the cleanup code passed to <code>withCleanup</code> throws
    * an exception, the returned futuristic will fail with that exception.
-   * </p>
+   * 
    *
    * @param futuristic a future-like type
    * @param cleanup a cleanup function to execute once the passed futuristic type completes

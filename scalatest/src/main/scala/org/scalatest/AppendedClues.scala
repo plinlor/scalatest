@@ -21,7 +21,6 @@ import exceptions.ModifiableMessage
 /**
  * Trait providing an implicit conversion that allows clues to be placed after a block of code.
  *
- * <p>
  * You can use the <code>withClue</code> construct provided by <a href="Assertions.html"><code>Assertions</code></a>, which is
  * extended by every style trait in ScalaTest, to add extra information to reports of failed or canceled tests.
  * The <code>withClue</code> from <code>Assertions</code> places the "clue string" at the front, both
@@ -33,70 +32,59 @@ import exceptions.ModifiableMessage
  * }
  * </pre>
  *
- * <p>
  * The above expression will yield the failure message:
- * </p>
+ * 
  *
- * <p>
  * <code>This is a prepended clue; 2 did not equal 3</code>
- * </p>
+ * 
  *
- * <p>
  * If you mix in this trait, or import its members via its companion object, you can alternatively place
  * the clue string at the end, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * { 1 + 1 should equal (3) } withClue "now the clue comes after"
  * </pre>
  *
- * <p>
  * The above expression will yield the failure message:
- * </p>
+ * 
  *
- * <p>
  * <code>2 did not equal 3 now the clue comes after</code>
- * </p>
+ * 
  *
- * <p>
  * If no space is already present, either at the beginning of the clue string or at the end
  * of the current message, a space will be placed between the two, unless the clue string
  * starts with one of the punctuation characters: comma (<code>,</code>), period (<code>.</code>),
  * or semicolon (<code>;</code>). For example, the failure message in the above example
  * includes an extra space inserted between <em>3</em> and <em>now</em>.
- * </p>
+ * 
  *
- * <p>
  * By contrast this code, which has a clue string starting with comma:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * { 1 + 1 should equal (3) } withClue ", now the clue comes after"
  * </pre>
  *
- * <p>
  * Will yield a failure message with no extra inserted space:
- * </p>
+ * 
  *
- * <p>
  * <code>2 did not equal 3, now the clue comes after</code>
- * </p>
+ * 
  *
- * <p>
  * The <code>withClue</code> method will only append the clue string to the detail
  * message of exception types that mix in the <code>ModifiableMessage</code> trait.
  * See the documentation for <a href="exceptions/ModifiableMessage.html"><code>ModifiableMessage</code></a> for more
  * information.
- * </p>
+ * 
  *
- * <p>
  * Note: the reason this functionality is not provided by <code>Assertions</code> directly, like the
  * prepended <code>withClue</code> construct, is because appended clues require an implicit conversion.
  * ScalaTest only gives you one implicit conversion by default in any test class to minimize the
  * potential for conflicts with other implicit conversions you may be using. All other implicit conversions,
  * including the one provided by this trait, you must explicitly invite into your code through inheritance
  * or an import.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -121,18 +109,16 @@ trait AppendedClues {
      * between it and the existing detail message (unless the detail message is
      * not defined).
      *
-     * <p>
      * This method allows you to add more information about what went wrong that will be
      * reported when a test fails or cancels. For example, this code:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * { 1 + 1 should equal (3) } withClue ", not even for very large values of 1"
      * </pre>
      *
-     * <p>
      * Would yield a <code>TestFailed</code> exception whose message would be:
-     * </p>
+     * 
      *
      * <pre>
      * 2 did not equal 3, not even for very large values of 1

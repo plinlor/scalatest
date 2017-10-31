@@ -20,21 +20,19 @@ package org.scalatest
  * Stackable trait that when mixed into a <code>Suite with ScreenshotCapturer</code> ensures a screenshot
  * is captured for every failed test.
  *
- * <p>
  * The screenshot is file is placed in a directory whose name is defined by <code>screenshotDir</code>. By
  * default, <code>screenshotDir</code> returns the value of the <code>java.io.tmpdir</code> system property.
  * To change this, override <code>screenshotDir</code>.
- * </p>
+ * 
  */
 private[scalatest] trait ScreenshotOnFailure extends TestSuiteMixin { this: TestSuite with ScreenshotCapturer => 
   
   /**
    * The name of the directory into which screenshots will be captured.
    *
-   * <p>
    * By default, this method returns the value of the <code>java.io.tmpdir</code> system property.
    * To change this, override <code>screenshotDir</code>.
-   * </p>
+   * 
    */
   val screenshotDir: String = System.getProperty("java.io.tmpdir")
   
@@ -42,11 +40,10 @@ private[scalatest] trait ScreenshotOnFailure extends TestSuiteMixin { this: Test
    * Delegates to <code>super.withFixture</code> to execute the passed <code>NoArgTest</code>, and if the test fails,
    * captures a screenshot to the directory name defined by <code>screenshotDir</code>.
    *
-   * <p>
    * This method captures screenshots by invoking <code>captureScreenshot</code>, defined in trait <code>ScreenshotCapturer</code>.
    * If <code>captureScreenshot</code> completes abruptly with an exception, information about that exception, including the full
    * stack trace, is printed to the standard error stream, and the original exception that indicated a failed test is rethrown.
-   * </p>
+   * 
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {
     super.withFixture(test) match {

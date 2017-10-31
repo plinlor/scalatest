@@ -20,13 +20,12 @@ package org.scalactic
  * <code>Option</code>, which converts <code>Some</code> to <code>Good</code>,
  * <code>None</code> to <code>Bad</code>.
  *
- * <p>
  * You can use the <code>toOr</code> method to record information about why
  * a processing of nested <code>Option</code>s resulted in <code>None</code>.
  * For example, the following <code>for</code> expression results in
  * <code>None</code> if either the passed optional <code>Person</code> is
  * <code>None</code> or else if the contained optional age is <code>None</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; case class Person(name: String, age: Option[Int])
@@ -49,12 +48,11 @@ package org.scalactic
  * res2: Option[Int] = None
  * </pre>
  *
- * <p>
  * If you instead populate the <code>for</code> expression with <code>Or</code>s,
  * supplying an error message or other "bad" value to the <code>toOr</code> method
  * in case of <code>None</code>, you'll get an indication of which part
  * failed if a <code>None</code> is encountered:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import OptionSugar._

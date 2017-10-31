@@ -20,11 +20,10 @@ import org.scalatest.Resources
 /**
  * Defines a family of singleton objects representing units of time.
  *
- * <p>
  * The singleton objects that extend this abstract class may be passed
  * to the constructor of <a href="Span.html"><code>Span</code></a> to specify
  * units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Second)
@@ -38,10 +37,9 @@ sealed abstract class Units extends Product with Serializable {
 /**
  * Indicates units for a single nanosecond.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify nanosecond units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Nanosecond)
@@ -55,10 +53,9 @@ case object Nanosecond extends Units {
 /**
  * Indicates nanosecond units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify nanosecond units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Nanoseconds)
@@ -72,10 +69,9 @@ case object Nanoseconds extends Units {
 /**
  * Indicates units for a single microsecond.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify microsecond units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Microsecond)
@@ -89,10 +85,9 @@ case object Microsecond extends Units {
 /**
  * Indicates microsecond units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify microsecond units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Microseconds)
@@ -106,10 +101,9 @@ case object Microseconds extends Units {
 /**
  * Indicates units for a single millisecond.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify millisecond units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Millisecond)
@@ -123,10 +117,9 @@ case object Millisecond extends Units {
 /**
  * Indicates millisecond units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify millisecond units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Milliseconds)
@@ -139,20 +132,18 @@ case object Milliseconds extends Units {
 /**
  * Indicates millisecond units (shorthand form).
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify millisecond units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Millis)
  * </pre>
  *
- * <p>
  * <em>Note: <code>Millis</code> is merely a shorthand for <a href="Milliseconds$.html"><code>Milliseconds</code></a>.
  * When passed to <code>Span</code>, <code>Millis</code> means exactly the same thing as
  * <code>Milliseconds</code>.</em>
- * </p>
+ * 
  */
 case object Millis extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMillisecondUnits(lengthString)
@@ -162,10 +153,9 @@ case object Millis extends Units {
 /**
  * Indicates units for a single second.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify second units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Second)
@@ -179,10 +169,9 @@ case object Second extends Units {
 /**
  * Indicates second units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify second units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Seconds)
@@ -196,10 +185,9 @@ case object Seconds extends Units {
 /**
  * Indicates units for a single minute.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify minute units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Minute)
@@ -213,10 +201,9 @@ case object Minute extends Units {
 /**
  * Indicates minute units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify minute units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Minutes)
@@ -230,10 +217,9 @@ case object Minutes extends Units {
 /**
  * Indicates units for a single hour.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify hour units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Hour)
@@ -247,10 +233,9 @@ case object Hour extends Units {
 /**
  * Indicates hour units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify hour units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Hours)
@@ -264,10 +249,9 @@ case object Hours extends Units {
 /**
  * Indicates units for a single day.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify day units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(1, Day)
@@ -281,10 +265,9 @@ case object Day extends Units {
 /**
  * Indicates day units.
  *
- * <p>
  * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
  * specify day units of time. For example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(10, Days)

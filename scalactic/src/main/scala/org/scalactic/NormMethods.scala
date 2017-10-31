@@ -19,9 +19,8 @@ package org.scalactic
  * Provides an implicit conversion that allows <code>norm</code> to be invoked on any value of type
  * <code>T</code> for which an implicit <code>Normalization[T]</code> exists.
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._

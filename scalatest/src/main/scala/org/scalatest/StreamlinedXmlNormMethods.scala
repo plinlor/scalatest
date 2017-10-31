@@ -23,9 +23,8 @@ import org.scalactic.{NormMethods, Uniformity}
  * an implicit <code>Uniformity[T]</code> for subtypes of <code>scala.xml.NodeSeq</code> that enables
  * you to streamline XML by invoking <code>.norm</code> on it.
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; &lt;good&gt;&lt;day&gt;sunshine&lt;/day&gt;&lt;/good&gt; == &lt;good&gt;
@@ -59,11 +58,10 @@ trait StreamlinedXmlNormMethods extends StreamlinedXml with NormMethods {
    * instance for any subtype of <code>scala.xml.NodeSeq</code> that will normalize the XML by removing empty text nodes and trimming
    * non-empty text nodes.
    *
-   * <p>
    * This <code>Uniformity[T]</code> enables normalization of XML by invoking the <code>.norm</code>
    * method on subtypes of <code>scala.xml.NodeSeq</code>.  See the main documentation for this trait for more
    * details and examples.
-   * </p>
+   * 
    *
    * @return a <code>Uniformity[T]</code> instance that normalizes XML for testing
    */

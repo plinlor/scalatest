@@ -21,10 +21,9 @@ import org.scalatest._
  * Abstract class that supports test registration in <code>FlatSpec</code>
  * and <code>fixture.FlatSpec</code>.
  *
- * <p>
  * For example, this class enables syntax such as the following pending test registration
  * in <code>FlatSpec</code> and <code>fixture.FlatSpec</code>:
- * </p>
+ * 
  *
  * <pre>
  * "A Stack (when empty)" should "be empty" is (pending)
@@ -32,27 +31,24 @@ import org.scalatest._
  * </pre>
  *
  *
- * <p>
  * For example, this class enables syntax such as the following tagged test registration
  * in <code>FlatSpec</code> and <code>fixture.FlatSpec</code>:
- * </p>
+ * 
  *
  * <pre>
  * "A Stack (when empty)" should "be empty" taggedAs(SlowTet) in { ... }
  *                                          ^
  * </pre>
  *
- * <p>
  * This class also indirectly enables syntax such as the following regular test registration
  * in <code>FlatSpec</code> and <code>fixture.FlatSpec</code>:
- * </p>
+ * 
  *
  * <pre>
  * "A Stack (when empty)" should "be empty" in { ... }
  *                                          ^
  * </pre>
  *
- * <p>
  * However, this class does not declare any methods named <code>in</code>, because the
  * type passed to <code>in</code> differs in a <code>FlatSpec</code> and a <code>fixture.FlatSpec</code>.
  * A <code>fixture.FlatSpec</code> needs two <code>in</code> methods, one that takes a no-arg
@@ -62,7 +58,7 @@ import org.scalatest._
  * <code>FlatSpec</code> and <code>fixture.FlatSpec</code> each provide an implicit conversion
  * from <code>ResultOfStringPassedToVerb</code> to a type that provides the appropriate
  * <code>in</code> methods. 
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -72,38 +68,34 @@ abstract class ResultOfStringPassedToVerb(val verb: String, val rest: String) {
    * Supports the registration of pending tests in a
    * <code>FlatSpec</code> and <code>fixture.FlatSpec</code>.
    *
-   * <p>
    * This method supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre>
    * "A Stack" must "pop values in last-in-first-out order" is (pending)
    *                                                        ^
    * </pre>
    *
-   * <p>
    * For examples of pending test registration, see the <a href="../FlatSpec.html#PendingTests">Pending tests section</a> in the main documentation
    * for trait <code>FlatSpec</code>.
-   * </p>
+   * 
    */
   def is(fun: => PendingStatement)
 
   /**
    * Supports the registration of tagged tests in <code>FlatSpec</code> and <code>fixture.FlatSpec</code>.
    *
-   * <p>
    * This method supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre>
    * "A Stack" must "pop values in last-in-first-out order" taggedAs(SlowTest) in { ... }
    *                                                        ^
    * </pre>
    *
-   * <p>
    * For examples of tagged test registration, see the <a href="../FlatSpec.html#TaggingTests">Tagging tests section</a> in the main documentation
    * for trait <code>FlatSpec</code>.
-   * </p>
+   * 
    */
   def taggedAs(firstTestTag: Tag, otherTestTags: Tag*): ResultOfTaggedAsInvocation
 }

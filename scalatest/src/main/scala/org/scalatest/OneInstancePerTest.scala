@@ -29,18 +29,16 @@ import org.scalactic.Requirements._
  * behavior in ScalaTest.
  * </td></tr></table>
  * 
- * <p>
  * If you mix this trait into a <a href="Suite.html"><code>Suite</code></a>, you can initialize shared reassignable
  * fixture variables as well as shared mutable fixture objects in the constructor of the
  * class. Because each test will run in its own instance of the class, each test will
  * get a fresh copy of the instance variables. This is the approach to test isolation taken,
  * for example, by the JUnit framework. <code>OneInstancePerTest</code> can, therefore,
  * be handy when porting JUnit tests to ScalaTest.
- * </p>
+ * 
  *
- * <p>
  * Here's an example of <code>OneInstancePerTest</code> being used in a <code>FunSuite</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.FunSuite
@@ -67,18 +65,16 @@ import org.scalactic.Requirements._
  * }
  * </pre>
  *
- * <p>
  * <code>OneInstancePerTest</code> is supertrait to <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a>, in which
  * running each test in its own instance is intended to make it easier to write suites of tests that run in parallel (by reducing the likelihood
  * of concurrency bugs in those suites.) <code>OneInstancePerTest</code> is also supertrait to the <em>path</em> traits,
  * <a href="path/FunSpec.html"><code>path.FunSpec</code></a> and <a href="path/FreeSpec.html"><code>path.FreeSpec</code></a>, to make it obvious
  * these traits run each test in a new, isolated instance.
- * </p>
  * 
- * <p>
+ * 
  * For the details on how <code>OneInstancePerTest</code> works, see the documentation for methods <code>runTests</code> and <code>runTest</code>,
  * which this trait overrides.
- * </p>
+ * 
  * 
  * @author Bill Venners
  */
@@ -90,16 +86,14 @@ trait OneInstancePerTest extends SuiteMixin {
    * Modifies the behavior of <code>super.runTest</code> to facilitate running each test in its
    * own instance of this <code>Suite</code>'s class.
    *
-   * <p>
    * This trait's implementation of <code>runTest</code> 
    * uses the <code>runTestInNewInstance</code> flag of the passed <code>Args</code> object to determine whether this instance is the general instance responsible
    * for running all tests in the suite (<code>runTestInNewInstance</code> is <code>true</code>), or a test-specific instance
    * responsible for running just one test (<code>runTestInNewInstance</code> is <code>false</code>).
    * Note that these <code>Boolean</code> values are reverse those used by <code>runTests</code>, because <code>runTests</code> always inverts the <code>Boolean</code> value
    * of <code>runTestInNewInstance</code> when invoking <code>runTest</code>.
-   * </p>
    * 
-   * <p>
+   * 
    * If <code>runTestInNewInstance</code> is <code>true</code>, this trait's implementation of this method creates a new instance of this class (by
    * invoking <code>newInstance</code> on itself), then invokes <code>run</code> on the new instance,
    * passing in <code>testName</code>, wrapped in a <code>Some</code>, and <code>args</code> unchanged.
@@ -109,12 +103,11 @@ trait OneInstancePerTest extends SuiteMixin {
    * <code>Suite</code> or <code>run</code> on a newly created instance of this <code>Suite</code>
    * completes abruptly with an exception, then this <code>runTests</code> method will complete
    * abruptly with the same exception.
-   * </p>
    * 
-   * <p>
+   * 
    * If <code>runTestInNewInstance</code> is <code>false</code>, this trait's implementation of this method simply invokes <code>super.runTest</code>,
    * passing along the same <code>testName</code> and <code>args</code> objects.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
    * @param args the <code>Args</code> for this run
@@ -135,29 +128,26 @@ trait OneInstancePerTest extends SuiteMixin {
    * Modifies the behavior of <code>super.runTests</code> to facilitate running each test in its
    * own instance of this <code>Suite</code>'s class.
    *
-   * <p>
    * This trait's implementation of <code>runTest</code> 
    * uses the <code>runTestInNewInstance</code> flag of the passed <code>Args</code> object to determine whether this instance is the general instance responsible
    * for running all tests in the suite (<code>runTestInNewInstance</code> is <code>false</code>), or a test-specific instance
    * responsible for running just one test (<code>runTestInNewInstance</code> is <code>true</code>). Note that these <code>Boolean</code> values are
    * reverse those used by <code>runTest</code>, because <code>runTests</code> always inverts the <code>Boolean</code> value of
    * <code>runTestInNewInstance</code> when invoking <code>runTest</code>.
-   * </p>
    * 
-   * <p>
+   * 
    * If <code>runTestInNewInstance</code> is <code>false</code>, this trait's implementation of this method will invoke
    * <code>super.runTests</code>, passing along <code>testName</code> and <code>args</code>, but with the 
    * <code>runTestInNewInstance</code> flag set to <code>true</code>. By setting <code>runTestInNewInstance</code> to
    * <code>true</code>, <code>runTests</code> is telling <code>runTest</code> to create a new instance to run each test.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>runTestInNewInstance</code> is <code>true</code>, this trait's implementation of this method will invoke
    * <code>runTest</code> directly, passing in <code>testName.get</code> and the <code>args</code> object, with
    * the <code>runTestInNewInstance</code> flag set to <code>false</code>. By setting <code>runTestInNewInstance</code> to
    * <code>false</code>, <code>runTests</code> is telling <code>runTest</code> that this is the test-specific instance,
    * so it should just run the specified test.
-   * </p>
+   * 
    *
    * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
    *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
@@ -220,7 +210,6 @@ In BeforeAndAfter and BeforeAndAfterEach, we want to only execute beforeEach/aft
   /**
    * Construct a new instance of this <code>Suite</code>.
    *
-   * <p>
    * This trait's implementation of <code>runTests</code> invokes this method to create
    * a new instance of this <code>Suite</code> for each test. This trait's implementation
    * of this method uses reflection to call <code>this.getClass.newInstance</code>. This
@@ -233,12 +222,11 @@ In BeforeAndAfter and BeforeAndAfterEach, we want to only execute beforeEach/aft
    * cases where a <code>Suite</code> class is explicitly defined without a public,
    * no-arg constructor, you will need to override this method to construct a new
    * instance of the <code>Suite</code> in some other way.
-   * </p>
+   * 
    *
-   * <p>
    * Here's an example of how you could override <code>newInstance</code> to construct
    * a new instance of an inner class:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.Suite

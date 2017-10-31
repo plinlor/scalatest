@@ -25,17 +25,15 @@ import scala.collection.GenTraversable
 /**
  * Supertrait for typeclasses that enable the <code>be</code> <code>sorted</code> matcher syntax.
  *
- * <p>
  * A <code>Sortable[S]</code> provides access to the "sortable nature" of type <code>S</code> in such
  * a way that <code>be</code> <code>sorted</code> matcher syntax can be used with type <code>S</code>. An <code>S</code>
  * can be any type for which the concept of being sorted makes sense, such as sequences. ScalaTest provides
  * implicit implementations for several types. You can enable the <code>be</code> <code>sorted</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Sortable[U]</code> for the type and making it available implicitly.
  * 
- * <p>
  * ScalaTest provides an implicit <code>Sortable</code> instance for types out of the box
  * in the <a href="Sortable$.html"><code>Sortable</code> companion object</a>:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>scala.collection.GenSeq</code></li>

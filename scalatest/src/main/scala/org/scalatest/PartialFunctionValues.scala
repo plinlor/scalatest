@@ -24,28 +24,25 @@ import org.scalatest.exceptions.TestFailedException
  * to <code>PartialFunction</code>, which will return the value (result) of the function applied to the argument passed to <code>valueAt</code>,
  * or throw <code>TestFailedException</code> if the partial function is not defined at the argument.
  *
- * <p>
  * This construct allows you to express in one statement that a partial function should be defined for a particular input,
  * and that its result value should meet some expectation. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * pf.valueAt("IV") should equal (4)
  * </pre>
  *
- * <p>
  * Or, using an assertion instead of a matcher expression:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(pf.valueAt("IV") === 4)
  * </pre>
  *
- * <p>
  * Were you to simply invoke <code>apply</code> on the <code>PartialFunction</code>, passing in an input value, 
  * if the partial function wasn't defined at that input, it would throw some exception, but likely not one
  * that provides a <a href="exceptions/StackDepth.html">stack depth</a>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Note: a Map[K, V] is a PartialFunction[K, V]
@@ -54,13 +51,12 @@ import org.scalatest.exceptions.TestFailedException
  * pf("V") should equal (5) // pf("V") throws NoSuchElementException
  * </pre>
  *
- * <p>
  * The <code>NoSuchElementException</code> thrown in this situation would cause the test to fail, but without providing a stack depth pointing
  * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> (and a
  * few other ScalaTest exceptions), makes it quicker for
  * users to navigate to the cause of the failure. Without <code>PartialFunctionValues</code>, to get
  * a stack depth exception you would need to make two statements, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val pf: PartialFunction[String, Int] = Map("I" -&gt; 1, "II" -&gt; 2, "III" -&gt; 3, "IV" -&gt; 4)
@@ -69,9 +65,8 @@ import org.scalatest.exceptions.TestFailedException
  * pf("V") should equal (5)
  * </pre>
  *
- * <p>
  * The <code>PartialFunctionValues</code> trait allows you to state that more concisely:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val pf: PartialFunction[String, Int] = Map("I" -&gt; 1, "II" -&gt; 2, "III" -&gt; 3, "IV" -&gt; 4)

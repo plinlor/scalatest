@@ -19,10 +19,9 @@ package org.scalactic
  * Represents the result of a <em>validation</em>, either the object <a href="Pass$.html"><code>Pass</code></a> if the validation 
  * succeeded, else an instance of <a href="Fail.html"><code>Fail</code></a> containing an error value describing the validation failure.
  *
- * <p>
  * <code>Validation</code>s are used to filter <a href="Or.html"><code>Or</code></a>s in <code>for</code> expressions or <code>filter</code> method calls.
  * For example, consider these methods:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalactic._
@@ -34,21 +33,19 @@ package org.scalactic
  *   if (i % 3 == 0) Pass else Fail(i + " was not divisible by 3")
  * </pre>
  *
- * <p>
  * Because <code>isRound</code> and <code>isDivBy3</code> take an <code>Int</code> and return a <code>Validation[ErrorMessage]</code>, you
  * can use them in filters in <code>for</code> expressions involving <code>Or</code>s of type <code>Int</code> <code>Or</code> <code>ErrorMessage</code>.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * for (i &lt;- Good(3) if isRound(i) &amp;&amp; isDivBy3(i)) yield i
  * // Result: Bad(3 was not a round number)
  * </pre>
  *
- * <p>
  * <code>Validation</code>s can also be used to accumulate error using <code>when</code>, a method that's made available by trait <code>Accumulation</code> on
  * accumualting <code>Or</code>s (<code>Or</code>s whose <code>Bad</code> type is an <code>Every[T]</code>). Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import Accumulation._
@@ -60,11 +57,10 @@ package org.scalactic
  * // Result: Bad(Many(4 was not a round number, 4 was not divisible by 3))
  * </pre>
  *
- * <p>
  * Note: You can think of <code>Validation</code> as an &ldquo;<code>Option</code> with attitude,&rdquo; where <code>Pass</code> is 
  * a <code>None</code> that indicates validation success and <code>Fail</code> is a <code>Some</code> whose value describes 
  * the validation failure.
- * </p>
+ * 
  * 
  * @tparam E the type of error value describing a validation failure for this <code>Validation</code>
  */
@@ -73,9 +69,8 @@ sealed trait Validation[+E] extends Product with Serializable {
   /**
    * Ands this <code>Validation</code> with another, passed, <code>Validation</code>.
    *
-   * <p>
    * The result of and-ing two <code>Validations</code> is:
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
    * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">Expression</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">Result</th></tr><tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>Pass &amp;&amp; Pass</code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>Pass</code></td></tr>
@@ -84,12 +79,11 @@ sealed trait Validation[+E] extends Product with Serializable {
    * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>Fail(left) &amp;&amp; Fail(right)</code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>Fail(left)</code></td></tr>
    * </table>
    *
-   * <p>
    * As you can see in the above table, no attempt is made by <code>&amp;&amp;</code> to accumulate errors, which in turn means that
    * no constraint is placed on the <code>E</code> type (it need not be an <code>Every</code>). Instead, <code>&amp;&amp;</code> short circuits
    * and returns the first <code>Fail</code> it encounters. This makes it useful in filters in <code>for</code> expressions involving <a href="Or.html"><code>Or</code></a>s.
    * Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalactic._
@@ -118,9 +112,8 @@ case object Pass extends Validation[Nothing] {
   /**
    * Ands this <code>Validation</code> with another, passed, <code>Validation</code>.
    *
-   * <p>
    * The result of invoking this method will be the result of executing the passed <code>other</code> by-name value.
-   * </p>
+   * 
    *
    * @param other the other validation to and with this one
    * @return the result of anding this <code>Validation</code> with the other, passed, <code>Validation</code>
@@ -139,9 +132,8 @@ case class Fail[E](error: E) extends Validation[E] {
   /**
    * Ands this <code>Validation</code> with another, passed, <code>Validation</code>.
    *
-   * <p>
    * The result of invoking this method will be this same <code>Fail</code> object. It will not execute the passed by-name.
-   * </p>
+   * 
    *
    * @param other the other validation to and with this one
    * @return the result of anding this <code>Validation</code> with the other, passed, <code>Validation</code>

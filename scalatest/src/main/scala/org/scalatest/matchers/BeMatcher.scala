@@ -22,28 +22,25 @@ import scala.reflect.ClassTag
  * The value to match is passed to the <code>BeMatcher</code>'s <code>apply</code> method. The result is a <code>MatchResult</code>.
  * A <code>BeMatcher</code> is, therefore, a function from the specified type, <code>T</code>, to a <code>MatchResult</code>.
  *
- * <p>
  * Although <code>BeMatcher</code>
  * and <code>Matcher</code> represent very similar concepts, they have no inheritance relationship
  * because <code>Matcher</code> is intended for use right after <code>should</code> or <code>must</code>
  * whereas <code>BeMatcher</code> is intended for use right after <code>be</code>.
- * </p>
+ * 
  *
- * <p>
  * As an example, you could create <code>BeMatcher[Int]</code>
  * called <code>odd</code> that would match any odd <code>Int</code>, and one called <code>even</code> that would match
  * any even <code>Int</code>. 
  * Given this pair of <code>BeMatcher</code>s, you could check whether an <code>Int</code> was odd or even with expressions like:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * num should be (odd)
  * num should not be (even)
  * </pre>
  *
- * <p>
  * Here's is how you might define the odd and even <code>BeMatchers</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * trait CustomMatchers {
@@ -65,17 +62,15 @@ import scala.reflect.ClassTag
  * object CustomMatchers extends CustomMatchers
  * </pre>
  *
- * <p>
  * These <code>BeMatcher</code>s are defined inside a trait to make them easy to mix into any
  * suite or spec that needs them.
  * The <code>CustomMatchers</code> companion object exists to make it easy to bring the
  * <code>BeMatcher</code>s defined in this trait into scope via importing, instead of mixing in the trait. The ability
  * to import them is useful, for example, when you want to use the matchers defined in a trait in the Scala interpreter console.
- * </p>
+ * 
  *
- * <p>
  * Here's an rather contrived example of how you might use <code>odd</code> and <code>even</code>: 
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class DoubleYourPleasureSuite extends FunSuite with MustMatchers with CustomMatchers {
@@ -95,20 +90,18 @@ import scala.reflect.ClassTag
  * }
  * </pre>
  *
- * <p>
  * The last assertion in the above test will fail with this failure message:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * 6 was even
  * </pre>
  *
- * <p>
  * For more information on <code>MatchResult</code> and the meaning of its fields, please
  * see the documentation for <a href="MatchResult.html"><code>MatchResult</code></a>. To understand why <code>BeMatcher</code>
  * is contravariant in its type parameter, see the section entitled "Matcher's variance" in the
  * documentation for <a href="../Matcher.html"><code>Matcher</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
 */
@@ -139,11 +132,10 @@ trait BeMatcher[-T] extends Function1[T, MatchResult] { thisBeMatcher =>
   /**
    * Compose this <code>BeMatcher</code> with the passed function, returning a new <code>BeMatcher</code>.
    *
-   * <p>
    * This method overrides <code>compose</code> on <code>Function1</code> to
    * return a more specific function type of <code>BeMatcher</code>. For example, given
    * an <code>odd</code> matcher defined like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val odd =
@@ -157,32 +149,29 @@ trait BeMatcher[-T] extends Function1[T, MatchResult] { thisBeMatcher =>
    *   }
    * </pre>
    *
-   * <p>
    * You could use <code>odd</code> like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * 3 should be (odd)
    * 4 should not be (odd)
    * </pre>
    *
-   * <p>
    * If for some odd reason, you wanted a <code>BeMatcher[String]</code> that 
    * checked whether a string, when converted to an <code>Int</code>,
    * was odd, you could make one by composing <code>odd</code> with
    * a function that converts a string to an <code>Int</code>, like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val oddAsInt = odd compose { (s: String) => s.toInt }
    * </pre>
    *
-   * <p>
    * Now you have a <code>BeMatcher[String]</code> whose <code>apply</code> method first
    * invokes the converter function to convert the passed string to an <code>Int</code>,
    * then passes the resulting <code>Int</code> to <code>odd</code>. Thus, you could use
    * <code>oddAsInt</code> like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "3" should be (oddAsInt)

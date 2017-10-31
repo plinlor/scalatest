@@ -27,19 +27,17 @@ import org.scalatest.exceptions.NotAllowedException
  * a suite of tests in which each test represents one <em>scenario</em> of a
  * <em>feature</em>.
  * 
- * <p>
  * <a href="FeatureSpec.html"><code>FeatureSpec</code></a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
  * behavior of <code>FeatureSpec</code> into some other class, you can use this
  * trait instead, because class <code>FeatureSpec</code> does nothing more than
  * extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="FeatureSpec.html">detailed
  * overview of <code>FeatureSpec</code></a>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -206,16 +204,14 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * A <code>Map</code> whose keys are <code>String</code> names of tagged tests and whose associated values are
    * the <code>Set</code> of tag names for the test. If this <code>FeatureSpec</code> contains no tags, this method returns an empty <code>Map</code>.
    *
-   * <p>
    * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
    * methods <code>scenario</code> and <code>ignore</code>. 
-   * </p>
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
    * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
    * <code>org.scalatest.Ignore</code>.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
@@ -256,11 +252,10 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   /**
    * Run zero to many of this <code>FeatureSpec</code>'s tests.
    *
-   * <p>
    * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
    * If <code>testName</code> is <code>Some</code>, this trait's implementation of this method
    * invokes <code>runTest</code> on this object, passing in:
-   * </p>
+   * 
    *
    * <ul>
    * <li><code>testName</code> - the <code>String</code> value of the <code>testName</code> <code>Option</code> passed
@@ -270,7 +265,6 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * <li><code>configMap</code> - the <code>configMap</code> passed to this method, or one that wraps and delegates to it</li>
    * </ul>
    *
-   * <p>
    * This method takes a <code>Set</code> of tag names that should be included (<code>tagsToInclude</code>), and a <code>Set</code>
    * that should be excluded (<code>tagsToExclude</code>), when deciding which of this <code>Suite</code>'s tests to execute.
    * If <code>tagsToInclude</code> is empty, all tests will be executed
@@ -279,9 +273,8 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * will be executed. However, if <code>testName</code> is <code>Some</code>, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
    * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
    * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. For more information on trait tags, see the main documentation for this trait.
-   * </p>
+   * 
    *
-   * <p>
    * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
    * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially execute.
    * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
@@ -290,7 +283,7 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
    * of this method checks whether the test should be run based on the <code>tagsToInclude</code> and <code>tagsToExclude</code> <code>Set</code>s.
    * If so, this implementation invokes <code>runTest</code>, passing in:
-   * </p>
+   * 
    *
    * <ul>
    * <li><code>testName</code> - the <code>String</code> name of the test to run (which will be one of the names in the <code>testNames</code> <code>Set</code>)</li>
@@ -316,12 +309,11 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * An immutable <code>Set</code> of test names. If this <code>FeatureSpec</code> contains no tests, this method returns an
    * empty <code>Set</code>.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space. For example, consider this <code>FeatureSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.FeatureSpec
@@ -334,10 +326,9 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * }
    * </pre>
    *
-   * <p>
    * Invoking <code>testNames</code> on this <code>FeatureSpec</code> will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
    * <pre>
    * "A Stack (when not empty) must allow me to pop"
@@ -359,21 +350,19 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   /**
    * Registers shared scenarios.
    *
-   * <p>
    * This method enables the following syntax for shared scenarios in a <code>FeatureSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * ScenariosFor(nonEmptyStack(lastValuePushed))
    * </pre>
    *
-   * <p>
    * This method just provides syntax sugar intended to make the intent of the code clearer.
    * Because the parameter passed to it is
    * type <code>Unit</code>, the expression will be evaluated before being passed, which
    * is sufficient to register the shared scenarios. For examples of shared scenarios, see the
    * <a href="#sharedScenarios">Shared scenarios section</a> in the main documentation for this trait.
-   * </p>
+   * 
    */
   protected def ScenariosFor(unit: Unit): Unit = {}
   

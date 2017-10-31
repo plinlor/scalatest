@@ -18,10 +18,9 @@ package org.scalactic
 /**
  * Defines a custom way to normalize instances of a type.
  *
- * <p>
  * For example, to normalize <code>Double</code>s by truncating off any decimal part,
  * you might write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalactic._
@@ -32,9 +31,8 @@ package org.scalactic
  *  }
  * </pre>
  *
- * <p>
  * Given this definition you could use it with the <a href="Explicitly.html"><code>Explicitly</code></a> DSL like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest._
@@ -44,17 +42,15 @@ package org.scalactic
  * (2.1 should === (2.0)) (after being truncated)
  * </pre>
  *
- * <p>
  * Note that to use a <code>Normalization</code> with the <code>Explicitly</code> DSL, you'll need to use
  * <a href="TypeCheckedTripleEquals.html"><code>TypeCheckedTripleEquals</code></a>.
  * If you're just using plain-old
  * <a href="TripleEquals.html"><code>TripleEquals</code></a>, you'll need a <a href="Uniformity.html"><code>Uniformity</code></a>, a <code>Normalization</code> subclass.
- * </p>
+ * 
  *
- * <p>
  * If you make the <code>truncated</code> <code>val</code> implicit and import or mix in the members of <a href="NormMethods.html"><code>NormMethods</code></a>,
  * you can access the behavior by invoking <code>.norm</code> on <code>Double</code>s.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * implicit val doubleNormalization = truncated
@@ -71,9 +67,8 @@ trait Normalization[A] { thisNormalization =>
   /**
    * Returns a normalized form of the passed object.
    *
-   * <p>
    * If the passed object is already in normal form, this method may return the same instance passed.
-   * </p>
+   * 
    *
    * @tparam A the type of the object to normalize
    * @param a the object to normalize
@@ -84,12 +79,11 @@ trait Normalization[A] { thisNormalization =>
   /**
    * Returns a new <code>Normalization</code> that composes this and the passed <code>Normalization</code>.
    *
-   * <p>
    * The <code>normalized</code> method of the <code>Normalization</code> returned by this method returns a normalized form of the passed
    * object obtained by forwarding the passed value first to this <code>Normalization</code>'s <code>normalized</code> method,
    * then passing that result to the other <code>Normalization</code>'s <code>normalized</code> method.
    * Essentially, the body of the composed <code>normalized</code> method is:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * normalizationPassedToAnd.normalized(normalizationOnWhichAndWasInvoked.normalized(a))

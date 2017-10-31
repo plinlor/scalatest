@@ -19,20 +19,17 @@ package org.scalactic.source
  * A source file position consisting of a simple source file name, the
  * full path to the file, and a line number.
  *
- * <p>
  * Class <code>Position</code> is used by ScalaTest assertions, matchers,
  * and testing styles to provide locations for failures in test results.
- * </p>
+ * 
  *
- * <p>
  * The <code>pathFilename<code> should always end with the <code>fileName</code>, which
  * is the simple file name. For example, if the <code>filePathname</code> were <code>"/Users/this/is/a/class/Act.scala"</code>,
  * the <code>fileName</code> would be <code>"Act.scala"</code>.
- * </p>
  * 
- * <p>
+ * 
  * <em>Note: Class <code>Position</code> is in part inspired by the <a href="https://github.com/lihaoyi/sourcecode" target="_blank"><code>sourcecode</code></a> library designed by Li Haoyi.</a></em>
- * </p>
+ * 
  *
  * @param fileName the simple name of a source file
  * @param filePathname the fully qualified pathname of the source file

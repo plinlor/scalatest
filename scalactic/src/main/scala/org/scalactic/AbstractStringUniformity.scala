@@ -18,17 +18,15 @@ package org.scalactic
 /**
  * Convenience base trait for string <a href="Uniformity.html"><code>Uniformity</code></a>s.
  *
- * <p>
  * This trait defines a <code>normalizedCanHandle</code> method that returns true if the passed
  * <code>Any</code> is a <code>String</code> and a <code>normalizedOrSame</code> method that
  * normalizes any passed <code>String</code>s via the <code>normalized</code> method, which is
  * left abstract for subclasses to fill in.
- * </p>
+ * 
  *
- * <p>
  * Here's an example in which <code>AbstractStringUniformity</code> is used to normalize strings
  * by ensuring the first character, if any, is capitalized:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val capitalized: Uniformity[String] =
@@ -38,9 +36,8 @@ package org.scalactic
  *   }
  * </pre>
  *
- * <p>
  * Here's an example of using the <code>capitalized</code> <code>Uniformity</code> with a <code>Matcher</code> expression:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
@@ -74,14 +71,13 @@ trait AbstractStringUniformity extends Uniformity[String] {
   /**
    * Normalizes the passed object if it is a <code>String</code>.
    *
-   * <p>
    * This method returns either:
-   * </p>
+   * 
    *
    * <ul>
    * <li>if the passed object is a <code>String</code>, the result of passing that string to <code>normalized</code></li>
    * <li>else, the same exact object that was passed
-   * </p>
+   * 
    *
    * @return a normalized form of any passed <code>String</code>, or the same object if not a <code>String</code>.
    */

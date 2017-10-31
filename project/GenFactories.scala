@@ -95,13 +95,12 @@ import scala.language.higherKinds
 /**
  * A matcher factory that can produce a matcher given $nTypeclassInstances$.
  *
- * <p>
  * In the type parameters for this class, "<code>SC</code>" means <em>superclass</em>; "<code>TC</code>"
  * (in <code>TC1</code>, <code>TC2</code>, <em>etc.</em>) means <em>typeclass</em>.
  * This class's <code>matcher</code> factory method will produce a <code>Matcher[T]</code>, where <code>T</code> is a subtype of (or the same type
  * as) <code>SC</code>, given a typeclass instance for each <code>TC<em>n</em></code>
  * implicit parameter (for example, a <code>TC1[T]</code>, <code>TC2[T]</code>, <em>etc.</em>).
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -120,9 +119,8 @@ $if (arityIsOne)$
    * Enables the <a href="../../org/scalactic/"><code>Explicitly</code></a> DSL to be used directly
    * on a <code>MatcherFactory1</code>, without invoking the <code>matcher</code> factory method.
    *
-   * <p>
    * Here's an example of the kind of syntax this <code>apply</code> method can enable:
-   * </p>
+   * 
    *
    * <pre>
    * result should equal (1) (decided by defaultEquality)
@@ -1012,10 +1010,9 @@ $endif$
      * should be, or shouldBe instead.
      * </strong>
      * 
-     * <p>
      * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
      * cases still compile, but silently wouldn't work.
-     * </p>
+     * 
      */
     def be(tripleEqualsInvocation: TripleEqualsInvocation[_]): MatcherFactory$arity$[SC, $commaSeparatedTCNs$] =
       thisMatcherFactory.and(MatcherWords.not.be(tripleEqualsInvocation)(pos))
@@ -2306,10 +2303,9 @@ $endif$
      * should be, or shouldBe instead.
      * </strong>
      * 
-     * <p>
      * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
      * cases still compile, but silently wouldn't work.
-     * </p>
+     * 
      */
     def be(tripleEqualsInvocation: TripleEqualsInvocation[_]): MatcherFactory$arity$[SC, $commaSeparatedTCNs$] =
       thisMatcherFactory.or(MatcherWords.not.be(tripleEqualsInvocation)(pos))

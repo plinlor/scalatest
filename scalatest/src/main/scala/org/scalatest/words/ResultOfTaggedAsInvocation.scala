@@ -21,27 +21,24 @@ import org.scalatest._
  * Supports the registration of tagged tests in shorthand form in <code>FlatSpec</code>
  * and <code>fixture.FlatSpec</code>.
  *
- * <p>
  * For example, this class enables syntax such as the following tagged, pending test registration
  * in shorthand form:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "A Stack (when empty)" should "be empty" taggedAs() is (pending)
  *                                                     ^
  * </pre>
  *
- * <p>
  * In addition, this class indirectly enables syntax such as the following tagged test registration
  * in shorthand form:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "A Stack (when empty)" should "be empty" taggedAs() in { ... }
  *                                                     ^
  * </pre>
  *
- * <p>
  * Rather than provide <code>in</code> and <code>ignore</code> methods directly, these
  * methods are provided after <code>taggedAs()</code> by implicit conversions
  * because the type passed to <code>in</code> (and <code>ignore</code>)
@@ -53,7 +50,7 @@ import org.scalatest._
  * <code>FlatSpec</code> and <code>fixture.FlatSpec</code> each provide an implicit conversion
  * from <code>ResultOfTaggedAsInvocation</code> to a type that provides the appropriate
  * <code>in</code> methods.
- * </p>
+ * 
   *
  * @author Bill Venners
  */
@@ -63,21 +60,19 @@ abstract class ResultOfTaggedAsInvocation(val verb: String, val rest: String, va
    * Supports the registration of tagged, pending tests in shorthand form in <code>FlatSpec</code>
    * and <code>fixture.FlatSpec</code>.
    *
-   * <p>
    * This method supports syntax such as the following:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "A Stack" must "pop values in last-in-first-out order" taggedAs(SlowTest) is (pending)
    *                                                                           ^
    * </pre>
    *
-   * <p>
    * For examples of tagged test registration, see the <a href="../FlatSpec.html#TaggingTests">Tagging tests section</a>
    * in the main documentation for trait <code>FlatSpec</code>.
    * For examples of pending test registration, see the <a href="../FlatSpec.html#PendingTests">Pending tests section</a>
    * in the main documentation for trait <code>FlatSpec</code>.
-   * </p>
+   * 
    */
   def is(testFun: => PendingStatement)
 }

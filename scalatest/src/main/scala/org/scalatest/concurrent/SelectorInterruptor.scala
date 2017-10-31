@@ -20,10 +20,8 @@ import java.nio.channels.Selector
  * Strategy for interrupting an operation in which <code>wakeup</code> is called on the <code>java.nio.channels.Selector</code> passed to
  * the constructor.
  *
- * <p>
  * This class can be used for configuration when using traits <a href="Timeouts.html"><code>Timeouts</code></a>
  * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
  */
 @deprecated("Please use org.scalatest.concurrent.Signaler instead.")
 class SelectorInterruptor(selector: Selector) extends Interruptor {

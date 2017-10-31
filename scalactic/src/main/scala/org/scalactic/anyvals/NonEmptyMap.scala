@@ -31,17 +31,15 @@ import org.scalactic.Every
 /**
   * A non-empty map: an ordered, immutable, non-empty collection of key-value tuples with <code>LinearSeq</code> performance characteristics.
   *
-  * <p>
   * The purpose of <code>NonEmptyMap</code> is to allow you to express in a type that a <code>Map</code> is non-empty, thereby eliminating the
   * need for (and potential exception from) a run-time check for non-emptiness. For a non-empty sequence with <code>IndexedSeq</code>
   * performance, see <a href="Every.html"><code>Every</code></a>.
-  * </p>
+  * 
   *
   * <h2>Constructing <code>NonEmptyMap</code>s</h2>
   *
-  * <p>
   * You can construct a <code>NonEmptyMap</code> by passing one or more elements to the <code>NonEmptyMap.apply</code> factory method:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * scala&gt; NonEmptyMap(1 -> "one", 2 -> "two", 3 -> "three")
@@ -50,34 +48,31 @@ import org.scalactic.Every
   *
   * <h2>Working with <code>NonEmptyMap</code>s</h2>
   *
-  * <p>
   * <code>NonEmptyMap</code> does not extend Scala's <code>Map</code> or <code>Traversable</code> traits because these require that
   * implementations may be empty. For example, if you invoke <code>tail</code> on a <code>Seq</code> that contains just one element,
   * you'll get an empty <code>Seq</code>:
-  * </p>
+  * 
   *
   * <pre class="stREPL">
   * scala&gt; Map(1 -> "one").tail
   * res6: Map[Int] = Map()
   * </pre>
   *
-  * <p>
   * On the other hand, many useful methods exist on <code>Map</code> that when invoked on a non-empty <code>Seq</code> are guaranteed
   * to not result in an empty <code>Map</code>. For convenience, <code>NonEmptyMap</code> defines a method corresponding to every such <code>Map</code>
   * method. Here are an example:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * NonEmptyMap(1 -> "one", 2 -> "two", 3 -> "three").map(t => (t._1 + 1, t._2))                        // Result: NonEmptyMap(2 -> "one", 3 -> "two", 4 -> "three")
   * </pre>
   *
-  * <p>
   * <code>NonEmptyMap</code> does <em>not</em> currently define any methods corresponding to <code>Map</code> methods that could result in
   * an empty <code>Map</code>. However, an implicit converison from <code>NonEmptyMap</code> to <code>Map</code>
   * is defined in the <code>NonEmptyMap</code> companion object that will be applied if you attempt to call one of the missing methods. As a
   * result, you can invoke <code>filter</code> on an <code>NonEmptyMap</code>, even though <code>filter</code> could result
   * in an empty map&mdash;but the result type will be <code>Map</code> instead of <code>NonEmptyMap</code>:
-  * </p>
+  * 
   *
   * <pre class="stHighlight">
   * NonEmptyMap(1 -> "one", 2 -> "two", 3 -> "three").filter(_._1 &lt; 10) // Result: Map(1 -> "one", 2 -> "two", 3 -> "three")
@@ -85,11 +80,10 @@ import org.scalactic.Every
   * </pre>
   *
   *
-  * <p>
   * You can use <code>NonEmptyMap</code>s in <code>for</code> expressions. The result will be an <code>NonEmptyMap</code> unless
   * you use a filter (an <code>if</code> clause). Because filters are desugared to invocations of <code>filter</code>, the
   * result type will switch to a <code>Map</code> at that point. Here are some examples:
-  * </p>
+  * 
   *
   * <pre class="stREPL">
   * scala&gt; import org.scalactic.anyvals._
@@ -144,10 +138,9 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * Fold left: applies a binary operator to a start value, <code>z</code>, and all entries of this <code>NonEmptyMap</code>, going left to right.
     *
-    * <p>
     * Note: <code>/:</code> is alternate syntax for the <code>foldLeft</code> method; <code>z</code> <code>/:</code> <code>non-empty map</code> is the
     * same as <code>non-empty map</code> <code>foldLeft</code> <code>z</code>.
-    * </p>
+    * 
     *
     * @tparam B the result of the binary operator
     * @param z the start value
@@ -159,19 +152,17 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * op(...op(op(z, x_1), x_2), ..., x_n)
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyMap</code>. 
-    * </p>
+    * 
     */
   final def /:[B](z: B)(op: (B, (K, V)) => B): B = toMap./:(z)(op)
 
   /**
     * Fold right: applies a binary operator to all entries of this <code>NonEmptyMap</code> and a start value, going right to left.
     *
-    * <p>
     * Note: <code>:\</code> is alternate syntax for the <code>foldRight</code> method; <code>non-empty map</code> <code>:\</code> <code>z</code> is the same
     * as <code>non-empty map</code> <code>foldRight</code> <code>z</code>.
-    * </p>
+    * 
     *
     * @tparam B the result of the binary operator
     * @param z the start value
@@ -183,18 +174,16 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * op(x_1, op(x_2, ... op(x_n, z)...))
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyMap</code>. 
-    * </p>
+    * 
     */
   final def :\[B](z: B)(op: ((K, V), B) => B): B = toMap.:\(z)(op)
 
   /**
     * Returns a new <code>NonEmptyMap</code> with the given entry added.
     *
-    * <p>
     * Note that :-ending operators are right associative. A mnemonic for <code>+:</code> <em>vs.</em> <code>:+</code> is: the COLon goes on the COLlection side.
-    * </p>
+    * 
     *
     * @param entry the element to add to this <code>NonEmptyMap</code>
     * @return a new <code>NonEmptyMap</code> consisting of <code>element</code> followed by all elements of this <code>NonEmptyMap</code>.
@@ -396,9 +385,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * Folds the entries of this <code>NonEmptyMap</code> using the specified associative binary operator.
     *
-    * <p>
     * The order in which operations are performed on entries is unspecified and may be nondeterministic.
-    * </p>
+    * 
     *
     * @tparam U a type parameter for the binary operator, a supertype of (K, V).
     * @param z a neutral element for the fold operation; may be added to the result an arbitrary number of
@@ -422,9 +410,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * op(...op(op(z, x_1), x_2), ..., x_n)
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyMap</code>. 
-    * </p>
+    * 
     */
   final def foldLeft[B](z: B)(op: (B, (K, V)) => B): B = toMap.foldLeft(z)(op)
 
@@ -441,9 +428,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * op(x_1, op(x_2, ... op(x_n, z)...))
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyMap</code>. 
-    * </p>
+    * 
     */
   final def foldRight[B](z: B)(op: ((K, V), B) => B): B = toMap.foldRight(z)(op)
 
@@ -472,9 +458,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * (nonEmptyMap.toMap partition f)(k) = xs filter (x =&gt; f(x) == k)
     * </pre>
     *
-    * <p>
     * That is, every key <code>k</code> is bound to a <code>NonEmptyMap</code> of those elements <code>x</code> for which <code>f(x)</code> equals <code>k</code>.
-    * </p>
+    * 
     */
   final def groupBy(f: ((K, V)) => K): Map[K, NonEmptyMap[K, V]] = {
     val mapKToMap = toMap.groupBy(f)
@@ -638,9 +623,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * The result of multiplying all the entries of this <code>NonEmptyMap</code>.
     *
-    * <p>
     * This method can be invoked for any <code>NonEmptyMap[T]</code> for which an implicit <code>Numeric[T]</code> exists.
-    * </p>
+    * 
     *
     * @return the product of all elements
     */
@@ -649,9 +633,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * Reduces the entries of this <code>NonEmptyMap</code> using the specified associative binary operator.
     *
-    * <p>
     * The order in which operations are performed on entries is unspecified and may be nondeterministic.
-    * </p>
+    * 
     *
     * @tparam U a type parameter for the binary operator, a supertype of T.
     * @param op a binary operator that must be associative.
@@ -670,9 +653,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * op(...op(op(x_1, x_2), x_3), ..., x_n)
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the elements of this <code>NonEmptyMap</code>. 
-    * </p>
+    * 
     */
   final def reduceLeft[U >: (K, V)](op: (U, (K, V)) => U): U = toMap.reduceLeft(op)
 
@@ -682,7 +664,7 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * @tparam U the result type of the binary operator.
     * @param op the binary operator.
     * @return a <code>Some</code> containing the result of <code>reduceLeft(op)</code>
-    * </p>
+    * 
     */
   final def reduceLeftOption[U >: (K, V)](op: (U, (K, V)) => U): Option[U] = toMap.reduceLeftOption(op)
 
@@ -699,9 +681,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
     * op(x_1, op(x_2, ... op(x_{n-1}, x_n)...))
     * </pre>
     *
-    * <p>
     * where x<sub>1</sub>, ..., x<sub>n</sub> are the entries of this <code>NonEmptyMap</code>.
-    * </p>
+    * 
     */
   final def reduceRight[U >: (K, V)](op: ((K, V), U) => U): U = toMap.reduceRight(op)
 
@@ -744,9 +725,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * Computes a prefix scan of the entries of this <code>NonEmptyMap</code>.
     *
-    * <p>
     * Note: The neutral element z may be applied more than once. 
-    * </p>
+    * 
     *
     * @param z a neutral element for the scan operation; may be added to the result an arbitrary number of
     *     times, and must not change the result (<em>e.g.</em>, <code>Nil</code> for list concatenation,
@@ -779,9 +759,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * The size of this <code>NonEmptyMap</code>.
     *
-    * <p>
     * Note: <code>length</code> and <code>size</code> yield the same result, which will be <code>&gt;</code>= 1. 
-    * </p>
+    * 
     *
     * @return the number of elements in this <code>NonEmptyMap</code>. 
     */
@@ -797,9 +776,8 @@ final class NonEmptyMap[K, +V] private (val toMap: Map[K, V]) extends AnyVal {
   /**
     * The result of summing all the elements of this <code>NonEmptyMap</code>.
     *
-    * <p>
     * This method can be invoked for any <code>NonEmptyMap[T]</code> for which an implicit <code>Numeric[T]</code> exists.
-    * </p>
+    * 
     *
     * @return the sum of all elements
     */
@@ -1001,10 +979,9 @@ object NonEmptyMap {
   /**
     * Implicit conversion from <code>NonEmptyMap</code> to <code>Map</code>.
     *
-    * <p>
     * One use case for this implicit conversion is to enable <code>GenSeq[NonEmptyMap]</code>s to be flattened.
     * Here's an example:
-    * </p>
+    * 
     *
     * <pre class="stREPL">
     * scala&gt; Vector(NonEmptyMap(1, 2, 3), NonEmptyMap(3, 4), NonEmptyMap(5, 6, 7, 8)).flatten

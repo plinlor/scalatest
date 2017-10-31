@@ -31,9 +31,8 @@ import TripleEqualsSupport._
  * in equality comparisons match exactly.
  * </td></tr></table>
  *
- * <p>
  * By default under <code>TripleEquals</code>, any use of <code>===</code> will compile, just like the <code>==</code> operator:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -52,10 +51,9 @@ import TripleEqualsSupport._
  * res2: Boolean = false
  * </pre>
  *
- * <p>
  * With <a href="http://www.scalactic.org/supersafe">SuperSafe Community Edition</a> installed, the first two expressions
  * above will be allowed to compile, but the third (which represents a likely bug) will not: 
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -79,9 +77,8 @@ import TripleEqualsSupport._
  *             ^
  * </pre>
  *
- * <p>
  * By contrast, <code>TypeCheckedTripleEquals</code> will prevent any of the above three expressions from compiling:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -110,12 +107,11 @@ import TripleEqualsSupport._
  *             ^
  * </pre>
  *
- * <p>
  * Trait <code>TypeCheckedTripleEquals</code> rejects comparisons of types <code>Int</code> and <code>Long</code>, <code>List[Int]</code>
  * and <code>Vector[Int]</code>, and <code>String</code> and <code>Int</code>, because none have a direct subtype/supertype relationship.
  * To compare two types that are unrelated by inheritance under <code>TypeCheckedTripleEquals</code>, you could
  * convert one of them to the other type (because a type is both a subtype and supertype of itself). Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; 1L === 1.toLong // Now both sides are Long
@@ -125,14 +121,13 @@ import TripleEqualsSupport._
  * res1: Boolean = true
  * </pre>
  *
- * <p>
  * Nevertheless, a better (and the recommended) way to deal with this situation is to use a <em>widening type ascription</em>.
  * A type ascription is simply a colon and a type placed next to a variable, usually surrounded by parentheses.
  * For example, because <code>AnyVal</code> is a common supertype of <code>Int</code> and <code>Long</code>, 
  * you could solve the type error by widening the type of one side or the other to <code>AnyVal</code>.
  * Because <code>AnyVal</code> is a supertype of both <code>Int</code> and <code>Long</code>, the
  * type constraint will be satisfied:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; 1 === (1L: AnyVal)
@@ -142,11 +137,10 @@ import TripleEqualsSupport._
  * res3: Boolean = true
  * </pre>
  * 
- * <p>
  * Similarly, since <code>Seq[Int]</code> is a common supertype of both
  * <code>Vector[Int]</code> and <code>List[Int]</code>, the type constraint can be
  * satisfied by widening either to their common supertype, <code>Seq[Int]</code>:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; List(1, 2, 3) === (Vector(1, 2, 3): Seq[Int])
@@ -156,21 +150,19 @@ import TripleEqualsSupport._
  * res5: Boolean = true
  * </pre>
  *
- * <p>
  * The primary intended use case for <code>TypeCheckedTripleEquals</code> is to enable tests to be very strict
  * about which types can compared for equality, but it can also be used with production code where this level of
  * strictness is desired. 
- * </p>
+ * 
  *
  * <h2>Forcing implicit conversions before equality checks</h2>
  *
- * <p>
  * You can also use a type ascription to force an implicit conversion before a value participates
  * in an equality comparison. For example, although <code>JavaConversions</code> provides
  * an implicit conversion between <code>java.util.Set</code> and <code>scala.collection.mutable.Set</code>,
  * under <code>TypeCheckedTripleEquals</code> an equality comparison between those two types
  * will not be allowed:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import collection.JavaConversions._
@@ -190,10 +182,9 @@ import TripleEqualsSupport._
  *                                  ^
  * </pre>
  *
- * <p>
  * To force an implicit conversion of the Java <code>HashSet</code> to a Scala <code>mutable.Set</code>, after which the
  * type constraint will be satisfied, you can use a type ascription:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; mutable.Set.empty[String] === (new java.util.HashSet[String]: mutable.Set[String])
@@ -202,12 +193,11 @@ import TripleEqualsSupport._
  * 
  * <h2>Scoping equality policies</h2>
  *
- * <p>
  * This trait will override or hide implicit methods defined by 
  * <a href="TripleEquals.html"><code>TripleEquals</code></a> 
  * and can therefore be used to temporarily turn on or off type checking in a limited scope. Here's an example, in which <code>TypeCheckedTripleEquals</code> will
  * cause a compiler error:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalactic._
@@ -229,10 +219,9 @@ import TripleEqualsSupport._
  * }
  * </pre>
  *
- * <p>
  * Because <code>Int</code> and <code>Long</code> are not in a subtype/supertype relationship, comparing <code>1</code> and <code>1L</code> in the context
  * of <code>TypeCheckedTripleEquals</code> will generate a compiler error:
- * </p>
+ * 
  *
  * <pre>
  * Example.scala:9: error: types Int and Long do not adhere to the type constraint selected
@@ -243,10 +232,9 @@ import TripleEqualsSupport._
  * one error found
  * </pre>
  * 
- * <p>
  * You can &ldquo;relax&rdquo; the type checking locally by importing
  * the members of <code>TripleEquals</code> in a limited scope:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * package org.scalactic.examples.conversioncheckedtripleequals
@@ -271,23 +259,20 @@ import TripleEqualsSupport._
  * }
  * </pre>
  *
- * <p>
  * With the above change, the <code>Example.scala</code> file compiles fine. The strict checking is disabled only inside the first <code>cmp</code> method that
  * takes an <code>Int</code> and a <code>Long</code>. <code>TypeCheckedTripleEquals</code> is still enforcing its type constraint, for example, for the <code>s === t</code>
  * expression in the other overloaded <code>cmp</code> method that takes strings.
- * </p>
  * 
- * <p>
+ * 
  * Because the methods <code>TripleEquals</code> and <code>TypeCheckedTripleEquals</code>
  * <em>override</em> all the methods defined in supertype <a href="TripleEqualsSupport.html"><code>TripleEqualsSupport</code></a>, you can achieve the same
  * kind of nested tuning of equality constraints whether you mix in traits, import from companion objects, or use some combination of both.
- * </p>
+ * 
  *
- * <p>
  * In short, you should be able to select a primary constraint level via either a mixin or import, then change that in nested scopes
  * however you want, again either through a mixin or import, without getting any implicit conversion ambiguity. The innermost constraint level in scope
  * will always be in force.
- * </p>
+ * 
  *
  * @author Bill Venners
  */

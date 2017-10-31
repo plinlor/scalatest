@@ -19,20 +19,18 @@ package org.scalactic.anyvals
   * Object that can be used as an endpoint for <code>NonEmptyList</code> construction expressions
   * that use the cons (<code>::</code>) operator.
   *
-  * <p>
   * Here's an example:
-  * </p>
+  * 
   *
   * <pre class="stREPL">
   * scala&gt; 1 :: 2 :: 3 :: End
   * res0: org.scalactic.NonEmptyList[Int] = NonEmptyList(1, 2, 3)
   * </pre>
   *
-  * <p>
   * Note that unlike <code>Nil</code>, which is an instance of <code>List[Nothing]</code>,
   * <code>End</code> is not an instance of <code>NonEmptyList[Nothing]</code>, because there is
   * no empty <code>NonEmptyList</code>:
-  * </p>
+  * 
   *
   * <pre class="stREPL">
   * scala&gt; Nil.isInstanceOf[List[_]]
@@ -47,10 +45,9 @@ object End {
     * A <code>::</code> operator that serves to start a <code>NonEmptyList</code> construction
     * expression.
     *
-    * <p>
     * The result of calling this method will always be a <code>NonEmptyList</code> of length 1.
     * Here's an example:
-    * </p>
+    * 
     *
     * <pre class="stREPL">
     * scala> 1 :: End

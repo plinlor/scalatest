@@ -22,7 +22,6 @@ import reflect.macros.Context
  * Trait providing assertion methods that can be called at compile time from macros
  * to validate literals in source code.
  *
- * <p>
  * The intent of <code>CompileTimeAssertions</code> is to make it easier to create
  * <code>AnyVal</code>s that restrict the values of types for which Scala supports
  * literals: <code>Int</code>, <code>Long</code>, <code>Float</code>, <code>Double</code>, <code>Char</code>,
@@ -31,7 +30,7 @@ import reflect.macros.Context
  * an example of a method that both requires an odd <code>Int</code> is passed (as a
  * <em>precondition</em>, and ensures an odd * <code>Int</code> is returned (as
  * a <em>postcondition</em>):
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * def nextOdd(i: Int): Int = {
@@ -41,14 +40,13 @@ import reflect.macros.Context
  * }
  * </pre>
  *
- * <p>
  * In either the precondition or postcondition check fails, an exception will
  * be thrown at runtime. If you have many methods like this you may want to
  * create a type to represent an odd <code>Int</code>, so that the checking
  * for validity errors is isolated in just one place. By using an <code>AnyVal</code>
  * you can avoid boxing the <code>Int</code>, which may be more efficient.
  * This might look like:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * final class OddInt private (val value: Int) extends AnyVal {
@@ -63,7 +61,6 @@ import reflect.macros.Context
  * }
  * </pre>
  *
- * <p>
  * An <code>AnyVal</code> cannot have any constructor code, so to ensure that
  * any <code>Int</code> passed to the <code>OddInt</code> constructor is actually
  * odd, the constructor must be private. That way the only way to construct a
@@ -73,19 +70,18 @@ import reflect.macros.Context
  * <code>ensuring</code> clauses anywhere else that odd <code>Int</code>s are
  * needed, because the type promises the constraint. The <code>nextOdd</code>
  * method could, therefore, be rewritten as:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * def nextOdd(oi: OddInt): OddInt = OddInt(oi.value + 2)
  * </pre>
  *
- * <p>
  * Using the compile-time assertions provided by this trait, you can construct
  * a factory method implemented via a macro that causes a compile failure
  * if <code>OddInt.apply</code> is passed anything besides an odd
  * <code>Int</code> literal. Class <code>OddInt</code> would look exactly the
  * same as before:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * final class OddInt private (val value: Int) extends AnyVal {
@@ -93,7 +89,6 @@ import reflect.macros.Context
  * }
  * </pre>
  *
- * <p>
  * In the companion object, however, the <code>apply</code> method would
  * be implemented in terms of a macro. Because the <code>apply</code> method
  * will only work with literals, you'll need a second method that can work
@@ -101,7 +96,7 @@ import reflect.macros.Context
  * that returns an <code>Option[OddInt]</code> that returns <code>Some[OddInt}</code> if the passed <code>Int</code> is odd,
  * else returns <code>None</code>, and an <code>ensuringValid</code> method that returns an <code>OddInt</code>
  * if the passed <code>Int</code> is valid, else throws <code>AssertionError</code>.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * object OddInt {
@@ -123,12 +118,11 @@ import reflect.macros.Context
  * }
  * </pre>
  *
- * <p>
  * The <code>apply</code> method refers to a macro implementation method in class
  * <code>PosIntMacro</code>. The macro implementation of any such method can look
  * very similar to this one. The only changes you'd need to make is the
  * <code>isValid</code> method implementation and the text of the error messages.
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalactic.anyvals.CompileTimeAssertions
@@ -156,7 +150,6 @@ import reflect.macros.Context
  * }
  * </pre>
  *
- * <p>
  * The <code>isValid</code> method just takes the underlying type and returns <code>true</code> if it is valid,
  * else <code>false</code>. This method is placed here so the same valiation code can be used both in
  * the <code>from</code> method at runtime and the <code>apply</code> macro at compile time. The <code>apply</code>
@@ -168,30 +161,27 @@ import reflect.macros.Context
  * will then execute. This line of code must construct an AST (abstract syntax tree) of code that will replace
  * the <code>OddInt.apply</code> invocation. We invoke the other factory method that either returns an <code>OddInt</code>
  * or throws an <code>AssertionError</code>, since we've proven at compile time that the call will succeed.
- * </p>
+ * 
  *
- * <p>
  * You may wish to use quasi-quotes instead of reify. The reason we use reify is that this also works on 2.10 without
  * any additional plugin (i.e., you don't need macro paradise), and Scalactic supports 2.10.
- * </p>
+ * 
  */
 trait CompileTimeAssertions {
 
   /**
    * Ensures a given expression of type <code>Int</code> is a literal with a valid value according to a given validation function.
    *
-   * <p>
    * If the given <code>Int</code> expression is a literal whose value satisfies the given validation function, this method will
    * return normally. Otherwise, if the given <code>Int</code> expression is not a literal, this method will complete abruptly with
    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
    * given <code>Int</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
+   * 
    *
    * @param c the compiler context for this assertion
    * @param value the <code>Int</code> expression to validate
@@ -216,18 +206,16 @@ trait CompileTimeAssertions {
   /**
    * Ensures a given expression of type <code>Long</code> is a literal with a valid value according to a given validation function.
    *
-   * <p>
    * If the given <code>Long</code> expression is a literal whose value satisfies the given validation function, this method will
    * return normally. Otherwise, if the given <code>Long</code> expression is not a literal, this method will complete abruptly with
    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
    * given <code>Long</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
+   * 
    *
    * @param c the compiler context for this assertion
    * @param value the <code>Long</code> expression to validate
@@ -252,18 +240,16 @@ trait CompileTimeAssertions {
   /**
    * Ensures a given expression of type <code>Float</code> is a literal with a valid value according to a given validation function.
    *
-   * <p>
    * If the given <code>Float</code> expression is a literal whose value satisfies the given validation function, this method will
    * return normally. Otherwise, if the given <code>Float</code> expression is not a literal, this method will complete abruptly with
    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
    * given <code>Float</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
+   * 
    *
    * @param c the compiler context for this assertion
    * @param value the <code>Float</code> expression to validate
@@ -288,18 +274,16 @@ trait CompileTimeAssertions {
   /**
    * Ensures a given expression of type <code>Double</code> is a literal with a valid value according to a given validation function.
    *
-   * <p>
    * If the given <code>Double</code> expression is a literal whose value satisfies the given validation function, this method will
    * return normally. Otherwise, if the given <code>Double</code> expression is not a literal, this method will complete abruptly with
    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
    * given <code>Double</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
+   * 
    *
    * @param c the compiler context for this assertion
    * @param value the <code>Double</code> expression to validate
@@ -324,18 +308,16 @@ trait CompileTimeAssertions {
   /**
    * Ensures a given expression of type <code>String</code> is a literal with a valid value according to a given validation function.
    *
-   * <p>
    * If the given <code>String</code> expression is a literal whose value satisfies the given validation function, this method will
    * return normally. Otherwise, if the given <code>String</code> expression is not a literal, this method will complete abruptly with
    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
    * given <code>String</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
+   * 
    *
    * @param c the compiler context for this assertion
    * @param value the <code>String</code> expression to validate
@@ -360,18 +342,16 @@ trait CompileTimeAssertions {
   /**
    * Ensures a given expression of type <code>Char</code> is a literal with a valid value according to a given validation function.
    *
-   * <p>
    * If the given <code>Char</code> expression is a literal whose value satisfies the given validation function, this method will
    * return normally. Otherwise, if the given <code>Char</code> expression is not a literal, this method will complete abruptly with
    * an exception whose detail message includes the <code>String</code> passed as <code>notLiteralMsg</code>. Otherwise, the
    * given <code>Char</code> expression is a literal that does <em>not</em> satisfy the given validation function, so this method will
    * complete abruptly with an exception whose detail message includes the <code>String</code> passed as <code>notValidMsg</code>.
-   * </p>
+   * 
    *
-   * <p>
    * This method is intended to be invoked at compile time from macros. When called from a macro, exceptions thrown by this method
    * will result in compiler errors. The detail message of the thrown exception will appear as the compiler error message.
-   * </p>
+   * 
    *
    * @param c the compiler context for this assertion
    * @param value the <code>Char</code> expression to validate

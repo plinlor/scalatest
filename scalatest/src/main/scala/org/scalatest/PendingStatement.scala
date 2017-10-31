@@ -18,7 +18,6 @@ package org.scalatest
 /**
  * Trait mixed into the result type of the <code>pending</code> statement of trait <code>Assertions</code>, which always throws <code>TestPendingException</code>. 
  *
- * <p>
  * This type is used primarily to facilitate the <code>is (pending)</code> syntax of
  * traits <a href="FlatSpec.html"><code>FlatSpec</code></a>, <a href="WordSpec.html"><code>WordSpec</code></a>, and
  * <a href="FlatSpec.html"><code>FLatSpec</code></a> as well the
@@ -29,7 +28,7 @@ package org.scalatest
  * type. To make sure syntax like <code>is (pending)</code> only works with
  * method <code>pending</code>, it is helpful to have a specially named
  * "<code>Nothing</code>" type.
- * </p>
+ * 
  */
 sealed trait PendingStatement
 

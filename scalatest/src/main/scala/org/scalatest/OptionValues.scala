@@ -25,27 +25,24 @@ import org.scalatest.exceptions.TestFailedException
  * to <code>Option</code>, which will return the value of the option if it is defined,
  * or throw <code>TestFailedException</code> if not.
  *
- * <p>
  * This construct allows you to express in one statement that an option should be defined
  * and that its value should meet some expectation. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * opt.value should be &gt; 9
  * </pre>
  *
- * <p>
  * Or, using an assertion instead of a matcher expression:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(opt.value &gt; 9)
  * </pre>
  *
- * <p>
  * Were you to simply invoke <code>get</code> on the <code>Option</code>, 
  * if the option wasn't defined, it would throw a <code>NoSuchElementException</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val opt: Option[Int] = None
@@ -53,13 +50,12 @@ import org.scalatest.exceptions.TestFailedException
  * opt.get should be &gt; 9 // opt.get throws NoSuchElementException
  * </pre>
  *
- * <p>
  * The <code>NoSuchElementException</code> would cause the test to fail, but without providing a <a href="exceptions/StackDepth.html">stack depth</a> pointing
  * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> (and a
  * few other ScalaTest exceptions), makes it quicker for
  * users to navigate to the cause of the failure. Without <code>OptionValues</code>, to get
  * a stack depth exception you would need to make two statements, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val opt: Option[Int] = None
@@ -68,9 +64,8 @@ import org.scalatest.exceptions.TestFailedException
  * opt.get should be &gt; 9
  * </pre>
  *
- * <p>
  * The <code>OptionValues</code> trait allows you to state that more concisely:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val opt: Option[Int] = None

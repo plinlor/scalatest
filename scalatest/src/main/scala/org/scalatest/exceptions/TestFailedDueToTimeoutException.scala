@@ -22,12 +22,11 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
 /**
  * Subclass of <a href="TestFailedException.html"><code>TestFailedException</code></a> representing tests that failed because of a timeout.
  *
- * <p>
  * This exception is thrown by the <code>failAfter</code>
  * method of trait <a href="../concurrent/Timeouts.html"><code>Timeouts</code></a>, the <code>eventually</code> method of trait
  * <a href="../concurrent/Eventually.html"><code>Eventually</code></a>, and the <code>await</code> methods of trait
  * <a href="../concurrent/AsyncAssertions.html"><code>AsyncAssertions</code></a>.
- * </p>
+ * 
  *
  * @param messageFun a function that produces an optional detail message for this <code>TestFailedDueToTimeoutException</code>.
  * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestFailedDueToTimeoutException</code> to be thrown.

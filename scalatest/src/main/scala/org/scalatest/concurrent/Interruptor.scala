@@ -18,10 +18,9 @@ package org.scalatest.concurrent
 /**
  * Strategy for interrupting an operation after a timeout expires.
  *
- * <p>
  * An instance of this trait is used for configuration when using traits
  * <a href="Timeouts.html"><code>Timeouts</code></a> and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * </p>
+ * 
  */
 @deprecated("Please use org.scalatest.concurrent.Signaler instead.")
 trait Interruptor extends Function1[Thread, Unit] { thisInterruptor =>
@@ -29,12 +28,11 @@ trait Interruptor extends Function1[Thread, Unit] { thisInterruptor =>
   /**
    * Interrupts an operation.
    *
-   * <p>
    * This method may do anything to attempt to interrupt an operation, or even do nothing.
    * When called by <code>failAfter</code> method of trait <a href="Timeouts.html"><code>Timeouts</code></a>, the passed
    * <code>Thread</code> will represent the main test thread. This <code>Thread</code> is
    * passed in case it is useful, but need not be used by implementations of this method.
-   * </p>
+   * 
    */
   def apply(testThread: Thread): Unit
 

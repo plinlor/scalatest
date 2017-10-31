@@ -28,18 +28,16 @@ import java.lang.reflect.{InvocationTargetException, Method, Modifier}
  * val decorateToStringValue = PrivateMethod[String]('decorateToStringValue)
  * </pre>
  *
- * <p>
  * The type parameter on <code>PrivateMethod</code>, in this case <code>String</code>, is the result type of the private method
  * you wish to invoke. The symbol passed to the <code>PrivateMethod.apply</code> factory method, in this
  * case <code>'decorateToStringValue</code>, is the name of the private method to invoke. To test
  * the private method, use the <code>invokePrivate</code> operator, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * targetObject invokePrivate decorateToStringValue(1)
  * </pre>
  *
- * <p>
  * Here, <code>targetObject</code> is a variable or singleton object name referring to the object whose
  * private method you want to test. You pass the arguments to the private method in the parentheses after
  * the <code>PrivateMethod</code> object.
@@ -49,9 +47,8 @@ import java.lang.reflect.{InvocationTargetException, Method, Modifier}
  * looks like a regular method invocation, but with the dot (<code>.</code>) replaced by <code>invokePrivate</code>.
  * The private method is invoked dynamically via reflection, so if you have a typo in the method name symbol, specify the wrong result type,
  * or pass invalid parameters, the <code>invokePrivate</code> operation will compile, but throw an exception at runtime.
- * </p>
+ * 
  *
- * <p>
  * One limitation to be aware of is that you can't use <code>PrivateMethodTester</code> to test a private method
  * declared in a trait, because the class the trait gets mixed into will not declare that private method. Only the
  * class generated to hold method implementations for the trait will have that private method. If you want to
@@ -60,21 +57,19 @@ import java.lang.reflect.{InvocationTargetException, Method, Modifier}
  * way. If the private trait method you want to test uses the trait's state, your best options are to test it
  * indirectly via a non-private trait method that calls the private method, or make the private method package access
  * and test it directly via regular static method invocations. 
- * </p>
+ * 
  *
  *
- * <p>
  * Also, if you want to use <code>PrivateMethodTester</code> to invoke a parameterless private method, you'll need to use
  * empty parens. Instead of:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * targetObject invokePrivate privateParameterlessMethod
  * </pre>
  *
- * <p>
  * You'll need to write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * targetObject invokePrivate privateParameterlessMethod()

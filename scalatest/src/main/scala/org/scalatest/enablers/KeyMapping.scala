@@ -25,7 +25,6 @@ import scala.collection.GenTraversable
 /**
  * Supertrait for typeclasses that enable <code>contain key</code> matcher syntax.
  *
- * <p>
  * A <code>KeyMapping[M]</code> provides access to the "key mapping nature" of type <code>M</code> in such
  * a way that <code>contain key</code> matcher syntax can be used with type <code>M</code>. A <code>M</code>
  * can be any type for which <code>contain key</code> syntax makes sense. ScalaTest provides implicit implementations
@@ -33,10 +32,9 @@ import scala.collection.GenTraversable
  * matcher syntax on your own type <code>U</code> by defining a <code>KeyMapping[U]</code> for the type and making it
  * available implicitly.
  * 
- * <p>
  * ScalaTest provides implicit <code>KeyMapping</code> instances for <code>scala.collection.GenMap</code>,
  * and <code>java.util.Map</code> in the <code>KeyMapping</code> companion object.
- * </p>
+ * 
  */
 trait KeyMapping[-M] {
 

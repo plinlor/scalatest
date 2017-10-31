@@ -45,11 +45,10 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepthFun
  * override <code>defaultTestSignaler</code> and set it to <code>ThreadSignaler</code>.
  * </strong>
  *
- * <p>
  * This trait overrides <code>withFixture</code>, wrapping a <code>super.withFixture(test)</code> call
  * in a <code>failAfter</code> invocation, specifying a time limit obtained by invoking <code>timeLimit</code>
  * and a <a href="Signaler.html"><code>Signaler</code></a> by invoking <code>defaultTestSignaler</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * failAfter(timeLimit) {
@@ -57,17 +56,15 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepthFun
  * } (defaultTestSignaler)
  * </pre>
  *
- * <p>
  * Note that the <code>failAfter</code> method executes the body of the by-name passed to it using the same
  * thread that invoked <code>failAfter</code>. This means that the same thread will run the <code>withFixture</code> method
  * as well as each test, so no extra synchronization is required. A second thread is used to run a timer, and if the timeout
  * expires, that second thread will attempt to signal the main test thread via the <code>defaultTestSignaler</code>.
- * </p>
  * 
- * <p>
+ * 
  * The <code>timeLimit</code> field is abstract in this trait. Thus you must specify a time limit when you use it.
  * For example, the following code specifies that each test must complete within 200 milliseconds:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalatest.FunSpec
@@ -92,22 +89,19 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepthFun
  * }
  * </pre>
  *
- * <p>
  * If you run the above <code>ExampleSpec</code>, the second test will fail with the error message: 
- * </p>
  * 
- * <p>
+ * 
  * <code>The test did not complete within the specified 200 millisecond time limit.</code>
- * </p>
  * 
- * <p>
+ * 
  * The <code>failAfter</code> method uses an <code>Signaler</code> to attempt to signal the main test thread if the timeout
  * expires. The default <code>Signaler</code> returned by the <code>defaultTestSignaler</code> method is a
  * <a href="DoNotSignal$.html"><code>DoNotSignal</code></a>, which does not signal the main test thread to stop. If you wish to change this
  * signaling strategy, override <code>defaultTestSignaler</code> to return a different <code>Signaler</code>. For example,
  * here's how you'd change the default to <a href="ThreadSignaler$.html"><code>ThreadSignaler</code></a>, which will
  * interrupt the main test thread when time is up:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalatest.FunSpec
@@ -131,13 +125,12 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepthFun
  * }
  * </pre>
  * 
- * <p>
  * Like the previous incarnation of <code>ExampleSuite</code>, the second test will fail with an error message that indicates
  * a timeout expired. But whereas in the previous case, the <code>Thread.sleep</code> would be interrupted after 200 milliseconds,
  * in this case it is never interrupted. In the previous case, the failed test requires a little over 200 milliseconds to run.
  * In this case, because the <code>sleep(300)</code> is never interrupted, the failed test requires a little over 300 milliseconds
  * to run.
- * </p>
+ * 
  */
 trait TimeLimitedTests extends TestSuiteMixin { this: TestSuite =>
 
@@ -171,10 +164,9 @@ trait TimeLimitedTests extends TestSuiteMixin { this: TestSuite =>
   /**
    * The default <a href="Signaler.html"><code>Signaler</code></a> strategy used to interrupt tests that exceed their time limit.
    * 
-   * <p>
    * This trait's implementation of this method returns <a href="DoNotSignal$.html"><code>DoNotSignal</code></a>, which does not signal/interrupt
    * the main test and future thread. Override this method to change the test signaling strategy.
-   * </p>
+   * 
    * 
    * @return a <code>ThreadInterruptor</code>
    */

@@ -26,9 +26,8 @@ package org.scalatest
  * and gentle guide to structuring text (with <code>describe</code> and <code>it</code>) provide an excellent general-purpose choice for writing specification-style tests. 
  * </td></tr></table>
  * 
- * <p>
  * Here's an example <code>FunSpec</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec
@@ -53,7 +52,6 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * A <code>FunSpec</code> contains <em>describe clauses</em> and tests. You define a describe clause
  * with <code>describe</code>, and a test with either <code>it</code> or <code>they</code>. 
  * <code>describe</code>,  <code>it</code>, and <code>they</code> are methods, defined in
@@ -66,11 +64,10 @@ package org.scalatest
  * You place the spec text between the parentheses, followed by the test code between curly
  * braces.  The test code will be wrapped up as a function passed as a by-name parameter to
  * <code>it</code> (or <code>they</code>), which will register the test for later execution.
- * </p>
+ * 
  *
- * <p>
  * Note: the <code>they</code> method is intended for use when the subject is plural, for example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * describe("The combinators") {
@@ -80,13 +77,11 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * A <code>FunSpec</code>'s lifecycle has two phases: the <em>registration</em> phase and the
  * <em>ready</em> phase. It starts in registration phase and enters ready phase the first time
  * <code>run</code> is called on it. It then remains in ready phase for the remainder of its lifetime.
- * </p>
+ * 
  *
- * <p>
  * Tests can only be registered with the <code>it</code> or <code>they</code> methods while the <code>FunSpec</code> is
  * in its registration phase. Any attempt to register a test after the <code>FunSpec</code> has
  * entered its ready phase, <em>i.e.</em>, after <code>run</code> has been invoked on the <code>FunSpec</code>,
@@ -94,22 +89,20 @@ package org.scalatest
  * of using <code>FunSpec</code> is to register tests during object construction as is done in all
  * the examples shown here. If you keep to the recommended style, you should never see a
  * <code>TestRegistrationClosedException</code>.
- * </p>
+ * 
  *
- * <p>
  * When you execute a <code>FunSpec</code>, it will send <code>Formatter</code>s in the events it sends to the
  * <code>Reporter</code>. ScalaTest's built-in reporters will report these events in such a way
  * that the output is easy to read as an informal specification of the <em>subject</em> being tested.
  * For example, were you to run <code>SetSpec</code> from within the Scala interpreter:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)
  * </pre>
  *
- * <p>
  * You would see:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * <span class="stGreen">A Set</span>
@@ -118,10 +111,9 @@ package org.scalatest
  * <span class="stGreen">  - should produce NoSuchElementException when head is invoked</span>
  * </pre>
  *
- * <p>
  * Or, to run just the &ldquo;<code>A Set when empty should have size 0</code>&rdquo; test, you could pass that test's name, or any unique substring of the
  * name, such as <code>"size 0"</code> or even just <code>"0"</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSuite, "size 0")
@@ -130,30 +122,26 @@ package org.scalatest
  * <span class="stGreen">  - should have size 0</span>
  * </pre>
  *
- * <p>
  * You can also pass to <code>execute</code> a <a href="ConfigMap.html"><em>config map</em></a> of key-value
  * pairs, which will be passed down into suites and tests, as well as other parameters that configure the run itself.
  * For more information on running in the Scala interpreter, see the documentation for <code>execute</code> (below) and the
  * <a href="Shell.html">ScalaTest shell</a>.
- * </p>
+ * 
  *
- * <p>
  * The <code>execute</code> method invokes a <code>run</code> method that takes two
  * parameters. This <code>run</code> method, which actually executes the suite, will usually be invoked by a test runner, such
  * as <a href="run$.html"><code>run</code></a>, <a href="tools/Runner$.html"><code>tools.Runner</code></a>, a build tool, or an IDE.
- * </p>
- * <p>
+ * 
  * <em>Note: <code>FunSpec</code>'s syntax is in great part inspired by <a href="http://rspec.info/" target="_blank">RSpec</a>, a Ruby BDD framework.</em>
- *</p>
+ *
  *
  * <a name="ignoredTests"></a><h2>Ignored tests</h2>
  *
- * <p>
  * To support the common use case of temporarily disabling a test, with the
  * good intention of resurrecting the test at a later time, <code>FunSpec</code> provides registration
  * methods that start with <code>ignore</code> instead of <code>it</code> or <code>they</code>. For example, to temporarily
  * disable the test with the text <code>"should have size 0"</code>, just change &ldquo;<code>it</code>&rdquo; into &#8220;<code>ignore</code>,&#8221; like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.ignore
@@ -178,17 +166,15 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * If you run this version of <code>SetSpec</code> with:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)
  * </pre>
  *
- * <p>
  * It will run only the second test and report that the first test was ignored:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * <span class="stGreen">A Set</span>
@@ -197,9 +183,8 @@ package org.scalatest
  * <span class="stGreen">  - should produce NoSuchElementException when head is invoked</span>
  * </pre>
  *
- * <p>
  * If you wish to temporarily ignore an entire suite of tests, you can (on the JVM, not Scala.js) annotate the test class with <code>@Ignore</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.ignoreall
@@ -226,11 +211,10 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * When you mark a test class with a tag annotation, ScalaTest will mark each test defined in that class with that tag.
  * Thus, marking the <code>SetSpec</code> in the above example with the <code>@Ignore</code> tag annotation means that both tests
  * in the class will be ignored. If you run the above <code>SetSpec</code> in the Scala interpreter, you'll see:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)
@@ -241,16 +225,14 @@ package org.scalatest
  * <span class="stYellow">  - should produce NoSuchElementException when head is invoked !!! IGNORED !!!</span>
  * </pre>
  *
- * <p>
  * Note that marking a test class as ignored won't prevent it from being discovered by ScalaTest. Ignored classes
  * will be discovered and run, and all their tests will be reported as ignored. This is intended to keep the ignored
  * class visible, to encourage the developers to eventually fix and &ldquo;un-ignore&rdquo; it. If you want to
  * prevent a class from being discovered at all (on the JVM, not Scala.js), use the <a href="DoNotDiscover.html"><code>DoNotDiscover</code></a> annotation instead.
- * </p>
+ * 
  *
  * <a name="informers"></a><h2>Informers</h2>
  *
- * <p>
  * One of the parameters to <code>FunSpec</code>'s <code>run</code> method is a <code>Reporter</code>, which
  * will collect and report information about the running suite of tests.
  * Information about suites and tests that were run, whether tests succeeded or failed, 
@@ -263,7 +245,7 @@ package org.scalatest
  * The <code>Informer</code> will then pass the information to the <code>Reporter</code> via an <code>InfoProvided</code> event.
  * Here's an example in which the <code>Informer</code> returned by <code>info</code> is used implicitly by the
  * <code>Given</code>, <code>When</code>, and <code>Then</code> methods of trait <code>GivenWhenThen</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.info
@@ -308,16 +290,14 @@ package org.scalatest
  *
  * <a name="documenters"></a><h2>Documenters</h2>
  *
- * <p>
  * <code>FunSpec</code> also provides a <code>markup</code> method that returns a <a href="Documenter.html"><code>Documenter</code></a>, which allows you to send
  * to the <code>Reporter</code> text formatted in <a href="http://daringfireball.net/projects/markdown/" target="_blank">Markdown syntax</a>.
  * You can pass the extra information to the <code>Documenter</code> via its <code>apply</code> method.
  * The <code>Documenter</code> will then pass the information to the <code>Reporter</code> via an <a href="events/MarkupProvided.html"><code>MarkupProvided</code></a> event.
- * </p>
+ * 
  *
- * <p>
  * Here's an example <code>FunSpec</code> that uses <code>markup</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.markup
@@ -373,29 +353,26 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Although all of ScalaTest's built-in reporters will display the markup text in some form,
  * the HTML reporter will format the markup information into HTML. Thus, the main purpose of <code>markup</code> is to
  * add nicely formatted text to HTML reports. Here's what the above <code>SetSpec</code> would look like in the HTML reporter:
- * </p>
+ * 
  *
  * <img class="stScreenShot" src="../../lib/funSpec.gif">
  *
  * <a name="notifiersAlerters"></a><h2>Notifiers and alerters</h2>
  *
- * <p>
  * ScalaTest records text passed to <code>info</code> and <code>markup</code> during tests, and sends the recorded text in the <code>recordedEvents</code> field of
  * test completion events like <code>TestSucceeded</code> and <code>TestFailed</code>. This allows string reporters (like the standard out reporter) to show
  * <code>info</code> and <code>markup</code> text <em>after</em> the test name in a color determined by the outcome of the test. For example, if the test fails, string
  * reporters will show the <code>info</code> and <code>markup</code> text in red. If a test succeeds, string reporters will show the <code>info</code>
  * and <code>markup</code> text in green. While this approach helps the readability of reports, it means that you can't use <code>info</code> to get status
  * updates from long running tests.
- * </p>
+ * 
  *
- * <p>
  * To get immediate (<em>i.e.</em>, non-recorded) notifications from tests, you can use <code>note</code> (a <a href="Notifier.html"><code>Notifier</code></a>) and <code>alert</code>
  * (an <a href="Alerter.html"><code>Alerter</code></a>). Here's an example showing the differences:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.note
@@ -422,11 +399,10 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Because <code>note</code> and <code>alert</code> information is sent immediately, it will appear <em>before</em> the test name in string reporters, and its color will
  * be unrelated to the ultimate outcome of the test: <code>note</code> text will always appear in green, <code>alert</code> text will always appear in yellow.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)
@@ -439,49 +415,43 @@ package org.scalatest
  *   + markup is *also* recorded</span>
  * </pre>
  *
- * <p>
  * Another example is <a href="tools/Runner$.html#slowpokeNotifications">slowpoke notifications</a>.
  * If you find a test is taking a long time to complete, but you're not sure which test, you can enable 
  * slowpoke notifications. ScalaTest will use an <code>Alerter</code> to fire an event whenever a test has been running
  * longer than a specified amount of time.
- * </p>
+ * 
  *
- * <p>
  * In summary, use <code>info</code> and <code>markup</code> for text that should form part of the specification output. Use
  * <code>note</code> and <code>alert</code> to send status notifications. (Because the HTML reporter is intended to produce a
  * readable, printable specification, <code>info</code> and <code>markup</code> text will appear in the HTML report, but
  * <code>note</code> and <code>alert</code> text will not.)
- * </p>
+ * 
  *
  * <a name="pendingTests"></a><h2>Pending tests</h2>
  *
- * <p>
  * A <em>pending test</em> is one that has been given a name but is not yet implemented. The purpose of
  * pending tests is to facilitate a style of testing in which documentation of behavior is sketched
  * out before tests are written to verify that behavior (and often, before the behavior of
  * the system being tested is itself implemented). Such sketches form a kind of specification of
  * what tests and functionality to implement later.
- * </p>
+ * 
  *
- * <p>
  * To support this style of testing, a test can be given a name that specifies one
  * bit of behavior required by the system being tested. The test can also include some code that
  * sends more information about the behavior to the reporter when the tests run. At the end of the test,
  * it can call method <code>pending</code>, which will cause it to complete abruptly with <code>TestPendingException</code>.
- * </p>
+ * 
  *
- * <p>
  * Because tests in ScalaTest can be designated as pending with <code>TestPendingException</code>, both the test name and any information
  * sent to the reporter when running the test can appear in the report of a test run. (In other words,
  * the code of a pending test is executed just like any other test.) However, because the test completes abruptly
  * with <code>TestPendingException</code>, the test will be reported as pending, to indicate
  * the actual test, and possibly the functionality, has not yet been implemented.
- * </p>
+ * 
  *
- * <p>
  * You can mark a test as pending in <code>FunSpec</code> by placing "<code>(pending)</code>" after the 
  * test name, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.pending
@@ -504,19 +474,17 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * (Note: "<code>(pending)</code>" is the body of the test. Thus the test contains just one statement, an invocation
  * of the <code>pending</code> method, which throws <code>TestPendingException</code>.)
  * If you run this version of <code>SetSpec</code> with:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new SetSpec)
  * </pre>
  *
- * <p>
  * It will run both tests, but report that the test named "<code>should have size 0</code>" is pending. You'll see:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * <span class="stGreen">A Set</span>
@@ -527,7 +495,6 @@ package org.scalatest
  * 
  * <a name="taggingTests"></a><h2>Tagging tests</h2>
  *
- * <p>
  * A <code>FunSpec</code>'s tests may be classified into groups by <em>tagging</em> them with string names.
  * As with any suite, when executing a <code>FunSpec</code>, groups of tests can
  * optionally be included and/or excluded. To tag a <code>FunSpec</code>'s tests,
@@ -539,7 +506,7 @@ package org.scalatest
  * defined a tag annotation interface with fully qualified name,
  * <code>com.mycompany.tags.DbTest</code>, then you could
  * create a matching tag for <code>FunSpec</code>s like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.tagging
@@ -549,9 +516,8 @@ package org.scalatest
  * object DbTest extends Tag("com.mycompany.tags.DbTest")
  * </pre>
  *
- * <p>
  * Given these definitions, you could place <code>FunSpec</code> tests into groups with tags like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.FunSpec
@@ -575,12 +541,10 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * This code marks both tests with the <code>org.scalatest.tags.Slow</code> tag, 
  * and the second test with the <code>com.mycompany.tags.DbTest</code> tag.
- * </p>
+ * 
  *
- * <p>
  * The <code>run</code> method takes a <code>Filter</code>, whose constructor takes an optional
  * <code>Set[String]</code> called <code>tagsToInclude</code> and a <code>Set[String]</code> called
  * <code>tagsToExclude</code>. If <code>tagsToInclude</code> is <code>None</code>, all tests will be run
@@ -588,30 +552,27 @@ package org.scalatest
  * <code>tagsToExclude</code> <code>Set</code>. If <code>tagsToInclude</code> is defined, only tests
  * belonging to tags mentioned in the <code>tagsToInclude</code> set, and not mentioned in <code>tagsToExclude</code>,
  * will be run.
- * </p>
+ * 
  *
- * <p>
  * It is recommended, though not required, that you create a corresponding tag annotation when you
  * create a <code>Tag</code> object. A tag annotation (on the JVM, not Scala.js) allows you to tag all the tests of a <code>FunSpec</code> in
  * one stroke by annotating the class. For more information and examples, see the
  * <a href="Tag.html">documentation for class <code>Tag</code></a>. On Scala.js, to tag all tests of a suite, you'll need to
  * tag each test individually at the test site.
- * </p>
+ * 
  *
  * <a name="sharedFixtures"></a>
  * <h2>Shared fixtures</h2>
  *
- * <p>
  * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
  * connections, <em>etc.</em>) tests use to do their work.
  * When multiple tests need to work with the same fixtures, it is important to try and avoid
  * duplicating the fixture code across those tests. The more code duplication you have in your
  * tests, the greater drag the tests will have on refactoring the actual production code.
- * </p>
+ * 
  *
- * <p>
  * ScalaTest recommends three techniques to eliminate such code duplication:
- * </p>
+ * 
  *
  * <ul>
  * <li>Refactor using Scala</li>
@@ -622,9 +583,9 @@ package org.scalatest
  * <p>Each technique is geared towards helping you reduce code duplication without introducing
  * instance <code>var</code>s, shared mutable objects, or other dependencies between tests. Eliminating shared
  * mutable state across tests will make your test code easier to reason about and more amenable for parallel
- * test execution.</p><p>The following sections
+ * test execution.<p>The following sections
  * describe these techniques, including explaining the recommended usage
- * for each. But first, here's a table summarizing the options:</p>
+ * for each. But first, here's a table summarizing the options:
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  *
@@ -676,12 +637,11 @@ package org.scalatest
  *       <code>withFixture(NoArgTest)</code></a>
  *     </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- *     <p>
  *     The recommended default approach when most or all tests need the same fixture treatment. This general technique
  *     allows you, for example, to perform side effects at the beginning and end of all or most tests, 
  *     transform the outcome of tests, retry tests, make decisions based on test names, tags, or other test data.
  *     Use this technique unless:
- *     </p>
+ *     
  *  <dl>
  *  <dd style="display: list-item; list-style-type: disc; margin-left: 1.2em;">Different tests need different fixtures (refactor using Scala instead)</dd>
  *  <dd style="display: list-item; list-style-type: disc; margin-left: 1.2em;">An exception in fixture code should abort the suite, not fail the test (use a <em>before-and-after</em> trait instead)</dd>
@@ -730,12 +690,11 @@ package org.scalatest
  * <a name="getFixtureMethods"></a>
  * <h4>Calling get-fixture methods</h4>
  *
- * <p>
  * If you need to create the same mutable fixture objects in multiple tests, and don't need to clean them up after using them, the simplest approach is to write one or
  * more <em>get-fixture</em> methods. A get-fixture method returns a new instance of a needed fixture object (or an holder object containing
  * multiple fixture objects) each time it is called. You can call a get-fixture method at the beginning of each
  * test that needs the fixture, storing the returned object or objects in local variables. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.getfixture
@@ -771,30 +730,27 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * The &ldquo;<code>f.</code>&rdquo; in front of each use of a fixture object provides a visual indication of which objects 
  * are part of the fixture, but if you prefer, you can import the the members with &ldquo;<code>import f._</code>&rdquo; and use the names directly.
- * </p>
+ * 
  *
- * <p>
  * If you need to configure fixture objects differently in different tests, you can pass configuration into the get-fixture method. For example, if you could pass
  * in an initial value for a mutable fixture object as a parameter to the get-fixture method.
- * </p>
+ * 
  *
  * <a name="fixtureContextObjects"></a>
  * <h4>Instantiating fixture-context objects </h4>
  *
- * <p>
  * An alternate technique that is especially useful when different tests need different combinations of fixture objects is to define the fixture objects as instance variables
  * of <em>fixture-context objects</em> whose instantiation forms the body of tests. Like get-fixture methods, fixture-context objects are only
  * appropriate if you don't need to clean up the fixtures after using them.
- * </p>
+ * 
  *
  * To use this technique, you define instance variables intialized with fixture objects in traits and/or classes, then in each test instantiate an object that
  * contains just the fixture objects needed by the test. Traits allow you to mix together just the fixture objects needed by each test, whereas classes
  * allow you to pass data in via a constructor to configure the fixture objects. Here's an example in which fixture objects are partitioned into two traits
  * and each test just mixes together the traits it needs:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.fixturecontext
@@ -847,18 +803,16 @@ package org.scalatest
  * <a name="withFixtureNoArgTest"></a>
  * <h4>Overriding <code>withFixture(NoArgTest)</code></h4>
  *
- * <p>
  * Although the get-fixture method and fixture-context object approaches take care of setting up a fixture at the beginning of each
  * test, they don't address the problem of cleaning up a fixture at the end of the test. If you just need to perform a side-effect at the beginning or end of
  * a test, and don't need to actually pass any fixture objects into the test, you can override <code>withFixture(NoArgTest)</code>, one of ScalaTest's
  * lifecycle methods defined in trait <a href="Suite.html"><code>Suite</code></a>.
- * </p>
+ * 
  *
- * <p>
  * Trait <code>Suite</code>'s implementation of <code>runTest</code> passes a no-arg test function to <code>withFixture(NoArgTest)</code>. It is <code>withFixture</code>'s
  * responsibility to invoke that test function. <code>Suite</code>'s implementation of <code>withFixture</code> simply
  * invokes the function, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Default implementation in trait Suite
@@ -867,19 +821,17 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * You can, therefore, override <code>withFixture</code> to perform setup before and/or cleanup after invoking the test function. If
  * you have cleanup to perform, you should invoke the test function inside a <code>try</code> block and perform the cleanup in
  * a <code>finally</code> clause, in case an exception propagates back through <code>withFixture</code>. (If a test fails because of an exception,
  * the test function invoked by withFixture will result in a [[org.scalatest.Failed <code>Failed</code>]] wrapping the exception. Nevertheless,
  * best practice is to perform cleanup in a finally clause just in case an exception occurs.)
- * </p>
+ * 
  *
- * <p>
  * The <code>withFixture</code> method is designed to be stacked, and to enable this, you should always call the <code>super</code> implementation
  * of <code>withFixture</code>, and let it invoke the test function rather than invoking the test function directly. In other words, instead of writing
  * &ldquo;<code>test()</code>&rdquo;, you should write &ldquo;<code>super.withFixture(test)</code>&rdquo;, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Your implementation
@@ -892,10 +844,9 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Here's an example in which <code>withFixture(NoArgTest)</code> is used to take a snapshot of the working directory if a test fails, and 
  * send that information to the reporter:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.noargtest
@@ -929,10 +880,9 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Running this version of <code>ExampleSuite</code> in the interpreter in a directory with two files, <code>hello.txt</code> and <code>world.txt</code>
  * would give the following output:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new ExampleSuite)
@@ -944,27 +894,24 @@ package org.scalatest
  *   + Dir snapshot: hello.txt, world.txt </span>
  * </pre>
  *
- * <p>
  * Note that the <a href="Suite$NoArgTest.html"><code>NoArgTest</code></a> passed to <code>withFixture</code>, in addition to
  * an <code>apply</code> method that executes the test, also includes the test name and the <a href="ConfigMap.html">config
  * map</a> passed to <code>runTest</code>. Thus you can also use the test name and configuration objects in your <code>withFixture</code>
  * implementation.
- * </p>
+ * 
  *
  * <a name="loanFixtureMethods"></a>
  * <h4>Calling loan-fixture methods</h4>
  *
- * <p>
  * If you need to both pass a fixture object into a test <em>and</em> perform cleanup at the end of the test, you'll need to use the <em>loan pattern</em>.
  * If different tests need different fixtures that require cleanup, you can implement the loan pattern directly by writing <em>loan-fixture</em> methods.
  * A loan-fixture method takes a function whose body forms part or all of a test's code. It creates a fixture, passes it to the test code by invoking the
  * function, then cleans up the fixture after the function returns.
- * </p>
+ * 
  *
- * <p>
  * The following example shows three tests that use two fixtures, a database and a file. Both require cleanup after, so each is provided via a
  * loan-fixture method. (In this example, the database is simulated with a <code>StringBuffer</code>.)
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.loanfixture
@@ -1047,21 +994,18 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * As demonstrated by the last test, loan-fixture methods compose. Not only do loan-fixture methods allow you to
  * give each test the fixture it needs, they allow you to give a test multiple fixtures and clean everything up afterwards.
- * </p>
+ * 
  *
- * <p>
  * Also demonstrated in this example is the technique of giving each test its own "fixture sandbox" to play in. When your fixtures
  * involve external side-effects, like creating files or databases, it is a good idea to give each file or database a unique name as is
  * done in this example. This keeps tests completely isolated, allowing you to run them in parallel if desired.
- * </p>
+ * 
  *
  * <a name="withFixtureOneArgTest"></a>
  * <h4>Overriding <code>withFixture(OneArgTest)</code></h4>
  *
- * <p>
  * If all or most tests need the same fixture, you can avoid some of the boilerplate of the loan-fixture method approach by using a <code>fixture.Suite</code>
  * and overriding <code>withFixture(OneArgTest)</code>.
  * Each test in a <code>fixture.Suite</code> takes a fixture as a parameter, allowing you to pass the fixture into
@@ -1069,24 +1013,22 @@ package org.scalatest
  * <code>withFixture</code> method that takes a <code>OneArgTest</code>. This <code>withFixture</code> method is responsible for
  * invoking the one-arg test function, so you can perform fixture set up before, and clean up after, invoking and passing
  * the fixture into the test function.
- * </p>
+ * 
  *
- * <p>
  * To enable the stacking of traits that define <code>withFixture(NoArgTest)</code>, it is a good idea to let
  * <code>withFixture(NoArgTest)</code> invoke the test function instead of invoking the test
  * function directly. To do so, you'll need to convert the <code>OneArgTest</code> to a <code>NoArgTest</code>. You can do that by passing
  * the fixture object to the <code>toNoArgTest</code> method of <code>OneArgTest</code>. In other words, instead of
  * writing &ldquo;<code>test(theFixture)</code>&rdquo;, you'd delegate responsibility for
  * invoking the test function to the <code>withFixture(NoArgTest)</code> method of the same instance by writing:
- * </p>
+ * 
  *
  * <pre>
  * withFixture(test.toNoArgTest(theFixture))
  * </pre>
  *
- * <p>
  * Here's a complete example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.oneargtest
@@ -1128,23 +1070,21 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * In this example, the tests actually required two fixture objects, a <code>File</code> and a <code>FileWriter</code>. In such situations you can
  * simply define the <code>FixtureParam</code> type to be a tuple containing the objects, or as is done in this example, a case class containing
  * the objects.  For more information on the <code>withFixture(OneArgTest)</code> technique, see the <a href="fixture/FunSpec.html">documentation for <code>fixture.FunSpec</code></a>.
- * </p>
+ * 
  *
  * <a name="beforeAndAfter"></a>
  * <h4>Mixing in <code>BeforeAndAfter</code></h4>
  *
- * <p>
  * In all the shared fixture examples shown so far, the activities of creating, setting up, and cleaning up the fixture objects have been
  * performed <em>during</em> the test.  This means that if an exception occurs during any of these activities, it will be reported as a test failure.
  * Sometimes, however, you may want setup to happen <em>before</em> the test starts, and cleanup <em>after</em> the test has completed, so that if an
  * exception occurs during setup or cleanup, the entire suite aborts and no more tests are attempted. The simplest way to accomplish this in ScalaTest is
  * to mix in trait <a href="BeforeAndAfter.html"><code>BeforeAndAfter</code></a>.  With this trait you can denote a bit of code to run before each test
  * with <code>before</code> and/or after each test each test with <code>after</code>, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.beforeandafter
@@ -1184,7 +1124,6 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Note that the only way <code>before</code> and <code>after</code> code can communicate with test code is via some side-effecting mechanism, commonly by
  * reassigning instance <code>var</code>s or by changing the state of mutable objects held from instance <code>val</code>s (as in this example). If using
  * instance <code>var</code>s or mutable objects held from instance <code>val</code>s you wouldn't be able to run tests in parallel in the same instance
@@ -1192,25 +1131,23 @@ package org.scalatest
  * <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>. By running each test in its own instance of the class, each test has its own copy of the instance variables, so you
  * don't need to synchronize. If you mixed <code>ParallelTestExecution</code> into the <code>ExampleSuite</code> above, the tests would run in parallel just fine
  * without any synchronization needed on the mutable <code>StringBuilder</code> and <code>ListBuffer[String]</code> objects.
- * </p>
+ * 
  *
- * <p>
  * Although <code>BeforeAndAfter</code> provides a minimal-boilerplate way to execute code before and after tests, it isn't designed to enable stackable
  * traits, because the order of execution would be non-obvious.  If you want to factor out before and after code that is common to multiple test suites, you 
  * should use trait <code>BeforeAndAfterEach</code> instead, as shown later in the next section,
  * <a href="#composingFixtures.html">composing fixtures by stacking traits</a>.
- * </p>
+ * 
  *
  * <a name="composingFixtures"></a><h2>Composing fixtures by stacking traits</h2>
  *
- * <p>
  * In larger projects, teams often end up with several different fixtures that test classes need in different combinations,
  * and possibly initialized (and cleaned up) in different orders. A good way to accomplish this in ScalaTest is to factor the individual
  * fixtures into traits that can be composed using the <em>stackable trait</em> pattern. This can be done, for example, by placing
  * <code>withFixture</code> methods in several traits, each of which call <code>super.withFixture</code>. Here's an example in
  * which the <code>StringBuilder</code> and <code>ListBuffer[String]</code> fixtures used in the previous examples have been
  * factored out into two <em>stackable fixture traits</em> named <code>Builder</code> and <code>Buffer</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.composingwithfixture
@@ -1259,26 +1196,23 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * By mixing in both the <code>Builder</code> and <code>Buffer</code> traits, <code>ExampleSuite</code> gets both fixtures, which will be
  * initialized before each test and cleaned up after. The order the traits are mixed together determines the order of execution.
  * In this case, <code>Builder</code> is &ldquo;super&rdquo; to <code>Buffer</code>. If you wanted <code>Buffer</code> to be &ldquo;super&rdquo;
  * to <code>Builder</code>, you need only switch the order you mix them together, like this: 
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class Example2Spec extends FunSpec with Buffer with Builder
  * </pre>
  *
- * <p>
  * And if you only need one fixture you mix in only that trait:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class Example3Spec extends FunSpec with Builder
  * </pre>
  *
- * <p>
  * Another way to create stackable fixture traits is by extending the <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a>
  * and/or <a href="BeforeAndAfterAll.html"><code>BeforeAndAfterAll</code></a> traits.
  * <code>BeforeAndAfterEach</code> has a <code>beforeEach</code> method that will be run before each test (like JUnit's <code>setUp</code>),
@@ -1286,7 +1220,7 @@ package org.scalatest
  * Similarly, <code>BeforeAndAfterAll</code> has a <code>beforeAll</code> method that will be run before all tests,
  * and an <code>afterAll</code> method that will be run after all tests. Here's what the previously shown example would look like if it
  * were rewritten to use the <code>BeforeAndAfterEach</code> methods instead of <code>withFixture</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.funspec.composingbeforeandaftereach
@@ -1340,31 +1274,28 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * To get the same ordering as <code>withFixture</code>, place your <code>super.beforeEach</code> call at the end of each
  * <code>beforeEach</code> method, and the <code>super.afterEach</code> call at the beginning of each <code>afterEach</code>
  * method, as shown in the previous example. It is a good idea to invoke <code>super.afterEach</code> in a <code>try</code>
  * block and perform cleanup in a <code>finally</code> clause, as shown in the previous example, because this ensures the
  * cleanup code is performed even if <code>super.afterEach</code> throws an exception.
- * </p>
+ * 
  *
- * <p>
  * The difference between stacking traits that extend <code>BeforeAndAfterEach</code> versus traits that implement <code>withFixture</code> is
  * that setup and cleanup code happens before and after the test in <code>BeforeAndAfterEach</code>, but at the beginning and
  * end of the test in <code>withFixture</code>. Thus if a <code>withFixture</code> method completes abruptly with an exception, it is
  * considered a failed test. By contrast, if any of the <code>beforeEach</code> or <code>afterEach</code> methods of <code>BeforeAndAfterEach</code> 
  * complete abruptly, it is considered an aborted suite, which will result in a <a href="events/SuiteAborted.html"><code>SuiteAborted</code></a> event.
- * </p>
+ * 
  * 
  * <a name="sharedTests"></a><h2>Shared tests</h2>
  *
- * <p>
  * Sometimes you may want to run the same test code on different fixture objects. In other words, you may want to write tests that are "shared"
  * by different fixture objects.
  * To accomplish this in a <code>FunSpec</code>, you first place shared tests in <em>behavior functions</em>. These behavior functions will be
  * invoked during the construction phase of any <code>FunSpec</code> that uses them, so that the tests they contain will be registered as tests in that <code>FunSpec</code>.
  * For example, given this stack class:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import scala.collection.mutable.ListBuffer
@@ -1403,7 +1334,6 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * You may want to test the <code>Stack</code> class in different states: empty, full, with one item, with one item less than capacity,
  * <em>etc</em>. You may find you have several tests that make sense any time the stack is non-empty. Thus you'd ideally want to run
  * those same tests for three stack fixture objects: a full stack, a stack with a one item, and a stack with one item less than
@@ -1412,12 +1342,11 @@ package org.scalatest
  * behavior function three times, passing in each of the three stack fixtures so that the shared tests are run for all three fixtures. You
  * can define a behavior function that encapsulates these shared tests inside the <code>FunSpec</code> that uses them. If they are shared
  * between different <code>FunSpec</code>s, however, you could also define them in a separate trait that is mixed into each <code>FunSpec</code> that uses them.
- * </p>
+ * 
  *
- * <p>
  * <a name="StackBehaviors">For</a> example, here the <code>nonEmptyStack</code> behavior function (in this case, a behavior <em>method</em>) is defined in a trait along with another
  * method containing shared tests for non-full stacks:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * trait StackBehaviors { this: FunSpec =&gt;
@@ -1464,31 +1393,28 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * Given these behavior functions, you could invoke them directly, but <code>FunSpec</code> offers a DSL for the purpose,
  * which looks like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * it should behave like nonEmptyStack(stackWithOneItem, lastValuePushed)
  * it should behave like nonFullStack(stackWithOneItem)
  * </pre>
  *
- * <p>
  * If you prefer to use an imperative style to change fixtures, for example by mixing in <code>BeforeAndAfterEach</code> and
  * reassigning a <code>stack</code> <code>var</code> in <code>beforeEach</code>, you could write your behavior functions
  * in the context of that <code>var</code>, which means you wouldn't need to pass in the stack fixture because it would be
  * in scope already inside the behavior function. In that case, your code would look like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * it should behave like nonEmptyStack // assuming lastValuePushed is also in scope inside nonEmptyStack
  * it should behave like nonFullStack
  * </pre>
  *
- * <p>
  * The recommended style, however, is the functional, pass-all-the-needed-values-in style. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class SharedTestExampleSpec extends FunSpec with StackBehaviors {
@@ -1567,10 +1493,9 @@ package org.scalatest
  * }
  * </pre>
  *
- * <p>
  * If you load these classes into the Scala interpreter (with scalatest's JAR file on the class path), and execute it,
  * you'll see:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; org.scalatest.run(new StackSpec)
@@ -1601,13 +1526,12 @@ package org.scalatest
  * - should complain on a push</span>
  * </pre>
  * 
- * <p>
  * One thing to keep in mind when using shared tests is that in ScalaTest, each test in a suite must have a unique name.
  * If you register the same tests repeatedly in the same suite, one problem you may encounter is an exception at runtime
  * complaining that multiple tests are being registered with the same test name. A good way to solve this problem in a <code>FunSpec</code> is to surround
  * each invocation of a behavior function with a <code>describe</code> clause, which will prepend a string to each test name.
  * For example, the following code in a <code>FunSpec</code> would register a test with the name <code>"A Stack (when empty) should be empty"</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *   describe("A Stack") {
@@ -1620,7 +1544,6 @@ package org.scalatest
  *       // ...
  * </pre>
  *
- * <p>
  * If the <code>"should be empty"</code> test was factored out into a behavior function, it could be called repeatedly so long
  * as each invocation of the behavior function is inside a different set of <code>describe</code> clauses.
  *

@@ -18,19 +18,17 @@ package org.scalatest.enablers
 /**
  * Supertrait for <code>Messaging</code> typeclasses.
  *
- * <p>
  * Trait <code>Messaging</code> is a typeclass trait for objects that can be queried for message.
  * Objects of type T for which an implicit <code>Messaging[T]</code> is available can be used
  * with the <code>should have message</code> syntax.
  * You can enable the <code>have message</code> matcher syntax on your own
  * type <code>U</code> by defining a <code>Messaging[U]</code> for the type and making it available implicitly.
- * </p>
+ * 
  *
- * <p>
  * ScalaTest provides an implicit <code>Messaging</code> instance for <code>java.lang.Throwable</code> and
  * arbitary object with <code>message()</code>, <code>message</code>, <code>getMessage()</code> or <code>getMessage</code>
  * method in the <code>Messaging</code> companion object.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Chee Seng

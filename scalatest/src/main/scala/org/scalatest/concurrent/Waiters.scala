@@ -28,33 +28,29 @@ import org.scalactic.source
  * Trait that facilitates performing assertions outside the main test thread, such as assertions in callback methods
  * that are invoked asynchronously.
  *
- * <p>
  * Trait <code>Waiters</code> provides a <code>Waiter</code> class that you can use to orchestrate the inter-thread
  * communication required to perform assertions outside the main test thread, and a means to configure it.
- * </p>
+ * 
  *
- * <p>
  * To use <code>Waiter</code>, create an instance of it in the main test thread:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val w = new Waiter // Do this in the main test thread
  * </pre>
  *
- * <p>
  * At some point later, call <code>await</code> on the waiter:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * w.await() // Call await() from the main test thread
  * </pre>
  *
- * <p>
  * The <code>await</code> call will block until it either receives a report of a failed assertion from a different thread, at which
  * point it will complete abruptly with the same exception, or until it is <em>dismissed</em> by a different thread (or threads), at
  * which point it will return normally. You can optionally specify a timeout and/or a number
  * of dismissals to wait for. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.time.SpanSugar._
@@ -62,44 +58,38 @@ import org.scalactic.source
  * w.await(timeout(300 millis), dismissals(2))
  * </pre>
  *
- * <p>
  * The default value for <code>timeout</code>, provided via an implicit <code>PatienceConfig</code> parameter, is 150 milliseconds. The default value for
  * <code>dismissals</code> is 1. The <code>await</code> method will block until either it is dismissed a sufficient number of times by other threads or
  * an assertion fails in another thread. Thus if you just want to perform assertions in just one other thread, only that thread will be
  * performing a dismissal, so you can use the default value of 1 for <code>dismissals</code>.
- * </p>
+ * 
  *
- * <p>
  * <code>Waiter</code> contains four overloaded forms of <code>await</code>, two of which take an implicit
  * <code>PatienceConfig</code> parameter. To change the default timeout configuration, override or hide
  * (if you imported the members of <code>Waiters</code> companion object instead of mixing in the
  * trait) <code>patienceConfig</code> with a new one that returns your desired configuration.
- * </p>
+ * 
  *
- * <p>
  * To dismiss a waiter, you just invoke <code>dismiss</code> on it:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * w.dismiss() // Call this from one or more other threads
  * </pre>
  *
- * <p>
  * You may want to put <code>dismiss</code> invocations in a finally clause to ensure they happen even if an exception is thrown.
  * Otherwise if a dismissal is missed because of a thrown exception, an <code>await</code> call will wait until it times out.
- * </p>
+ * 
  *
- * <p>
  * Note that if a <code>Waiter</code> receives <em>more </em> than the expected number of dismissals, it will not report
  * this as an error: <em>i.e.</em>, receiving greater than the number of expected dismissals without any failed assertion will simply
  * cause the the test to complete, not to fail. The only way a <code>Waiter</code> will cause a test to fail is if one of the
  * asynchronous assertions to which it is applied fails.
- * </p>
+ * 
  *
- * <p>
  * Finally, to perform an assertion in a different thread, you just apply the <code>Waiter</code> to the assertion code. Here are
  * some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * w { assert(1 + 1 === 3) }    // Can use assertions
@@ -107,9 +97,8 @@ import org.scalactic.source
  * w { "hi".charAt(-1) }        // Any exceptions will be forwarded to await
  * </pre>
  *
- * <p>
  * Here's a complete example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest._
@@ -185,28 +174,25 @@ trait Waiters extends PatienceConfiguration {
    * Class that facilitates performing assertions outside the main test thread, such as assertions in callback methods
    * that are invoked asynchronously.
    *
-   * <p>
    * To use <code>Waiter</code>, create an instance of it in the main test thread:
-   * </p>
+   * 
    *
    * <pre class=stHighlight">
    * val w = new Waiter // Do this in the main test thread
    * </pre>
    *
-   * <p>
    * At some point later, call <code>await</code> on the waiter:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * w.await() // Call await() from the main test thread
    * </pre>
    *
-   * <p>
    * The <code>await</code> call will block until it either receives a report of a failed assertion from a different thread, at which
    * point it will complete abruptly with the same exception, or until it is <em>dismissed</em> by a different thread (or threads), at
    * which point it will return normally. You can optionally specify a timeout and/or a number
    * of dismissals to wait for. Here's an example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.time.SpanSugar._
@@ -214,37 +200,32 @@ trait Waiters extends PatienceConfiguration {
    * w.await(timeout(300 millis), dismissals(2))
    * </pre>
    *
-   * <p>
    * The default value for <code>timeout</code>, provided via an implicit <code>PatienceConfig</code> parameter, is 150 milliseconds. The default value for
    * <code>dismissals</code> is 1. The <code>await</code> method will block until either it is dismissed a sufficient number of times by other threads or
    * an assertion fails in another thread. Thus if you just want to perform assertions in just one other thread, only that thread will be
    * performing a dismissal, so you can use the default value of 1 for <code>dismissals</code>.
-   * </p>
+   * 
    *
-   * <p>
    * <code>Waiter</code> contains four overloaded forms of <code>await</code>, two of which take an implicit
    * <code>PatienceConfig</code> parameter. To change the default timeout configuration, override or hide
    * (if you imported the members of <code>Waiters</code> companion object instead of mixing in the
    * trait) <code>patienceConfig</code> with a new one that returns your desired configuration.
-   * </p>
+   * 
    *
-   * <p>
    * To dismiss a waiter, you just invoke <code>dismiss</code> on it:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * w.dismiss() // Call this from one or more other threads
    * </pre>
    *
-   * <p>
    * You may want to put <code>dismiss</code> invocations in a finally clause to ensure they happen even if an exception is thrown.
    * Otherwise if a dismissal is missed because of a thrown exception, an <code>await</code> call will wait until it times out.
-   * </p>
+   * 
    *
-   * <p>
    * Finally, to perform an assertion in a different thread, you just apply the <code>Waiter</code> to the assertion code. Here are
    * some examples:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * w { assert(1 + 1 === 3) }    // Can use assertions
@@ -252,9 +233,8 @@ trait Waiters extends PatienceConfiguration {
    * w { "hi".charAt(-1) }        // Any exceptions will be forwarded to await
    * </pre>
    *
-   * <p>
    * Here's a complete example:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest._

@@ -23,15 +23,13 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
 /**
  * Exception thrown to indicate a test has been canceled.
  *
- * <p>
  * A <em>canceled test</em> is one that is unable to run because a needed dependency, such as
  * an external database, is missing.
- * </p>
+ * 
  *
- * <p>
  * Canceled tests are ones that complete abruptly with a <code>TestCanceledException</code> after
  * starting.
- * </p>
+ * 
  *
  * @param messageFun a function that return an optional detail message for this <code>TestCanceledException</code>.
  * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.

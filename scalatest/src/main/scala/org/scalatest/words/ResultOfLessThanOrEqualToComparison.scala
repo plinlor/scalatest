@@ -34,9 +34,8 @@ final class ResultOfLessThanOrEqualToComparison[T : Ordering](val right: T) {
    *                   ^  ... invoked by this be method
    * </pre>
    *
-   * <p>
    * or
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * num should (not be &lt;= (10) and not be &gt; (17))

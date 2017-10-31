@@ -18,10 +18,9 @@ package org.scalactic.exceptions
 /**
  * Exception that indicates a validation failed.
  *
- * <p>
  * This exception is used to indicate and describe a failed validation by the <code>validating</code> methods
  * of [[org.scalactic.TrySugar <code>TrySugar</code>]] and [[org.scalactic.FutureSugar <code>FutureSugar</code>]].
- * </p>
+ * 
  *
  * @param errorMessage a string describing the validation failure
  */

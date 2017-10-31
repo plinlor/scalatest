@@ -24,35 +24,31 @@ import exceptions.StackDepthException
  * will return the value of the lone element if the collection does
  * indeed contain one and only one element, or throw <a href="TestFailedException.html"><code>TestFailedException</code></a> if not.
  *
- * <p>
  * This construct allows you to express in one statement that a collection should contain one and only one element
  * and that the element value should meet some expectation. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * set.loneElement should be &gt; 9
  * </pre>
  *
- * <p>
  * Or, using an assertion instead of a matcher expression:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * assert(set.loneElement &gt; 9)
  * </pre>
  *
- * <p>
  * The <code>loneElement</code> syntax can be used with any collection type <code>C</code> for which an
  * implicit <a href="enablers/Collecting.html"><code>Collecting[C]</code></a> is available. ScalaTest provides
  * implicit <code>Collecting</code> instances for <code>scala.collection.GenTraversable</code>, <code>Array</code>,
  * and <code>java.util.Collection</code>. You can enable the <code>loneElement</code>
  * syntax on other collection types by defining an implicit <code>Collecting</code> instances for those types.
- * </p>
+ * 
  *
- * <p>
  * If you want to use <code>loneElement</code> with a <code>java.util.Map</code>, first transform it to a
  * set of entries with <code>entrySet</code>, and if helpful, use ScalaTest's <a href="Entry.html"><code>Entry</code></a> class:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
@@ -83,9 +79,8 @@ trait LoneElement {
    * Wrapper class that adds a <code>loneElement</code> method to any collection type <code>C</code> for which 
    * an implicit <code>Collecting[C]</code> is available.
    *
-   * <p>
    * Through the implicit conversion provided by trait <code>LoneElement</code>, this class allows you to make statements like:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * trav.loneElement should be &gt; 9
@@ -102,9 +97,8 @@ trait LoneElement {
      * Returns the value contained in the wrapped collection, if it contains one and only one element, else throws <code>TestFailedException</code> with
      * a detail message describing the problem.
      *
-     * <p>
      * This method enables syntax such as the following:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * trav.loneElement should be &gt; 9
@@ -143,9 +137,8 @@ trait LoneElement {
    * Wrapper class that adds a <code>loneElement</code> method to Java Map for which
    * an implicit <code>Collecting[org.scalatest.Entry, java.util.Map]</code> is available.
    *
-   * <p>
    * Through the implicit conversion provided by trait <code>LoneElement</code>, this class allows you to make statements like:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * jmap.loneElement.getKey should be &gt; 9
@@ -182,9 +175,8 @@ trait LoneElement {
    * Wrapper class that adds a <code>loneElement</code> method to <code>String</code> for which an
    * implicit <code>Collecting[C]</code> is available.
    *
-   * <p>
    * Through the implicit conversion provided by trait <code>LoneElement</code>, this class allows you to make statements like:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "9".loneElement should be ('9')

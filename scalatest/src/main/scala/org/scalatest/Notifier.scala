@@ -20,7 +20,6 @@ import org.scalactic.source
 /**
  * Trait providing an <code>apply</code> method to which status updates about a running suite of tests can be reported.
  * 
- * <p>
  * An <code>Notifier</code> is essentially
  * used to wrap a <code>Reporter</code> and provide easy ways to send status updates
  * to that <code>Reporter</code> via an <code>NoteProvided</code> event.
@@ -29,12 +28,11 @@ import org.scalactic.source
  * The <code>Notifier</code> will forward the passed alert <code>message</code> string to the
  * <a href="Reporter.html"><code>Reporter</code></a> as the <code>message</code> parameter, and the optional
  * payload object as the <code>payload</code> parameter, of an <a href="NoteProvided.html"><code>NoteProvided</code></a> event.
- * </p>
+ * 
  *
- * <p>
  * For insight into the differences between <code>Notifier</code>, <code>Alerter</code>, and <code>Informer</code>, see the
  * main documentation for trait <a href="Notifying.html"><code>Notifying</code></a>.
- * </p>
+ * 
  */
 trait Notifier {
 

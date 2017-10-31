@@ -28,9 +28,8 @@ package object scalactic {
    * Returns the result of evaluating the given block <code>f</code>, wrapped in a <code>Good</code>, or
    * if an exception is thrown, the <code>Throwable</code>, wrapped in a <code>Bad</code>.
    *
-   * <p>
    * Here are some examples:
-   * </p>
+   * 
    *
    * <pre class="stREPL">
    * scala&gt; import org.scalactic._

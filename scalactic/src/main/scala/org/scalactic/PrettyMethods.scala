@@ -24,11 +24,10 @@ trait PrettyMethods {
   /**
    * Implicit class that adds a <code>pretty</code> method to any object.
    *
-   * <p>
    * The constructor of this class, besides taking an object <code>o</code> to prettify,
    * also takes an implicit <code>Prettifier</code> that the <code>pretty</code> method will use to prettify the
    * object.
-   * </p>
+   * 
    *
    * @param o the object to prettify
    * @param prettifier an implicit <code>Prettifier</code> that will be used

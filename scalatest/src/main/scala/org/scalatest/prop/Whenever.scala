@@ -27,10 +27,9 @@ trait Whenever {
   /**
    * Evaluates the passed code block if the passed boolean condition is true, else throws <code>DiscardedEvaluationException</code>.
    *
-   * <p>
    * The <code>whenever</code> method can be used inside property check functions to discard invocations of the function with
    * data for which it is known the property would fail. For example, given the following <code>Fraction</code> class:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * class Fraction(n: Int, d: Int) {
@@ -66,12 +65,11 @@ trait Whenever {
    *   )
    * </pre>
    *
-   * <p>
    * Imagine you wanted to check a property against this class with data that includes some
    * value that are rejected by the constructor, such as a denominator of zero, which should
    * result in an <code>IllegalArgumentException</code>. You could use <code>whenever</code>
    * to discard any rows in the <code>fraction</code> that represent illegal arguments, like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * import org.scalatest.matchers.Matchers._
@@ -95,12 +93,11 @@ trait Whenever {
    * }
    * </pre>
    *
-   * <p>
    * In this example, rows 6, 8, and 9 have values that would cause a false to be passed
    * to <code>whenever</code>. (For example, in row 6, <code>d</code> is 0, which means <code>d</code> <code>!=</code> <code>0</code>
    * will be false.) For those rows, <code>whenever</code> will throw <code>DiscardedEvaluationException</code>,
    * which will cause the <code>forAll</code> method to discard that row.
-   * </p>
+   * 
    *
    * @param condition the boolean condition that determines whether <code>whenever</code> will evaluate the
    *    <code>fun</code> function (<code>condition</code> is true) or throws <code>DiscardedEvaluationException</code> (<code>condition</code> is false)

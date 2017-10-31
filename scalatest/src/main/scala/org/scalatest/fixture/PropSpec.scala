@@ -31,7 +31,6 @@ import org.scalatest._
  * the <a href="../PropSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for class <code>PropSpec</code>.</em>
  * </td></tr></table>
  * 
- * <p>
  * Class <code>fixture.PropSpec</code> behaves similarly to class <code>org.scalatest.PropSpec</code>, except that tests may have a
  * fixture parameter. The type of the
  * fixture parameter is defined by the abstract <code>FixtureParam</code> type, which is a member of this class.
@@ -42,11 +41,10 @@ import org.scalatest._
  * This class's <code>runTest</code> method delegates the actual running of each test to <code>withFixture</code>, passing
  * in the test code to run via the <code>OneArgTest</code> argument. The <code>withFixture</code> method (abstract in this class) is responsible
  * for creating the fixture argument and passing it to the test function.
- * </p>
  * 
- * <p>
+ * 
  * Subclasses of this class must, therefore, do three things differently from a plain old <code>org.scalatest.PropSpec</code>:
- * </p>
+ * 
  * 
  * <ol>
  * <li>define the type of the fixture parameter by specifying type <code>FixtureParam</code></li>
@@ -55,9 +53,8 @@ import org.scalatest._
  * <li>(You can also define tests that don't take a fixture parameter.)</li>
  * </ol>
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.propspec
@@ -133,63 +130,56 @@ import org.scalatest._
  * }
  * </pre>
  *
- * <p>
  * Note: to run the examples on this page, you'll need to include <a href="http://www.scalacheck.org">ScalaCheck</a> on the classpath in addition to ScalaTest.
- * </p>
+ * 
  *
- * <p>
  * In the previous example, <code>withFixture</code> creates and initializes a temp file, then invokes the test function,
  * passing in a <code>FileReader</code> connected to that file.  In addition to setting up the fixture before a test,
  * the <code>withFixture</code> method also cleans it up afterwards. If you need to do some clean up
  * that must happen even if a test fails, you should invoke the test function from inside a <code>try</code> block and do
  * the cleanup in a <code>finally</code> clause, as shown in the previous example.
- * </p>
+ * 
  *
- * <p>
  * If a test fails, the <code>OneArgTest</code> function will result in a [[org.scalatest.Failed Failed]] wrapping the
  * exception describing the failure.
  * The reason you must perform cleanup in a <code>finally</code> clause is that in case an exception propagates back through
  * <code>withFixture</code>, the <code>finally</code> clause will ensure the fixture cleanup happens as that exception
  * propagates back up the call stack to <code>runTest</code>.
- * </p>
+ * 
  *
- * <p>
  * If a test doesn't need the fixture, you can indicate that by providing a no-arg instead of a one-arg function.
  * In other words, instead of starting your function literal
  * with something like &ldquo;<code>reader =&gt;</code>&rdquo;, you'd start it with &ldquo;<code>() =&gt;</code>&rdquo;, as is done
  * in the third test in the above example. For such tests, <code>runTest</code>
  * will not invoke <code>withFixture(OneArgTest)</code>. It will instead directly invoke <code>withFixture(NoArgTest)</code>.
- * </p>
+ * 
  *
  * <a name="multipleFixtures"></a>
  * <h2>Passing multiple fixture objects</h2>
  *
- * <p>
  * If the fixture you want to pass into your tests consists of multiple objects, you will need to combine
  * them into one object to use this class. One good approach to passing multiple fixture objects is
  * to encapsulate them in a case class. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * case class FixtureParam(builder: StringBuilder, buffer: ListBuffer[String])
  * </pre>
  *
- * <p>
  * To enable the stacking of traits that define <code>withFixture(NoArgTest)</code>, it is a good idea to let
  * <code>withFixture(NoArgTest)</code> invoke the test function instead of invoking the test
  * function directly. To do so, you'll need to convert the <code>OneArgTest</code> to a <code>NoArgTest</code>. You can do that by passing
  * the fixture object to the <code>toNoArgTest</code> method of <code>OneArgTest</code>. In other words, instead of
  * writing &ldquo;<code>test(theFixture)</code>&rdquo;, you'd delegate responsibility for
  * invoking the test function to the <code>withFixture(NoArgTest)</code> method of the same instance by writing:
- * </p>
+ * 
  *
  * <pre>
  * withFixture(test.toNoArgTest(theFixture))
  * </pre>
  *
- * <p>
  * Here's a complete example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * package org.scalatest.examples.fixture.propspec.multi

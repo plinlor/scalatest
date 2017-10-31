@@ -21,11 +21,10 @@ import TripleEqualsSupport._
  * Provides an implicit method that loosens the equality constraint defined by <code>TypeCheckedTripleEquals</code> or <code>ConversionCheckedTripleEquals</code>
  * for Scala <code>Map</code>s to one that more closely matches Scala's approach to <code>Map</code> equality.
  *
- * <p>
  * Scala's approach to <code>Map</code> equality is that if both objects being compared are <code>Map</code>s, the elements are compared to determine equality.
  * This means you could compare an immutable <code>TreeMap</code> and a mutable <code>HashMap</code> for equality, for instance, and get true so long as the two maps
  * contained the same key-value mappings. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import scala.collection.immutable.TreeMap
@@ -38,10 +37,9 @@ import TripleEqualsSupport._
  * res0: Boolean = true
  * </pre>
  *
- * <p>
  * Such a comparison would not, however, compile if you used <code>===</code> under either <code>TypeCheckedTripleEquals</code> or <code>ConversionCheckedTripleEquals</code>,
  * because <code>TreeMap</code> and <code>HashMap</code> are not in a subtype/supertype relationship, nor does an implicit conversion by default exist between them:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -60,9 +58,8 @@ import TripleEqualsSupport._
  *                                               ^
  * </pre>
  *
- * <p>
  * If you mix or import the implicit conversion provided by <code>MapEqualityConstraint</code>, however, the comparison will be allowed:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import MapEqualityConstraints._
@@ -72,14 +69,13 @@ import TripleEqualsSupport._
  * res2: Boolean = true
  * </pre>
  *
- * <p>
  * The equality constraint provided by this trait requires that both left and right sides are subclasses of <code>scala.collection.GenMap</code> and that
  * an <code>EqualityConstraint</code> can be found for both key types and both value types. In the example above, both the <code>TreeMap</code> and
  * <code>HashMap</code> are subclasses of <code>scala.collection.GenMap</code>, and the regular <code>TypeCheckedTripleEquals</code> provides equality
  * constraints for the key types, both of which are <code>String</code>, and value types, both of which are <code>Int</code>. By contrast, this
  * trait would not allow a <code>TreeMap[String, Int]</code> to be compared against a <code>HashMap[String, java.util.Date]</code>, because no equality constraint
  * will exist between the value types <code>Int</code> and <code>Date</code>:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import java.util.Date

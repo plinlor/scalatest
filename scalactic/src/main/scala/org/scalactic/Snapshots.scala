@@ -20,9 +20,8 @@ import reflect.macros.Context
 /**
  * Case class that stores the name and value of a variable or expression.
  *
- * <p>
  * See the main documentation for trait <a href="Snapshots.html"><code>Snapshots</code></a> for more information and examples.
- * </p>
+ * 
  * 
  * @param name the name of the expression
  * @param value the value of the expression
@@ -42,10 +41,9 @@ final case class Snapshot(name: String, value: Any) {
  * <a href="SnapshotSeq.html"><code>SnapshotSeq</code></a>, whose <code>toString</code> lists the names
  * and values of each argument.
  *
- * <p>
  * The intended use case of this trait is to help you write debug and log
  * messages that give a "snapshot" of program state. Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import Snapshots._
@@ -68,9 +66,8 @@ final case class Snapshot(name: String, value: Any) {
  * f was null
  * </pre>
  * 
- * <p>
  * Or, because a <code>SnapshotSeq</code> is a <code>IndexedSeq[Snapshot]</code>, you can process it just like any other <code>Seq</code>, for example:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; snap(a, b, c, d, e, f).mkString("Wow! ", ", and ", ". That's so awesome!")
@@ -94,18 +91,16 @@ trait Snapshots {
  * An <code>IndexedSeq[Snapshot]</code> providing <code>toString</code> and <code>lines</code> methods that 
  * can be useful for debug and log messages about program state.
  * 
- * <p>
  * See the main documentation for trait <a href="Snapshots.html"><code>Snapshots</code></a> for more information and examples.
- * </p>
+ * 
  */
 final class SnapshotSeq(underlying: collection.immutable.IndexedSeq[Snapshot]) extends collection.immutable.IndexedSeq[Snapshot] {
 
   /**
    * Selects an element by its index in the sequence.
    *
-   * <p>
    * This method invokes <code>apply</code> on the underlying immutable <code>IndexedSeq[String]</code>, passing in <code>idx</code>, and returns the result.
-   * </p>
+   * 
    *
    * @param idx the index to select
    * @return the element of this sequence at index <code>idx</code>, where 0 indicates the first element
@@ -115,9 +110,8 @@ final class SnapshotSeq(underlying: collection.immutable.IndexedSeq[Snapshot]) e
   /**
    * The length of this sequence.
    *
-   * <p>
    * This method invokes <code>length</code> on the underlying immutable <code>IndexedSeq[String]</code> and returns the result.
-   * </p>
+   * 
    *
    * @return the number of elements in this sequence
    */
@@ -126,11 +120,10 @@ final class SnapshotSeq(underlying: collection.immutable.IndexedSeq[Snapshot]) e
   /**
    * Appends a string element to this sequence, if it doesn't already exist in the sequence.
    *
-   * <p>
    * If the string element already exists in this sequence, this method returns itself. If not,
    * this method returns a new <code>MultiSelOptionSeq</code> with the passed value appended to the
    * end of the original <code>MultiSelOptionSeq</code>.
-   * </p>
+   * 
    *
    * @param the string element to append to this sequence
    * @return a <code>MultiSelOptionSeq</code> that contains the passed string value
@@ -145,11 +138,10 @@ final class SnapshotSeq(underlying: collection.immutable.IndexedSeq[Snapshot]) e
   /**
    * Removes a string element to this sequence, if it already exists in the sequence.
    *
-   * <p>
    * If the string element does not already exist in this sequence, this method returns itself. If the element
    * is contained in this sequence, this method returns a new <code>MultiSelOptionSeq</code> with the passed value
    * removed from the the original <code>MultiSelOptionSeq</code>, leaving any other elements in the same order.
-   * </p>
+   * 
    *
    * @param the string element to append to this sequence
    * @return a <code>MultiSelOptionSeq</code> that contains the passed string value

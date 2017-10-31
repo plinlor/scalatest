@@ -32,26 +32,24 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * Trait extended by objects that can match a value of the specified type. The value to match is
  * passed to the matcher's <code>apply</code> method. The result is a <code>MatchResult</code>.
  * A matcher is, therefore, a function from the specified type, <code>T</code>, to a <code>MatchResult</code>.
- * <p></p> <!-- needed otherwise the heading below shows up in the wrong place. dumb scaladoc algo -->
+ * <p> <!-- needed otherwise the heading below shows up in the wrong place. dumb scaladoc algo -->
  *
  * <h2>Creating custom matchers</h2>
  * 
- * <p>
  * If none of the built-in matcher syntax satisfies a particular need you have, you can create
  * custom <code>Matcher</code>s that allow
  * you to place your own syntax directly after <code>should</code>. For example, although you can ensure that a <code>java.io.File</code> has a name
  * that ends with a particular extension like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * file.getName should endWith (".txt")
  * </pre>
  * 
- * <p>
  * You might prefer 
  * to create a custom <code>Matcher[java.io.File]</code>
  * named <code>endWithExtension</code>, so you could write expressions like:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * file should endWithExtension ("txt")
@@ -59,10 +57,9 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * file should (exist and endWithExtension ("txt"))
  * </pre>
  * 
- * <p>
  * One good way to organize custom matchers is to place them inside one or more
  * traits that you can then mix into the suites that need them. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest._
@@ -90,13 +87,11 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * object CustomMatchers extends CustomMatchers
  * </pre>
  *
- * <p>
  * Note: the <code>CustomMatchers</code> companion object exists to make it easy to bring the
  * matchers defined in this trait into scope via importing, instead of mixing in the trait. The ability
  * to import them is useful, for example, when you want to use the matchers defined in a trait in the Scala interpreter console.
- * </p>
+ * 
  *
- * <p>
  * This trait contains one matcher class, <code>FileEndsWithExtensionMatcher</code>, and a <code>def</code> named <code>endWithExtension</code> that returns a new
  * instance of <code>FileEndsWithExtensionMatcher</code>. Because the class extends <code>Matcher[java.io.File]</code>,
  * the compiler will only allow it be used to match against instances of <code>java.io.File</code>. A matcher must declare an
@@ -104,29 +99,26 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * The apply method will return a <code>MatchResult</code> whose <code>matches</code> field will indicate whether the match succeeded.
  * The <code>failureMessage</code> field will provide a programmer-friendly error message indicating, in the event of a match failure, what caused
  * the match to fail. 
- * </p>
+ * 
  *
- * <p>
  * The <code>FileEndsWithExtensionMatcher</code> matcher in this example determines success by determining if the passed <code>java.io.File</code> ends with
  * the desired extension. It does this in the first argument passed to the <code>MatchResult</code> factory method:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * name.endsWith(expectedExtension)
  * </pre>
  *
- * <p>
  * In other words, if the file name has the expected extension, this matcher matches.
  * The next argument to <code>MatchResult</code>'s factory method produces the failure message string:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * s"""File $name did not end with extension "$expectedExtension"""",
  * </pre>
  *
- * <p>
  * For example, consider this matcher expression:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest._
@@ -137,50 +129,44 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * new File("essay.text") should endWithExtension ("txt")
  * </pre>
  *
- * <p>
  * Because the passed <code>java.io.File</code> has the name <code>essay.text</code>, but the expected extension is <code>"txt"</code>, the failure
  * message would be:
- * </p>
+ * 
  *
  * <pre>
  * File essay.text did not have extension "txt"
  * </pre>
  *
- * <p>
  * For more information on the fields in a <code>MatchResult</code>, including the subsequent field (or fields) that follow the failure message,
  * please see the documentation for <a href="MatchResult.html"><code>MatchResult</code></a>.
- * </p>
+ * 
  *
  * <a name="otherways"></a>
  * <h2>Creating dynamic matchers</h2>
  *
- * <p>
  * There are other ways to create new matchers besides defining one as shown above. For example, you might check that a file is hidden like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * new File("secret.txt") should be ('hidden)
  * </pre>
  *
- * <p>
  * If you wanted to get rid of the tick mark, you could simply define <code>hidden</code> like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val hidden = 'hidden
  * </pre>
  *
- * <p>
  * Now you can check that an file is hidden without the tick mark:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * new File("secret.txt") should be (hidden)
  * </pre>
  *
- * <p>
  * You could get rid of the parens with by using <code>shouldBe</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * new File("secret.txt") shouldBe hidden
@@ -188,26 +174,23 @@ import TripleEqualsSupport.TripleEqualsInvocation
  *
  * <h2>Creating matchers using logical operators</h2>
  *
- * <p>
  * You can also use ScalaTest matchers' logical operators to combine existing matchers into new ones, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val beWithinTolerance = be &gt;= 0 and be &lt;= 10
  * </pre>
  *
- * <p>
  * Now you could check that a number is within the tolerance (in this case, between 0 and 10, inclusive), like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * num should beWithinTolerance
  * </pre>
  *
- * <p>
  * When defining a full blown matcher, one shorthand is to use one of the factory methods in <code>Matcher</code>'s companion
  * object. For example, instead of writing this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val beOdd =
@@ -221,9 +204,8 @@ import TripleEqualsSupport.TripleEqualsInvocation
  *   }
  * </pre>
  *
- * <p>
  * You could alternately write this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val beOdd =
@@ -236,9 +218,8 @@ import TripleEqualsSupport.TripleEqualsInvocation
  *   }
  * </pre>
  *
- * <p>
  * Either way you define the <code>beOdd</code> matcher, you could use it like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * 3 should beOdd
@@ -248,10 +229,9 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * <a name="composingMatchers"></a>
  * <h2>Composing matchers</h2>
  *
- * <p>
  * You can also compose matchers. For example, the <code>endWithExtension</code> matcher from the example above
  * can be more easily created by composing a function with the existing <code>endWith</code> matcher:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
@@ -267,21 +247,19 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * endWithExtension: (ext: String)org.scalatest.matchers.Matcher[java.io.File]
  * </pre>
  *
- * <p>
  * Now you have a <code>Matcher[File]</code> whose <code>apply</code> method first
  * invokes the converter function to convert the passed <code>File</code> to a <code>String</code>,
  * then passes the resulting <code>String</code> to <code>endWith</code>. Thus, you could use this version 
  * <code>endWithExtension</code> like the previous one:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; new File("output.txt") should endWithExtension("txt")
  * </pre>
  *
- * <p>
  * In addition, by composing twice, you can modify the type of both sides of a match statement
  * with the same function, like this:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val f = be &gt; (_: Int)
@@ -296,21 +274,19 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * scala&gt; "8" should beAsIntsGreaterThan ("7")
  * </pre>
  *
- * <p>
  * At thsi point, however, the error message for the <code>beAsIntsGreaterThan</code>
  * gives no hint that the <code>Int</code>s being compared were parsed from <code>String</code>s:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; "7" should beAsIntsGreaterThan ("8")
  * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
  * </pre>
  *
- * <p>
  * To modify error message, you can use trait <a href="MatcherProducers.html"><code>MatcherProducers</code></a>, which
  * also provides a <code>composeTwice</code> method that performs the <code>compose</code> ...
  * <code>andThen</code> ... <code>compose</code> operation:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import matchers._
@@ -325,18 +301,16 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * scala&gt; "8" should beAsIntsGreaterThan ("7")
  * </pre>
  *
- * <p>
  * Of course, the error messages is still the same:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; "7" should beAsIntsGreaterThan ("8")
  * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
  * </pre>
  *
- * <p>
  * To modify the error messages, you can use <code>mapResult</code> from <code>MatcherProducers</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val beAsIntsGreaterThan =
@@ -355,13 +329,12 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * beAsIntsGreaterThan: String =&gt; org.scalatest.matchers.Matcher[String] = &lt;function1&gt;
  * </pre>
  *
- * <p>
  * The <code>mapResult</code> method takes a function that accepts a <code>MatchResult</code> and produces a new
  * <code>MatchResult</code>, which can contain modified arguments and modified error messages. In this example,
  * the error messages are being modified by wrapping the old arguments in <a href="LazyArg.html"><code>LazyArg</code></a>
  * instances that lazily apply the given prettification functions to the <code>toString</code> result of the old args.
  * Now the error message is clearer:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; "7" should beAsIntsGreaterThan ("8")
@@ -370,10 +343,9 @@ import TripleEqualsSupport.TripleEqualsInvocation
  *
  * <h2>Matcher's variance</h2>
  *
- * <p>
  * <code>Matcher</code> is contravariant in its type parameter, <code>T</code>, to make its use more flexible.
  * As an example, consider the hierarchy:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * class Fruit
@@ -381,15 +353,13 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * class ValenciaOrange extends Orange
  * </pre>
  *
- * <p>
  * Given an orange:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val orange = Orange
  * </pre>
  *
- * <p>
  * The expression "<code>orange should</code>" will, via an implicit conversion in <code>Matchers</code>,
  * result in an object that has a <code>should</code>
  * method that takes a <code>Matcher[Orange]</code>. If the static type of the matcher being passed to <code>should</code> is
@@ -398,15 +368,14 @@ import TripleEqualsSupport.TripleEqualsInvocation
  * <code>Matcher[Valencia]</code> only knows how to match against a <code>Valencia</code>. The reason
  * it won't compile is given that <code>Matcher</code> is contravariant in its type parameter, <code>T</code>, a
  * <code>Matcher[Valencia]</code> is <em>not</em> a subtype of <code>Matcher[Orange]</code>.
- * </p>
+ * 
  *
- * <p>
  * By contrast, if the static type of the matcher being passed to <code>should</code> is <code>Matcher[Fruit]</code>,
  * it should (and will) compile. The reason it <em>should</em> compile is that given the left value is an <code>Orange</code>,
  * it is also a <code>Fruit</code>, and a <code>Matcher[Fruit]</code> knows how to match against <code>Fruit</code>s.
  * The reason it <em>will</em> compile is that given  that <code>Matcher</code> is contravariant in its type parameter, <code>T</code>, a
  * <code>Matcher[Fruit]</code> is indeed a subtype of <code>Matcher[Orange]</code>.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -436,11 +405,10 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
   /**
    * Compose this matcher with the passed function, returning a new matcher.
    *
-   * <p>
    * This method overrides <code>compose</code> on <code>Function1</code> to
    * return a more specific function type of <code>Matcher</code>. For example, given
    * a <code>beOdd</code> matcher defined like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val beOdd =
@@ -454,32 +422,29 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    *   }
    * </pre>
    *
-   * <p>
    * You could use <code>beOdd</code> like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * 3 should beOdd
    * 4 should not (beOdd)
    * </pre>
    *
-   * <p>
    * If for some odd reason, you wanted a <code>Matcher[String]</code> that 
    * checked whether a string, when converted to an <code>Int</code>,
    * was odd, you could make one by composing <code>beOdd</code> with
    * a function that converts a string to an <code>Int</code>, like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val beOddAsInt = beOdd compose { (s: String) => s.toInt }
    * </pre>
    *
-   * <p>
    * Now you have a <code>Matcher[String]</code> whose <code>apply</code> method first
    * invokes the converter function to convert the passed string to an <code>Int</code>,
    * then passes the resulting <code>Int</code> to <code>beOdd</code>. Thus, you could use
    * <code>beOddAsInt</code> like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "3" should beOddAsInt
@@ -498,7 +463,6 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * that represents the logical-and of the results of the wrapped and the passed matcher applied to
    * the same value.
    *
-   * <p>
    * The reason <code>and</code> has an upper bound on its type parameter is so that the <code>Matcher</code>
    * resulting from an invocation of <code>and</code> will have the correct type parameter. If you call
    * <code>and</code> on a <code>Matcher[Orange]</code>, passing in a <code>Matcher[Valencia]</code>,
@@ -511,7 +475,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * <code>Matcher[Orange]</code> and a <code>Matcher[Fruit]</code> know how to match an
    * <code>Orange</code> (but a <code>Matcher[Orange]</code> doesn't know how to
    * match any old <code>Fruit</code>).
-   * </p>
+   * 
    *
    * @param the matcher to logical-and with this matcher
    * @return a matcher that performs the logical-and of this and the passed matcher
@@ -552,7 +516,6 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * that represents the logical-or of the results of this and the passed matcher applied to
    * the same value.
    *
-   * <p>
    * The reason <code>or</code> has an upper bound on its type parameter is so that the <code>Matcher</code>
    * resulting from an invocation of <code>or</code> will have the correct type parameter. If you call
    * <code>or</code> on a <code>Matcher[Orange]</code>, passing in a <code>Matcher[Valencia]</code>,
@@ -565,7 +528,7 @@ trait Matcher[-T] extends Function1[T, MatchResult] { outerInstance =>
    * <code>Matcher[Orange]</code> and a <code>Matcher[Fruit]</code> know how to match an
    * <code>Orange</code> (but a <code>Matcher[Orange]</code> doesn't know how to
    * match any old <code>Fruit</code>).
-   * </p>
+   * 
    *
    * @param rightMatcher the matcher to logical-or with this matcher
    * @return a matcher that performs the logical-or of this and the passed matcher

@@ -58,10 +58,9 @@ import enablers.Futuristic
  * <code>withFixture</code> lifecycle method that accepts as its parameter a test function
  * that returns a <a href="FutureOutcome.html"><code>FutureOutcome</code></a>.
  *
- * <p>
  * The <code>withFixture</code> method add by this trait has the 
  * following signature and implementation:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * def withFixture(test: NoArgAsyncTest): FutureOutcome = {
@@ -69,25 +68,22 @@ import enablers.Futuristic
  * }
  * </pre>
  *
- * <p>
  * This trait enables testing of asynchronous code without blocking.  Instead of returning
  * <code>Outcome</code> like <a href="TestSuite.html"><code>TestSuite</code></a>'s 
  * <code>withFixture</code>, this trait's <code>withFixture</code> method returns a
  * <code>FutureOutcome</code>. Similarly, the <code>apply</code> method of test function interface,
  * <code>NoArgAsyncTest</code>, returns <code>FutureOutcome</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // In trait NoArgAsyncTest:
  * def apply(): FutureOutcome
  * </pre>
  *
- * <p>
  * The <code>withFixture</code> method supports async testing, because when the test function returns,
  * the test body has not necessarily finished execution.
- * </p>
+ * 
  *
- * <p>
  * The recommended way to ensure cleanup is performed after a test body finishes execution is
  * to use a <code>complete</code>-<code>lastly</code> clause, syntax that is defined in trait
  * <a href="CompleteLastly.html"><code>CompleteLastly</code></a>, which this trait extends.
@@ -96,14 +92,13 @@ import enablers.Futuristic
  * normally yielding a <code>FutureOutcome</code>. In the latter case,
  * <code>complete</code>-<code>lastly</code> will
  * register the cleanup code to execute asynchronously when the <code>FutureOutcome</code> completes.
- * </p>
+ * 
  *
- * <p>
  * The <code>withFixture</code> method is designed to be stacked, and to enable this, you should always call the <code>super</code> implementation
  * of <code>withFixture</code>, and let it invoke the test function rather than invoking the test function directly. In other words, instead of writing
  * &ldquo;<code>test()</code>&rdquo;, you should write &ldquo;<code>super.withFixture(test)</code>&rdquo;. Thus, the recommended
  * structure of a <code>withFixture</code> implementation that performs cleanup looks like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Your implementation
@@ -117,9 +112,8 @@ import enablers.Futuristic
  * }
  * </pre>
  *
- * <p>
  * If you have no cleanup to perform, you can write <code>withFixture</code> like this instead:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Your implementation
@@ -129,7 +123,6 @@ import enablers.Futuristic
  * }
  * </pre>
  *
- * <p>
  * The test function and <code>withFixture</code> method returns a
  * <a href="FutureOutcome.html"><code>FutureOutcome</code></a>,
  * a ScalaTest class that wraps a Scala <code>Future[Outcome]</code> and offers methods
@@ -141,13 +134,12 @@ import enablers.Futuristic
  * <code>Failed</code>. This is true of the asynchronous test code itself that's represented by
  * the <code>FutureOutcome</code> and any transformation or callback registered on the
  * <code>FutureOutcome</code> in <code>withFixture</code>.
- * </p>
  * 
- * <p>
+ * 
  * If you want to perform an action only for certain outcomes, you'll need to 
  * register code performing that action on the <code>FutureOutcome</code> using
  * one of <code>FutureOutcome</code>'s callback registration methods:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>onSucceededThen</code> - executed if the <code>Outcome</code> is a <code>Succeeded</code>.
@@ -161,10 +153,9 @@ import enablers.Futuristic
  *        or a thrown suite-aborting exception.
  * </ul>
  *
- * <p>
  * For example, if you want to perform an action if a test fails, you'd register the
  * callback using <code>onFailedThen</code>, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // Your implementation
@@ -181,7 +172,6 @@ import enablers.Futuristic
  * }
  * </pre>
  *
- * <p>
  * Note that all callback registration methods, such as <code>onFailedThen</code> used in the
  * previous example, return a new <code>FutureOutcome</code> that won't complete until the
  * the original <code>FutureOutcome</code> <em>and the callback</em> has completed. If the callback
@@ -190,12 +180,11 @@ import enablers.Futuristic
  * registered on that <code>FutureOutcome</code> with <code>onFailedThen</code> throws <code>TestPendingException</code>, the
  * result of the <code>FutureOutcome</code> returned by <code>onFailedThen</code> will
  * be <code>Pending</code>.
- * </p>
+ * 
  *
- * <p>
  * Lastly, if you want to change the outcome in some way in <code>withFixture</code>, you'll need to use
  * the <code>change</code> method of <code>FutureOutcome</code>, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * // Your implementation
@@ -251,10 +240,9 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
   /**
    * Implicitly converts an <code>Assertion</code> to a <code>Future[Assertion]</code>.
    *
-   * <p>
    * This implicit conversion is used to allow synchronous tests to be included along with
    * asynchronous tests in an <code>AsyncTestSuite</code>. It will be 
-   * </p>
+   * 
    *
    * @param assertion the <code>Assertion</code> to convert
    * @return a <code>Future[Assertion]</code> that has already completed successfully
@@ -271,10 +259,9 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
   /**
    * A test function taking no arguments and returning a <code>FutureOutcome</code>.
    *
-   * <p>
    * For more detail and examples, see the relevant section in the
    * <a href="AsyncFlatSpec.html#withFixtureNoArgTest">documentation for trait <code>AsyncFlatSpec</code></a>.
-   * </p>
+   * 
    */
   trait NoArgAsyncTest extends (() => FutureOutcome) with TestData {
     /**
@@ -286,7 +273,6 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
   /**
    * Run the passed test function in the context of a fixture established by this method.
    *
-   * <p>
    * This method should set up the fixture needed by the tests of the
    * current suite, invoke the test function, and if needed, register a callback
    * on the resulting <code>FutureOutcome</code> to perform any clean
@@ -295,17 +281,15 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
    * side effects, such as reassigning instance <code>var</code>s in this <code>Suite</code> or initializing
    * a globally accessible external database. If you want to avoid reassigning instance <code>var</code>s
    * you can use <a href="fixture/AsyncTestSuite.html">fixture.AsyncTestSuite</a>.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of <code>runTest</code> invokes this method for each test, passing
    * in a <code>NoArgAsyncTest</code> whose <code>apply</code> method will execute the code of the test
    * and returns its result.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method simply invokes the passed <code>NoArgAsyncTest</code> function.
-   * </p>
+   * 
    *
    * @param test the no-arg async test function to run with a fixture
    */
@@ -336,16 +320,14 @@ trait AsyncTestSuite extends Suite with RecoverMethods with CompleteLastly { thi
   /**
    * Run an async test.
    *
-   * <p>
    * This method is redefine in this trait solely to narrow its contract. Subclasses must implement
    * this method to call the <code>withFixture(NoArgAsyncTest)</code> method, which is defined in
    * this trait.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
    * and has no other effect.
-   * </p>
+   * 
    *
    * @param testName the name of one async test to execute.
    * @param args the <code>Args</code> for this run

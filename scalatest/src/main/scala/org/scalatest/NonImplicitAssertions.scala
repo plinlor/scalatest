@@ -23,10 +23,9 @@ import TripleEqualsSupport._
  * Trait that can be mixed into a <code>Suite</code> to disable the implicit conversions provided by default in trait
  * <a href="Assertions.html"><code>Assertions</code></a>, which trait <code>Suite</code> extends.
  * 
- * <p>
  * This trait can be used to quickly solve a problem in which ScalaTest's default implicit conversion is clashing with those of some other library
  * you need to use in your tests. After mixing in this trait, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * class MySuite extends FunSuite with NonImplicitAssertions { 
@@ -34,10 +33,9 @@ import TripleEqualsSupport._
  * } 
  * </pre>
  *
- * <p>
  * You can write tests using <code>assert</code> (without triple equals), <code>assertResult</code>, <code>assertThrows</code>,
  * <code>intercept</code>, <code>assertCompiles</code>, <code>assertDoesNotCompile</code>, and <code>assertTypeError</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  *   assert(a &lt; 7)

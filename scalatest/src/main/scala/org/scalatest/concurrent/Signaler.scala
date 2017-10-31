@@ -18,22 +18,20 @@ package org.scalatest.concurrent
 /**
  * Strategy for signaling an operation after a timeout expires.
  *
- * <p>
  * An instance of this trait is used for configuration when using traits
  * <a href="TimeLimits.html"><code>TimeLimits</code></a> and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * </p>
+ * 
  */
 trait Signaler {
 
   /**
    * Signals an operation.
    *
-   * <p>
    * This method may do anything to attempt to signal or interrupt an operation, or even do nothing.
    * When called by <code>failAfter</code> method of trait <a href="TimeLimits.html"><code>TimeLimits</code></a>, the passed
    * <code>Thread</code> will represent the main test thread. This <code>Thread</code> is
    * passed in case it is useful, but need not be used by implementations of this method.
-   * </p>
+   * 
    */
   def apply(testThread: Thread): Unit
 }

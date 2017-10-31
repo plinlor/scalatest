@@ -23,9 +23,8 @@ import org.scalactic.Uniformity
  * instance for any subtype of <code>scala.xml.NodeSeq</code> that will normalize the XML by removing empty text nodes and trimming
  * non-empty text nodes.
  *
- * <p>
  * Here's an example of some unnormalized XML:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * &lt;summer&gt;
@@ -36,18 +35,16 @@ import org.scalactic.Uniformity
  * &lt;/summer&gt;
  * </pre>
  *
- * <p>
  * The <code>Uniformity</code> returned by this trait's <code>streamlined</code> method would transform
  * the above XML to:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * &lt;summer&gt;&lt;day&gt;&lt;/day&gt;&lt;night&gt;with lots of stars&lt;/night&gt;&lt;/summer&gt;
  * </pre>
  *
- * <p>
  * The <code>streamlined</code> method can be used with the <a href="../scalactic/Explicitly.html"><code>Explicitly</code></a> DSL, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * xmlElem should equal (
@@ -60,11 +57,10 @@ import org.scalactic.Uniformity
  * ) (after being streamlined[Elem])
  * </pre>
  *
- * <p>
  * The goal of this trait is to provide a normalization for XML that makes it easier to test XML objects for equality.
  * White space is significant in XML, and is taken into account by the default equality for XML, accessed
  * by invoking the <code>==</code> method on an XML <code>NodeSeq</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; val xmlElem = &lt;summer&gt;&lt;day&gt;&lt;/day&gt;&lt;night&gt;with lots of stars&lt;/night&gt;&lt;/summer&gt;
@@ -79,14 +75,13 @@ import org.scalactic.Uniformity
  * res1: Boolean = false
  * </pre>
  *
- * <p>
  * The above equality comparison produces false because of whitespace differences in the XML.
  * When such whitespace differences are unimportant to the actual application, it can make it
  * easier to write readable test code if you can compare XML for equality without taking
  * into account empty text nodes, or leading and trailing whitespace in nonempty text nodes.
  * The <code>streamlined</code> method of this trait provides a <code>Uniformity</code>
  * instance that does just that:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalactic._
@@ -122,11 +117,10 @@ trait StreamlinedXml {
    * instance for any subtype of <code>scala.xml.NodeSeq</code> that will normalize the XML by removing empty text nodes and trimming
    * non-empty text nodes.
    *
-   * <p>
    * The purpose of this <code>Uniformity</code> is to make it easier to write readable test
    * code that compares XML for equality. See the main documentation for this trait for more
    * details and examples.
-   * </p>
+   * 
    *
    * @return a <code>Uniformity[T]</code> instance that normalizes XML for testing
    */
@@ -171,14 +165,13 @@ trait StreamlinedXml {
       /**
        * Normalizes the passed object if it is a <code>Elem</code>.
        *
-       * <p>
        * This method returns either:
-       * </p>
+       * 
        *
        * <ul>
        * <li>if the passed object is a <code>Elem</code>, the result of passing that string to <code>normalized</code></li>
        * <li>else, the same exact object that was passed
-       * </p>
+       * 
        *
        * @return a normalized form of any passed <code>Elem</code>, or the same object if not a <code>Elem</code>.
        */

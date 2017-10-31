@@ -27,11 +27,10 @@ import org.scalatest.Exceptional
 /**
  * Trait that when mixed into a suite class establishes a time limit for its tests.
  *
- * <p>
  * This trait overrides <code>withFixture</code>, wrapping a <code>super.withFixture(test)</code> call
  * in a <code>failAfter</code> invocation, specifying a timeout obtained by invoking <code>timeLimit</code>
  * and an <a href="Interruptor.html"><code>Interruptor</code></a> by invoking <code>defaultTestInterruptor</code>:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * failAfter(timeLimit) {
@@ -39,17 +38,15 @@ import org.scalatest.Exceptional
  * } (defaultTestInterruptor)
  * </pre>
  *
- * <p>
  * Note that the <code>failAfter</code> method executes the body of the by-name passed to it using the same
  * thread that invoked <code>failAfter</code>. This means that the same thread will run the <code>withFixture</code> method
  * as well as each test, so no extra synchronization is required. A second thread is used to run a timer, and if the timeout
  * expires, that second thread will attempt to interrupt the main test thread via the <code>defaultTestInterruptor</code>.
- * </p>
  * 
- * <p>
+ * 
  * The <code>timeLimit</code> field is abstract in this trait. Thus you must specify a time limit when you use it.
  * For example, the following code specifies that each test must complete within 200 milliseconds:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalatest.FunSpec
@@ -74,22 +71,19 @@ import org.scalatest.Exceptional
  * }
  * </pre>
  *
- * <p>
  * If you run the above <code>ExampleSpec</code>, the second test will fail with the error message: 
- * </p>
  * 
- * <p>
+ * 
  * <code>The test did not complete within the specified 200 millisecond time limit.</code>
- * </p>
  * 
- * <p>
+ * 
  * The <code>failAfter</code> method uses an <code>Interruptor</code> to attempt to interrupt the main test thread if the timeout
  * expires. The default <code>Interruptor</code> returned by the <code>defaultTestInterruptor</code> method is a
  * <a href="ThreadInterruptor$.html"><code>ThreadInterruptor</code></a>, which calls <code>interrupt</code> on the main test thread. If you wish to change this
  * interruption strategy, override <code>defaultTestInterruptor</code> to return a different <code>Interruptor</code>. For example,
  * here's how you'd change the default to <a href="DoNotInterrupt$.html"><code>DoNotInterrupt</code></a>, a very patient interruption strategy that does nothing to
  * interrupt the main test thread:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalatest.FunSpec
@@ -113,13 +107,12 @@ import org.scalatest.Exceptional
  * }
  * </pre>
  * 
- * <p>
  * Like the previous incarnation of <code>ExampleSuite</code>, the second test will fail with an error message that indicates
  * a timeout expired. But whereas in the previous case, the <code>Thread.sleep</code> would be interrupted after 200 milliseconds,
  * in this case it is never interrupted. In the previous case, the failed test requires a little over 200 milliseconds to run.
  * In this case, because the <code>sleep(300)</code> is never interrupted, the failed test requires a little over 300 milliseconds
  * to run.
- * </p>
+ * 
  */
 @deprecated("DeprecatedTimeLimitedTests is deprecated and will be removed in a future version of ScalaTest. Please use TimeLimitedTests instead.")
 trait DeprecatedTimeLimitedTests extends TestSuiteMixin { this: TestSuite =>
@@ -153,10 +146,9 @@ trait DeprecatedTimeLimitedTests extends TestSuiteMixin { this: TestSuite =>
   /**
    * The default <a href="Interruptor.html"><code>Interruptor</code></a> strategy used to interrupt tests that exceed their time limit.
    * 
-   * <p>
    * This trait's implementation of this method returns <a href="ThreadInterruptor$.html"><code>ThreadInterruptor</code></a>, which invokes <code>interrupt</code>
    * on the main test thread. Override this method to change the test interruption strategy.
-   * </p>
+   * 
    * 
    * @return a <code>ThreadInterruptor</code>
    */

@@ -21,41 +21,36 @@ import TripleEqualsSupport._
  * Provides an implicit conversion that will be applied only if a higher-priority implicit conversion declared a subtrait
  * is not applicable.
  *
- * <p>
  * <strong>This trait, which supports <code>ConversionCheckedTripleEquals</code>, will no longer be necessary once the deprecation cycle for <code>ConversionCheckedTripleEquals</code>
  * has completed. At that time it will be removed.</strong>
- * </p>
+ * 
  *
- * <p>
  * The purpose of this trait is to make the <code>===</code> operator symetric. In other words, a <code>===</code> invocation
  * will be allowed if an implicit conversion exists in either direction. For example, the implicit widening conversion from
  * <code>Int</code> to <code>Long</code> will be applied on the left hand side in this expression:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * 1 === 1L
  * </pre>
  *
- * <p>
  * But in the next expression, it will be applied on the right hand side:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * 1L === 1
  * </pre>
  *
- * <p>
  * The first expression above is enabled by the implicit conversion <code>conversionCheckedConstraint</code> in trait
  * <a href="ConversionCheckedTripleEquals.html"><code>ConversionCheckedTripleEquals</code></a>.
  * The second expression above is
  * enabled by the implicit conversion <code>lowPriorityConversionCheckedConstraint</code> in this trait.
- * </p>
+ * 
  *
- * <p>
  * The reason these two implicit methods aren't both declared in the subtraits is
  * that if implicit conversions were available in both directions, they would conflict. By placing one of them in this supertrait, the higher
  * priority conversion will be selected.
- * </p>
+ * 
  */
 @deprecated("Trait LowPriorityConversionCheckedConstraint is deprecated and will be removed after the deprecation period of ConversionCheckedTripleEquals has completed.")
 trait LowPriorityConversionCheckedConstraint extends TripleEqualsSupport {

@@ -24,10 +24,9 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
   /**
    * A test function taking a fixture parameter and returning an <code>Outcome</code>.
    *
-   * <p>
    * For more detail and examples, see the
    * <a href="FlatSpec.html">documentation for trait <code>fixture.FlatSpec</code></a>.
-   * </p>
+   * 
    */
   protected trait OneArgTest extends (FixtureParam => Outcome) with TestData { thisOneArgTest =>
 
@@ -46,7 +45,6 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
      * this <code>OneArgTest</code>'s apply method,
      * passing in the given <code>fixture</code>.
      *
-     * <p>
      * This method makes it easier to invoke the <code>withFixture</code> method
      * that takes a <code>NoArgTest</code>. For example, if a <code>fixture.Suite</code> 
      * mixes in <code>SeveredStackTraces</code>, it will inherit an implementation
@@ -56,7 +54,7 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
      * <code>withFixture(NoArgTest)</code> method, the stack trace severing behavior
      * will not happen. Here's how that might look in a <code>fixture.Suite</code>
      * whose <code>FixtureParam</code> is <code>StringBuilder</code>:
-     * </p>
+     * 
      *
      * <pre class="stHighlight">
      * def withFixture(test: OneArgTest) = {
@@ -64,11 +62,10 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
      * }
      * </pre>
      *
-     * <p>
      * Invoking this method has no side effect. It just returns a <code>NoArgTest</code> whose
      * <code>apply</code> method invokes <code>apply</code> on this <code>OneArgTest</code>, passing
      * in the <code>FixtureParam</code> passed to <code>toNoArgTest</code>.
-     * </p>
+     * 
      *
      * @param fixture the <code>FixtureParam</code>
      * @return an new instance of <code>NoArgTest</code>
@@ -113,12 +110,11 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
   /**
    *  Run the passed test function with a fixture created by this method.
    *
-   * <p>
    * This method should create the fixture object needed by the tests of the
    * current suite, invoke the test function (passing in the fixture object),
    * and if needed, perform any clean up needed after the test completes.
    * For more detail and examples, see the <a href="Suite.html">main documentation for this trait</a>.
-   * </p>
+   * 
    *
    * @param test the <code>OneArgTest</code> to invoke, passing in a fixture
    * @return an instance of <code>Outcome</code>

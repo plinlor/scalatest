@@ -126,10 +126,9 @@ import org.scalactic.source
 /**
  * Trait to which markup text tests can be reported.
  * 
- * <p>
  * Note: <code>Documenter</code> will be described in more detail in a future 2.0 milestone release. As of this release
  * you can't see its effects yet.
- * </p>
+ * 
  * 
  * @author Bill Venners
  */

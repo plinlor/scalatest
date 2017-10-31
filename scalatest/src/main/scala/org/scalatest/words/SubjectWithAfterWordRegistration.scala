@@ -21,10 +21,9 @@ import org.scalactic._
  * Class that provides a role-specific type for an implicit conversion used to support
  * the registration of subject descriptions in <code>FlatSpec</code> and <code>FreeSpec</code> styles.
  *
- * <p>
  * For example, this class enables syntax such as the following in <code>WordSpec</code>
  * and <code>fixture.WordSpec</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "A Stack (when empty)" should { ...
@@ -41,10 +40,9 @@ abstract class SubjectWithAfterWordRegistration {
   /**
    * Registers a subject description in <code>WordSpec</code> and <code>fixture.WordSpec</code>.
    *
-   * <p>
    * For example, this class enables syntax such as the following in <code>WordSpec</code>
    * and <code>fixture.WordSpec</code>:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * "A Stack (when empty)" should { ...

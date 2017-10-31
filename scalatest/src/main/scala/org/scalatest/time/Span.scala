@@ -22,14 +22,13 @@ import Span.totalNanosForLongLength
 /**
  * A time span.
  *
- * <p>
  * A <code>Span</code> is used to express time spans in ScalaTest, in constructs such as the
  * <code>failAfter</code> method of trait <a href="../concurrent/Timeouts.html"><code>Timeouts</code></a>,
  * the <code>timeLimit</code> field of trait
  * <a href="../concurrent/TimeLimitedTests.html"><code>TimeLimitedTests</code></a>, and
  * the timeouts of traits <a href="../concurrent/Eventually.html"><code>Eventually</code></a>,
  * and <a href="../concurrent/AsyncAssertions.html"><code>AsyncAssertions</code></a>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.time.Span
@@ -41,10 +40,9 @@ import Span.totalNanosForLongLength
  * }
  * </pre>
  *
- * <p>
  * If you prefer you can mix in or import the members of <a href="../time/SpanSugar.html"><code>SpanSugar</code></a> and place a units value after the timeout value.
  * Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.time.SpanSugar._
@@ -59,10 +57,9 @@ import Span.totalNanosForLongLength
  * }
  * </pre>
  *
- * <p>
  * In addition to expression the numeric value with an <code>Int</code> or a <code>Long</code>, you
  * can also express it via a <code>Float</code> or <code>Double</code>. Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.time.Span
@@ -80,24 +77,22 @@ import Span.totalNanosForLongLength
  * }
  * </pre>
  *
- * <p>
  * Internally, a <code>Span</code> is expressed in terms of a <code>Long</code> number of nanoseconds. Thus, the maximum
  * time span that can be represented is <code>Long.MaxValue</code> nanoseconds, or approximately 292 years.
  * Hopefully these won't be "famous last words," but 292 years should be sufficient for software testing purposes.
  * Any attempt to create a <code>Span</code> longer than <code>Long.MaxValue</code> nanoseconds will be met with
  * an <code>IllegalArgumentException</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Span(Long.MaxValue, Nanoseconds) // Produces the longest possible time.Span
  * Span(Long.MaxValue, Seconds)     // Produces an IllegalArgumentException
  * </pre>
  *
- * <p>
  * All of class <code>Span</code>'s constructors are private. The only way you can create a new <code>Span</code> is
  * via one of the two <code>apply</code> factory methods in <a href="Span$.html"><code>Span</code>'s
  * companion object</a>. Here is a table showing one example of each numeric type and unit value:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
@@ -326,10 +321,9 @@ import Span.totalNanosForLongLength
  * </tr>
  * </table>
  *
- * <p>
  * Note that because of implicit conversions in the <code>Span</code> companion object, you can use a
  * <code>scala.concurrent.duration.Duration</code> where a <code>Span</code> is needed, and vice versa.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -364,11 +358,10 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
    * This time span converted to milliseconds, computed via <code>totalNanos / 1000000</code>, which
    * truncates off any leftover nanoseconds.
    *
-   * <p>
    * The <code>millisPart</code> and <code>nanosPart</code> can be used, for example, when invoking
    * <code>Thread.sleep</code>. For example, given a <code>Span</code> named <code>span</code>, you could
    * write:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Thread.sleep(span.millisPart, span.nanosPart)
@@ -380,11 +373,10 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
    * The number of nanoseconds remaining when this time span is converted to milliseconds, computed via
    * <code>(totalNanos % 1000000).toInt</code>.
    *
-   * <p>
    * The <code>millisPart</code> and <code>nanosPart</code> can be used, for example, when invoking
    * <code>Thread.sleep</code>. For example, given a <code>Span</code> named <code>span</code>, you could
    * write:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * Thread.sleep(span.millisPart, span.nanosPart)
@@ -395,17 +387,15 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
   /**
    * Returns a <code>Span</code> representing this <code>Span</code> <em>scaled</em> by the passed factor.
    *
-   * <p>
    * The passed <code>factor</code> can be any positive number or zero, including fractional numbers. A number
    * greater than one will scale the <code>Span</code> up to a larger value. A fractional number will scale it
    * down to a smaller value. A factor of 1.0 will cause the exact same <code>Span</code> to be returned. A
    * factor of zero will cause <code>Span.Zero</code> to be returned.
-   * </p>
+   * 
    *
-   * <p>
    * If overflow occurs, <code>Span.Max</code> will be returned. If underflow occurs, <code>Span.Zero</code>
    * will be returned.
-   * </p>
+   * 
    *
    * @throws IllegalArgumentException if the passed value is less than zero
    */
@@ -453,10 +443,9 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
    * Returns a localized string suitable for presenting to a user that describes the time span represented
    * by this <code>Span</code>.
    *
-   * <p>
    * For example, for <code>Span(1, Millisecond)</code>, this method would return <code>"1 millisecond"</code>.
    * For <code>Span(9.99, Seconds)</code>, this method would return <code>"9.9 seconds"</code>.
-   * </p>
+   * 
    *
    * @return a localized string describing this <code>Span</code>
    */
@@ -465,10 +454,9 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
   /**
    * Returns a string that looks similar to a factory method call that would have produced this <code>Span</code>.
    *
-   * <p>
    * For example, for <code>Span(1, Millisecond)</code>, this method would return <code>"Span(1, Millisecond)"</code>.
    * For <code>Span(9.99, Seconds)</code>, this method would return <code>"Span(9.99, Seconds)"</code>.
-   * </p>
+   * 
    *
    * @return a string that looks like a factory method call that would produce this <code>Span</code>
    */
@@ -477,10 +465,9 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
   /**
    * Compares another object for equality.
    *
-   * <p>
    * If the passed object is a <code>Span</code>, this method will return <code>true</code> only if the other
    * <code>Span</code> returns the exact same value as this <code>Span</code> for <code>totalNanos</code>.
-   * </p>
+   * 
    *
    * @param other the object to compare with this one for equality
    *
@@ -504,11 +491,10 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
 /**
  * Companion object for <code>Span</code> that provides two factory methods for creating <code>Span</code> instances.
  *
- * <p>
  * The first argument to each factory method is a numeric value; the second argument is a <code>Units</code> value.
  * One factory method takes a <code>Long</code>, so it can be invoked with either an <code>Int</code> or
  * </code>Long</code>, as in:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import org.scalatest.time._
@@ -517,10 +503,9 @@ final class Span private (totNanos: Long, lengthString: String, unitsMessageFun:
  * Span(1L, Millisecond)
  * </pre>
  *
- * <p>
  * The other factory method takes a <code>Double</code>, so it can be invoked with either a <code>Float</code> or
  * a <code>Double</code>:
- * </p>
+ * 
  * <pre class="stHighlight">
  * import org.scalatest.time._
  *
@@ -536,11 +521,10 @@ object Span {
    * Returns a <code>Span</code> representing the passed <code>Long</code> <code>length</code> of time in the
    * passed <code>units</code>.
    *
-   * <p>
    * If the requested time span is less than zero or greater than <code>Long.MaxValue</code> nanoseconds, this method will throw
    * an <code>IllegalArgumentException</code>. (Note: a zero-length time span is allowed, just not a negative or
    * too-large time span.)
-   * </p>
+   * 
    *
    * @param length the length of time denominated by the passed <code>units</code>
    * @param units the units of time for the passed <code>length</code>
@@ -554,11 +538,10 @@ object Span {
    * Returns a <code>Span</code> representing the passed <code>Double</code> <code>length</code> of time in the
    * passed <code>units</code>.
    *
-   * <p>
    * If the requested time span is less than <code>0.0</code> or, when converted to <code>Long</code> number of nanoseconds, would be greater than
    * <code>Long.MaxValue</code> nanoseconds, this method will throw an <code>IllegalArgumentException</code>.
    * (Note: a zero-length time span is allowed, just not a negative or too-large time span.)
-   * </p>
+   * 
    *
    * @param length the length of time denominated by the passed <code>units</code>
    * @param units the units of time for the passed <code>length</code>
@@ -573,11 +556,10 @@ object Span {
    * A <code>Span</code> with the maximum expressible value, <code>Span(Long.MaxValue, Nanoseconds)</code>,
    * which is approximately 292 years.
    *
-   * <p>
    * One use case for this <code>Span</code> value is to help convert a duration concept from a different library to
    * <code>Span</code> when that library's duration concept includes a notion of infinite durations. An infinite
    * duration can be converted to <code>Span.Max</code>.
-   * </p>
+   * 
    *
    * @return a <code>Span</code> with the maximum expressible value, <code>Long.MaxValue</code> nanoseconds.
    */
@@ -695,11 +677,10 @@ object Span {
    * Implicitly converts a <code>scala.concurrent.duration.Duration</code> to a <code>Span</code>,
    * so that a <code>Duration</code> can be used where a <code>Span</code> is needed.
    *
-   * <p>
    * This function transforms <code>Duration.MinusInf</code> to <code>Span.Zero</code>, <code>Duration.Inf</code>
    * and <code>Undefined</code> to <code>Span.Max</code>, and all others to a <code>Span</code> containing a
    * corresponing number of nanoseconds.
-   * </p>
+   * 
    */
   implicit def convertDurationToSpan(duration: Duration): Span = {
     duration match {

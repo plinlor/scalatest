@@ -29,9 +29,8 @@ object MatchSucceeded {
    * Extractor enabling patterns that match <code>MatchResult</code> having <code>matches</code> property value of <code>true</code>,
    * extracting the contained negated failure message.
    *
-   * <p>
    * For example, you can use this extractor to get the negated failure message of a <code>MatchResult</code> like this:
-   * </p>
+   * 
    *
    * <pre>
    * matchResult match {

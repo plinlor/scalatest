@@ -107,17 +107,15 @@ final class NotWord {
    *                ^
    * </pre>
    *
-   * <p>
    * In addition, this method enables you to negate a <code>BeMatcher</code> at its point of use, like this:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * num should be (not (odd))
    * </pre>
    *
-   * <p>
    * Nevertheless, in such as case it would be more idiomatic to write:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * num should not be (odd)
@@ -413,10 +411,9 @@ final class NotWord {
    * should be, or shouldBe instead.
    * </strong>
    *
-   * <p>
    * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
    * cases still compile, but silently wouldn't work.
-   * </p>
+   * 
    */
   @deprecated("The deprecation period for the be === syntax has expired. Please use should equal, should ===, shouldEqual, should be, or shouldBe instead.")
   def be(tripleEqualsInvocation: TripleEqualsInvocation[_])(implicit pos: source.Position): Matcher[Any] = {

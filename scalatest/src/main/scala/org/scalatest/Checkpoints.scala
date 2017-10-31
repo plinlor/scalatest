@@ -25,25 +25,22 @@ import org.scalactic._
  * to be performed within a test, with any failures accumulated and reported
  * together at the end of the test.
  *
- * <p>
  * Because ScalaTest uses exceptions to signal failed assertions, normally execution
  * of a test will stop as soon as the first failed assertion is encountered. Trait
  * <code>Checkpoints</code> provides an option when you want to continue executing
  * the remainder of the test body, or part of it, even if an assertion has already failed in that test.
- * </p>
- * <p>
+ * 
  * To use a <code>Checkpoint</code> (once you've mixed in or imported the members of trait
  * <code>Checkpoints</code>), you first need to create one, like this:
- * </p>
+ * 
  *
  * <pre>
  * val cp = new Checkpoint
  * </pre>
  *
- * <p>
  * Then give the <code>Checkpoint</code> assertions to execute by passing them (via a by-name parameter)
  * to its <code>apply</code> method, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val (x, y) = (1, 2)
@@ -51,33 +48,29 @@ import org.scalactic._
  * cp { y should be &gt; 9 }
  * </pre>
  *
- * <p>
  * Both of the above assertions will fail, but it won't be reported yet. The <code>Checkpoint</code> will execute them
  * right away, each time its <code>apply</code> method is invoked. But it will catch the <code>TestFailedExceptions</code> and
  * save them, only reporting them later when <code>reportAll</code> is invoked. Thus, at the end of the test, you must call
  * <code>reportAll</code>, like this:
- * </p>
+ * 
  *
  * <pre>
  * cp.reportAll()
  * </pre>
  * 
- * <p>
  * This <code>reportAll</code> invocation will complete abruptly with a <code>TestFailedException</code> whose message
  * includes the message, source file, and line number of each of the checkpointed assertions that previously failed. For example:
- * </p>
+ * 
  *
  * <pre>
  * 1 was not less than 0 (in Checkpoint) at ExampleSpec.scala:12
  * 2 was not greater than 9 (in Checkpoint) at ExampleSpec.scala:13
  * </pre>
  *
- * <p>
  * Make sure you invoke <code>reportAll</code> before the test completes, otherwise any failures that were detected by the
  * <code>Checkpoint</code> will not be reported.
- * </p>
+ * 
  *
- * <p>
  * Note that a <code>Checkpoint</code> will catch and record for later reporting (via <code>reportAll</code>) exceptions that mix in <code>StackDepth</code>
  * except for <code>TestCanceledException</code>, <code>TestRegistrationClosedException</code>, <code>NotAllowedException</code>,
  * and <code>DuplicateTestNameException</code>. If a block of code passed to a <code>Checkpoint</code>'s <code>apply</code> method completes
@@ -85,7 +78,7 @@ import org.scalactic._
  * of the <code>apply</code> method will complete abruptly with the same exception immediately. Unless you put <code>reportAll</code> in a finally
  * clause and handle this case, such an unexpected exception will cause you to lose any information about assertions that failed earlier in the test and were
  * recorded by the <code>Checkpoint</code>.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author George Berger
@@ -96,9 +89,8 @@ trait Checkpoints {
    * Class that allows multiple assertions to be performed within a test, with any
    * failures accumulated and reported together at the end of the test.
    * 
-   * <p>
    * See the main documentation for trait <code>Checkpoints</code> for more information and an example.
-   * </p>
+   * 
    */
   class Checkpoint {
     private final val failures: ConcurrentLinkedQueue[Throwable with StackDepth] =
@@ -119,11 +111,10 @@ trait Checkpoints {
      * except for <code>TestCanceledException</code>, <code>TestRegistrationClosedException </code>, <code>NotAllowedException </code>,
      * and <code>DuplicateTestNameException </code>.
      * 
-     * <p>
      * If the block of code completes abruptly with any of the <code>StackDepth</code> exceptions in the
      * previous list, or any non-<code>StackDepth</code> exception, that invocation of this <code>apply</code> method will complete abruptly
      * with the same exception.
-     * </p>
+     * 
      *
      * @param f the block of code, likely containing one or more assertions, to execute
      */

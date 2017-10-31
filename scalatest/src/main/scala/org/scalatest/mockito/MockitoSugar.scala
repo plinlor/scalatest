@@ -23,26 +23,23 @@ import org.mockito.MockSettings
 /**
  * Trait that provides some basic syntax sugar for <a href="http://mockito.org/" target="_blank">Mockito</a>.
  *
- * <p>
  * Using the Mockito API directly, you create a mock with:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val mockCollaborator = mock(classOf[Collaborator])
  * </pre>
  *
- * <p>
  * Using this trait, you can shorten that to:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val mockCollaborator = mock[Collaborator]
  * </pre>
  *
- * <p>
  * This trait also provides shorthands for the three other (non-deprecated) overloaded <code>mock</code> methods,
  * which allow you to pass in a default answer, a name, or settings.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Chua Chee Seng
@@ -53,17 +50,15 @@ trait MockitoSugar {
    * Invokes the <code>mock(classToMock: Class[T])</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock)</code> method in Java class <code>org.mockito.Mockito</code>).
    *
-   * <p>
    * Using the Mockito API directly, you create a mock with:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock(classOf[Collaborator])
    * </pre>
    *
-   * <p>
    * Using this method, you can shorten that to:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock[Collaborator]
@@ -77,17 +72,15 @@ trait MockitoSugar {
    * Invokes the <code>mock(classToMock: Class[T], defaultAnswer: Answer[_])</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock, org.mockito.stubbing.Answer defaultAnswer)</code> method in Java class <code>org.mockito.Mockito</code>).
    *
-   * <p>
    * Using the Mockito API directly, you create a mock with:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock(classOf[Collaborator], defaultAnswer)
    * </pre>
    *
-   * <p>
    * Using this method, you can shorten that to:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock[Collaborator](defaultAnswer)
@@ -101,17 +94,15 @@ trait MockitoSugar {
    * Invokes the <code>mock(classToMock: Class[T], mockSettings: MockSettings)</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock, org.mockito.MockSettings mockSettings)</code> method in Java class <code>org.mockito.Mockito</code>).
    *
-   * <p>
    * Using the Mockito API directly, you create a mock with:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock(classOf[Collaborator], mockSettings)
    * </pre>
    *
-   * <p>
    * Using this method, you can shorten that to:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock[Collaborator](mockSettings)
@@ -125,17 +116,15 @@ trait MockitoSugar {
    * Invokes the <code>mock(classToMock: Class[T], name: String)</code> method on the <code>Mockito</code> companion object (<em>i.e.</em>, the
    * static <code>mock(java.lang.Class<T> classToMock, java.lang.String name)</code> method in Java class <code>org.mockito.Mockito</code>).
    *
-   * <p>
    * Using the Mockito API directly, you create a mock with:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock(classOf[Collaborator], name)
    * </pre>
    *
-   * <p>
    * Using this method, you can shorten that to:
-   * </p>
+   * 
    *
    * <pre class="stHighlight">
    * val mockCollaborator = mock[Collaborator](name)

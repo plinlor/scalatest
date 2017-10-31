@@ -55,26 +55,23 @@ import exceptions.TestFailedException
  * Trait that provides a domain specific language (DSL) for expressing assertions in tests
  * using the word <code>should</code>.
  *
- * <p>
  * For example, if you mix <code>Matchers</code> into
  * a suite class, you can write an equality assertion in that suite like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * result should equal (3)
  * </pre>
  * 
- * <p>
  * Here <code>result</code> is a variable, and can be of any type. If the object is an
  * <code>Int</code> with the value 3, execution will continue (<em>i.e.</em>, the expression will result
  * in the unit value, <code>()</code>). Otherwise, a <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a>
  * will be thrown with a detail message that explains the problem, such as <code>"7 did not equal 3"</code>.
  * This <code>TestFailedException</code> will cause the test to fail.
- * </p>
  * 
- * <p>
+ * 
  * Here is a table of contents for this documentation:
- * </p>
+ * 
  *
  * <ul>
  * <li><a href="#matchersMigration">Matchers migration in ScalaTest 2.0</a></li>
@@ -110,20 +107,18 @@ import exceptions.TestFailedException
  * <li><a href="#thosePeskyParens">Those pesky parens</a></li>
  * </ul>
  * 
- * <p>
  * Trait <a href="MustMatchers.html"><code>MustMatchers</code></a> is an alternative to <code>Matchers</code> that provides the exact same
  * meaning, syntax, and behavior as <code>Matchers</code>, but uses the verb <code>must</code> instead of <!-- PRESERVE --><code>should</code>.
  * The two traits differ only in the English semantics of the verb: <!-- PRESERVE --><code>should</code>
  * is informal, making the code feel like conversation between the writer and the reader; <code>must</code> is more formal, making the code feel more like 
  * a written specification.
- * </p>
+ * 
  *
  * <a name="checkingEqualityWithMatchers"></a>
  * <h2>Checking equality with matchers</h2>
  *
- * <p>
  * ScalaTest matchers provides five different ways to check equality, each designed to address a different need. They are:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * result should equal (3) // can customize equality
@@ -133,54 +128,48 @@ import exceptions.TestFailedException
  * result shouldBe 3       // cannot customize equality, so fastest to compile, no parentheses required
  * </pre>
  *
- * <p>
  * The &ldquo;<code>left</code> <code>should</code> <code>equal</code> <code>(right)</code>&rdquo; syntax requires an
  * <a href="../scalactic/Equality.html"><code>org.scalactic.Equality[L]</code></a> to be provided (either implicitly or explicitly), where
  * <code>L</code> is the left-hand type on which <code>should</code> is invoked. In the "<code>left</code> <code>should</code> <code>equal</code> <code>(right)</code>" case,
  * for example, <code>L</code> is the type of <code>left</code>. Thus if <code>left</code> is type <code>Int</code>, the "<code>left</code> <code>should</code>
  * <code>equal</code> <code>(right)</code>"
  * statement would require an <code>Equality[Int]</code>.
- * </p>
  * 
- * <p>
+ * 
  * By default, an implicit <code>Equality[T]</code> instance is available for any type <code>T</code>, in which equality is implemented
  * by simply invoking <code>==</code>  on the <code>left</code>
  * value, passing in the <code>right</code> value, with special treatment for arrays. If either <code>left</code> or <code>right</code> is an array, <code>deep</code>
  * will be invoked on it before comparing with <em>==</em>. Thus, the following expression
  * will yield false, because <code>Array</code>'s <code>equals</code> method compares object identity:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * Array(1, 2) == Array(1, 2) // yields false
  * </pre>
  *
- * <p>
  * The next expression will by default <em>not</em> result in a <code>TestFailedException</code>, because default <code>Equality[Array[Int]]</code> compares
  * the two arrays structurally, taking into consideration the equality of the array's contents:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Array(1, 2) should equal (Array(1, 2)) // succeeds (i.e., does not throw TestFailedException)
  * </pre>
  *
- * <p>
  * If you ever do want to verify that two arrays are actually the same object (have the same identity), you can use the
  * <code>be theSameInstanceAs</code> syntax, <a href="#checkingObjectIdentity">described below</a>.
- * </p>
+ * 
  *
- * <p>
  * You can customize the meaning of equality for a type when using "<code>should</code> <code>equal</code>," "<code>should</code> <code>===</code>,"
  * or <code>shouldEqual</code> syntax by defining implicit <code>Equality</code> instances that will be used instead of default <code>Equality</code>. 
  * You might do this to normalize types before comparing them with <code>==</code>, for instance, or to avoid calling the <code>==</code> method entirely,
  * such as if you want to compare <code>Double</code>s with a tolerance.
  * For an example, see the main documentation of <a href="../scalactic/Equality.html">trait <code>Equality</code></a>.
- * </p>
+ * 
  *
- * <p>
  * You can always supply implicit parameters explicitly, but in the case of implicit parameters of type <code>Equality[T]</code>, Scalactic provides a
  * simple "explictly" DSL. For example, here's how you could explicitly supply an <code>Equality[String]</code> instance that normalizes both left and right
  * sides (which must be strings), by transforming them to lowercase:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
@@ -195,23 +184,20 @@ import exceptions.TestFailedException
  * scala&gt; "Hi" should equal ("hi") (after being lowerCased)
  * </pre>
  *
- * <p>
  * The <code>after</code> <code>being</code> <code>lowerCased</code> expression results in an <code>Equality[String]</code>, which is then passed
  * explicitly as the second curried parameter to <code>equal</code>. For more information on the explictly DSL, see the main documentation
  * for trait <a href="../scalactic/Explicitly.html"><code>Explicitly</code></a>.
- * </p>
+ * 
  *
- * <p>
  * The "<code>should</code> <code>be</code>" and <code>shouldBe</code> syntax do not take an <code>Equality[T]</code> and can therefore not be customized.
  * They always use the default approach to equality described above. As a result, "<code>should</code> <code>be</code>" and <code>shouldBe</code> will
  * likely be the fastest-compiling matcher syntax for equality comparisons, since the compiler need not search for
  * an implicit <code>Equality[T]</code> each time.
- * </p>
+ * 
  *
- * <p>
  * The <code>should</code> <code>===</code> syntax (and its complement, <code>should</code> <code>!==</code>) can be used to enforce type
  * constraints at compile-time between the left and right sides of the equality comparison. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
@@ -228,32 +214,28 @@ import exceptions.TestFailedException
  *                       ^
  * </pre>
  *
- * <p>
  * By default, the "<code>Some(2)</code> <code>should</code> <code>===</code> <code>(2)</code>" statement would fail at runtime. By mixing in
  * the equality constraints provided by <code>TypeCheckedTripleEquals</code>, however, the statement fails to compile. For more information
  * and examples, see the main documentation for <a href="../scalactic/TypeCheckedTripleEquals.html">trait <code>TypeCheckedTripleEquals</code></a>.
- * </p>
+ * 
  *
  * <a name="checkingSizeAndLength"></a>
  * <h2>Checking size and length</h2>
  * 
- * <p>
  * You can check the size or length of any type of object for which it
  * makes sense. Here's how checking for length looks:
- * </p>
+ * 
  * <pre class="stHighlight">
  * result should have length 3
  * </pre>
  * 
- * <p>
  * Size is similar:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * result should have size 10
  * </pre>
  * 
- * <p>
  * The <code>length</code> syntax can be used with <code>String</code>, <code>Array</code>, any <code>scala.collection.GenSeq</code>,
  * any <code>java.util.List</code>, and any type <code>T</code> for which an implicit <code>Length[T]</code> type class is 
  * available in scope.
@@ -262,23 +244,21 @@ import exceptions.TestFailedException
  * available in scope. You can enable the <code>length</code> or <code>size</code> syntax for your own arbitrary types, therefore,
  * by defining <a href="enablers/Length.html"><code>Length</code></a> or <a href="enablers/Size.html"><code>Size</code></a> type
  * classes for those types.
- * </p>
+ * 
  *
- * <p>
  * In addition, the <code>length</code> syntax can be used with any object that has a field or method named <code>length</code>
  * or a method named <code>getLength</code>.   Similarly, the <code>size</code> syntax can be used with any
  * object that has a field or method named <code>size</code> or a method named <code>getSize</code>.
  * The type of a <code>length</code> or <code>size</code> field, or return type of a method, must be either <code>Int</code>
  * or <code>Long</code>. Any such method must take no parameters. (The Scala compiler will ensure at compile time that
  * the object on which <code>should</code> is being invoked has the appropriate structure.)
- * </p>
+ * 
  *
  * <a name="checkingStrings"></a>
  * <h2>Checking strings</h2>
  *
- * <p>
  * You can check for whether a string starts with, ends with, or includes a substring like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * string should startWith ("Hello")
@@ -286,9 +266,8 @@ import exceptions.TestFailedException
  * string should include ("seven")
  * </pre>
  * 
- * <p>
  * You can check for whether a string starts with, ends with, or includes a regular expression, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * string should startWith regex "Hel*o"
@@ -296,23 +275,20 @@ import exceptions.TestFailedException
  * string should include regex "wo.ld"
  * </pre>
  * 
- * <p>
  * And you can check whether a string fully matches a regular expression, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * string should fullyMatch regex """(-)?(\d+)(\.\d*)?"""
  * </pre>
  * 
- * <p>
  * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
  * or a <code>scala.util.matching.Regex</code>.
- * </p>
+ * 
  *
- * <p>
  * With the <code>startWith</code>, <code>endWith</code>, <code>include</code>, and <code>fullyMatch</code>
  * tokens can also be used with an optional specification of required groups, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "abbccxxx" should startWith regex ("a(b*)(c*)" withGroups ("bb", "cc"))
@@ -321,28 +297,25 @@ import exceptions.TestFailedException
  * "abbcc" should fullyMatch regex ("a(b*)(c*)" withGroups ("bb", "cc"))
  * </pre>
  * 
- * <p>
  * You can check whether a string is empty with <code>empty</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * s shouldBe empty
  * </pre>
  *
- * <p>
  * You can also use most of ScalaTest's matcher syntax for collections on <code>String</code> by
  * treating the <code>String</code>s as collections of characters. For examples, see the
  * <a href="#stringsAndArraysAsCollections"><code>String</code>s and <code>Array</code>s as collections</a> section below.
- * </p>
+ * 
  * 
  * <a name="greaterAndLessThan"></a>
  * <h2>Greater and less than</h2>
  * 
- * <p>
  * You can check whether any type for which an implicit <code>Ordering[T]</code> is available
  * is greater than, less than, greater than or equal, or less
  * than or equal to a value of type <code>T</code>. The syntax is:
- * </p>
+ * 
  * <pre class="stHighlight">
  * one should be &lt; 7
  * one should be &gt; 0
@@ -353,14 +326,13 @@ import exceptions.TestFailedException
  * <a name="checkingBooleanPropertiesWithBe"></a>
  * <h2>Checking <code>Boolean</code> properties with <code>be</code></h2>
  * 
- * <p>
  * If an object has a method that takes no parameters and returns boolean, you can check
  * it by placing a <code>Symbol</code> (after <code>be</code>) that specifies the name
  * of the method (excluding an optional prefix of "<code>is</code>"). A symbol literal
  * in Scala begins with a tick mark and ends at the first non-identifier character. Thus,
  * <code>'traversableAgain</code> results in a <code>Symbol</code> object at runtime, as does
  * <code>'completed</code> and <code>'file</code>. Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * iter shouldBe 'traversableAgain
@@ -376,39 +348,35 @@ import exceptions.TestFailedException
  * non-empty iterator was not traversableAgain
  * </pre>
  * 
- * <p>
  * This <code>be</code> syntax can be used with any reference (<code>AnyRef</code>) type.  If the object does
  * not have an appropriately named predicate method, you'll get a <code>TestFailedException</code>
  * at runtime with a detailed message that explains the problem.
  * (For the details on how a field or method is selected during this
  * process, see the documentation for <a href="words/BeWord.html"><code>BeWord</code></a>.)
- * </p>
  * 
- * <p>
+ * 
  * If you think it reads better, you can optionally put <code>a</code> or <code>an</code> after
  * <code>be</code>. For example, <code>java.io.File</code> has two predicate methods,
  * <code>isFile</code> and <code>isDirectory</code>. Thus with a <code>File</code> object
  * named <code>temp</code>, you could write:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * temp should be a 'file
  * </pre>
  * 
- * <p>
  * Or, given <code>java.awt.event.KeyEvent</code> has a method <code>isActionKey</code> that takes
  * no arguments and returns <code>Boolean</code>, you could assert that a <code>KeyEvent</code> is
  * an action key with:
- *</p>
+ *
  *
  * <pre class="stHighlight">
  * keyEvent should be an 'actionKey
  * </pre>
  * 
- * <p>
  * If you prefer to check <code>Boolean</code> properties in a type-safe manner, you can use a <code>BePropertyMatcher</code>.
  * This would allow you to write expressions such as:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * xs shouldBe traversableAgain
@@ -416,13 +384,12 @@ import exceptions.TestFailedException
  * keyEvent should be an actionKey
  * </pre>
  * 
- * <p>
  * These expressions would fail to compile if <code>should</code> is used on an inappropriate type, as determined
  * by the type parameter of the <code>BePropertyMatcher</code> being used. (For example, <code>file</code> in this example
  * would likely be of type <code>BePropertyMatcher[java.io.File]</code>. If used with an appropriate type, such an expression will compile
  * and at run time the <code>Boolean</code> property method or field will be accessed directly; <em>i.e.</em>, no reflection will be used.
  * See the documentation for <a href="matchers/BePropertyMatcher.html"><code>BePropertyMatcher</code></a> for more information.
- * </p>
+ * 
  *
  * <a name="usingCustomBeMatchers"></a>
  * <h2>Using custom <code>BeMatchers</code></h2>
@@ -432,7 +399,7 @@ import exceptions.TestFailedException
  * called <code>odd</code>, which would match any odd <code>Int</code>, and <code>even</code>, which would match
  * any even <code>Int</code>. 
  * Given this pair of <code>BeMatcher</code>s, you could check whether an <code>Int</code> was odd or even with expressions like:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * num shouldBe odd
@@ -444,9 +411,8 @@ import exceptions.TestFailedException
  * <a name="checkingObjectIdentity"></a>
  * <h2>Checking object identity</h2>
  * 
- * <p>
  * If you need to check that two references refer to the exact same object, you can write:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * ref1 should be theSameInstanceAs ref2
@@ -455,21 +421,19 @@ import exceptions.TestFailedException
  * <a name="checkingAnObjectsClass"></a>
  * <h2>Checking an object's class</h2>
  * 
- * <p>
  * If you need to check that an object is an instance of a particular class or trait, you can supply the type to
  * &ldquo;<code>be</code> <code>a</code>&rdquo; or &ldquo;<code>be</code> <code>an</code>&rdquo;:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * result1 shouldBe a [Tiger]
  * result1 should not be an [Orangutan]
  * </pre>
  * 
- * <p>
  * Because type parameters are erased on the JVM, we recommend you insert an underscore for any type parameters
  * when using this syntax. Both of the following test only that the result is an instance of <code>List[_]</code>, because at
  * runtime the type parameter has been erased:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * result shouldBe a [List[_]] // recommended
@@ -479,10 +443,9 @@ import exceptions.TestFailedException
  * <a name="checkingNumbersAgainstARange"></a>
  * <h2>Checking numbers against a range</h2>
  * 
- * <p>
  * Often you may want to check whether a number is within a
  * range. You can do that using the <code>+-</code> operator, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * sevenDotOh should equal (6.9 +- 0.2)
@@ -492,11 +455,10 @@ import exceptions.TestFailedException
  * sevenDotOh shouldBe 6.9 +- 0.2
  * </pre>
  * 
- * <p>
  * Any of these expressions will cause a <code>TestFailedException</code> to be thrown if the floating point
  * value, <code>sevenDotOh</code> is outside the range <code>6.7</code> to <code>7.1</code>.
  * You can use <code>+-</code> with any type <code>T</code> for which an implicit <code>Numeric[T]</code> exists, such as integral types:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * seven should equal (6 +- 2)
@@ -509,22 +471,20 @@ import exceptions.TestFailedException
  * <a name="checkingForEmptiness"></a>
  * <h2>Checking for emptiness</h2>
  *
- * <p>
  * You can check whether an object is "empty", like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * traversable shouldBe empty
  * javaMap should not be empty
  * </pre>
  * 
- * <p>
  * The <code>empty</code> token can be used with any type <code>L</code> for which an implicit <code>Emptiness[L]</code> exists.
  * The <code>Emptiness</code> companion object provides implicits for <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>, 
  * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>, and <code>Option[E]</code>. In addition, the
  * <code>Emptiness</code> companion object provides structural implicits for types that declare an <code>isEmpty</code> method that
  * returns a <code>Boolean</code>. Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
@@ -548,22 +508,20 @@ import exceptions.TestFailedException
  * <a name="workingWithContainers"></a>
  * <h2>Working with "containers"</h2>
  *
- * <p>
  * You can check whether a collection contains a particular element like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * traversable should contain ("five")
  * </pre>
  * 
- * <p>
  * The <code>contain</code> syntax shown above can be used with any type <code>C</code> that has a "containing" nature, evidenced by 
  * an implicit <code>org.scalatest.enablers.Containing[L]</code>, where <code>L</code> is left-hand type on
  * which <code>should</code> is invoked. In the <code>Containing</code>
  * companion object, implicits are provided for types <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>, 
  * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>, and <code>Option[E]</code>. 
  * Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
@@ -582,7 +540,6 @@ import exceptions.TestFailedException
  * scala&gt; Some(2) should contain (2)
  * </pre>
  * 
- * <p>
  * ScalaTest's implicit methods that provide the <code>Containing[L]</code> type classes require an <code>Equality[E]</code>, where
  * <code>E</code> is an element type. For example, to obtain a <code>Containing[Array[Int]]</code> you must supply an <code>Equality[Int]</code>,
  * either implicitly or explicitly. The <code>contain</code> syntax uses this <code>Equality[E]</code> to determine containership.
@@ -590,7 +547,7 @@ import exceptions.TestFailedException
  * in scope or use the explicitly DSL. Although the implicit parameter required for the <code>contain</code> syntax is of type <code>Containing[L]</code>,
  * implicit conversions are provided in the <code>Containing</code> companion object from <code>Equality[E]</code> to the various
  * types of containers of <code>E</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
@@ -609,22 +566,20 @@ import exceptions.TestFailedException
  * scala&gt; (List("Hi", "Di", "Ho") should contain ("ho")) (after being lowerCased)
  * </pre>
  *
- * <p>
  * Note that when you use the explicitly DSL with <code>contain</code> you need to wrap the entire
  * <code>contain</code> expression in parentheses, as shown here.
- * </p>
+ * 
  *
  * <pre>
  * (List("Hi", "Di", "Ho") should contain ("ho")) (after being lowerCased)
  * ^                                            ^
  * </pre>
  *
- * <p>
  * In addition to determining whether an object contains another object, you can use <code>contain</code> to
  * make other determinations.
  * For example, the <code>contain</code> <code>oneOf</code> syntax ensures that one and only one of the specified elements are
  * contained in the containing object:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain oneOf (5, 7, 9)
@@ -632,9 +587,8 @@ import exceptions.TestFailedException
  * "howdy" should contain oneOf ('a', 'b', 'c', 'd')
  * </pre>
  *
- * <p>
  * Note that if multiple specified elements appear in the containing object, <code>oneOf</code> will fail:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; List(1, 2, 3) should contain oneOf (2, 3, 4)
@@ -642,24 +596,21 @@ import exceptions.TestFailedException
  *         at ...
  * </pre>
  *
- * <p>
  * If you really want to ensure one or more of the specified elements are contained in the containing object, 
  * use <code>atLeastOneOf</code>, described below, instead of <code>oneOf</code>. Keep in mind, <code>oneOf</code>
  * means "<em>exactly</em> one of."
- * </p>
+ * 
  *
- * <p>
  * Note also that with any <code>contain</code> syntax, you can place custom implicit <code>Equality[E]</code> instances in scope
  * to customize how containership is determined, or use the explicitly DSL. Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * (Array("Doe", "Ray", "Me") should contain oneOf ("X", "RAY", "BEAM")) (after being lowerCased)
  * </pre>
  *
- * <p>
  * If you have a collection of elements that you'd like to use in a "one of" comparison, you can use "oneElementOf," like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain oneElementOf List(5, 7, 9)
@@ -668,10 +619,9 @@ import exceptions.TestFailedException
  * (Array("Doe", "Ray", "Me") should contain oneElementOf List("X", "RAY", "BEAM")) (after being lowerCased)
  * </pre>
  *
- * <p>
  * The <code>contain</code> <code>noneOf</code> syntax does the opposite of <code>oneOf</code>: it ensures none of the specified elements
  * are contained in the containing object:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain noneOf (7, 8, 9)
@@ -679,9 +629,8 @@ import exceptions.TestFailedException
  * "12345" should contain noneOf ('7', '8', '9')
  * </pre>
  *
- * <p>
  * If you have a collection of elements that you'd like to use in a "none of" comparison, you can use "noElementsOf," like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain noElementsOf List(7, 8, 9)
@@ -692,7 +641,6 @@ import exceptions.TestFailedException
  * <a name="workingWithAggregations"></a>
  * <h2>Working with "aggregations"</h2>
  *
- * <p>
  * As mentioned, the "<code>contain</code>,"  "<code>contain</code> <code>oneOf</code>," and "<code>contain</code> <code>noneOf</code>" syntax requires a
  * <code>Containing[L]</code> be provided, where <code>L</code> is the left-hand type.  Other <code>contain</code> syntax, which
  * will be described in this section, requires an <code>Aggregating[L]</code> be provided, where again <code>L</code> is the left-hand type.
@@ -701,20 +649,18 @@ import exceptions.TestFailedException
  * <code>Containing[L]</code>, whereas syntax that does <em>not</em> make sense for <code>Option</code> is enabled
  * by <code>Aggregating[L]</code>. For example, it doesn't make sense to assert that an <code>Option[Int]</code> contains all of a set of integers, as it
  * could only ever contain one of them. But this does make sense for a type such as <code>List[Int]</code> that can aggregate zero to many integers. 
- * </p>
  * 
- * <p>
+ * 
  * The <code>Aggregating</code> companion object provides implicit instances of <code>Aggregating[L]</code> 
  * for types <code>GenTraversable[E]</code>, <code>java.util.Collection[E]</code>, 
  * <code>java.util.Map[K, V]</code>, <code>String</code>, <code>Array[E]</code>. Note that these are the same types as are supported with
  * <code>Containing</code>, but with <code>Option[E]</code> missing.
  * Here are some examples:
- * </p>
  * 
- * <p>
+ * 
  * The <code>contain</code> <code>atLeastOneOf</code> syntax, for example, works for any type <code>L</code> for which an <code>Aggregating[L]</code> exists. It ensures
  * that at least one of (<em>i.e.</em>, one or more of) the specified objects are contained in the containing object:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3) should contain atLeastOneOf (2, 3, 4)
@@ -722,7 +668,6 @@ import exceptions.TestFailedException
  * "abc" should contain atLeastOneOf ('c', 'a', 't')
  * </pre>
  *
- * <p>
  * Similar to <code>Containing[L]</code>, the implicit methods that provide the <code>Aggregating[L]</code> instances require an <code>Equality[E]</code>, where
  * <code>E</code> is an element type. For example, to obtain a <code>Aggregating[Vector[String]]</code> you must supply an <code>Equality[String]</code>,
  * either implicitly or explicitly. The <code>contain</code> syntax uses this <code>Equality[E]</code> to determine containership.
@@ -730,15 +675,14 @@ import exceptions.TestFailedException
  * in scope or use the explicitly DSL. Although the implicit parameter required for the <code>contain</code> syntax is of type <code>Aggregating[L]</code>,
  * implicit conversions are provided in the <code>Aggregating</code> companion object from <code>Equality[E]</code> to the various
  * types of aggregations of <code>E</code>. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * (Vector(" A", "B ") should contain atLeastOneOf ("a ", "b", "c")) (after being lowerCased and trimmed)
  * </pre>
  * 
- * <p>
  * If you have a collection of elements that you'd like to use in an "at least one of" comparison, you can use "atLeastOneElementOf," like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * List(1, 2, 3) should contain atLeastOneElementOf List(2, 3, 4)
@@ -747,67 +691,59 @@ import exceptions.TestFailedException
  * (Vector(" A", "B ") should contain atLeastOneElementOf List("a ", "b", "c")) (after being lowerCased and trimmed)
  * </pre>
  *
- * <p>
  * The "<code>contain</code> <code>atMostOneOf</code>" syntax lets you specify a set of objects at most one of which should be contained in the containing object:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain atMostOneOf (5, 6, 7)
  * </pre>
  *
- * <p>
  * If you have a collection of elements that you'd like to use in a "at most one of" comparison, you can use "atMostOneElementOf," like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain atMostOneElementOf Vector(5, 6, 7)
  * </pre>
  *
- * <p>
  * The "<code>contain</code> <code>allOf</code>" syntax lets you specify a set of objects that should all be contained in the containing object:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain allOf (2, 3, 5)
  * </pre>
  *
- * <p>
  * If you have a collection of elements that you'd like to use in a "all of" comparison, you can use "allElementsOf," like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * List(1, 2, 3, 4, 5) should contain allElementsOf Array(2, 3, 5)
  * </pre>
  *
- * <p>
  * The "<code>contain</code> <code>only</code>" syntax lets you assert that the containing object contains <em>only</em> the specified objects, though it may
  * contain more than one of each:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3, 2, 1) should contain only (1, 2, 3)
  * </pre>
  *
- * <p>
  * The "<code>contain</code> <code>theSameElementsAs</code>" and "<code>contain</code> <code>theSameElementsInOrderAs</code> syntax differ from the others
  * in that the right hand side is a <code>GenTraversable[_]</code> rather than a varargs of <code>Any</code>. (Note: in a future 2.0 milestone release, possibly
  * 2.0.M6, these will likely be widened to accept any type <code>R</code> for which an <code>Aggregating[R]</code> exists.)
- * </p>
+ * 
  *
- * <p>
  * The "<code>contain</code> <code>theSameElementsAs</code>" syntax lets you assert that two aggregations contain the same objects:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 2, 3, 3, 3) should contain theSameElementsAs Vector(3, 2, 3, 1, 2, 3)
  * </pre>
  *
- * <p>
  * The number of times any family of equal objects appears must also be the same in both the left and right aggregations.
  * The specified objects may appear multiple times, but must appear in the order they appear in the right-hand list. For example, if
  * the last 3 element is left out of the right-hand list in the previous example, the expression would fail because the left side
  * has three 3's and the right hand side has only two:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * List(1, 2, 2, 3, 3, 3) should contain theSameElementsAs Vector(3, 2, 3, 1, 2)
@@ -815,17 +751,15 @@ import exceptions.TestFailedException
  *         at ...
  * </pre>
  * 
- * <p>
  * Note that no <code>onlyElementsOf</code> matcher is provided, because it would have the same
  * behavior as <code>theSameElementsAs</code>. (<em>I.e.</em>, if you were looking for <code>onlyElementsOf</code>, please use <code>theSameElementsAs</code>
  * instead.)
- * </p>
  * 
- * </p>
+ * 
+ * 
  * <a name="workingWithSequences"></a>
  * <h2>Working with "sequences"</h2>
  *
- * <p>
  * The rest of the <code>contain</code> syntax, which
  * will be described in this section, requires a <code>Sequencing[L]</code> be provided, where again <code>L</code> is the left-hand type.
  * (A <code>Sequencing[L]</code> instance defines the "sequencing nature" of a type <code>L</code>.)
@@ -833,16 +767,14 @@ import exceptions.TestFailedException
  * For example, it doesn't make sense to assert that a <code>Map[String, Int]</code> or <code>Set[Int]</code> contains all of a set of integers in a particular
  * order, as these types don't necessarily define an order for their elements. But this does make sense for a type such as <code>Seq[Int]</code> that does define
  * an order for its elements. 
- * </p>
  * 
- * <p>
+ * 
  * The <code>Sequencing</code> companion object provides implicit instances of <code>Sequencing[L]</code> 
  * for types <code>GenSeq[E]</code>, <code>java.util.List[E]</code>, 
  * <code>String</code>, and <code>Array[E]</code>. 
  * Here are some examples:
- * </p>
  * 
- * <p>
+ * 
  * Similar to <code>Containing[L]</code>, the implicit methods that provide the <code>Aggregating[L]</code> instances require an <code>Equality[E]</code>, where
  * <code>E</code> is an element type. For example, to obtain a <code>Aggregating[Vector[String]]</code> you must supply an <code>Equality[String]</code>,
  * either implicitly or explicitly. The <code>contain</code> syntax uses this <code>Equality[E]</code> to determine containership.
@@ -850,68 +782,60 @@ import exceptions.TestFailedException
  * in scope or use the explicitly DSL. Although the implicit parameter required for the <code>contain</code> syntax is of type <code>Aggregating[L]</code>,
  * implicit conversions are provided in the <code>Aggregating</code> companion object from <code>Equality[E]</code> to the various
  * types of aggregations of <code>E</code>. Here's an example:
- * </p>
+ * 
  *
- * <p>
  * The "<code>contain</code> <code>inOrderOnly</code>" syntax lets you assert that the containing object contains <em>only</em> the specified objects, in order. 
  * The specified objects may appear multiple times, but must appear in the order they appear in the right-hand list. Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 2, 3, 3, 3) should contain inOrderOnly (1, 2, 3)
  * </pre>
  *
- * <p>
  * The "<code>contain</code> <code>inOrder</code>" syntax lets you assert that the containing object contains <em>only</em> the specified objects in order, like
  * <code>inOrderOnly</code>, but allows other objects to appear in the left-hand aggregation as well:
  * contain more than one of each:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(0, 1, 2, 2, 99, 3, 3, 3, 5) should contain inOrder (1, 2, 3)
  * </pre>
  *
- * <p>
  * If you have a collection of elements that you'd like to use in a "in order" comparison, you can use "inOrderElementsOf," like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * List(0, 1, 2, 2, 99, 3, 3, 3, 5) should contain inOrderElementsOf Array(1, 2, 3)
  * </pre>
  *
- * <p>
  * Note that "order" in <code>inOrder</code>, <code>inOrderOnly</code>, and <code>theSameElementsInOrderAs</code> (described below)
  * in the <code>Aggregation[L]</code> instances built-in to ScalaTest is defined as "iteration order".
- * </p>
+ * 
  *
- * <p>
  * Lastly, the "<code>contain</code> <code>theSameElementsInOrderAs</code>" syntax lets you assert that two aggregations contain
  * the same exact elements in the same (iteration) order:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3) should contain theSameElementsInOrderAs collection.mutable.TreeSet(3, 2, 1)
  * </pre>
  *
- * <p>
  * The previous assertion succeeds because the iteration order of a<code>TreeSet</code> is the natural
  * ordering of its elements, which in this case is 1, 2, 3. An iterator obtained from the left-hand <code>List</code> will produce the same elements
  * in the same order.
- * </p>
+ * 
  *
- * <p>
  * Note that no <code>inOrderOnlyElementsOf</code> matcher is provided, because it would have the same
  * behavior as <code>theSameElementsInOrderAs</code>. (<em>I.e.</em>, if you were looking for <code>inOrderOnlyElementsOf</code>, please use <code>theSameElementsInOrderAs</code>
  * instead.)
- * </p>
+ * 
  * 
  * <a name="workingWithSortables"></a>
  * <h2>Working with "sortables"</h2>
  *
- * <p>
  * You can also ask whether the elements of "sortable" objects (such as <code>Array</code>s, Java <code>List</code>s, and <code>GenSeq</code>s)
  * are in sorted order, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * List(1, 2, 3) shouldBe sorted
@@ -920,7 +844,6 @@ import exceptions.TestFailedException
  * <a name="workingWithIterators"></a>
  * <h2>Working with iterators</h2>
  *
- * <p>
  * Althought it seems desireable to provide similar matcher syntax for Scala and Java iterators to that provided for sequences like
  * <code>Seq</code>s, <code>Array</code>, and <code>java.util.List</code>, the
  * ephemeral nature of iterators makes this problematic. Some syntax (such as <code>should</code> <code>contain</code>) is relatively straightforward to
@@ -938,26 +861,23 @@ import exceptions.TestFailedException
  *               ^
  * </pre>
  *
- * <p>
  * Instead, you will need to convert your iterators to a sequence explicitly before using them in matcher expressions:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * scala&gt; it.toStream should contain (2)
  * </pre>
  * 
- * <p>
  * We recommend you convert (Scala or Java) iterators to <code>Stream</code>s, as shown in the previous example, so that you can 
  * continue to reap any potential benefits provided by the laziness of the underlying iterator.
- * </p>
+ * 
  *
  * <a name="inspectorShorthands"></a>
  * <h2>Inspector shorthands</h2>
  *
- * <p>
  * You can use the <a href="Inspectors.html"><code>Inspectors</code></a> syntax with matchers as well as assertions. If you have a multi-dimensional collection, such as a
  * list of lists, using <code>Inspectors</code> is your best option:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * val yss =
@@ -972,27 +892,24 @@ import exceptions.TestFailedException
  * }
  * </pre>
  *
- * <p>
  * For assertions on one-dimensional collections, however, matchers provides "inspector shorthands." Instead of writing:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * val xs = List(1, 2, 3)
  * forAll (xs) { x =&gt; x should be &lt; 10 }
  * </pre>
  *
- * <p>
  * You can write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * all (xs) should be &lt; 10
  * </pre>
  *
- * <p>
  * The previous statement asserts that all elements of the <code>xs</code> list should be less than 10.
  * All of the inspectors have shorthands in matchers. Here is the full list:
- * </p>
+ * 
  *
  * <ul>
  * <li><code>all</code> - succeeds if the assertion holds true for every element</li>
@@ -1003,9 +920,8 @@ import exceptions.TestFailedException
  * <li><code>exactly</code> - succeeds if the assertion holds true for exactly the specified number of elements</li>
  * </ul>
  *
- * <p>
  * Here are some examples:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalatest.Matchers._
@@ -1039,12 +955,11 @@ import exceptions.TestFailedException
  *         at ...
  * </pre>
  * 
- * <p>
  * Like <a href=""><code>Inspectors</code></a>, objects used with inspector shorthands can be any type <code>T</code> for which a <code>Collecting[T, E]</code>
  * is availabe, which by default includes <code>GenTraversable</code>, 
  * Java <code>Collection</code>, Java <code>Map</code>, <code>Array</code>s, and <code>String</code>s.
  * Here are some examples:
- * </p>
+ * 
  *
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
@@ -1074,66 +989,59 @@ import exceptions.TestFailedException
  * <a name="singleElementCollections"></a>
  * <h2>Single-element collections</h2>
  *
- * <p>
  * To assert both that a collection contains just one "lone" element as well as something else about that element, you can use
  * the <code>loneElement</code> syntax provided by trait <a href="LoneElement.html"><code>LoneElement</code></a>. For example, if a
  * <code>Set[Int]</code> should contain just one element, an <code>Int</code>
  * less than or equal to 10, you could write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * import LoneElement._
  * set.loneElement should be &lt;= 10
  * </pre>
  *
- * <p>
  * You can invoke <code>loneElement</code> on any type <code>T</code> for which an implicit <a href="enablers/Collecting.html"><code>Collecting[E, T]</code></a>
  * is available, where <code>E</code> is the element type returned by the <code>loneElement</code> invocation. By default, you can use <code>loneElement</code>
  * on <code>GenTraversable</code>, Java <code>Collection</code>, Java <code>Map</code>, <code>Array</code>, and <code>String</code>.
- * </p>
+ * 
  *
  * <a name="javaCollectionsAndMaps"></a>
  * <h2>Java collections and maps</h2>
  *
- * <p>
  * You can use similar syntax on Java collections (<code>java.util.Collection</code>) and maps (<code>java.util.Map</code>).
  * For example, you can check whether a Java <code>Collection</code> or <code>Map</code> is <code>empty</code>,
  * like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * javaCollection should be ('empty)
  * javaMap should be ('empty)
  * </pre>
  * 
- * <p>
  * Even though Java's <code>List</code> type doesn't actually have a <code>length</code> or <code>getLength</code> method,
  * you can nevertheless check the length of a Java <code>List</code> (<code>java.util.List</code>) like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * javaList should have length 9
  * </pre>
  * 
- * <p>
  * You can check the size of any Java <code>Collection</code> or <code>Map</code>, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * javaMap should have size 20
  * javaSet should have size 90
  * </pre>
  * 
- * <p>
  * In addition, you can check whether a Java <code>Collection</code> contains a particular
  * element, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * javaCollection should contain ("five")
  * </pre>
  * 
- * <p>
  * One difference to note between the syntax supported on Java and Scala collections is that
  * in Java, <code>Map</code> is not a subtype of <code>Collection</code>, and does not
  * actually define an element type. You can ask a Java <code>Map</code> for an "entry set"
@@ -1143,7 +1051,7 @@ import exceptions.TestFailedException
  * ScalaTest matchers allows you to treat a Java <code>Map</code> as a collection of <code>Entry</code>,
  * and defines a convenience implementation of <code>java.util.Map.Entry</code> in
  * <a href="Entry.html"><code>org.scalatest.Entry</code></a>. Here's how you use it:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * javaMap should contain (Entry(2, 3))
@@ -1160,10 +1068,9 @@ import exceptions.TestFailedException
  * <a name="stringsAndArraysAsCollections"></a>
  * <h2><code>String</code>s and <code>Array</code>s as collections</h2>
  * 
- * <p>
  * You can also use all the syntax described above for Scala and Java collections on <code>Array</code>s and
  * <code>String</code>s. Here are some examples:
- * </p>
+ * 
  * 
  * <pre class="stREPL">
  * scala&gt; import org.scalatest._
@@ -1188,32 +1095,29 @@ import exceptions.TestFailedException
  * <a name="beAsAnEqualityComparison"></a>
  * <h2><code>be</code> as an equality comparison</h2>
  * 
- * <p>
  * All uses of <code>be</code> other than those shown previously perform an equality comparison. They work
  * the same as <code>equal</code> when it is used with default equality. This redundancy between <code>be</code> and <code>equals</code> exists in part
  * because it enables syntax that sometimes sounds more natural. For example, instead of writing: 
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * result should equal (null)
  * </pre>
  * 
- * <p>
  * You can write:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * result should be (null)
  * </pre>
  * 
- * <p>
  * (Hopefully you won't write that too much given <code>null</code> is error prone, and <code>Option</code>
  * is usually a better, well, option.) 
  * As mentioned <a href="#checkingEqualityWithMatchers">previously</a>, the other difference between <code>equal</code>
  * and <code>be</code> is that <code>equal</code> delegates the equality check to an <code>Equality</code> typeclass, whereas
  * <code>be</code> always uses default equality.
  * Here are some other examples of <code>be</code> used for equality comparison:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * sum should be (7.0)
@@ -1224,32 +1128,29 @@ import exceptions.TestFailedException
  * option should be (Some(1))
  * </pre>
  * 
- * <p>
  * As with <code>equal</code> used with default equality, using <code>be</code> on arrays results in <code>deep</code> being called on both arrays prior to
  * calling <code>equal</code>. As a result,
  * the following expression would <em>not</em> throw a <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Array(1, 2) should be (Array(1, 2)) // succeeds (i.e., does not throw TestFailedException)
  * </pre>
  *
- * <p>
  * Because <code>be</code> is used in several ways in ScalaTest matcher syntax, just as it is used in many ways in English, one
  * potential point of confusion in the event of a failure is determining whether <code>be</code> was being used as an equality comparison or
  * in some other way, such as a property assertion. To make it more obvious when <code>be</code> is being used for equality, the failure
  * messages generated for those equality checks will include the word <code>equal</code> in them. For example, if this expression fails with a
  * <code>TestFailedException</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * option should be (Some(1))
  * </pre>
  *
- * <p>
  * The detail message in that <code>TestFailedException</code> will include the words <code>"equal to"</code> to signify <code>be</code>
  * was in this case being used for equality comparison:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * Some(2) was not equal to Some(1)
@@ -1258,10 +1159,9 @@ import exceptions.TestFailedException
  * <a name="beingNegative"></a>
  * <h2>Being negative</h2>
  * 
- * <p>
  * If you wish to check the opposite of some condition, you can simply insert <code>not</code> in the expression.
  * Here are a few examples:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * result should not be (null)
@@ -1273,69 +1173,61 @@ import exceptions.TestFailedException
  * <a name="checkingThatCodeDoesNotCompile"></a>
  * <h2>Checking that a snippet of code does not compile</h2>
  * 
- * <p>
  * Often when creating libraries you may wish to ensure that certain arrangements of code that
  * represent potential &ldquo;user errors&rdquo; do not compile, so that your library is more error resistant.
  * ScalaTest <code>Matchers</code> trait includes the following syntax for that purpose:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "val a: String = 1" shouldNot compile
  * </pre>
  *
- * <p>
  * If you want to ensure that a snippet of code does not compile because of a type error (as opposed
  * to a syntax error), use:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "val a: String = 1" shouldNot typeCheck
  * </pre>
  *
- * <p>
  * Note that the <code>shouldNot</code> <code>typeCheck</code> syntax will only succeed if the given snippet of code does not
  * compile because of a type error. A syntax error will still result on a thrown <code>TestFailedException</code>.
- * </p>
+ * 
  *
- * <p>
  * If you want to state that a snippet of code <em>does</em> compile, you can make that
  * more obvious with:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "val a: Int = 1" should compile
  * </pre>
  *
- * <p>
  * Although the previous three constructs are implemented with macros that determine at compile time whether
  * the snippet of code represented by the string does or does not compile, errors 
  * are reported as test failures at runtime.
- * </p>
+ * 
  *
  * <a name="logicalExpressions"></a>
  * <h2>Logical expressions with <code>and</code> and <code>or</code></h2>
  * 
- * <p>
  * You can also combine matcher expressions with <code>and</code> and/or <code>or</code>, however,
  * you must place parentheses or curly braces around the <code>and</code> or <code>or</code> expression. For example, 
  * this <code>and</code>-expression would not compile, because the parentheses are missing:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * map should contain key ("two") and not contain value (7) // ERROR, parentheses missing!
  * </pre>
  * 
- * <p>
  * Instead, you need to write:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * map should (contain key ("two") and not contain value (7))
  * </pre>
  * 
- * <p>
  * Here are some more examples:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * number should (be &gt; (0) and be &lt;= (10))
@@ -1348,17 +1240,15 @@ import exceptions.TestFailedException
  * )
  * </pre>
  * 
- * <p>
  * Two differences exist between expressions composed of these <code>and</code> and <code>or</code> operators and the expressions you can write
  * on regular <code>Boolean</code>s using its <code>&amp;&amp;</code> and <code>||</code> operators. First, expressions with <code>and</code>
  * and <code>or</code> do not short-circuit. The following contrived expression, for example, would print <code>"hello, world!"</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * "yellow" should (equal ("blue") and equal { println("hello, world!"); "green" })
  * </pre>
  * 
- * <p>
  * In other words, the entire <code>and</code> or <code>or</code> expression is always evaluated, so you'll see any side effects
  * of the right-hand side even if evaluating
  * only the left-hand side is enough to determine the ultimate result of the larger expression. Failure messages produced by these
@@ -1367,60 +1257,54 @@ import exceptions.TestFailedException
  * of failure messages is intended
  * to make it easier and quicker for you to ascertain which part of the expression caused the failure. The failure message for the previous
  * expression, for example, would be:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * "yellow" did not equal "blue"
  * </pre>
  * 
- * <p>
  * Most likely this lack of short-circuiting would rarely be noticeable, because evaluating the right hand side will usually not
  * involve a side effect. One situation where it might show up, however, is if you attempt to <code>and</code> a <code>null</code> check on a variable with an expression
  * that uses the variable, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * map should (not be (null) and contain key ("ouch"))
  * </pre>
  * 
- * <p>
  * If <code>map</code> is <code>null</code>, the test will indeed fail, but with a <code>NullArgumentException</code>, not a
  * <code>TestFailedException</code>. Here, the <code>NullArgumentException</code> is the visible right-hand side effect. To get a
  * <code>TestFailedException</code>, you would need to check each assertion separately:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * map should not be (null)
  * map should contain key ("ouch")
  * </pre>
  * 
- * <p>
  * If <code>map</code> is <code>null</code> in this case, the <code>null</code> check in the first expression will fail with
  * a <code>TestFailedException</code>, and the second expression will never be executed.
- * </p>
+ * 
  *
- * <p>
  * The other difference with <code>Boolean</code> operators is that although <code>&amp;&amp;</code> has a higher precedence than <code>||</code>,
  * <code>and</code> and <code>or</code>
  * have the same precedence. Thus although the <code>Boolean</code> expression <code>(a || b &amp;&amp; c)</code> will evaluate the <code>&amp;&amp;</code> expression
  * before the <code>||</code> expression, like <code>(a || (b &amp;&amp; c))</code>, the following expression:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * traversable should (contain (7) or contain (8) and have size (9))
  * </pre>
  * 
- * <p>
  * Will evaluate left to right, as:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * traversable should ((contain (7) or contain (8)) and have size (9))
  * </pre>
  * 
- * <p>
  * If you really want the <code>and</code> part to be evaluated first, you'll need to put in parentheses, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * traversable should (contain (7) or (contain (8) and have size (9)))
@@ -1429,11 +1313,10 @@ import exceptions.TestFailedException
  * <a name="workingWithOptions"></a>
  * <h2>Working with <code>Option</code>s</h2>
  * 
- * <p>
  * You can work with options using ScalaTest's equality, <code>empty</code>,
  * <code>defined</code>, and <code>contain</code> syntax.
  * For example, if you wish to check whether an option is <code>None</code>, you can write any of:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * option shouldEqual None
@@ -1442,9 +1325,8 @@ import exceptions.TestFailedException
  * option shouldBe empty
  * </pre>
  * 
- * <p>
  * If you wish to check an option is defined, and holds a specific value, you can write any of:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * option shouldEqual Some("hi")
@@ -1452,44 +1334,40 @@ import exceptions.TestFailedException
  * option should === (Some("hi"))
  * </pre>
  * 
- * <p>
  * If you only wish to check that an option is defined, but don't care what it's value is, you can write:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * option shouldBe defined
  * </pre>
  * 
- * <p>
  * If you mix in (or import the members of) <a href="OptionValues.html"><code>OptionValues</code></a>,
  * you can write one statement that indicates you believe an option should be defined and then say something else about its value. Here's an example:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * import org.scalatest.OptionValues._
  * option.value should be &lt; 7
  * </pre>
  * 
- * <p>
  * As mentioned previously, you can use also use ScalaTest's <code>contain</code>, <code>contain oneOf</code>, and
  * <code>contain noneOf</code> syntax with options:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * Some(2) should contain (2)
  * Some(7) should contain oneOf (5, 7, 9)
  * Some(0) should contain noneOf (7, 8, 9)
  * </pre>
- * </p>
+ * 
  *
  * <a name="checkingArbitraryProperties"></a>
  * <h2>Checking arbitrary properties with <code>have</code></h2>
  * 
- * <p>
  * Using <code>have</code>, you can check properties of any type, where a <em>property</em> is an attribute of any
  * object that can be retrieved either by a public field, method, or JavaBean-style <code>get</code>
  * or <code>is</code> method, like this:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * book should have (
@@ -1499,7 +1377,6 @@ import exceptions.TestFailedException
  * )
  * </pre>
  * 
- * <p>
  * This expression will use reflection to ensure the <code>title</code>, <code>author</code>, and <code>pubYear</code> properties of object <code>book</code>
  * are equal to the specified values. For example, it will ensure that <code>book</code> has either a public Java field or method
  * named <code>title</code>, or a public method named <code>getTitle</code>, that when invoked (or accessed in the field case) results
@@ -1507,52 +1384,47 @@ import exceptions.TestFailedException
  * execution will continue. If one or more of the properties either does not exist, or exists but results in an unexpected value,
  * a <code>TestFailedException</code> will be thrown that explains the problem. (For the details on how a field or method is selected during this
  * process, see the documentation for <a href="Matchers$HavePropertyMatcherGenerator.html"><code>HavePropertyMatcherGenerator</code></a>.)
- * </p>
  * 
- * <p>
+ * 
  * When you use this syntax, you must place one or more property values in parentheses after <code>have</code>, seperated by commas, where a <em>property
  * value</em> is a symbol indicating the name of the property followed by the expected value in parentheses. The only exceptions to this rule is the syntax
  * for checking size and length shown previously, which does not require parentheses. If you forget and put parentheses in, however, everything will
  * still work as you'd expect. Thus instead of writing:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * array should have length (3)
  * set should have size (90)
  * </pre>
  * 
- * <p>
  * You can alternatively, write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * array should have (length (3))
  * set should have (size (90))
  * </pre>
  * 
- * <p>
  * If a property has a value different from the specified expected value, a <code>TestFailedError</code> will be thrown
  * with a detailed message that explains the problem. For example, if you assert the following on
  * a <code>book</code> whose title is <code>Moby Dick</code>:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * book should have ('title ("A Tale of Two Cities"))
  * </pre>
  *
- * <p>
  * You'll get a <code>TestFailedException</code> with this detail message:
- * </p>
+ * 
  *
  * <pre>
  * The title property had value "Moby Dick", instead of its expected value "A Tale of Two Cities",
  * on object Book("Moby Dick", "Melville", 1851)
  * </pre>
  * 
- * <p>
  * If you prefer to check properties in a type-safe manner, you can use a <code>HavePropertyMatcher</code>.
  * This would allow you to write expressions such as:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * book should have (
@@ -1562,21 +1434,19 @@ import exceptions.TestFailedException
  * )
  * </pre>
  * 
- * <p>
  * These expressions would fail to compile if <code>should</code> is used on an inappropriate type, as determined
  * by the type parameter of the <code>HavePropertyMatcher</code> being used. (For example, <code>title</code> in this example
  * might be of type <code>HavePropertyMatcher[org.publiclibrary.Book]</code>. If used with an appropriate type, such an expression will compile
  * and at run time the property method or field will be accessed directly; <em>i.e.</em>, no reflection will be used.
  * See the documentation for <a href="matchers/HavePropertyMatcher.html"><code>HavePropertyMatcher</code></a> for more information.
- * </p>
+ * 
  *
  * <a name="lengthSizeHavePropertyMatchers"></a>
  * <h2>Using <code>length</code> and <code>size</code> with <code>HavePropertyMatcher</code>s</h2>
  *
- * <p>
  * If you want to use <code>length</code> or <code>size</code> syntax with your own custom <code>HavePropertyMatcher</code>s, you 
  * can do so, but you must write <code>(of [&ldquo;the type&rdquo;])</code> afterwords. For example, you could write:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * book should have (
@@ -1586,20 +1456,18 @@ import exceptions.TestFailedException
  * )
  * </pre>
  *
- * <p>
  * Prior to ScalaTest 2.0, &ldquo;<code>length</code> <code>(22)</code>&rdquo; yielded a <code>HavePropertyMatcher[Any, Int]</code> that used reflection to dynamically look
  * for a <code>length</code> field or <code>getLength</code> method. In ScalaTest 2.0, &ldquo;<code>length</code> <code>(22)</code>&rdquo; yields a
  * <code>MatcherFactory1[Any, Length]</code>, so it is no longer a <code>HavePropertyMatcher</code>. The <code>(of [&lt;type&gt;])</code> syntax converts the
  * the <code>MatcherFactory1[Any, Length]</code> to a <code>HavePropertyMatcher[&lt;type&gt;, Int]</code>.
- * </p>
+ * 
  *
  * <a name="matchingAPattern"></a>
  * <h2>Checking that an expression matches a pattern</h2>
  *
- * <p>
  * ScalaTest's <a href="Inside.html"><code>Inside</code></a> trait allows you to make assertions after a pattern match.
  * Here's an example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * case class Name(first: String, middle: String, last: String)
@@ -1611,11 +1479,10 @@ import exceptions.TestFailedException
  * }
  * </pre>
  * 
- * <p>
  * You can use <code>inside</code> to just ensure a pattern is matched, without making any further assertions, but a better
  * alternative for that kind of assertion is <code>matchPattern</code>. The <code>matchPattern</code> syntax allows you
  * to express that you expect a value to match a particular pattern, no more and no less:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * name should matchPattern { case Name("Sarah", _, _) =&gt; }
@@ -1624,75 +1491,67 @@ import exceptions.TestFailedException
  * <a name="usingCustomMatchers"></a>
  * <h2>Using custom matchers</h2>
  * 
- * <p>
  * If none of the built-in matcher syntax (or options shown so far for extending the syntax) satisfy a particular need you have, you can create
  * custom <code>Matcher</code>s that allow
  * you to place your own syntax directly after <code>should</code>. For example, class <code>java.io.File</code> has a method <code>isHidden</code>, which
  * indicates whether a file of a certain path and name is hidden. Because the <code>isHidden</code> method takes no parameters and returns <code>Boolean</code>,
  * you can call it using <code>be</code> with a symbol or <code>BePropertyMatcher</code>, yielding assertions like:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * file should be ('hidden)  // using a symbol
  * file should be (hidden)   // using a BePropertyMatcher
  * </pre>
  * 
- * <p>
  * If it doesn't make sense to have your custom syntax follow <code>be</code>, you might want to create a custom <code>Matcher</code>
  * instead, so your syntax can follow <code>should</code> directly. For example, you might want to be able to check whether
  * a <code>java.io.File</code>'s name ends with a particular extension, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * // using a plain-old Matcher
  * file should endWithExtension ("txt")
  * </pre>
  * 
- * <p>
  * ScalaTest provides several mechanism to make it easy to create custom matchers, including ways to compose new matchers
  * out of existing ones complete with new error messages.  For more information about how to create custom
  * <code>Matcher</code>s, please see the documentation for the <a href="matchers/Matcher.html"><code>Matcher</code></a> trait.
- * </p>
+ * 
  *
  * <a name="checkingForExpectedExceptions"></a>
  * <h2>Checking for expected exceptions</h2>
  *
- * <p>
  * Sometimes you need to test whether a method throws an expected exception under certain circumstances, such
  * as when invalid arguments are passed to the method. With <code>Matchers</code> mixed in, you can
  * check for an expected exception like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * an [IndexOutOfBoundsException] should be thrownBy s.charAt(-1) 
  * </pre>
  *
- * <p>
  * If <code>charAt</code> throws an instance of <code>StringIndexOutOfBoundsException</code>,
  * this expression will result in that exception. But if <code>charAt</code> completes normally, or throws a different
  * exception, this expression will complete abruptly with a <code>TestFailedException</code>.
  * 
- * <p>
  * If you need to further isnpect an expected exception, you can capture it using this syntax:
- * </p>
+ * 
  * 
  * <pre class="stHighlight">
  * val thrown = the [IndexOutOfBoundsException] thrownBy s.charAt(-1) 
  * </pre>
  *
- * <p>
  * This expression returns the caught exception so that you can inspect it further if you wish, for
  * example, to ensure that data contained inside the exception has the expected values. Here's an
  * example:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * thrown.getMessage should equal ("String index out of range: -1")
  * </pre>
  *
- * <p>
  * If you prefer you can also capture and inspect an expected exception in one statement, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * the [ArithmeticException] thrownBy 1 / 0 should have message "/ by zero"
@@ -1701,9 +1560,8 @@ import exceptions.TestFailedException
  * } should have message "String index out of range: -1"
  * </pre>
  *
- * <p>
  * You can also state that no exception should be thrown by some code, like this:
- * </p>
+ * 
  *
  * <pre class="stHighlight">
  * noException should be thrownBy 0 / 1
@@ -1712,18 +1570,16 @@ import exceptions.TestFailedException
  * <a name="thosePeskyParens"></a>
  * <h2>Those pesky parens</h2>
  * 
- * <p>
  * Perhaps the most tricky part of writing assertions using ScalaTest matchers is remembering
  * when you need or don't need parentheses, but bearing in mind a few simple rules <!-- PRESERVE -->should help.
  * It is also reassuring to know that if you ever leave off a set of parentheses when they are
  * required, your code will not compile. Thus the compiler will help you remember when you need the parens.
  * That said, the rules are:
- * </p>
+ * 
  *
- * <p>
  * 1. Although you don't always need them, you may choose to always put parentheses
  * around right-hand values, such as the <code>7</code> in <code>num should equal (7)</code>:
- * </p>
+ * 
  *
  * <pre>
  * result should equal <span class="stRed">(</span>4<span class="stRed">)</span>
@@ -1739,10 +1595,9 @@ import exceptions.TestFailedException
  * javaSet should have size <span class="stRed">(</span>90<span class="stRed">)</span>
  * </pre>
  *
- * <p>
  * 2. Except for <code>length</code>, <code>size</code> and <code>message</code>, you must always put parentheses around
  * the list of one or more property values following a <code>have</code>:
- * </p>
+ * 
  *
  * <pre>
  * file should (exist and have <span class="stRed">(</span>'name ("temp.txt")<span class="stRed">)</span>)
@@ -1754,19 +1609,17 @@ import exceptions.TestFailedException
  * javaList should have length (9) // parens optional for length and size
  * </pre>
  *
- * <p>
  * 3. You must always put parentheses around <code>and</code> and <code>or</code> expressions, as in:
- * </p>
+ * 
  *
  * <pre>
  * catMap should <span class="stRed">(</span>contain key (9) and contain value ("lives")<span class="stRed">)</span>
  * number should <span class="stRed">(</span>equal (2) or equal (4) or equal (8)<span class="stRed">)</span>
  * </pre>
  * 
- * <p>
  * 4. Although you don't always need them, you may choose to always put parentheses
  * around custom <code>Matcher</code>s when they appear directly after <code>not</code>:
- * </p>
+ * 
  * 
  * <pre>
  * file should exist
@@ -1777,17 +1630,15 @@ import exceptions.TestFailedException
  * file should (have ('name ("temp.txt") or not <span class="stRed">(</span>exist<span class="stRed">)</span>)
  * </pre>
  *
- * <p>
  * That's it. With a bit of practice it <!-- PRESERVE -->should become natural to you, and the compiler will always be there to tell you if you
  * forget a set of needed parentheses.
- * </p>
+ * 
  *
- * <p>
  * <em>Note: ScalaTest's matchers are in part inspired by the matchers of <a href="http://rspec.info" target="_blank">RSpec</a>,
  * <a href="https://github.com/hamcrest/JavaHamcrest" target="_blank">Hamcrest</a>, and
  * <a href="http://etorreborre.github.io/specs2/" target="_blank">specs2</a>, and its &ldquo;<code>shouldNot compile</code>&rdquo; syntax
  * by the <code>illTyped</code> macro of <a href="https://github.com/milessabin/shapeless" target="_blank">shapeless</a>.</em>
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Chua Chee Seng
@@ -1806,13 +1657,11 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
    * the matchers DSL.
    *
-   * <p>
    * This class is used as the result of an implicit conversion from class <code>Symbol</code>, to enable symbols to be
    * used in <code>have ('author ("Dickens"))</code> syntax. The name of the implicit conversion method is
    * <code>convertSymbolToHavePropertyMatcherGenerator</code>.
-   * </p>
+   * 
    *
-   * <p>
    * Class <code>HavePropertyMatcherGenerator</code>'s primary constructor takes a <code>Symbol</code>. The 
    * <code>apply</code> method uses reflection to find and access a property that has the name specified by the
    * <code>Symbol</code> passed to the constructor, so it can determine if the property has the expected value
@@ -1822,7 +1671,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
    * "title", a public method named "title", or a public method named "getTitle". 
    * If a method, it must take no parameters. If multiple candidates are found,
    * the <code>apply</code> method will select based on the following algorithm:
-   * </p>
+   * 
    * 
    * <table class="stTable">
    * <tr><th class="stHeadingCell">Field</th><th class="stHeadingCell">Method</th><th class="stHeadingCell">"get" Method</th><th class="stHeadingCell">Result</th></tr>
@@ -1848,11 +1697,10 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      *                          ^
      * </pre>
      * 
-     * <p>
      * This class has an <code>apply</code> method that will produce a <code>HavePropertyMatcher[AnyRef, Any]</code>.
      * The implicit conversion method, <code>convertSymbolToHavePropertyMatcherGenerator</code>, will cause the 
      * above line of code to be eventually transformed into:
-     * </p>
+     * 
      * 
      * <pre class="stHighlight">
      * book should have (convertSymbolToHavePropertyMatcherGenerator('title).apply("A Tale of Two Cities"))
@@ -1868,7 +1716,6 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
          * book should have ('title ("A Tale of Two Cities"))
          * </pre>
          * 
-         * <p>
          * This method uses reflection to discover a field or method with a name that indicates it represents
          * the value of the property with the name contained in the <code>Symbol</code> passed to the 
          * <code>HavePropertyMatcherGenerator</code>'s constructor. The field or method must be public. To be a
@@ -1881,7 +1728,7 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
          * of <code>getTitle</code> will not be checked, so it need not be <code>String</code>. By contrast, if <code>'defined</code>
          * is passed as <code>symbol</code>, and the type of the <code>expectedValue</code> is <code>Boolean</code>, a method
          * named <code>isTitle</code> will be considered a candidate so long as its return type is <code>Boolean</code>.
-         * </p>
+         * 
          * TODO continue the story
          */
         def apply(objectWithProperty: AnyRef): HavePropertyMatchResult[Any] = {
@@ -2672,12 +2519,11 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      *                 ^
      * </pre>
      *
-     * <p>
      * This method is ultimately invoked for objects that have a <code>length</code> property structure
      * of type <code>Long</code>,
      * but is of a type that is not handled by implicit conversions from nominal types such as
      * <code>scala.Seq</code>, <code>java.lang.String</code>, and <code>java.util.List</code>.
-     * </p>
+     * 
      */
     def length(expectedLength: Long)(implicit len: Length[A]): Assertion = {
       val leftLength = len.lengthOf(left)
@@ -2694,12 +2540,11 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      *                 ^
      * </pre>
      *
-     * <p>
      * This method is ultimately invoked for objects that have a <code>size</code> property structure
      * of type <code>Long</code>,
      * but is of a type that is not handled by implicit conversions from nominal types such as
      * <code>Traversable</code> and <code>java.util.Collection</code>.
-     * </p>
+     * 
      */
     def size(expectedSize: Long)(implicit sz: Size[A]): Assertion = {
       val leftSize = sz.sizeOf(left)
@@ -3225,10 +3070,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      * should be, or shouldBe instead.
      * </strong>
      * 
-     * <p>
      * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
      * cases still compile, but silently wouldn't work.
-     * </p>
+     * 
      */
     @deprecated("The deprecation period for the be === syntax has expired. Please use should equal, should ===, shouldEqual, should be, or shouldBe instead.")
     def be(comparison: TripleEqualsInvocation[_]): Nothing = {
@@ -4210,10 +4054,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      *                        ^
      * </pre>
      *
-     * <p>
      * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
      * or a <code>scala.util.matching.Regex</code>.
-     * </p>
+     * 
      */
     def startWith(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -4301,10 +4144,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      *                        ^
      * </pre>
      *
-     * <p>
      * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
      * or a <code>scala.util.matching.Regex</code>.
-     * </p>
+     * 
      */
     def include(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -4363,10 +4205,9 @@ trait Matchers extends Assertions with Tolerance with ShouldVerb with MatcherWor
      *                        ^
      * </pre>
      *
-     * <p>
      * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
      * or a <code>scala.util.matching.Regex</code>.
-     * </p>
+     * 
      */
     def fullyMatch(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
       doCollected(collected, xs, original, prettifier, pos) { e =>
@@ -6683,10 +6524,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
    * the matchers DSL.
    *
-   * <p>
    * This class is used in conjunction with an implicit conversion to enable <code>should</code> methods to
    * be invoked on objects of type <code>Any</code>.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -7426,10 +7266,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
    * the matchers DSL.
    *
-   * <p>
    * This class is used in conjunction with an implicit conversion to enable <code>should</code> methods to
    * be invoked on <code>String</code>s.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
@@ -7643,10 +7482,9 @@ org.scalatest.exceptions.TestFailedException: org.scalatest.Matchers$ResultOfCol
    * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
    * the matchers DSL.
    *
-   * <p>
    * This class is used in conjunction with an implicit conversion to enable <code>withGroup</code> and <code>withGroups</code> methods to
    * be invoked on <code>Regex</code>s.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
