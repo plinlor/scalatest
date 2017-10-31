@@ -20,21 +20,19 @@ import org.scalactic._
 /**
  * A bundle of information about the current test.
  *
- * <p>
- * A <code>TestData</code> object is passed to the <code>withFixture</code> methods of traits <code>Suite</code> and <code>fixture.Suite</code>
- * (both <a href="Suite$NoArgTest.html"><code>NoArgTest</code></a> and <a href="fixture/Suite$OneArgTest.html"><code>OneArgTest</code></a>
- * extend <code>TestData</code>) and to the <code>beforeEach</code> and <code>afterEach</code>
- * methods of trait <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a>. This enables fixtures and tests to make use
+ * A `TestData` object is passed to the `withFixture` methods of traits `Suite` and `fixture.Suite`
+ * (both <a href="Suite$NoArgTest.html">`NoArgTest`</a> and <a href="fixture/Suite$OneArgTest.html">`OneArgTest`</a>
+ * extend `TestData`) and to the `beforeEach` and `afterEach`
+ * methods of trait <a href="BeforeAndAfterEach.html">`BeforeAndAfterEach`</a>. This enables fixtures and tests to make use
  * of the test name and configuration objects in the config map.
- * </p>
+ * 
  *
- * <p>
  * In ScalaTest's event model, a test may be surrounded by &ldquo;scopes.&rdquo; Each test and scope is associated with string of text.
  * A test's name is a concatenation of the text of any surrounding scopes followed by the text provided with the test
  * itself, after each text element has been trimmed and one space inserted between each component. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.freespec
  * 
  * import org.scalatest.FreeSpec
@@ -55,36 +53,32 @@ import org.scalactic._
  *     }
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * The above <code>FreeSpec</code> contains two tests, both nested inside the same two scopes. The outermost scope names
- * the subject, <code>A Set</code>. The nested scope qualifies the subject with <code>when empty</code>. Inside that
+ * The above `FreeSpec` contains two tests, both nested inside the same two scopes. The outermost scope names
+ * the subject, `A Set`. The nested scope qualifies the subject with `when empty`. Inside that
  * scope are the two tests. The text of the tests are:
- * <p>
  *
  * <ul>
- * <li><code>should have size 0</code></li>
- * <li><code>should produce NoSuchElementException when head is invoked</code></li>
+ * <li>`should have size 0`</li>
+ * <li>`should produce NoSuchElementException when head is invoked`</li>
  * </ul>
  *
- * <p>
  * Therefore, the names of these two tests are:
- * </p>
+ * 
  *
  * <ul>
- * <li><code>A Stack when empty should have size 0</code></li>
- * <li><code>A Stack when empty should produce NoSuchElementException when head is invoked</code></li>
+ * <li>`A Stack when empty should have size 0`</li>
+ * <li>`A Stack when empty should produce NoSuchElementException when head is invoked`</li>
  * </ul>
  *
- * <p>
- * The <code>TestData</code> instance for the first test would contain:
- * </p>
+ * The `TestData` instance for the first test would contain:
+ * 
  *
  * <ul>
- * <li><code>name</code>: <code>"A Stack when empty should have size 0"</code></li>
- * <li><code>scopes</code>: <code>collection.immutable.IndexedSeq("A Stack", "when empty")</code></li>
- * <li><code>text</code>: <code>"should have size 0"</code></li>
+ * <li>`name`: `"A Stack when empty should have size 0"`</li>
+ * <li>`scopes`: `collection.immutable.IndexedSeq("A Stack", "when empty")`</li>
+ * <li>`text`: `"should have size 0"`</li>
  * </ul>
  *
  * @author Bill Venners
@@ -93,7 +87,7 @@ import org.scalactic._
 trait TestData {
 
   /**
-   * A <code>ConfigMap</code> containing objects that can be used
+   * A `ConfigMap` containing objects that can be used
    * to configure the fixture and test.
    */
   val configMap: ConfigMap 
@@ -101,31 +95,28 @@ trait TestData {
   /**
    * The name of this test.
    *
-   * <p>
-   * See the main documentation for this trait for an explanation of the difference between <code>name</code>, <code>text</code>,
-   * and <code>scopes</code>.
-   * </p>
+   * See the main documentation for this trait for an explanation of the difference between `name`, `text`,
+   * and `scopes`.
+   * 
    */
   val name: String
 
   /**
-   * An immutable <code>IndexedSeq</code> containing the text for any "scopes" enclosing this test, in order
+   * An immutable `IndexedSeq` containing the text for any "scopes" enclosing this test, in order
    * from outermost to innermost scope.
    *
-   * <p>
-   * See the main documentation for this trait for an explanation of the difference between <code>name</code>, <code>text</code>,
-   * and <code>scopes</code>. If a test has no surrounding scopes, this field will contain an empty <code>IndexedSeq</code>.
-   * </p>
+   * See the main documentation for this trait for an explanation of the difference between `name`, `text`,
+   * and `scopes`. If a test has no surrounding scopes, this field will contain an empty `IndexedSeq`.
+   * 
    */
   val scopes: collection.immutable.IndexedSeq[String]
 
   /**
    * The "text" for this test.
    *
-   * <p>
-   * See the main documentation for this trait for an explanation of the difference between <code>name</code>, <code>text</code>,
-   * and <code>scopes</code>. If a test has no surrounding scopes, this field will contain the same string as <code>name</code>.
-   * </p>
+   * See the main documentation for this trait for an explanation of the difference between `name`, `text`,
+   * and `scopes`. If a test has no surrounding scopes, this field will contain the same string as `name`.
+   * 
    */
   val text: String
   

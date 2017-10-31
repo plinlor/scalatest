@@ -20,26 +20,24 @@ import org.scalactic._
 import TripleEqualsSupport._
 
 /**
- * Trait that can be mixed into a <code>Suite</code> to disable the implicit conversions provided by default in trait
- * <a href="Assertions.html"><code>Assertions</code></a>, which trait <code>Suite</code> extends.
+ * Trait that can be mixed into a `Suite` to disable the implicit conversions provided by default in trait
+ * <a href="Assertions.html">`Assertions`</a>, which trait `Suite` extends.
  * 
- * <p>
  * This trait can be used to quickly solve a problem in which ScalaTest's default implicit conversion is clashing with those of some other library
  * you need to use in your tests. After mixing in this trait, like this:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * class MySuite extends FunSuite with NonImplicitAssertions { 
  *   // ... 
  * } 
- * </pre>
+ * }}}
  *
- * <p>
- * You can write tests using <code>assert</code> (without triple equals), <code>assertResult</code>, <code>assertThrows</code>,
- * <code>intercept</code>, <code>assertCompiles</code>, <code>assertDoesNotCompile</code>, and <code>assertTypeError</code>:
- * </p>
+ * You can write tests using `assert` (without triple equals), `assertResult`, `assertThrows`,
+ * `intercept`, `assertCompiles`, `assertDoesNotCompile`, and `assertTypeError`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  *   assert(a &lt; 7)
  *
  *   assertResult(2) { 1 + 1 }
@@ -58,7 +56,7 @@ import TripleEqualsSupport._
  *   assertTypeError("val a: String = 1")
  *
  *   assertCompiles("val a: Int = 1")
- * </pre>
+ * }}}
  *
  * @author Chua Chee Seng
  * @author Bill Venners
@@ -66,11 +64,11 @@ import TripleEqualsSupport._
 trait NonImplicitAssertions extends Assertions {
 
   /**
-   * Overrides the <code>super</code> implementation of <code>convertToEqualizer</code>, turning off the implicit 
+   * Overrides the `super` implementation of `convertToEqualizer`, turning off the implicit 
    * modifier (if present) to remove the method from the space of implicit conversions.
    *
-   * @param left the object whose type to convert to <code>Equalizer</code>.
-   * @throws NullArgumentException if <code>left</code> is <code>null</code>.
+   * @param left the object whose type to convert to `Equalizer`.
+   * @throws NullArgumentException if `left` is `null`.
    */
   override def convertToEqualizer[T](left: T): Equalizer[T] = new Equalizer(left)
   override def convertToCheckingEqualizer[T](left: T): CheckingEqualizer[T] = new CheckingEqualizer(left)
@@ -87,11 +85,11 @@ trait NonImplicitAssertions extends Assertions {
 }
 
 /**
- * Companion object that facilitates the importing of the members of trait <code>Assertions</code> without importing the implicit conversions
- * it provides by default.  One use case for this object is to import the non-implicit <code>Assertions</code> members so you can use
- * them in the Scala interpreter along with another library whose implicits conflict with those provided by <code>Assertions</code>:
+ * Companion object that facilitates the importing of the members of trait `Assertions` without importing the implicit conversions
+ * it provides by default.  One use case for this object is to import the non-implicit `Assertions` members so you can use
+ * them in the Scala interpreter along with another library whose implicits conflict with those provided by `Assertions`:
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * $ scala -cp scalatest-1.7.jar
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
@@ -120,7 +118,7 @@ trait NonImplicitAssertions extends Assertions {
  * 
  * scala&gt; intercept[IndexOutOfBoundsException] { "hi".charAt(-1) }
  * res3: IndexOutOfBoundsException = java.lang.StringIndexOutOfBoundsException: String index out of range: -1
- * </pre>
+ * }}}
  */
 object NonImplicitAssertions extends NonImplicitAssertions
 

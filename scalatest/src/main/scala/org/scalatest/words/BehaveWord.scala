@@ -17,68 +17,62 @@ package org.scalatest.words
 
 
 /**
- * Class that supports shared test registration via instances referenced from the <code>behave</code> field of <code>FunSpec</code>s,
- * <code>FlatSpec</code>s, and <code>WordSpec</code>s as well as instance of their sister traits, 
- * <code>fixture.FunSpec</code>, <code>fixture.FlatSpec</code>, and <code>fixture.WordSpec</code>.
+ * Class that supports shared test registration via instances referenced from the `behave` field of `FunSpec`s,
+ * `FlatSpec`s, and `WordSpec`s as well as instance of their sister traits, 
+ * `fixture.FunSpec`, `fixture.FlatSpec`, and `fixture.WordSpec`.
  *
- * <p>
- * This class, via the <code>behave</code> field, enables syntax such as the following in <code>FunSpec</code>s, <code>FlatSpec</code>s,
- * <code>fixture.FunSpec</code>s, and <code>fixture.FlatSpec</code>s:
- * </p>
+ * This class, via the `behave` field, enables syntax such as the following in `FunSpec`s, `FlatSpec`s,
+ * `fixture.FunSpec`s, and `fixture.FlatSpec`s:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * it should behave like nonFullStack(stackWithOneItem)
  *           ^
- * </pre>
+ * }}}
  *
- * <p>
- * It also enables syntax such as the following syntax in <code>WordSpec</code>s and <code>fixture.WordSpec</code>s:
- * </p>
+ * It also enables syntax such as the following syntax in `WordSpec`s and `fixture.WordSpec`s:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * behave like nonEmptyStack(lastValuePushed)
  * ^
- * </pre>
+ * }}}
  *
- * <p>
- * For more information and examples of the use of <cod>behave</code>, see the Shared tests section
- * in the main documentation for trait <a href="../FunSpec.html#SharedTests"><code>FunSpec</code></a>,
- * <a href="../FlatSpec.html#SharedTests"><code>FlatSpec</code></a>, or <a href="../WordSpec.html#SharedTests"><code>WordSpec</code></a>.
- * </p>
+ * For more information and examples of the use of <cod>behave`, see the Shared tests section
+ * in the main documentation for trait <a href="../FunSpec.html#SharedTests">`FunSpec`</a>,
+ * <a href="../FlatSpec.html#SharedTests">`FlatSpec`</a>, or <a href="../WordSpec.html#SharedTests">`WordSpec`</a>.
+ * 
  */
 final class BehaveWord {
 
   /**
    * Supports the registration of shared tests.
    *
-   * <p>
-   * This method enables syntax such as the following in <code>FunSpec</code>s, <code>FlatSpec</code>s,
-   * <code>fixture.FunSpec</code>s, and <code>fixture.FlatSpec</code>s:
-   * </p>
+   * This method enables syntax such as the following in `FunSpec`s, `FlatSpec`s,
+   * `fixture.FunSpec`s, and `fixture.FlatSpec`s:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * it should behave like nonFullStack(stackWithOneItem)
    *                  ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * It also enables syntax such as the following syntax in <code>WordSpec</code>s and <code>fixture.WordSpec</code>s:
-   * </p>
+   * It also enables syntax such as the following syntax in `WordSpec`s and `fixture.WordSpec`s:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * behave like nonEmptyStack(lastValuePushed)
    * ^
-   * </pre>
+   * }}}
    *
-   * <p>
    * This method just provides syntax sugar intended to make the intent of the code clearer.
    * Because the parameter passed to it is
-   * type <code>Unit</code>, the expression will be evaluated before being passed, which
+   * type `Unit`, the expression will be evaluated before being passed, which
    * is sufficient to register the shared tests.
-   * For more information and examples of the use of <cod>behave</code>, see the Shared tests section
-   * in the main documentation for trait <a href="../FunSpec.html#SharedTests"><code>FunSpec</code></a>,
-   * <a href="../FlatSpec.html#SharedTests"><code>FlatSpec</code></a>, or <a href="../WordSpec.html#SharedTests"><code>WordSpec</code></a>.
-   * </p>
+   * For more information and examples of the use of <cod>behave`, see the Shared tests section
+   * in the main documentation for trait <a href="../FunSpec.html#SharedTests">`FunSpec`</a>,
+   * <a href="../FlatSpec.html#SharedTests">`FlatSpec`</a>, or <a href="../WordSpec.html#SharedTests">`WordSpec`</a>.
+   * 
    */
   def like(unit: Unit): Unit = ()
   

@@ -25,7 +25,7 @@ import org.scalatest.events.Event
 import scala.collection.mutable
 
 /**
- * A <code>Reporter</code> that writes a file listing any tests that
+ * A `Reporter` that writes a file listing any tests that
  * failed or canceled during a run, so they can be rerun if desired.
  */
 private[scalatest] class MemoryReporter(outputFile: String)

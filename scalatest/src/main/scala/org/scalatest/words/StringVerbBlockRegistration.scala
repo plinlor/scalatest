@@ -19,37 +19,35 @@ import org.scalactic._
 
 /**
  * Class that provides a role-specific type for an implicit conversion used to support
- * the registration of subject descriptions in <code>WordSpec</code> and <code>fixture.WordSpec</code>.
+ * the registration of subject descriptions in `WordSpec` and `fixture.WordSpec`.
  *
- * <p>
- * For example, this class enables syntax such as the following in <code>WordSpec</code>
- * and <code>fixture.WordSpec</code>:
- * </p>
+ * For example, this class enables syntax such as the following in `WordSpec`
+ * and `fixture.WordSpec`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * "A Stack (when empty)" should { ...
  *                        ^
- * </pre>
+ * }}}
  *
- * This <code>should</code> method, which is provided in <code>ShouldVerb</code>, needs an implicit parameter
- * of type <code>StringVerbBlockRegistration</code>.
+ * This `should` method, which is provided in `ShouldVerb`, needs an implicit parameter
+ * of type `StringVerbBlockRegistration`.
  *
  * @author Bill Venners
  */
 abstract class StringVerbBlockRegistration {
 
   /**
-   * Registers a subject description in <code>WordSpec</code> and <code>fixture.WordSpec</code>.
+   * Registers a subject description in `WordSpec` and `fixture.WordSpec`.
    *
-   * <p>
-   * For example, this class enables syntax such as the following in <code>WordSpec</code>
-   * and <code>fixture.WordSpec</code>:
-   * </p>
+   * For example, this class enables syntax such as the following in `WordSpec`
+   * and `fixture.WordSpec`:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "A Stack (when empty)" should { ...
    *                        ^
-   * </pre>
+   * }}}
    *
    */
   def apply(string: String, verb: String, pos: source.Position, block: () => Unit): Unit

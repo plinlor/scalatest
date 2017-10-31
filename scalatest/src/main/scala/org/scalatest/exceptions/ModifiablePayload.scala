@@ -16,43 +16,40 @@
 package org.scalatest.exceptions
 
 /**
- * Trait implemented by <a href="PayloadField.html"><code>PayloadField</code></a> exception types that can modify their payload.
+ * Trait implemented by <a href="PayloadField.html">`PayloadField`</a> exception types that can modify their payload.
  *
- * <p>
- * This trait facilitates the <code>withPayload</code> construct provided by trait
- * <a href="../Payloads.html"><code>Payloads</code></a>. This construct enables a payload object (or modified
+ * This trait facilitates the `withPayload` construct provided by trait
+ * <a href="../Payloads.html">`Payloads`</a>. This construct enables a payload object (or modified
  * payload object) to be included as the payload of a thrown exception. The payload
  * can then be included in the ScalaTest event that results from that exception. For
- * example, the payload included in a <a href="TestFailedException.html"><code>TestFailedException</code></a> will be included
- * as the payload of the resulting <a href="../events/TestFailed.html"><code>TestFailed</code></a> event. Here's an example in
+ * example, the payload included in a <a href="TestFailedException.html">`TestFailedException`</a> will be included
+ * as the payload of the resulting <a href="../events/TestFailed.html">`TestFailed`</a> event. Here's an example in
  * which a GUI snapshot is included as a payload when a test fails:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * withPayload(generateGUISnapshot()) {
  *   1 + 1 should === (3)
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * Exception types that mix in this trait have a <code>modifyPayload</code> method, which
+ * Exception types that mix in this trait have a `modifyPayload` method, which
  * returns an exception identical to itself, except with the payload option replaced with
  * the result of invoking the passed function, supplying the current payload option
- * as the lone <code>Option[Any]</code> parameter.
- * </p>
+ * as the lone `Option[Any]` parameter.
+ * 
  */
 trait ModifiablePayload[T <: Throwable] { this: Throwable with PayloadField =>
   
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with
-   * the result of invoking the passed function, <code>fun</code>, supplying the current payload option
-   * as the lone <code>Option[Any]</code> parameter.
+   * the result of invoking the passed function, `fun`, supplying the current payload option
+   * as the lone `Option[Any]` parameter.
    *
-   * <p>
    * Implementations of this method may either mutate this exception or return
    * a new instance with the revised detail message.
-   * </p>
+   * 
    *
    * @param fun A function that returns the new payload option given the old one
    */

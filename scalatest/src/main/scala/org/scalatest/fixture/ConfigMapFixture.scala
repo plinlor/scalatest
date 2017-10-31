@@ -18,15 +18,14 @@ package org.scalatest.fixture
 import org.scalatest._
 
 /**
- * Trait that when mixed into a <a href="Suite.html"><code>fixture.Suite</code></a> passes
- * the config map passed to <code>runTest</code> as a fixture into each test.
+ * Trait that when mixed into a <a href="Suite.html">`fixture.Suite`</a> passes
+ * the config map passed to `runTest` as a fixture into each test.
  *
- * <p>
- * Here's an example in which tests just check to make sure <code>"hello"</code> and <code>"world"</code>
+ * Here's an example in which tests just check to make sure `"hello"` and `"world"`
  * are defined keys in the config map:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.fixture.configmapfixture
  * 
  * import org.scalatest._
@@ -42,14 +41,13 @@ import org.scalatest._
  *     configMap should contain key "world"
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If you run this class without defining <code>"hello"</code> and <code>"world"</code>
+ * If you run this class without defining `"hello"` and `"world"`
  * in the confg map, the tests will fail:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; org.scalatest.run(new ExampleSpec)
  * <span class="stGreen">ExampleSpec:
  * The config map</span>
@@ -57,42 +55,40 @@ import org.scalatest._
  *   Map() did not contain key "hello" (<console>:20)
  * - should contain world *** FAILED ***
  *   Map() did not contain key "world" (<console>:24)</span>
- * </pre>
+ * }}}
  * 
- * <p>
- * If you do define <code>"hello"</code> and <code>"world"</code> keys
+ * If you do define `"hello"` and `"world"` keys
  * in the confg map, the tests will success:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; org.scalatest.run(new ExampleSpec, configMap = Map("hello" -&gt; "hi", "world" -&gt; "globe"))
  * <span class="stGreen">ExampleSpec:
  * The config map
  * - should contain hello
  * - should contain world</span>
- * </pre>
+ * }}}
  * 
  * @author Bill Venners
  */
 trait ConfigMapFixture { this: fixture.TestSuite =>
 
   /**
-   * The type of the <code>configMap</code>, which is <code>ConfigMap</code>.
+   * The type of the `configMap`, which is `ConfigMap`.
    */
   type FixtureParam = ConfigMap
 
   /**
-   * Invoke the test function, passing to the the test function the <code>configMap</code>
-   * obtained by invoking <code>configMap</code> on the passed <code>OneArgTest</code>.
+   * Invoke the test function, passing to the the test function the `configMap`
+   * obtained by invoking `configMap` on the passed `OneArgTest`.
    *
-   * <p>
-   * To enable stacking of traits that define <code>withFixture(NoArgTest)</code>, this method does not
+   * To enable stacking of traits that define `withFixture(NoArgTest)`, this method does not
    * invoke the test function directly. Instead, it delegates responsibility for invoking the test function
-   * to <code>withFixture(NoArgTest)</code>.
-   * </p>
+   * to `withFixture(NoArgTest)`.
+   * 
    *
-   * @param test the <code>OneArgTest</code> to invoke, passing in the
-   *   <code>configMap</code> fixture
+   * @param test the `OneArgTest` to invoke, passing in the
+   *   `configMap` fixture
    */
   def withFixture(test: OneArgTest): Outcome = {
     withFixture(test.toNoArgTest(test.configMap))

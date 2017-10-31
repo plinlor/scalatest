@@ -18,21 +18,20 @@ package org.scalatest.prop
 import org.scalatest.enablers.WheneverAsserting
 
 /**
- * Trait that contains the <code>whenever</code> clause that can be used in table- or generator-driven property checks.
+ * Trait that contains the `whenever` clause that can be used in table- or generator-driven property checks.
  *
  * @author Bill Venners
  */
 trait Whenever {
 
   /**
-   * Evaluates the passed code block if the passed boolean condition is true, else throws <code>DiscardedEvaluationException</code>.
+   * Evaluates the passed code block if the passed boolean condition is true, else throws `DiscardedEvaluationException`.
    *
-   * <p>
-   * The <code>whenever</code> method can be used inside property check functions to discard invocations of the function with
-   * data for which it is known the property would fail. For example, given the following <code>Fraction</code> class:
-   * </p>
+   * The `whenever` method can be used inside property check functions to discard invocations of the function with
+   * data for which it is known the property would fail. For example, given the following `Fraction` class:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * class Fraction(n: Int, d: Int) {
    *
    *   require(d != 0)
@@ -44,9 +43,9 @@ trait Whenever {
    *
    *   override def toString = numer + " / " + denom
    * }
-   * </pre>
+   * }}}
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest.prop.TableDrivenPropertyChecks._
    *
    * val fractions =
@@ -64,16 +63,15 @@ trait Whenever {
    *     (Integer.MIN_VALUE, 3),
    *     ( -3,  -1)
    *   )
-   * </pre>
+   * }}}
    *
-   * <p>
    * Imagine you wanted to check a property against this class with data that includes some
    * value that are rejected by the constructor, such as a denominator of zero, which should
-   * result in an <code>IllegalArgumentException</code>. You could use <code>whenever</code>
-   * to discard any rows in the <code>fraction</code> that represent illegal arguments, like this:
-   * </p>
+   * result in an `IllegalArgumentException`. You could use `whenever`
+   * to discard any rows in the `fraction` that represent illegal arguments, like this:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest.matchers.Matchers._
    *
    * forAll (fractions) { (n: Int, d: Int) =>
@@ -93,18 +91,17 @@ trait Whenever {
    *     f.denom should be > 0
    *   }
    * }
-   * </pre>
+   * }}}
    *
-   * <p>
    * In this example, rows 6, 8, and 9 have values that would cause a false to be passed
-   * to <code>whenever</code>. (For example, in row 6, <code>d</code> is 0, which means <code>d</code> <code>!=</code> <code>0</code>
-   * will be false.) For those rows, <code>whenever</code> will throw <code>DiscardedEvaluationException</code>,
-   * which will cause the <code>forAll</code> method to discard that row.
-   * </p>
+   * to `whenever`. (For example, in row 6, `d` is 0, which means `d` `!=` `0`
+   * will be false.) For those rows, `whenever` will throw `DiscardedEvaluationException`,
+   * which will cause the `forAll` method to discard that row.
+   * 
    *
-   * @param condition the boolean condition that determines whether <code>whenever</code> will evaluate the
-   *    <code>fun</code> function (<code>condition</code> is true) or throws <code>DiscardedEvaluationException</code> (<code>condition</code> is false)
-   * @param fun the function to evaluate if the specified <code>condition</code> is true
+   * @param condition the boolean condition that determines whether `whenever` will evaluate the
+   *    `fun` function (`condition` is true) or throws `DiscardedEvaluationException` (`condition` is false)
+   * @param fun the function to evaluate if the specified `condition` is true
    */
   def whenever[T](condition: Boolean)(fun: => T)(implicit wa: WheneverAsserting[T]): wa.Result =
     wa.whenever(condition)(fun)

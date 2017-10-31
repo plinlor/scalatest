@@ -18,7 +18,7 @@ package org.scalatest
 private[org] case class AnchorValue(anchor: Int, value: Any)
 
 /**
- * A trait that represent an expression recorded by <code>DiagrammedExprMacro</code>, which includes the following members:
+ * A trait that represent an expression recorded by `DiagrammedExprMacro`, which includes the following members:
  *
  * <ul>
  * <li>a boolean value</li>
@@ -26,8 +26,8 @@ private[org] case class AnchorValue(anchor: Int, value: Any)
  * <li>anchor values of this expression (including sub-expressions)</li>
  * </ul>
  *
- * <code>DiagrammedExpr</code> is used by code generated from <code>DiagrammedAssertionsMacro</code>, it needs to be public
- * so that the generated code can be compiled.  It is expected that ScalaTest users would ever need to use <code>DiagrammedExpr</code>
+ * `DiagrammedExpr` is used by code generated from `DiagrammedAssertionsMacro`, it needs to be public
+ * so that the generated code can be compiled.  It is expected that ScalaTest users would ever need to use `DiagrammedExpr`
  * directly.
  */
 trait DiagrammedExpr[T] {
@@ -42,42 +42,42 @@ trait DiagrammedExpr[T] {
 }
 
 /**
- * <code>DiagrammedExpr</code> companion object that provides factory methods to create different sub types of <code>DiagrammedExpr</code>
+ * `DiagrammedExpr` companion object that provides factory methods to create different sub types of `DiagrammedExpr`
  *
- * <code>DiagrammedExpr</code> is used by code generated from <code>DiagrammedAssertionsMacro</code>, it needs to be public
- * so that the generated code can be compiled.  It is expected that ScalaTest users would ever need to use <code>DiagrammedExpr</code>
+ * `DiagrammedExpr` is used by code generated from `DiagrammedAssertionsMacro`, it needs to be public
+ * so that the generated code can be compiled.  It is expected that ScalaTest users would ever need to use `DiagrammedExpr`
  * directly.
  */
 object DiagrammedExpr {
 
   /**
-   * Create simple <code>DiagrammedExpr</code> that wraps expressions that is not <code>Select</code>, <code>Apply</code> or <code>TypeApply</code>.
+   * Create simple `DiagrammedExpr` that wraps expressions that is not `Select`, `Apply` or `TypeApply`.
    *
    * @param expression the expression value
    * @param anchor the anchor of the expression
-   * @return a simple <code>DiagrammedExpr</code>
+   * @return a simple `DiagrammedExpr`
    */
   def simpleExpr[T](expression: T, anchor: Int): DiagrammedExpr[T] = new DiagrammedSimpleExpr(expression, anchor)
 
   /**
-   * Create apply <code>DiagrammedExpr</code> that wraps <code>Apply</code> or <code>TypeApply</code> expression.
+   * Create apply `DiagrammedExpr` that wraps `Apply` or `TypeApply` expression.
    *
-   * @param qualifier the qualifier of the <code>Apply</code> or <code>TypeApply</code> expression
-   * @param args the arguments of the <code>Apply</code> or <code>TypeApply</code> expression
+   * @param qualifier the qualifier of the `Apply` or `TypeApply` expression
+   * @param args the arguments of the `Apply` or `TypeApply` expression
    * @param value the expression value
    * @param anchor the anchor of the expression
-   * @return an apply <code>DiagrammedExpr</code>
+   * @return an apply `DiagrammedExpr`
    */
   def applyExpr[T](qualifier: DiagrammedExpr[_], args: List[DiagrammedExpr[_]], value: T, anchor: Int): DiagrammedExpr[T] =
     new DiagrammedApplyExpr(qualifier, args, value, anchor)
 
   /**
-   * Create select <code>DiagrammedExpr</code> that wraps <code>Select</code> expression.
+   * Create select `DiagrammedExpr` that wraps `Select` expression.
    *
-   * @param qualifier the qualifier of the <code>Apply</code> or <code>TypeApply</code> expression
+   * @param qualifier the qualifier of the `Apply` or `TypeApply` expression
    * @param value the expression value
    * @param anchor the anchor of the expression
-   * @return a select <code>DiagrammedExpr</code>
+   * @return a select `DiagrammedExpr`
    */
   def selectExpr[T](qualifier: DiagrammedExpr[_], value: T, anchor: Int): DiagrammedExpr[T] =
     new DiagrammedSelectExpr(qualifier, value, anchor)

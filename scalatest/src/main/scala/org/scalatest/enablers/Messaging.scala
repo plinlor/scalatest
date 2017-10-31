@@ -16,21 +16,19 @@
 package org.scalatest.enablers
 
 /**
- * Supertrait for <code>Messaging</code> typeclasses.
+ * Supertrait for `Messaging` typeclasses.
  *
- * <p>
- * Trait <code>Messaging</code> is a typeclass trait for objects that can be queried for message.
- * Objects of type T for which an implicit <code>Messaging[T]</code> is available can be used
- * with the <code>should have message</code> syntax.
- * You can enable the <code>have message</code> matcher syntax on your own
- * type <code>U</code> by defining a <code>Messaging[U]</code> for the type and making it available implicitly.
- * </p>
+ * Trait `Messaging` is a typeclass trait for objects that can be queried for message.
+ * Objects of type T for which an implicit `Messaging[T]` is available can be used
+ * with the `should have message` syntax.
+ * You can enable the `have message` matcher syntax on your own
+ * type `U` by defining a `Messaging[U]` for the type and making it available implicitly.
+ * 
  *
- * <p>
- * ScalaTest provides an implicit <code>Messaging</code> instance for <code>java.lang.Throwable</code> and
- * arbitary object with <code>message()</code>, <code>message</code>, <code>getMessage()</code> or <code>getMessage</code>
- * method in the <code>Messaging</code> companion object.
- * </p>
+ * ScalaTest provides an implicit `Messaging` instance for `java.lang.Throwable` and
+ * arbitary object with `message()`, `message`, `getMessage()` or `getMessage`
+ * method in the `Messaging` companion object.
+ * 
  *
  * @author Bill Venners
  * @author Chee Seng
@@ -47,23 +45,23 @@ trait Messaging[T] {
 }
 
 /**
- * Companion object for <code>Messaging</code> that provides implicit implementations for the following types:
+ * Companion object for `Messaging` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>java.lang.Throwable</code></li>
- * <li>arbitary object with a <code>message()</code> method that returns <code>String</code></li>
- * <li>arbitary object with a parameterless <code>message</code> method that returns <code>String</code></li>
- * <li>arbitary object with a <code>getMessage()</code> method that returns <code>String</code></li>
- * <li>arbitary object with a parameterless <code>getMessage</code> method that returns <code>String</code></li>
+ * <li>`java.lang.Throwable`</li>
+ * <li>arbitary object with a `message()` method that returns `String`</li>
+ * <li>arbitary object with a parameterless `message` method that returns `String`</li>
+ * <li>arbitary object with a `getMessage()` method that returns `String`</li>
+ * <li>arbitary object with a parameterless `getMessage` method that returns `String`</li>
  * </ul>
  */
 object Messaging {
 
   /**
-   * Enable <code>Messaging</code> implementation for <code>java.lang.Throwable</code>
+   * Enable `Messaging` implementation for `java.lang.Throwable`
    *
-   * @tparam EX any subtype of <code>java.lang.Throwable</code>
-   * @return <code>Messaging[EX]</code> that supports <code>java.lang.Throwable</code> in <code>have message</code> syntax
+   * @tparam EX any subtype of `java.lang.Throwable`
+   * @return `Messaging[EX]` that supports `java.lang.Throwable` in `have message` syntax
    */
   implicit def messagingNatureOfThrowable[EX <: Throwable]: Messaging[EX] = 
     new Messaging[EX] {
@@ -73,10 +71,10 @@ object Messaging {
   import scala.language.reflectiveCalls
 
   /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a <code>message()</code> method that returns <code>String</code>
+   * Provides `Messaging` implementation for any arbitrary object with a `message()` method that returns `String`
    *
-   * @tparam T any type that has a <code>message()</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+   * @tparam T any type that has a `message()` method that returns `String`
+   * @return `Messaging[T]` that supports `T` in `have message` syntax
    */
   implicit def messagingNatureOfAnyRefWithMessageMethod[T <: AnyRef { def message(): String}]: Messaging[T] = 
     new Messaging[T] {
@@ -84,10 +82,10 @@ object Messaging {
     }
 
   /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a parameterless <code>message</code> method that returns <code>String</code>
+   * Provides `Messaging` implementation for any arbitrary object with a parameterless `message` method that returns `String`
    *
-   * @tparam T any type that has a parameterless <code>message</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+   * @tparam T any type that has a parameterless `message` method that returns `String`
+   * @return `Messaging[T]` that supports `T` in `have message` syntax
    */
   implicit def messagingNatureOfAnyRefWithParameterlessMessageMethod[T <: AnyRef { def message: String}]: Messaging[T] = 
     new Messaging[T] {
@@ -95,10 +93,10 @@ object Messaging {
     }
 
   /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a <code>getMessage()</code> method that returns <code>String</code>
+   * Provides `Messaging` implementation for any arbitrary object with a `getMessage()` method that returns `String`
    *
-   * @tparam T any type that has a <code>getMessage()</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+   * @tparam T any type that has a `getMessage()` method that returns `String`
+   * @return `Messaging[T]` that supports `T` in `have message` syntax
    */
   implicit def messagingNatureOfAnyRefWithGetMessageMethod[T <: AnyRef { def getMessage(): String}]: Messaging[T] = 
     new Messaging[T] {
@@ -106,10 +104,10 @@ object Messaging {
     }
 
   /**
-   * Provides <code>Messaging</code> implementation for any arbitrary object with a parameterless <code>getMessage</code> method that returns <code>String</code>
+   * Provides `Messaging` implementation for any arbitrary object with a parameterless `getMessage` method that returns `String`
    *
-   * @tparam T any type that has a parameterless <code>getMessage</code> method that returns <code>String</code>
-   * @return <code>Messaging[T]</code> that supports <code>T</code> in <code>have message</code> syntax
+   * @tparam T any type that has a parameterless `getMessage` method that returns `String`
+   * @return `Messaging[T]` that supports `T` in `have message` syntax
    */
   implicit def messagingNatureOfAnyRefWithParameterlessGetMessageMethod[T <: AnyRef { def getMessage: String}]: Messaging[T] = 
     new Messaging[T] {

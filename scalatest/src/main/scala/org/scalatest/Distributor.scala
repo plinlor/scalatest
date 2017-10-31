@@ -16,43 +16,40 @@
 package org.scalatest
 
 /**
- * Trait whose instances facilitate parallel execution of <code>Suite</code>s.
- * An optional <code>Distributor</code> is passed to the <code>run</code> method of <a href="Suite.html"><code>Suite</code></a>. If a
- * <code>Distributor</code> is indeed passed, trait <code>Suite</code>'s implementation of <code>run</code> will
- * populate that <code>Distributor</code> with its nested <code>Suite</code>s (by passing them to the <code>Distributor</code>'s
- * <code>apply</code> method) rather than executing the nested <code>Suite</code>s directly. It is then up to another thread or process
- * to execute those <code>Suite</code>s.
+ * Trait whose instances facilitate parallel execution of `Suite`s.
+ * An optional `Distributor` is passed to the `run` method of <a href="Suite.html">`Suite`</a>. If a
+ * `Distributor` is indeed passed, trait `Suite`'s implementation of `run` will
+ * populate that `Distributor` with its nested `Suite`s (by passing them to the `Distributor`'s
+ * `apply` method) rather than executing the nested `Suite`s directly. It is then up to another thread or process
+ * to execute those `Suite`s.
  *
- * <p>
- * If you have a set of nested <code>Suite</code>s that must be executed sequentially, you can mix in trait
- * <a href="SequentialNestedSuiteExecution.html"><code>SequentialNestedSuiteExecution</code></a>, which overrides <code>runNestedSuites</code> and
- * calls <code>super</code>'s <code>runNestedSuites</code> implementation, passing in <code>None</code> for the
- * <code>Distributor</code>.
- * </p>
+ * If you have a set of nested `Suite`s that must be executed sequentially, you can mix in trait
+ * <a href="SequentialNestedSuiteExecution.html">`SequentialNestedSuiteExecution`</a>, which overrides `runNestedSuites` and
+ * calls `super`'s `runNestedSuites` implementation, passing in `None` for the
+ * `Distributor`.
  * 
- * <p>
+ * 
  * Implementations of this trait must be thread safe.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
 trait Distributor {
   
   /**
-   * Puts a <code>Suite</code> into the <code>Distributor</code>.
+   * Puts a `Suite` into the `Distributor`.
    *
-   * <p>
-   * The <code>Distributor</code> can decide which, if any, of the passed <code>Args</code
-   * to pass to the <code>Suite</code>'s apply method. For example, a <code>Distributor</code>
-   * may pass itself wrapped in a <code>Some</code> in the <code>Args</code> it passes to the <code>Suite</code>'s <code>run</code>
-   * method instead of the <code>args.distributor</code> value.
-   * </p>
+   * The `Distributor` can decide which, if any, of the passed `Args</code
+   * to pass to the `Suite`'s apply method. For example, a `Distributor`
+   * may pass itself wrapped in a `Some` in the `Args` it passes to the `Suite`'s `run`
+   * method instead of the `args.distributor` value.
+   * 
    *
-   * @param suite the <code>Suite</code> to put into the <code>Distributor</code>.
-   * @param args a <code>Args</code> containing objects that may be passed to the <code>Suite</code>'s
-   *             <code>run</code> method via a <code>Args</code> instance.
+   * @param suite the `Suite` to put into the `Distributor`.
+   * @param args a `Args` containing objects that may be passed to the `Suite`'s
+   *             `run` method via a `Args` instance.
    *
-   * @throws NullArgumentException if either <code>suite</code> or <code>tracker</code> is <code>null</code>.
+   * @throws NullArgumentException if either `suite` or `tracker` is `null`.
    */
   def apply(suite: Suite, args: Args): Status
 }

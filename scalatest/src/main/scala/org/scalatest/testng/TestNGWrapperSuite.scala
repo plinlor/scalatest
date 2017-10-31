@@ -20,31 +20,27 @@ import org.testng.TestNG
 import org.testng.TestListenerAdapter
 
 /**
- * <p>
  * Suite that wraps existing TestNG test suites, described by TestNG XML config files. This class allows
  * existing TestNG tests written in Java to be run by ScalaTest.
- * </p>
+ * 
  *
- * <p>
  * One way to use this class is to extend it and provide a list of one or more
  * names of TestNG XML config file names to run. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class MyWrapperSuite extends TestNGWrapperSuite(
  *   List("oneTest.xml", "twoTest.xml", "redTest.xml", "blueTest.xml")
  * )
- * </pre>
+ * }}}
  * 
- * <p>
- * You can also specify TestNG XML config files on <code>Runner</code>'s command line with <code>-t</code> parameters. See
- * the documentation for <code>Runner</code> for more information.
- * </p>
+ * You can also specify TestNG XML config files on `Runner`'s command line with `-t` parameters. See
+ * the documentation for `Runner` for more information.
+ * 
  *
- * <p>
- * To execute <code>TestNGWrapperSuite</code>s with ScalaTest's <code>Runner</code>, you must include TestNG's jar file on the class path or runpath.
- * This version of <code>TestNGSuite</code> was tested with TestNG version 6.3.1.
- * </p>
+ * To execute `TestNGWrapperSuite`s with ScalaTest's `Runner`, you must include TestNG's jar file on the class path or runpath.
+ * This version of `TestNGSuite` was tested with TestNG version 6.3.1.
+ * 
  *
  * @author Josh Cough
  */
@@ -53,10 +49,10 @@ class TestNGWrapperSuite(xmlSuiteFilenames: List[String]) extends TestNGSuite {
 // Probably mention FileNotFoundException here
 // If any files contained in the property cannot be found, a FileNotFoundException will be thrown.
   /**
-   * Runs TestNG with the XML config file or files provided to the primary constructor, passing reports to the specified <code>Reporter</code>.
+   * Runs TestNG with the XML config file or files provided to the primary constructor, passing reports to the specified `Reporter`.
    * 
    * @param testName If present (Some), then only the method with the supplied name is executed and groups will be ignored.
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    */
   override def run(testName: Option[String], args: Args): Status = {
 

@@ -17,14 +17,13 @@ package org.scalatest
 
 
 /**
- * Provides nestable <em>inspector methods</em> (or just <em>inspectors</em>) that enable assertions to be made about collections.
+ * Provides nestable ''inspector methods'' (or just ''inspectors'') that enable assertions to be made about collections.
  *
- * <p>
- * For example, the <code>forAll</code> method enables you to state that something should be true about all elements of a collection, such
+ * For example, the `forAll` method enables you to state that something should be true about all elements of a collection, such
  * as that all elements should be positive:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import org.scalatest._
  * import org.scalatest._
  *
@@ -38,25 +37,23 @@ package org.scalatest
  * xs: List[Int] = List(1, 2, 3, 4, 5)
  *
  * scala&gt; forAll (xs) { x =&gt; assert(x &gt; 0) }
- * </pre>
+ * }}}
  *
- * <p>
  * Or, with matchers:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import Matchers._
  * import Matchers._
  *
  * scala&gt; forAll (xs) { x =&gt; x should be &gt; 0 }
- * </pre>
+ * }}}
  *
- * <p>
  * To make assertions about nested collections, you can nest the inspector method invocations.
- * For example, given the following list of lists of <code>Int</code>:
- * </p>
+ * For example, given the following list of lists of `Int`:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; val yss =
  *      |   List(
  *      |     List(1, 2, 3),
@@ -64,37 +61,34 @@ package org.scalatest
  *      |     List(1, 2, 3)
  *      |   )
  * yss: List[List[Int]] = List(List(1, 2, 3), List(1, 2, 3), List(1, 2, 3))
- * </pre>
+ * }}}
  *
- * <p>
- * You can assert that all <code>Int</code> elements in all nested lists are positive by nesting two <code>forAll</code> method invocations, like this:
- * </p>
+ * You can assert that all `Int` elements in all nested lists are positive by nesting two `forAll` method invocations, like this:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; forAll (yss) { ys =&gt;
  *      |   forAll (ys) { y =&gt; y should be &gt; 0 }
  *      | }
- * </pre>
+ * }}}
  *
- * <p>
  * The full list of inspector methods are:
- * </p>
+ * 
  *
  * <ul>
- * <li><code>forAll</code> - succeeds if the assertion holds true for every element</li>
- * <li><code>forAtLeast</code> - succeeds if the assertion holds true for at least the specified number of elements</li>
- * <li><code>forAtMost</code> - succeeds if the assertion holds true for at most the specified number of elements</li>
- * <li><code>forBetween</code> - succeeds if the assertion holds true for between the specified minimum and maximum number of elements, inclusive</li>
- * <li><code>forEvery</code> - same as <code>forAll</code>, but lists all failing elements if it fails (whereas <code>forAll</code> just reports the first failing element)</li>
- * <li><code>forExactly</code> - succeeds if the assertion holds true for exactly the specified number of elements</li>
+ * <li>`forAll` - succeeds if the assertion holds true for every element</li>
+ * <li>`forAtLeast` - succeeds if the assertion holds true for at least the specified number of elements</li>
+ * <li>`forAtMost` - succeeds if the assertion holds true for at most the specified number of elements</li>
+ * <li>`forBetween` - succeeds if the assertion holds true for between the specified minimum and maximum number of elements, inclusive</li>
+ * <li>`forEvery` - same as `forAll`, but lists all failing elements if it fails (whereas `forAll` just reports the first failing element)</li>
+ * <li>`forExactly` - succeeds if the assertion holds true for exactly the specified number of elements</li>
  * </ul>
  *
- * <p>
  * The error messages produced by inspector methods are designed to make sense no matter how deeply you nest the method invocations. 
  * Here's an example of a nested inspection that fails and the resulting error message:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; forAll (yss) { ys =&gt;
  *      |   forAll (ys) { y =&gt; y should be &lt; 2 }
  *      | }
@@ -105,28 +99,26 @@ package org.scalatest
  * in List(List(1, 2, 3), List(1, 2, 3), List(1, 2, 3))
  *      at org.scalatest.InspectorsHelper$.doForAll(Inspectors.scala:146)
  *      ...
- * </pre>
+ * }}}
  *
- * <p>
  * One way the error message is designed to help you understand the error is by using indentation that mimics the indentation of the
- * source code (optimistically assuming the source will be nicely indented). The error message above indicates the outer <code>forAll</code> failed
- * because its initial <code>List</code> (<em>i.e.</em>, at index 0) failed
- * the assertion, which was that all elements of that initial <code>List[Int]</code> at index 0 should be less than 2. This assertion failed because index 1 of
+ * source code (optimistically assuming the source will be nicely indented). The error message above indicates the outer `forAll` failed
+ * because its initial `List` (''i.e.'', at index 0) failed
+ * the assertion, which was that all elements of that initial `List[Int]` at index 0 should be less than 2. This assertion failed because index 1 of
  * that inner list contained the value 2, which was indeed &ldquo;not less than 2.&rdquo; The error message for the inner list is an indented line inside the error message
  * for the outer list. The actual contents of each list are displayed at the end in inspector error messages, also indented appropriately. The actual contents
  * are placed at the end so that for very large collections, the contents will not drown out and make it difficult to find the messages that describe
  * actual causes of the failure.
- * </p>
+ * 
  *
- * <p>
- * The <code>forAll</code> and <code>forEvery</code> methods are similar in that both succeed only if the assertion holds for all elements of the collection.
- * They differ in that <code>forAll</code> will only report the first element encountered that failed the assertion, but <code>forEvery</code> will report <em>all</em>
- * elements that fail the assertion. The tradeoff is that while <code>forEvery</code> gives more information, it may take longer to run because it must inspect every element
- * of the collection. The <code>forAll</code> method can simply stop inspecting once it encounters the first failing element. Here's an example that
- * shows the difference in the <code>forAll</code> and <code>forEvery</code> error messages:
- * </p>
+ * The `forAll` and `forEvery` methods are similar in that both succeed only if the assertion holds for all elements of the collection.
+ * They differ in that `forAll` will only report the first element encountered that failed the assertion, but `forEvery` will report ''all''
+ * elements that fail the assertion. The tradeoff is that while `forEvery` gives more information, it may take longer to run because it must inspect every element
+ * of the collection. The `forAll` method can simply stop inspecting once it encounters the first failing element. Here's an example that
+ * shows the difference in the `forAll` and `forEvery` error messages:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; forAll (xs) { x =&gt; x should be &lt; 3 }
  * org.scalatest.exceptions.TestFailedException: forAll failed, because: 
  *   at index 2, 3 was not less than 3 (&lt;console&gt;:18) 
@@ -142,28 +134,26 @@ package org.scalatest
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.doForEvery(Inspectors.scala:226)
  *      ...
- * </pre>
+ * }}}
  *
- * <p>
- * Note that if you're using matchers, you can alternatively use <em>inspector shorthands</em> for writing non-nested
+ * Note that if you're using matchers, you can alternatively use ''inspector shorthands'' for writing non-nested
  * inspections. Here's an example:
- * </p>
  * 
- * <pre>
+ * 
+ * {{{
  * scala&gt; all (xs) should be &gt; 3
  * org.scalatest.exceptions.TestFailedException: 'all' inspection failed, because: 
  *   at index 0, 1 was not greater than 3 
  * in List(1, 2, 3, 4, 5)
  *      at org.scalatest.InspectorsHelper$.doForAll(Inspectors.scala:146)
- * </pre>
+ * }}}
  *
- * <p>
- * You can use <code>Inspectors</code> on any <code>scala.collection.GenTraversable</code>, <code>java.util.Collection</code>,
- * <code>java.util.Map</code> (with <a href="Entry.html"><code>Entry</code></a>), <code>Array</code>, or <code>String</code>. 
+ * You can use `Inspectors` on any `scala.collection.GenTraversable`, `java.util.Collection`,
+ * `java.util.Map` (with <a href="Entry.html">`Entry`</a>), `Array`, or `String`. 
  * Here are some examples:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import org.scalatest._
  * import org.scalatest._
  * 
@@ -189,7 +179,7 @@ package org.scalatest
  * scala&gt; forAtLeast(1, jmap) { e =&gt; e shouldBe Entry("b", 2) }
  * 
  * scala&gt; forAtLeast(2, "hello, world!") { c =&gt; c shouldBe 'o' }
- * </pre>
+ * }}}
  */
 
 

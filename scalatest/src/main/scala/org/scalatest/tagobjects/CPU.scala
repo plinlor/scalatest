@@ -18,15 +18,14 @@ package org.scalatest.tagobjects
 import org.scalatest.Tag
 
 /**
- * Tag object that indicates a test is CPU-intensive (<em>i.e.</em>, consumes a lot of CPU time when it runs).
+ * Tag object that indicates a test is CPU-intensive (''i.e.'', consumes a lot of CPU time when it runs).
  *
- * <p>
- * The corresponding tag annotation for this tag object is <code>org.scalatest.tags.CPU</code>.
- * This tag object can be used to tag test functions (in style traits other than <code>Spec</code>, in which tests are methods not functions) as being CPU-intensive.
- * See the "tagging tests" section in the documentation for your chosen styles to see the syntax. Here's an example for <code>FlatSpec</code>:
- * </p>
+ * The corresponding tag annotation for this tag object is `org.scalatest.tags.CPU`.
+ * This tag object can be used to tag test functions (in style traits other than `Spec`, in which tests are methods not functions) as being CPU-intensive.
+ * See the "tagging tests" section in the documentation for your chosen styles to see the syntax. Here's an example for `FlatSpec`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.tagobjects.cpu
  * 
  * import org.scalatest._
@@ -38,6 +37,6 @@ import org.scalatest.Tag
  *     assert(Set.empty.size === 0)
  *   }
  * }
- * </pre>
+ * }}}
  */
 object CPU extends Tag("org.scalatest.tags.CPU") 

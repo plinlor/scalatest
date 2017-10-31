@@ -20,7 +20,7 @@ import org.scalactic._
 
 /**
  * Trait declaring methods that can be used to register by-name test functions that
- * have result type <code>Future[Assertion]</code>.
+ * have result type `Future[Assertion]`.
  */
 trait AsyncTestRegistration { theSuite: AsyncTestSuite =>
 

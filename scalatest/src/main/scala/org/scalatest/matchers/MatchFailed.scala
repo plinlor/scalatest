@@ -18,30 +18,29 @@ package org.scalatest.matchers
 import org.scalactic.Prettifier
 
 /**
- * Singleton object that provides <code>unapply</code> method to extract failure message from <code>MatchResult</code>
- * having <code>matches</code> property value of <code>false</code>.
+ * Singleton object that provides `unapply` method to extract failure message from `MatchResult`
+ * having `matches` property value of `false`.
  *
  * @author Bill Venners
  * @author Chee Seng
  */
 object MatchFailed {
   /**
-   * Extractor enabling patterns that match <code>MatchResult</code> having <code>matches</code> property value of <code>false</code>,
+   * Extractor enabling patterns that match `MatchResult` having `matches` property value of `false`,
    * extracting the contained failure message.
    *
-   * <p>
-   * For example, you can use this extractor to get the failure message of a <code>MatchResult</code> like this:
-   * </p>
+   * For example, you can use this extractor to get the failure message of a `MatchResult` like this:
+   * 
    *
-   * <pre>
+   * {{{
    * matchResult match {
    *   case MatchFailed(failureMessage) => // do something with failureMessage
-   *   case _ => // when matchResult.matches equal to <code>true</code>
+   *   case _ => // when matchResult.matches equal to `true`
    * }
-   * </pre>
+   * }}}
    *
-   * @param matchResult the <code>MatchResult</code> to extract the failure message from.
-   * @return a <code>Some</code> wrapping the contained failure message if <code>matchResult.matches</code> is equal to <code>true</code>, else <code>None</code>.
+   * @param matchResult the `MatchResult` to extract the failure message from.
+   * @return a `Some` wrapping the contained failure message if `matchResult.matches` is equal to `true`, else `None`.
    */
   def unapply(matchResult: MatchResult)(implicit prettifier: Prettifier): Option[String] =
     if (!matchResult.matches) Some(matchResult.failureMessage(prettifier)) else None

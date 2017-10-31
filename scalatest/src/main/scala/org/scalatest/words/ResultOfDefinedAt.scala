@@ -18,7 +18,7 @@ package org.scalatest.words
 import org.scalactic.Prettifier
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners

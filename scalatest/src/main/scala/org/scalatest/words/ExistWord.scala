@@ -23,7 +23,7 @@ import org.scalatest.Resources
 import org.scalatest.matchers.MatchResult
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -54,10 +54,10 @@ final class ExistWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (exist and equal (existFile))
    *                    ^
-   * </pre>
+   * }}}
    */
   def and[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
     matcherFactory.and(anotherMatcherFactory)
@@ -65,10 +65,10 @@ final class ExistWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (exist and be (existFile))
    *                    ^
-   * </pre>
+   * }}}
    */
   def and(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] = 
     matcherFactory.and(anotherMatcher)
@@ -76,10 +76,10 @@ final class ExistWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (exist or equal (existFile))
    *                    ^
-   * </pre>
+   * }}}
    */
   def or[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
     matcherFactory.or(anotherMatcherFactory)
@@ -87,10 +87,10 @@ final class ExistWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (exist or be (existFile))
    *                    ^
-   * </pre>
+   * }}}
    */
   def or(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] = 
     matcherFactory.or(anotherMatcher)

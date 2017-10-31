@@ -24,7 +24,7 @@ import org.scalatest.UnquotedString
 import org.scalatest.MatchersHelper.endWithRegexWithGroups
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -34,10 +34,10 @@ final class EndWithWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "1.7b" should (endWith ("1.7b") and endWith ("7b"))
    *                        ^
-   * </pre>
+   * }}}
    */
   def apply(right: String): Matcher[String] =
     new Matcher[String] {
@@ -54,21 +54,21 @@ final class EndWithWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val decimal = """(-)?(\d+)(\.\d*)?"""
    * "b1.7" should (endWith regex (decimal) and endWith regex (decimal))
    *                        ^
-   * </pre>
+   * }}}
    */
   def regex[T <: String](right: T): Matcher[T] = regex(right.r)
   
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not { endWith regex ("a(b*)c" withGroup "bb") } 
    *                             ^
-   * </pre>
+   * }}}
    */	
   def regex(regexWithGroups: RegexWithGroups) = 
     new Matcher[String] {
@@ -80,11 +80,11 @@ final class EndWithWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val decimalRegex = """(-)?(\d+)(\.\d*)?""".r
    * "b1.7" should (endWith regex (decimalRegex) and endWith regex (decimalRegex))
    *                        ^
-   * </pre>
+   * }}}
    */
   def regex(rightRegex: Regex): Matcher[String] =
     new Matcher[String] {

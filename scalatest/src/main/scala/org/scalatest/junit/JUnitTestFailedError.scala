@@ -26,9 +26,8 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepth
 /**
  * Exception that indicates a test failed.
  *
- * <p>
  * The purpose of this exception is to encapsulate the same stack depth information provided by
- * <a href="../exceptions/TestFailedException.html"><code>TestFailedException</code></a>, which is used
+ * <a href="../exceptions/TestFailedException.html">`TestFailedException`</a>, which is used
  * when running with ScalaTest, but be reported as
  * a failure not an error when running with JUnit.
  * The stack depth information indicates which line of test code failed, so that when running
@@ -36,35 +35,33 @@ import org.scalatest.exceptions.StackDepthExceptionHelper.getStackDepth
  * the user that makes it quick to find the failing line of test code. (In other words, when
  * running with ScalaTest the user need not scan through the stack trace to find the correct filename
  * and line number of the failing test.)
- * </p>
+ * 
  *
- * <p>
- * JUnit distinguishes between <em>failures</em> and <em>errors</em>.
- * If a test fails because of a failed assertion, that is considered a <em>failure</em> in JUnit. If a test
+ * JUnit distinguishes between ''failures'' and ''errors''.
+ * If a test fails because of a failed assertion, that is considered a ''failure'' in JUnit. If a test
  * fails for any other reason, either the test code or the application being tested threw an unexpected
- * exception, that is considered an <em>error</em> in JUnit. This class differs from
- * <a href="../exceptions/TestFailedException.html"><code>TestFailedException</code></a> in that it extends
- * <code>junit.framework.AssertionFailedError</code>. Instances of this class are thrown by the
- * assertions provided by <a href="AssertionsForJUnit.html"><code>AssertionsForJUnit</code></a>.
- * </p>
+ * exception, that is considered an ''error'' in JUnit. This class differs from
+ * <a href="../exceptions/TestFailedException.html">`TestFailedException`</a> in that it extends
+ * `junit.framework.AssertionFailedError`. Instances of this class are thrown by the
+ * assertions provided by <a href="AssertionsForJUnit.html">`AssertionsForJUnit`</a>.
+ * 
  *
- * <p>
  * The way JUnit 3 (JUnit 3.8 and earlier releases) decided whether an exception represented a failure or error
- * is that only thrown <code>junit.framework.AssertionFailedError</code>s were considered failures. Any other
+ * is that only thrown `junit.framework.AssertionFailedError`s were considered failures. Any other
  * exception type was considered an error. The exception type thrown by the JUnit 3 assertion methods declared
- * in <code>junit.framework.Assert</code> (such as <code>assertEquals</code>, <code>assertTrue</code>,
- * and <code>fail</code>) was, therefore, <code>AssertionFailedError</code>. In JUnit 4, <code>AssertionFailedError</code>
- * was made to extend <code>java.lang.AssertionError</code>, and the distinction between failures and errors
+ * in `junit.framework.Assert` (such as `assertEquals`, `assertTrue`,
+ * and `fail`) was, therefore, `AssertionFailedError`. In JUnit 4, `AssertionFailedError`
+ * was made to extend `java.lang.AssertionError`, and the distinction between failures and errors
  * was essentially dropped. However, some tools that integrate with JUnit carry on this distinction, so even
- * if you are using JUnit 4 you may want to use <code>AssertionsForJUnit</code>.
- * </p>
+ * if you are using JUnit 4 you may want to use `AssertionsForJUnit`.
+ * 
  *
- * @param message an optional detail message for this <code>TestFailedException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestFailedException</code> to be thrown.
+ * @param message an optional detail message for this `TestFailedException`.
+ * @param cause an optional cause, the `Throwable` that caused this `TestFailedException` to be thrown.
  * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
- * @param payload an optional payload, which ScalaTest will include in a resulting <code>JUnitTestFailedError</code> event
+ * @param payload an optional payload, which ScalaTest will include in a resulting `JUnitTestFailedError` event
  *
- * @throws NullArgumentException if either <code>message</code> or <code>cause</code> is <code>null</code>, or <code>Some(null)</code>.
+ * @throws NullArgumentException if either `message` or `cause` is `null`, or `Some(null)`.
  *
  * @author Bill Venners
  */
@@ -124,7 +121,7 @@ class JUnitTestFailedError(
   override final def initCause(throwable: Throwable): Throwable = { throw new IllegalStateException }
 
   /**
-   * Create a <code>JUnitTestFailedError</code> with specified stack depth and no detail message or cause.
+   * Create a `JUnitTestFailedError` with specified stack depth and no detail message or cause.
    *
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
@@ -132,12 +129,12 @@ class JUnitTestFailedError(
   def this(failedCodeStackDepth: Int) = this(None, None, Right(failedCodeStackDepth), None)
 
   /**
-   * Create a <code>JUnitTestFailedError</code> with a specified stack depth and detail message.
+   * Create a `JUnitTestFailedError` with a specified stack depth and detail message.
    *
-   * @param message A detail message for this <code>JUnitTestFailedError</code>.
+   * @param message A detail message for this `JUnitTestFailedError`.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if <code>message</code> is <code>null</code>.
+   * @throws NullArgumentException if `message` is `null`.
    */
   def this(message: String, failedCodeStackDepth: Int) =
     this(
@@ -151,14 +148,14 @@ class JUnitTestFailedError(
     )
 
   /**
-   * Create a <code>JUnitTestFailedError</code> with the specified stack depth and cause.  The
-   * <code>message</code> field of this exception object will be initialized to
-   * <code>if (cause.getMessage == null) "" else cause.getMessage</code>.
+   * Create a `JUnitTestFailedError` with the specified stack depth and cause.  The
+   * `message` field of this exception object will be initialized to
+   * `if (cause.getMessage == null) "" else cause.getMessage`.
    *
-   * @param cause the cause, the <code>Throwable</code> that caused this <code>JUnitTestFailedError</code> to be thrown.
+   * @param cause the cause, the `Throwable` that caused this `JUnitTestFailedError` to be thrown.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if <code>cause</code> is <code>null</code>.
+   * @throws NullArgumentException if `cause` is `null`.
    */
   def this(cause: Throwable, failedCodeStackDepth: Int) =
     this(
@@ -172,18 +169,18 @@ class JUnitTestFailedError(
     )
 
   /**
-   * Create a <code>JUnitTestFailedError</code> with the specified stack depth, detail
+   * Create a `JUnitTestFailedError` with the specified stack depth, detail
    * message, and cause.
    *
    * <p>Note that the detail message associated with cause is
-   * <em>not</em> automatically incorporated in this throwable's detail
+   * ''not'' automatically incorporated in this throwable's detail
    * message.
    *
-   * @param message A detail message for this <code>JUnitTestFailedError</code>.
-   * @param cause the cause, the <code>Throwable</code> that caused this <code>JUnitTestFailedError</code> to be thrown.
+   * @param message A detail message for this `JUnitTestFailedError`.
+   * @param cause the cause, the `Throwable` that caused this `JUnitTestFailedError` to be thrown.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if either <code>message</code> or <code>cause</code> is <code>null</code>.
+   * @throws NullArgumentException if either `message` or `cause` is `null`.
    */
   def this(message: String, cause: Throwable, failedCodeStackDepth: Int) =
     this(
@@ -200,7 +197,7 @@ class JUnitTestFailedError(
     )
 
   /**
-   * Returns an exception of class <code>JUnitTestFailedError</code> with <code>failedExceptionStackDepth</code> set to 0 and 
+   * Returns an exception of class `JUnitTestFailedError` with `failedExceptionStackDepth` set to 0 and 
    * all frames above this stack depth severed off. This can be useful when working with tools (such as IDEs) that do not
    * directly support ScalaTest. (Tools that directly support ScalaTest can use the stack depth information delivered
    * in the StackDepth exceptions.)
@@ -215,10 +212,10 @@ class JUnitTestFailedError(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the detail message option string replaced with the result of passing
-   * the current detail message to the passed function, <code>fun</code>.
+   * the current detail message to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional detail message, will produce
-   * the modified optional detail message for the result instance of <code>JUnitTestFailedError</code>.
+   * the modified optional detail message for the result instance of `JUnitTestFailedError`.
    */
   def modifyMessage(fun: Option[String] => Option[String]): JUnitTestFailedError = {
     val mod = new JUnitTestFailedError(fun(message), cause, posOrStackDepth, payload)
@@ -229,10 +226,10 @@ class JUnitTestFailedError(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with the result of passing
-   * the current payload option to the passed function, <code>fun</code>.
+   * the current payload option to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional payload, will produce
-   * the modified optional payload for the result instance of <code>JUnitTestFailedError</code>.
+   * the modified optional payload for the result instance of `JUnitTestFailedError`.
    */
   def modifyPayload(fun: Option[Any] => Option[Any]): JUnitTestFailedError = {
     val currentPayload = payload
@@ -248,9 +245,9 @@ class JUnitTestFailedError(
 
   /**
    * Indicates whether this object is equal to the passed object. If the passed object is
-   * a <code>JUnitTestFailedError</code>, equality requires equal <code>message</code>,
-   * <code>cause</code>, and <code>failedCodeStackDepth</code> fields, as well as equal
-   * return values of <code>getStackTrace</code>.
+   * a `JUnitTestFailedError`, equality requires equal `message`,
+   * `cause`, and `failedCodeStackDepth` fields, as well as equal
+   * return values of `getStackTrace`.
    */
   override def equals(other: Any): Boolean =
     other match {

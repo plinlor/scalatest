@@ -21,7 +21,7 @@ import org.scalatest.MatchersHelper.indicateFailure
 import org.scalactic._
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -31,10 +31,10 @@ final class NoExceptionWord(pos: source.Position) {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * noException should be thrownBy { ... }
    *             ^
-   * </pre>
+   * }}}
    **/
   def should(beWord: BeWord): ResultOfBeWordForNoException = 
     new ResultOfBeWordForNoException(pos)
@@ -42,10 +42,10 @@ final class NoExceptionWord(pos: source.Position) {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * noException shouldBe thrownBy { ... }
    *             ^
-   * </pre>
+   * }}}
    **/
   def shouldBe(thrownBy: ResultOfThrownByApplication): org.scalatest.Assertion = {
     try {
@@ -63,10 +63,10 @@ final class NoExceptionWord(pos: source.Position) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * noException must be thrownBy { ... }
    *             ^
-   * </pre>
+   * }}}
    **/
   def must(beWord: BeWord): ResultOfBeWordForNoException =
     new ResultOfBeWordForNoException(pos)
@@ -74,10 +74,10 @@ final class NoExceptionWord(pos: source.Position) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * noException mustBe thrownBy { ... }
    *             ^
-   * </pre>
+   * }}}
    **/
   def mustBe(thrownBy: ResultOfThrownByApplication): org.scalatest.Assertion = {
     try {

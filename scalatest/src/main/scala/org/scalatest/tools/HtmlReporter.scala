@@ -48,7 +48,7 @@ import Suite.xmlContent
 import org.scalatest.exceptions.TestFailedException
 
 /**
- * A <code>Reporter</code> that prints test status information in HTML format to a file.
+ * A `Reporter` that prints test status information in HTML format to a file.
  */
 private[scalatest] class HtmlReporter(
   directoryPath: String,

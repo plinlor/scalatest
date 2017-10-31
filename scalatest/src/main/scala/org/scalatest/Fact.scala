@@ -89,7 +89,7 @@ private[scalatest] sealed abstract class Fact {
   final def isEqvTo(rhs: Fact): Fact = Fact.IsEqvTo(this, rhs)
 
   /**
-   * Construct failure message to report if a fact fails, using <code>rawFactMessage</code>, <code>factMessageArgs</code> and <code>prettifier</code>
+   * Construct failure message to report if a fact fails, using `rawFactMessage`, `factMessageArgs` and `prettifier`
    *
    * @return failure message to report if a fact fails
    */
@@ -102,7 +102,7 @@ private[scalatest] sealed abstract class Fact {
     else makeString(rawSimplifiedFactMessage, simplifiedFactMessageArgs)
 
   /**
-   * Construct failure message suitable for appearing mid-sentence, using <code>rawMidSentenceFactMessage</code>, <code>midSentenceFactMessageArgs</code> and <code>prettifier</code>
+   * Construct failure message suitable for appearing mid-sentence, using `rawMidSentenceFactMessage`, `midSentenceFactMessageArgs` and `prettifier`
    *
    * @return failure message suitable for appearing mid-sentence
    */
@@ -182,7 +182,7 @@ private[scalatest] object Fact {
   }
 
   /**
-   * Companion object for the <code>No</code> case class.
+   * Companion object for the `No` case class.
    *
    * @author Bill Venners
    */
@@ -219,16 +219,16 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>factMessage</code>, 
-     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>, 
-     * <code>midSentenceSimplifiedFailureMessage</code>, <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> fields.
-     * <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> will be used in place of <code>midSentenceFactMessageArgs</code>
-     * and <code>midSentenceSimplifiedFailureMessageArgs</code>.
+     * Factory method that constructs a new `No` with passed `factMessage`, 
+     * `negativeFailureMessage`, `midSentenceFactMessage`, 
+     * `midSentenceSimplifiedFailureMessage`, `factMessageArgs`, and `simplifiedFailureMessageArgs` fields.
+     * `factMessageArgs`, and `simplifiedFailureMessageArgs` will be used in place of `midSentenceFactMessageArgs`
+     * and `midSentenceSimplifiedFailureMessageArgs`.
      *
      * @param rawFactMessage raw failure message to report if a match fails
      * @param rawMidSentenceFactMessage raw failure message to report if a match fails
      * @param factMessageArgs arguments for constructing failure message to report if a match fails
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -251,17 +251,17 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>factMessage</code>,
-     * <code>negativeFactMessage</code>, <code>midSentenceFactMessage</code>,
-     * <code>midSentenceSimplifiedFactMessage</code>, <code>factMessageArgs</code>, and <code>simplifiedFactMessageArgs</code> fields.
-     * <code>factMessageArgs</code>, and <code>simplifiedFactMessageArgs</code> will be used in place of <code>midSentenceFactMessageArgs</code>
-     * and <code>midSentenceSimplifiedFactMessageArgs</code>.
+     * Factory method that constructs a new `No` with passed `factMessage`,
+     * `negativeFactMessage`, `midSentenceFactMessage`,
+     * `midSentenceSimplifiedFactMessage`, `factMessageArgs`, and `simplifiedFactMessageArgs` fields.
+     * `factMessageArgs`, and `simplifiedFactMessageArgs` will be used in place of `midSentenceFactMessageArgs`
+     * and `midSentenceSimplifiedFactMessageArgs`.
      *
      * @param rawFactMessage raw fact message to report if a match fails
      * @param rawMidSentenceFactMessage raw mid sentence fact message to report if a match fails
      * @param factMessageArgs arguments for constructing fact message to report if a match fails
      * @param midSentenceFactMessageArgs arguments for constructing mid sentence fact message to report if a match fails
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -285,14 +285,14 @@ private[scalatest] object Fact {
       )
   
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
-     * <code>rawNegativeFailureMessage</code>, <code>rawMidSentenceFactMessage</code>, and
-     * <code>rawMidSentenceSimplifiedFailureMessage</code> fields.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `No` with passed `rawFactMessage`,
+     * `rawNegativeFailureMessage`, `rawMidSentenceFactMessage`, and
+     * `rawMidSentenceSimplifiedFailureMessage` fields.  All argument fields will have `Vector.empty` values.
      * This is suitable to create No with eager error messages, and its mid-sentence messages need to be different.
      *
      * @param rawFactMessage raw failure message to report if a match fails
      * @param rawMidSentenceFactMessage raw failure message to report if a match fails
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -314,16 +314,16 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
-     * <code>rawSimplifiedFactMessage</code>, <code>rawMidSentenceFactMessage</code>, and
-     * <code>rawMidSentenceSimplifiedFactMessage</code> fields.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `No` with passed `rawFactMessage`,
+     * `rawSimplifiedFactMessage`, `rawMidSentenceFactMessage`, and
+     * `rawMidSentenceSimplifiedFactMessage` fields.  All argument fields will have `Vector.empty` values.
      * This is suitable to create No with eager error messages, and its simplified and mid-sentence messages need to be different.
      *
      * @param rawFactMessage raw message to report for this fact
      * @param rawSimplifiedFactMessage raw simplified to report for this fact
      * @param rawMidSentenceFactMessage raw mid-sentence message to report for this fact
      * @param rawMidSentenceSimplifiedFactMessage raw mid-sentence simplified message to report for this fact
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -347,18 +347,18 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
-     * <code>rawSimplifiedFactMessage</code>, <code>rawMidSentenceFactMessage</code>, and
-     * <code>rawMidSentenceSimplifiedFactMessage</code> fields.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `No` with passed `rawFactMessage`,
+     * `rawSimplifiedFactMessage`, `rawMidSentenceFactMessage`, and
+     * `rawMidSentenceSimplifiedFactMessage` fields.  All argument fields will have `Vector.empty` values.
      * This is suitable to create No with eager error messages, and its simplified and mid-sentence messages need to be different.
      *
      * @param rawFactMessage raw message to report for this fact
      * @param rawSimplifiedFactMessage raw simplified to report for this fact
      * @param rawMidSentenceFactMessage raw mid-sentence message to report for this fact
      * @param rawMidSentenceSimplifiedFactMessage raw mid-sentence simplified message to report for this fact
-     * @param factMessageArgs arguments for <code>rawFactMessage</code> and <code>rawMidSentenceFactMessage</code>
-     * @param simplifiedFactMessageArgs arguments for <code>rawSimplifiedFactMessage</code> and <code>rawMidSentenceSimplifiedFactMessage</code>
-     * @return a <code>No</code> instance
+     * @param factMessageArgs arguments for `rawFactMessage` and `rawMidSentenceFactMessage`
+     * @param simplifiedFactMessageArgs arguments for `rawSimplifiedFactMessage` and `rawMidSentenceSimplifiedFactMessage`
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -384,20 +384,20 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
-     * <code>rawSimplifiedFactMessage</code>, <code>rawMidSentenceFactMessage</code>, and
-     * <code>rawMidSentenceSimplifiedFactMessage</code> fields.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `No` with passed `rawFactMessage`,
+     * `rawSimplifiedFactMessage`, `rawMidSentenceFactMessage`, and
+     * `rawMidSentenceSimplifiedFactMessage` fields.  All argument fields will have `Vector.empty` values.
      * This is suitable to create No with eager error messages, and its simplified and mid-sentence messages need to be different.
      *
      * @param rawFactMessage raw message to report for this fact
      * @param rawSimplifiedFactMessage raw simplified to report for this fact
      * @param rawMidSentenceFactMessage raw mid-sentence message to report for this fact
      * @param rawMidSentenceSimplifiedFactMessage raw mid-sentence simplified message to report for this fact
-     * @param factMessageArgs arguments for <code>rawFactMessage</code>
-     * @param simplifiedFactMessageArgs arguments for <code>rawSimplifiedFactMessage</code>
-     * @param midSentenceFactMessageArgs arguments for <code>rawMidSentenceFactMessage</code>
-     * @param midSentenceSimplifiedFactMessageArgs arguments for <code>rawMidSentenceSimplifiedFactMessage</code>
-     * @return a <code>No</code> instance
+     * @param factMessageArgs arguments for `rawFactMessage`
+     * @param simplifiedFactMessageArgs arguments for `rawSimplifiedFactMessage`
+     * @param midSentenceFactMessageArgs arguments for `rawMidSentenceFactMessage`
+     * @param midSentenceSimplifiedFactMessageArgs arguments for `rawMidSentenceSimplifiedFactMessage`
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -425,15 +425,15 @@ private[scalatest] object Fact {
       )
   
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>, and
-     * <code>rawNegativeFailureMessage</code> fields. The <code>rawMidSentenceFactMessage</code> will return the same
-     * string as <code>rawFactMessage</code>, and the <code>rawMidSentenceSimplifiedFailureMessage</code> will return the
-     * same string as <code>rawSimplifiedFailureMessage</code>.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `No` with passed `rawFactMessage`, and
+     * `rawNegativeFailureMessage` fields. The `rawMidSentenceFactMessage` will return the same
+     * string as `rawFactMessage`, and the `rawMidSentenceSimplifiedFailureMessage` will return the
+     * same string as `rawSimplifiedFailureMessage`.  All argument fields will have `Vector.empty` values.
      * This is suitable to create No with eager error messages that have same mid-sentence messages.
      *
      * @param rawFactMessage raw failure message to report if a match fails
      * @param rawSimplifiedFailureMessage raw message with a meaning opposite to that of the failure message
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String
@@ -454,12 +454,12 @@ private[scalatest] object Fact {
       )
   
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>,
-     * <code>rawNegativeFailureMessage</code>, <code>factMessageArgs</code> and <code>simplifiedFailureMessageArgs</code> fields.
-     * The <code>rawMidSentenceFactMessage</code> will return the same string as <code>rawFactMessage</code>, and the
-     * <code>rawMidSentenceSimplifiedFailureMessage</code> will return the same string as <code>rawSimplifiedFailureMessage</code>.
-     * The <code>midSentenceFactMessageArgs</code> will return the same as <code>factMessageArgs</code>, and the
-     * <code>midSentenceSimplifiedFailureMessageArgs</code> will return the same as <code>simplifiedFailureMessageArgs</code>.
+     * Factory method that constructs a new `No` with passed `rawFactMessage`,
+     * `rawNegativeFailureMessage`, `factMessageArgs` and `simplifiedFailureMessageArgs` fields.
+     * The `rawMidSentenceFactMessage` will return the same string as `rawFactMessage`, and the
+     * `rawMidSentenceSimplifiedFailureMessage` will return the same string as `rawSimplifiedFailureMessage`.
+     * The `midSentenceFactMessageArgs` will return the same as `factMessageArgs`, and the
+     * `midSentenceSimplifiedFailureMessageArgs` will return the same as `simplifiedFailureMessageArgs`.
      * This is suitable to create No with lazy error messages that have same mid-sentence and use different arguments for
      * simplified messages.
      *
@@ -467,7 +467,7 @@ private[scalatest] object Fact {
      * @param rawSimplifiedFailureMessage raw message with a meaning opposite to that of the failure message
      * @param factMessageArgs arguments for constructing failure message to report if a match fails
      * @param simplifiedFailureMessageArgs arguments for constructing message with a meaning opposite to that of the failure message
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -489,15 +489,15 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>No</code> with passed <code>rawFactMessage</code>, and
-     * <code>cause</code> fields. The <code>rawMidSentenceFactMessage</code>, <code>rawSimplifiedFailureMessage</code> and
-     * <code>rawMidSentenceSimplifiedFailureMessage</code>will return the same string as <code>rawFactMessage</code>.
-     * All argument fields will have <code>Vector.empty</code> values.  This is suitable to create No with eager error messages
+     * Factory method that constructs a new `No` with passed `rawFactMessage`, and
+     * `cause` fields. The `rawMidSentenceFactMessage`, `rawSimplifiedFailureMessage` and
+     * `rawMidSentenceSimplifiedFailureMessage`will return the same string as `rawFactMessage`.
+     * All argument fields will have `Vector.empty` values.  This is suitable to create No with eager error messages
      * that have same mid-sentence messages.
      *
      * @param rawFactMessage raw fact message
      * @param cause the causing throwable of this No instance
-     * @return a <code>No</code> instance
+     * @return a `No` instance
      */
     def apply(
       rawFactMessage: String,
@@ -520,7 +520,7 @@ private[scalatest] object Fact {
   }
   
   /**
-   * Companion object for the <code>Yes</code> case class.
+   * Companion object for the `Yes` case class.
    *
    * @author Bill Venners
    */
@@ -554,16 +554,16 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed code>factMessage</code>, 
-     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>, 
-     * <code>midSentenceSimplifiedFailureMessage</code>, <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> fields.
-     * <code>factMessageArgs</code>, and <code>simplifiedFailureMessageArgs</code> will be used in place of <code>midSentenceFactMessageArgs</code>
-     * and <code>midSentenceSimplifiedFailureMessageArgs</code>.
+     * Factory method that constructs a new `Yes` with passed code>factMessage`, 
+     * `negativeFailureMessage`, `midSentenceFactMessage`, 
+     * `midSentenceSimplifiedFailureMessage`, `factMessageArgs`, and `simplifiedFailureMessageArgs` fields.
+     * `factMessageArgs`, and `simplifiedFailureMessageArgs` will be used in place of `midSentenceFactMessageArgs`
+     * and `midSentenceSimplifiedFailureMessageArgs`.
      *
      * @param rawFactMessage raw failure message to report if a match fails
      * @param rawMidSentenceFactMessage raw failure message to report if a match fails
      * @param factMessageArgs arguments for constructing failure message to report if a match fails
-     * @return a <code>Yes</code> instance
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,
@@ -586,17 +586,17 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed code>factMessage</code>,
-     * <code>negativeFailureMessage</code>, <code>midSentenceFactMessage</code>,
-     * <code>midSentenceSimplifiedFactMessage</code>, <code>factMessageArgs</code>, and <code>simplifiedFactMessageArgs</code> fields.
-     * <code>factMessageArgs</code>, and <code>simplifiedFactMessageArgs</code> will be used in place of <code>midSentenceFactMessageArgs</code>
-     * and <code>midSentenceSimplifiedFactMessageArgs</code>.
+     * Factory method that constructs a new `Yes` with passed code>factMessage`,
+     * `negativeFailureMessage`, `midSentenceFactMessage`,
+     * `midSentenceSimplifiedFactMessage`, `factMessageArgs`, and `simplifiedFactMessageArgs` fields.
+     * `factMessageArgs`, and `simplifiedFactMessageArgs` will be used in place of `midSentenceFactMessageArgs`
+     * and `midSentenceSimplifiedFactMessageArgs`.
      *
      * @param rawFactMessage raw fact message to report if a match fails
      * @param rawMidSentenceFactMessage raw mid-sentence fact message to report if a match fails
      * @param factMessageArgs arguments for constructing fact message to report if a match fails
      * @param midSentenceFactMessageArgs arguments for constructing mid-sentence fact message to report if a match fails
-     * @return a <code>Yes</code> instance
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,
@@ -620,14 +620,14 @@ private[scalatest] object Fact {
       )
   
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
-     * <code>rawNegativeFailureMessage</code>, <code>rawMidSentenceFactMessage</code>, and
-     * <code>rawMidSentenceSimplifiedFailureMessage</code> fields.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `Yes` with passed `rawFactMessage`,
+     * `rawNegativeFailureMessage`, `rawMidSentenceFactMessage`, and
+     * `rawMidSentenceSimplifiedFailureMessage` fields.  All argument fields will have `Vector.empty` values.
      * This is suitable to create Yes with eager error messages, and its mid-sentence messages need to be different.
      *
      * @param rawFactMessage raw failure message to report if a match fails
      * @param rawMidSentenceFactMessage raw failure message to report if a match fails
-     * @return a <code>Yes</code> instance
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,
@@ -649,9 +649,9 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
-     * <code>rawFactMessage</code>, <code>rawSimplifiedFactMessage</code>, <code>rawMidSentenceFactMessage</code> and
-     * <code>rawMidSentenceSimplifiedFactMessage</code> fields.  All argument fields will have <code>Vector.empty</code>
+     * Factory method that constructs a new `Yes` with passed `rawFactMessage`,
+     * `rawFactMessage`, `rawSimplifiedFactMessage`, `rawMidSentenceFactMessage` and
+     * `rawMidSentenceSimplifiedFactMessage` fields.  All argument fields will have `Vector.empty`
      * values.  This is suitable to create Yes with eager error messages, and its simplified and mid-sentence messages
      * need to be different.
      *
@@ -659,7 +659,7 @@ private[scalatest] object Fact {
      * @param rawSimplifiedFactMessage raw simplified message to report for this fact
      * @param rawMidSentenceFactMessage raw mid-sentence message to report for this fact
      * @param rawMidSentenceSimplifiedFactMessage raw mid-sentence simplified message to report for this fact
-     * @return a <code>Yes</code> instance
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,
@@ -683,9 +683,9 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
-     * <code>rawFactMessage</code>, <code>rawSimplifiedFactMessage</code>, <code>rawMidSentenceFactMessage</code> and
-     * <code>rawMidSentenceSimplifiedFactMessage</code> fields.  All argument fields will have <code>Vector.empty</code>
+     * Factory method that constructs a new `Yes` with passed `rawFactMessage`,
+     * `rawFactMessage`, `rawSimplifiedFactMessage`, `rawMidSentenceFactMessage` and
+     * `rawMidSentenceSimplifiedFactMessage` fields.  All argument fields will have `Vector.empty`
      * values.  This is suitable to create Yes with eager error messages, and its simplified and mid-sentence messages
      * need to be different.
      *
@@ -693,9 +693,9 @@ private[scalatest] object Fact {
      * @param rawSimplifiedFactMessage raw simplified message to report for this fact
      * @param rawMidSentenceFactMessage raw mid-sentence message to report for this fact
      * @param rawMidSentenceSimplifiedFactMessage raw mid-sentence simplified message to report for this fact
-     * @param factMessageArgs arguments for <code>rawFactMessage</code> and <code>rawMidSentenceFactMessage</code>
-     * @param simplifiedFactMessageArgs arguments for <code>rawSimplifiedFactMessage</code> and <code>rawMidSentenceSimplifiedFactMessage</code>
-     * @return a <code>Yes</code> instance
+     * @param factMessageArgs arguments for `rawFactMessage` and `rawMidSentenceFactMessage`
+     * @param simplifiedFactMessageArgs arguments for `rawSimplifiedFactMessage` and `rawMidSentenceSimplifiedFactMessage`
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,
@@ -721,9 +721,9 @@ private[scalatest] object Fact {
       )
 
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
-     * <code>rawFactMessage</code>, <code>rawSimplifiedFactMessage</code>, <code>rawMidSentenceFactMessage</code> and
-     * <code>rawMidSentenceSimplifiedFactMessage</code> fields.  All argument fields will have <code>Vector.empty</code>
+     * Factory method that constructs a new `Yes` with passed `rawFactMessage`,
+     * `rawFactMessage`, `rawSimplifiedFactMessage`, `rawMidSentenceFactMessage` and
+     * `rawMidSentenceSimplifiedFactMessage` fields.  All argument fields will have `Vector.empty`
      * values.  This is suitable to create Yes with eager error messages, and its simplified and mid-sentence messages
      * need to be different.
      *
@@ -731,11 +731,11 @@ private[scalatest] object Fact {
      * @param rawSimplifiedFactMessage raw simplified message to report for this fact
      * @param rawMidSentenceFactMessage raw mid-sentence message to report for this fact
      * @param rawMidSentenceSimplifiedFactMessage raw mid-sentence simplified message to report for this fact
-     * @param factMessageArgs arguments for <code>rawFactMessage</code>
-     * @param simplifiedFactMessageArgs arguments for <code>rawSimplifiedFactMessage</code>
-     * @param midSentenceFactMessageArgs arguments for <code>rawMidSentenceFactMessage</code>
-     * @param midSentenceSimplifiedFactMessageArgs arguments for <code>rawMidSentenceSimplifiedFactMessage</code>
-     * @return a <code>Yes</code> instance
+     * @param factMessageArgs arguments for `rawFactMessage`
+     * @param simplifiedFactMessageArgs arguments for `rawSimplifiedFactMessage`
+     * @param midSentenceFactMessageArgs arguments for `rawMidSentenceFactMessage`
+     * @param midSentenceSimplifiedFactMessageArgs arguments for `rawMidSentenceSimplifiedFactMessage`
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,
@@ -763,14 +763,14 @@ private[scalatest] object Fact {
       )
   
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>, and
-     * <code>rawNegativeFailureMessage</code> fields. The <code>rawMidSentenceFactMessage</code> will return the same
-     * string as <code>rawFactMessage</code>, and the <code>rawMidSentenceSimplifiedFailureMessage</code> will return the
-     * same string as <code>rawSimplifiedFailureMessage</code>.  All argument fields will have <code>Vector.empty</code> values.
+     * Factory method that constructs a new `Yes` with passed `rawFactMessage`, and
+     * `rawNegativeFailureMessage` fields. The `rawMidSentenceFactMessage` will return the same
+     * string as `rawFactMessage`, and the `rawMidSentenceSimplifiedFailureMessage` will return the
+     * same string as `rawSimplifiedFailureMessage`.  All argument fields will have `Vector.empty` values.
      * This is suitable to create Yes with eager error messages that have same mid-sentence messages.
      *
      * @param rawFactMessage raw failure message to report if a match fails
-     * @return a <code>Yes</code> instance
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String
@@ -791,18 +791,18 @@ private[scalatest] object Fact {
       )
   
     /**
-     * Factory method that constructs a new <code>Yes</code> with passed <code>rawFactMessage</code>,
-     * <code>rawNegativeFailureMessage</code>, <code>factMessageArgs</code> and <code>simplifiedFailureMessageArgs</code> fields.
-     * The <code>rawMidSentenceFactMessage</code> will return the same string as <code>rawFactMessage</code>, and the
-     * <code>rawMidSentenceSimplifiedFailureMessage</code> will return the same string as <code>rawSimplifiedFailureMessage</code>.
-     * The <code>midSentenceFactMessageArgs</code> will return the same as <code>factMessageArgs</code>, and the
-     * <code>midSentenceSimplifiedFailureMessageArgs</code> will return the same as <code>simplifiedFailureMessageArgs</code>.
+     * Factory method that constructs a new `Yes` with passed `rawFactMessage`,
+     * `rawNegativeFailureMessage`, `factMessageArgs` and `simplifiedFailureMessageArgs` fields.
+     * The `rawMidSentenceFactMessage` will return the same string as `rawFactMessage`, and the
+     * `rawMidSentenceSimplifiedFailureMessage` will return the same string as `rawSimplifiedFailureMessage`.
+     * The `midSentenceFactMessageArgs` will return the same as `factMessageArgs`, and the
+     * `midSentenceSimplifiedFailureMessageArgs` will return the same as `simplifiedFailureMessageArgs`.
      * This is suitable to create Yes with lazy error messages that have same mid-sentence and use different arguments for
      * simplified messages.
      *
      * @param rawFactMessage raw failure message to report if a match fails
      * @param factMessageArgs arguments for constructing failure message to report if a match fails
-     * @return a <code>Yes</code> instance
+     * @return a `Yes` instance
      */
     def apply(
       rawFactMessage: String,

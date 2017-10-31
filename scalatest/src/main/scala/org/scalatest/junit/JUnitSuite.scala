@@ -20,11 +20,11 @@ package org.scalatest.junit;
 
 /**
  * A suite of tests that can be run with either JUnit or ScalaTest. This class allows you to write JUnit 4 tests
- * with ScalaTest's more concise assertion syntax as well as JUnit's assertions (<code>assertEquals</code>, etc.).
- * You create tests by defining methods that are annotated with <code>Test</code>, and can create fixtures with
- * methods annotated with <code>Before</code> and <code>After</code>. For example:
+ * with ScalaTest's more concise assertion syntax as well as JUnit's assertions (`assertEquals`, etc.).
+ * You create tests by defining methods that are annotated with `Test`, and can create fixtures with
+ * methods annotated with `Before` and `After`. For example:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest.junit.JUnitSuite
  * import scala.collection.mutable.ListBuffer
  * import _root_.org.junit.Test
@@ -53,16 +53,14 @@ package org.scalatest.junit;
  *     assert(lb.isEmpty)
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * To execute <code>JUnitSuite</code>s with ScalaTest's <code>Runner</code>, you must include JUnit's jar file on the class path or runpath.
- * This version of <code>JUnitSuite</code> was tested with JUnit version 4.10.
- * </p>
+ * To execute `JUnitSuite`s with ScalaTest's `Runner`, you must include JUnit's jar file on the class path or runpath.
+ * This version of `JUnitSuite` was tested with JUnit version 4.10.
+ * 
  *
- * <p>
  * Instances of this class are not thread safe.
- * </p>
+ * 
  *
  * @author Bill Venners
  * @author Daniel Watson

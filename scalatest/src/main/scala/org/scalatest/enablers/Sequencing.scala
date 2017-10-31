@@ -22,84 +22,80 @@ import org.scalatest.words.ArrayWrapper
 import scala.annotation.tailrec
 
 /**
- * Typeclass that enables for sequencing certain <code>contain</code> syntax in the ScalaTest matchers DSL.
+ * Typeclass that enables for sequencing certain `contain` syntax in the ScalaTest matchers DSL.
  *
- * <p>
- * An <code>Sequencing[A]</code> provides access to the "sequenching nature" of type <code>A</code> in such
- * a way that relevant <code>contain</code> matcher syntax can be used with type <code>A</code>. An <code>A</code>
- * can be any type of <em>sequencing</em>&#8212;an object that in some way brings together other objects in order.
+ * An `Sequencing[A]` provides access to the "sequenching nature" of type `A` in such
+ * a way that relevant `contain` matcher syntax can be used with type `A`. An `A`
+ * can be any type of ''sequencing''&#8212;an object that in some way brings together other objects in order.
  * ScalaTest provides implicit implementations for several types out of the box in the
- * <a href="Sequencing$.html"><code>Sequencing</code> companion object</a>:
- * </p>
+ * <a href="Sequencing$.html">`Sequencing` companion object</a>:
+ * 
  *
  * <ul>
- * <li><code>scala.collection.GenSeq</code></li>
- * <li><code>scala.collection.SortedSet</code></li>
- * <li><code>scala.collection.SortedMap</code></li>
- * <li><code>Array</code></li>
- * <li><code>java.util.List</code></li>
- * <li><code>java.util.SortedSet</code></li>
- * <li><code>java.util.SortedMap</code></li>
- * <li><code>String</code></li>
+ * <li>`scala.collection.GenSeq`</li>
+ * <li>`scala.collection.SortedSet`</li>
+ * <li>`scala.collection.SortedMap`</li>
+ * <li>`Array`</li>
+ * <li>`java.util.List`</li>
+ * <li>`java.util.SortedSet`</li>
+ * <li>`java.util.SortedMap`</li>
+ * <li>`String`</li>
  * </ul>
  *
- * <p>
- * The <code>contain</code> syntax enabled by this trait is:
- * <p>
+ * The `contain` syntax enabled by this trait is:
  *
  * <ul>
- * <li><code>result should contain inOrder (1, 2, 3)</code></li>
- * <li><code>result should contain inOrderOnly (1, 2, 3)</code></li>
- * <li><code>result should contain theSameElementsInOrderAs List(1, 2, 3)</code></li>
+ * <li>`result should contain inOrder (1, 2, 3)`</li>
+ * <li>`result should contain inOrderOnly (1, 2, 3)`</li>
+ * <li>`result should contain theSameElementsInOrderAs List(1, 2, 3)`</li>
  * </ul>
  *
- * <p>
- * You can enable the <code>contain</code> matcher syntax enabled by <code>Sequencing</code> on your own
- * type <code>U</code> by defining an <code>Sequencing[U]</code> for the type and making it available implicitly.
- * </p>
+ * You can enable the `contain` matcher syntax enabled by `Sequencing` on your own
+ * type `U` by defining an `Sequencing[U]` for the type and making it available implicitly.
+ * 
  */
 trait Sequencing[-S] {
 
   /**
-   * Implements <code>contain</code> <code>inOrder</code> syntax for sequences of type <code>S</code>.
+   * Implements `contain` `inOrder` syntax for sequences of type `S`.
    *
    * @param sequence an sequence about which an assertion is being made
-   * @param eles elements all of which should be contained, in order of appearance in <code>eles</code>, in the passed sequence
+   * @param eles elements all of which should be contained, in order of appearance in `eles`, in the passed sequence
    * @return true if the passed sequence contains all of the passed elements in (iteration) order
    */
   def containsInOrder(sequence: S, eles: Seq[Any]): Boolean
 
   /**
-   * Implements <code>contain</code> <code>inOrderOnly</code> syntax for sequences of type <code>S</code>.
+   * Implements `contain` `inOrderOnly` syntax for sequences of type `S`.
    *
    * @param sequence an sequence about which an assertion is being made
-   * @param eles the only elements that should be contained, in order of appearence in <code>eles</code>, in the passed sequence
+   * @param eles the only elements that should be contained, in order of appearence in `eles`, in the passed sequence
    * @return true if the passed sequence contains only the passed elements in (iteration) order
    */
   def containsInOrderOnly(sequence: S, eles: Seq[Any]): Boolean
 
   /**
-   * Implements <code>contain</code> <code>theSameElementsInOrderAs</code> syntax for sequences of type <code>S</code>.
+   * Implements `contain` `theSameElementsInOrderAs` syntax for sequences of type `S`.
    *
    * @param leftSequence an sequence about which an assertion is being made
-   * @param rightSequence an sequence that should contain the same elements, in (iterated) order as the passed <code>leftSequence</code>
-   * @return true if the passed <code>leftSequence</code> contains the same elements, in (iterated) order, as the passed <code>rightSequence</code>
+   * @param rightSequence an sequence that should contain the same elements, in (iterated) order as the passed `leftSequence`
+   * @return true if the passed `leftSequence` contains the same elements, in (iterated) order, as the passed `rightSequence`
    */
   def containsTheSameElementsInOrderAs(leftSequence: S, rightSequence: GenTraversable[Any]): Boolean
 }
 
 /**
- * Companion object for <code>Sequencing</code> that provides implicit implementations for the following types:
+ * Companion object for `Sequencing` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>scala.collection.GenSeq</code></li>
- * <li><code>scala.collection.SortedSet</code></li>
- * <li><code>scala.collection.SortedMap</code></li>
- * <li><code>Array</code></li>
- * <li><code>java.util.List</code></li>
- * <li><code>java.util.SortedSet</code></li>
- * <li><code>java.util.SortedMap</code></li>
- * <li><code>String</code></li>
+ * <li>`scala.collection.GenSeq`</li>
+ * <li>`scala.collection.SortedSet`</li>
+ * <li>`scala.collection.SortedMap`</li>
+ * <li>`Array`</li>
+ * <li>`java.util.List`</li>
+ * <li>`java.util.SortedSet`</li>
+ * <li>`java.util.SortedMap`</li>
+ * <li>`String`</li>
  * </ul>
  */
 object Sequencing {
@@ -192,12 +188,12 @@ object Sequencing {
   import scala.language.higherKinds
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>scala.collection.GenSeq</code>.
+   * Implicit to support `Sequencing` nature of `scala.collection.GenSeq`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>scala.collection.GenSeq</code>
-   * @tparam E the type of the element in the <code>scala.collection.GenSeq</code>
-   * @tparam SEQ any subtype of <code>scala.collection.GenSeq</code>
-   * @return <code>Sequencing[SEQ[E]]</code> that supports <code>scala.collection.GenSeq</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `scala.collection.GenSeq`
+   * @tparam E the type of the element in the `scala.collection.GenSeq`
+   * @tparam SEQ any subtype of `scala.collection.GenSeq`
+   * @return `Sequencing[SEQ[E]]` that supports `scala.collection.GenSeq` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfGenSeq[E, SEQ[e] <: scala.collection.GenSeq[e]](implicit equality: Equality[E]): Sequencing[SEQ[E]] =
     new Sequencing[SEQ[E]] {
@@ -219,32 +215,32 @@ object Sequencing {
   import scala.language.implicitConversions
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * into <code>Sequencing</code> of type <code>SEQ[E]</code>, where <code>SEQ</code> is a subtype of <code>scala.collection.GenSeq</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * into `Sequencing` of type `SEQ[E]`, where `SEQ` is a subtype of `scala.collection.GenSeq`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * (List("hi", "he") should contain inOrderOnly ("HI", "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[List[String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[List[String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * @tparam E type of elements in the <code>scala.collection.GenSeq</code>
-   * @tparam SEQ subtype of <code>scala.collection.GenSeq</code>
-   * @return <code>Sequencing</code> of type <code>SEQ[E]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * @tparam E type of elements in the `scala.collection.GenSeq`
+   * @tparam SEQ subtype of `scala.collection.GenSeq`
+   * @return `Sequencing` of type `SEQ[E]`
    */
   implicit def convertEqualityToGenSeqSequencing[E, SEQ[e] <: scala.collection.GenSeq[e]](equality: Equality[E]): Sequencing[SEQ[E]] = 
     sequencingNatureOfGenSeq(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>scala.collection.SortedSet</code>.
+   * Implicit to support `Sequencing` nature of `scala.collection.SortedSet`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>scala.collection.SortedSet</code>
-   * @tparam E the type of the element in the <code>scala.collection.SortedSet</code>
-   * @tparam SET any subtype of <code>scala.collection.SortedSet</code>
-   * @return <code>Sequencing[SET[E]]</code> that supports <code>scala.collection.SortedSet</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `scala.collection.SortedSet`
+   * @tparam E the type of the element in the `scala.collection.SortedSet`
+   * @tparam SET any subtype of `scala.collection.SortedSet`
+   * @return `Sequencing[SET[E]]` that supports `scala.collection.SortedSet` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfSortedSet[E, SET[e] <: scala.collection.SortedSet[e]](implicit equality: Equality[E]): Sequencing[SET[E]] =
     new Sequencing[SET[E]] {
@@ -263,33 +259,33 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * into <code>Sequencing</code> of type <code>SET[E]</code>, where <code>SET</code> is a subtype of <code>scala.collection.SortedSet</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * into `Sequencing` of type `SET[E]`, where `SET` is a subtype of `scala.collection.SortedSet`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * (SortedSet("hi", "he") should contain inOrderOnly ("HI", "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[SortedSet[String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[SortedSet[String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * @tparam E type of elements in the <code>scala.collection.SortedSet</code>
-   * @tparam SET subtype of <code>scala.collection.SortedSet</code>
-   * @return <code>Sequencing</code> of type <code>SET[E]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * @tparam E type of elements in the `scala.collection.SortedSet`
+   * @tparam SET subtype of `scala.collection.SortedSet`
+   * @return `Sequencing` of type `SET[E]`
    */
   implicit def convertEqualityToSortedSetSequencing[E, SET[e] <: scala.collection.SortedSet[e]](equality: Equality[E]): Sequencing[SET[E]] = 
     sequencingNatureOfSortedSet(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>scala.collection.SortedMap</code>.
+   * Implicit to support `Sequencing` nature of `scala.collection.SortedMap`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>scala.collection.SortedMap</code>
-   * @tparam K the type of the key in the <code>scala.collection.SortedMap</code>
-   * @tparam V the type of the value in the <code>scala.collection.SortedMap</code>
-   * @tparam MAP any subtype of <code>scala.collection.SortedMap</code>
-   * @return <code>Sequencing[MAP[K, V]]</code> that supports <code>scala.collection.SortedMap</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `scala.collection.SortedMap`
+   * @tparam K the type of the key in the `scala.collection.SortedMap`
+   * @tparam V the type of the value in the `scala.collection.SortedMap`
+   * @tparam MAP any subtype of `scala.collection.SortedMap`
+   * @return `Sequencing[MAP[K, V]]` that supports `scala.collection.SortedMap` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfSortedMap[K, V, MAP[k, v] <: scala.collection.SortedMap[k, v]](implicit equality: Equality[(K, V)]): Sequencing[MAP[K, V]] =
     new Sequencing[MAP[K, V]] {
@@ -308,33 +304,33 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>(K, V)</code>
-   * into <code>Sequencing</code> of type <code>MAP[K, V]</code>, where <code>MAP</code> is a subtype of <code>scala.collection.SortedMap</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `(K, V)`
+   * into `Sequencing` of type `MAP[K, V]`, where `MAP` is a subtype of `scala.collection.SortedMap`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * // lowerCased needs to be implemented as Normalization[(K, V)]
    * (SortedMap("hi" -> "hi", "he" -> "he") should contain inOrderOnly ("HI" -> "HI", "HE" -> "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[SortedMap[String, String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[SortedMap[String, String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>(K, V)</code>
-   * @tparam K the type of the key in the <code>scala.collection.SortedMap</code>
-   * @tparam V the type of the value in the <code>scala.collection.SortedMap</code>
-   * @tparam MAP subtype of <code>scala.collection.SortedMap</code>
-   * @return <code>Sequencing</code> of type <code>MAP[K, V]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `(K, V)`
+   * @tparam K the type of the key in the `scala.collection.SortedMap`
+   * @tparam V the type of the value in the `scala.collection.SortedMap`
+   * @tparam MAP subtype of `scala.collection.SortedMap`
+   * @return `Sequencing` of type `MAP[K, V]`
    */
   implicit def convertEqualityToSortedMapSequencing[K, V, MAP[k, v] <: scala.collection.SortedMap[k, v]](equality: Equality[(K, V)]): Sequencing[MAP[K, V]] = 
     sequencingNatureOfSortedMap(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>Array</code>.
+   * Implicit to support `Sequencing` nature of `Array`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>Array</code>
-   * @tparam E the type of the element in the <code>Array</code>
-   * @return <code>Sequencing[Array[E]]</code> that supports <code>Array</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `Array`
+   * @tparam E the type of the element in the `Array`
+   * @return `Sequencing[Array[E]]` that supports `Array` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfArray[E](implicit equality: Equality[E]): Sequencing[Array[E]] = 
     new Sequencing[Array[E]] {
@@ -353,31 +349,31 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * into <code>Sequencing</code> of type <code>Array[E]</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * into `Sequencing` of type `Array[E]`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * (Array("hi", "he") should contain inOrderOnly ("HI", "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[Array[String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[Array[String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * @tparam E type of elements in the <code>Array</code>
-   * @return <code>Sequencing</code> of type <code>Array[E]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * @tparam E type of elements in the `Array`
+   * @return `Sequencing` of type `Array[E]`
    */
   implicit def convertEqualityToArraySequencing[E](equality: Equality[E]): Sequencing[Array[E]] = 
     sequencingNatureOfArray(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>java.util.List</code>.
+   * Implicit to support `Sequencing` nature of `java.util.List`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>java.util.List</code>
-   * @tparam E the type of the element in the <code>java.util.List</code>
-   * @tparam JLIST any subtype of <code>java.util.List</code>
-   * @return <code>Sequencing[JLIST[E]]</code> that supports <code>java.util.List</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `java.util.List`
+   * @tparam E the type of the element in the `java.util.List`
+   * @tparam JLIST any subtype of `java.util.List`
+   * @return `Sequencing[JLIST[E]]` that supports `java.util.List` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfJavaList[E, JLIST[e] <: java.util.List[e]](implicit equality: Equality[E]): Sequencing[JLIST[E]] = 
     new Sequencing[JLIST[E]] {
@@ -396,34 +392,34 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * into <code>Sequencing</code> of type <code>JLIST[E]</code>, where <code>JLIST</code> is a subtype of <code>java.util.List</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * into `Sequencing` of type `JLIST[E]`, where `JLIST` is a subtype of `java.util.List`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val javaList = new java.util.ArrayList[String]()
    * javaList.add("hi", "he")
    * (javaList should contain ("HI", "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[java.util.ArrayList[String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[java.util.ArrayList[String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * @tparam E type of elements in the <code>java.util.List</code>
-   * @tparam JLIST subtype of <code>java.util.List</code>
-   * @return <code>Sequencing</code> of type <code>JLIST[E]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * @tparam E type of elements in the `java.util.List`
+   * @tparam JLIST subtype of `java.util.List`
+   * @return `Sequencing` of type `JLIST[E]`
    */
   implicit def convertEqualityToJavaListSequencing[E, JLIST[e] <: java.util.List[e]](equality: Equality[E]): Sequencing[JLIST[E]] = 
     sequencingNatureOfJavaList(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>java.util.SortedSet</code>.
+   * Implicit to support `Sequencing` nature of `java.util.SortedSet`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>java.util.SortedSet</code>
-   * @tparam E the type of the element in the <code>java.util.SortedSet</code>
-   * @tparam JSET any subtype of <code>java.util.SortedSet</code>
-   * @return <code>Sequencing[JSET[E]]</code> that supports <code>java.util.SortedSet</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `java.util.SortedSet`
+   * @tparam E the type of the element in the `java.util.SortedSet`
+   * @tparam JSET any subtype of `java.util.SortedSet`
+   * @return `Sequencing[JSET[E]]` that supports `java.util.SortedSet` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfJavaSortedSet[E, JSET[e] <: java.util.SortedSet[e]](implicit equality: Equality[E]): Sequencing[JSET[E]] =
     new Sequencing[JSET[E]] {
@@ -442,35 +438,35 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * into <code>Sequencing</code> of type <code>JSET[E]</code>, where <code>JSET</code> is a subtype of <code>java.util.SortedSet</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * into `Sequencing` of type `JSET[E]`, where `JSET` is a subtype of `java.util.SortedSet`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val javaSet = new java.util.TreeSet[String]()
    * javaSet.add("hi", "he")
    * (javaSet should contain inOrderOnly ("HI", "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[java.util.TreeSet[String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[java.util.TreeSet[String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * @tparam E type of elements in the <code>java.util.List</code>
-   * @tparam JSET subtype of <code>java.util.List</code>
-   * @return <code>Sequencing</code> of type <code>JLIST[E]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * @tparam E type of elements in the `java.util.List`
+   * @tparam JSET subtype of `java.util.List`
+   * @return `Sequencing` of type `JLIST[E]`
    */
   implicit def convertEqualityToJavaSortedSetSequencing[E, JSET[e] <: java.util.SortedSet[e]](equality: Equality[E]): Sequencing[JSET[E]] = 
     sequencingNatureOfJavaSortedSet(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>java.util.SortedMap</code>.
+   * Implicit to support `Sequencing` nature of `java.util.SortedMap`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of entry in the <code>java.util.SortedMap</code>
-   * @tparam K the type of the key in the <code>java.util.SortedMap</code>
-   * @tparam V the type of the value in the <code>java.util.SortedMap</code>
-   * @tparam JMAP any subtype of <code>java.util.SortedMap</code>
-   * @return <code>Sequencing[JMAP[K, V]]</code> that supports <code>java.util.SortedMap</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of entry in the `java.util.SortedMap`
+   * @tparam K the type of the key in the `java.util.SortedMap`
+   * @tparam V the type of the value in the `java.util.SortedMap`
+   * @tparam JMAP any subtype of `java.util.SortedMap`
+   * @return `Sequencing[JMAP[K, V]]` that supports `java.util.SortedMap` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfJavaSortedMap[K, V, JMAP[k, v] <: java.util.SortedMap[k, v]](implicit equality: Equality[java.util.Map.Entry[K, V]]): Sequencing[JMAP[K, V]] =
     new Sequencing[JMAP[K, V]] {
@@ -489,34 +485,34 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>java.util.Map.Entry[K, V]</code>
-   * into <code>Sequencing</code> of type <code>JMAP[K, V]</code>, where <code>JMAP</code> is a subtype of <code>java.util.SortedMap</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `java.util.Map.Entry[K, V]`
+   * into `Sequencing` of type `JMAP[K, V]`, where `JMAP` is a subtype of `java.util.SortedMap`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val javaMap = new java.util.TreeMap[Int, String]()
    * javaMap.put(1, "one")
    * // lowerCased needs to be implemented as Normalization[java.util.Map.Entry[K, V]]
    * (javaMap should contain inOrderOnly (Entry(1, "ONE"))) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>java.util.Map.Entry[Int, String]</code></a>
-   * and this implicit conversion will convert it into <code>Aggregating[java.util.TreeMap[Int, String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`java.util.Map.Entry[Int, String]`</a>
+   * and this implicit conversion will convert it into `Aggregating[java.util.TreeMap[Int, String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>java.util.Map.Entry[K, V]</code>
-   * @tparam K the type of the key in the <code>java.util.SortedMap</code>
-   * @tparam V the type of the value in the <code>java.util.SortedMap</code>
-   * @tparam JMAP subtype of <code>java.util.SortedMap</code>
-   * @return <code>Sequencing</code> of type <code>JMAP[K, V]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `java.util.Map.Entry[K, V]`
+   * @tparam K the type of the key in the `java.util.SortedMap`
+   * @tparam V the type of the value in the `java.util.SortedMap`
+   * @tparam JMAP subtype of `java.util.SortedMap`
+   * @return `Sequencing` of type `JMAP[K, V]`
    */
   implicit def convertEqualityToJavaSortedMapSequencing[K, V, JMAP[k, v] <: java.util.SortedMap[k, v]](equality: Equality[java.util.Map.Entry[K, V]]): Sequencing[JMAP[K, V]] = 
     sequencingNatureOfJavaSortedMap(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>String</code>.
+   * Implicit to support `Sequencing` nature of `String`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of <code>Char</code> in the <code>String</code>
-   * @return <code>Sequencing[String]</code> that supports <code>String</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of `Char` in the `String`
+   * @return `Sequencing[String]` that supports `String` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfString(implicit equality: Equality[Char]): Sequencing[String] = 
     new Sequencing[String] {
@@ -535,30 +531,30 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>Char</code>
-   * into <code>Sequencing</code> of type <code>String</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `Char`
+   * into `Sequencing` of type `String`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * // lowerCased needs to be implemented as Normalization[Char]
    * ("hi hello" should contain inOrderOnly ('E')) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[Char]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[String]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[Char]`</a>
+   * and this implicit conversion will convert it into `Sequencing[String]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>Char</code>
-   * @return <code>Sequencing</code> of type <code>String</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `Char`
+   * @return `Sequencing` of type `String`
    */
   implicit def convertEqualityToStringSequencing(equality: Equality[Char]): Sequencing[String] = 
     sequencingNatureOfString(equality)
 
   /**
-   * Implicit to support <code>Sequencing</code> nature of <code>Every</code>.
+   * Implicit to support `Sequencing` nature of `Every`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of element in the <code>Every</code>
-   * @tparam E the type of the element in the <code>Every</code>
-   * @return <code>Sequencing[Every[E]]</code> that supports <code>Every</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of element in the `Every`
+   * @tparam E the type of the element in the `Every`
+   * @return `Sequencing[Every[E]]` that supports `Every` in relevant `contain` syntax
    */
   implicit def sequencingNatureOfEvery[E](implicit equality: Equality[E]): Sequencing[Every[E]] =
     new Sequencing[Every[E]] {
@@ -574,20 +570,20 @@ object Sequencing {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * into <code>Sequencing</code> of type <code>Every[E]</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * into `Sequencing` of type `Every[E]`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * (Every("hi", "he") should contain inOrderOnly ("HI", "HE")) (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>Sequencing[Every[String]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `Sequencing[Every[String]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>E</code>
-   * @tparam E type of elements in the <code>Every</code>
-   * @return <code>Sequencing</code> of type <code>Every[E]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `E`
+   * @tparam E type of elements in the `Every`
+   * @return `Sequencing` of type `Every[E]`
    */
   implicit def convertEqualityToEverySequencing[E](equality: Equality[E]): Sequencing[Every[E]] =
     sequencingNatureOfEvery(equality)

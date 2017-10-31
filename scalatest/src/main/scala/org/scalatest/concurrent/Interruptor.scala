@@ -18,10 +18,9 @@ package org.scalatest.concurrent
 /**
  * Strategy for interrupting an operation after a timeout expires.
  *
- * <p>
  * An instance of this trait is used for configuration when using traits
- * <a href="Timeouts.html"><code>Timeouts</code></a> and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * </p>
+ * <a href="Timeouts.html">`Timeouts`</a> and <a href="TimeLimitedTests.html">`TimeLimitedTests`</a>.
+ * 
  */
 @deprecated("Please use org.scalatest.concurrent.Signaler instead.")
 trait Interruptor extends Function1[Thread, Unit] { thisInterruptor =>
@@ -29,12 +28,11 @@ trait Interruptor extends Function1[Thread, Unit] { thisInterruptor =>
   /**
    * Interrupts an operation.
    *
-   * <p>
    * This method may do anything to attempt to interrupt an operation, or even do nothing.
-   * When called by <code>failAfter</code> method of trait <a href="Timeouts.html"><code>Timeouts</code></a>, the passed
-   * <code>Thread</code> will represent the main test thread. This <code>Thread</code> is
+   * When called by `failAfter` method of trait <a href="Timeouts.html">`Timeouts`</a>, the passed
+   * `Thread` will represent the main test thread. This `Thread` is
    * passed in case it is useful, but need not be used by implementations of this method.
-   * </p>
+   * 
    */
   def apply(testThread: Thread): Unit
 
@@ -47,17 +45,17 @@ trait Interruptor extends Function1[Thread, Unit] { thisInterruptor =>
 }
 
 /**
- * Companion object that provides a factory method for an <code>Interruptor</code> defined
- * in terms of a function from a function of type <code>Thread</code> to </code>Unit</code>.
+ * Companion object that provides a factory method for an `Interruptor` defined
+ * in terms of a function from a function of type `Thread` to `Unit`.
  */
 object Interruptor {
 
   /**
-   * Factory method for an <code>Interruptor</code> defined in terms of a function from a function of
-   * type <code>Thread</code> to </code>Unit</code>.
+   * Factory method for an `Interruptor` defined in terms of a function from a function of
+   * type `Thread` to `Unit`.
    *
-   * When this <code>apply</code> method is invoked, it will invoke the passed function's <code>apply</code>
-   * method, forwarding along the passed <code>Thread</code>.
+   * When this `apply` method is invoked, it will invoke the passed function's `apply`
+   * method, forwarding along the passed `Thread`.
    *
    * @param fun the function representing the interruption strategy
    */

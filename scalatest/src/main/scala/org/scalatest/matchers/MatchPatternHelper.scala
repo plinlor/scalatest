@@ -21,17 +21,17 @@ import org.scalatest.MatchersHelper._
 import org.scalatest.words.ResultOfNotWordForAny
 
 /**
- * <code>MatchPatternHelper</code> is called by <code>MatchPatternMacro</code> to support <code>matchPattern</code> syntax.
+ * `MatchPatternHelper` is called by `MatchPatternMacro` to support `matchPattern` syntax.
  */
 object MatchPatternHelper {
 
   /**
-   * <code>MatchPatternHelper</code> that is called by <code>MatchPatternMacro</code> to support the following syntax:
+   * `MatchPatternHelper` that is called by `MatchPatternMacro` to support the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should matchPattern { case Person("Bob", _) => }
    *               ^
-   * </pre>
+   * }}}
    */
   def matchPatternMatcher(right: PartialFunction[Any, _]): Matcher[Any] =
     new Matcher[Any] {
@@ -47,12 +47,12 @@ object MatchPatternHelper {
     }
 
   /**
-   * <code>MatchPatternHelper</code> that is called by <code>MatchPatternMacro</code> to support the following syntax:
+   * `MatchPatternHelper` that is called by `MatchPatternMacro` to support the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should (not matchPattern { case Person("Alice", _) => } and (equal (result)))
    *                    ^
-   * </pre>
+   * }}}
    */
   def notMatchPatternMatcher(right: PartialFunction[Any, _]): Matcher[Any] =
     new Matcher[Any] {
@@ -68,12 +68,12 @@ object MatchPatternHelper {
     }
 
   /**
-   * <code>MatchPatternHelper</code> that is called by <code>MatchPatternMacro</code> to support the following syntax:
+   * `MatchPatternHelper` that is called by `MatchPatternMacro` to support the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not matchPattern { case Person("Bob", _) => }
    *                   ^
-   * </pre>
+   * }}}
    */
   def checkMatchPattern(resultOfNoWordForAny: ResultOfNotWordForAny[_], right: PartialFunction[Any, _]): Unit = {
     if (right.isDefinedAt(resultOfNoWordForAny.left) != resultOfNoWordForAny.shouldBeTrue)

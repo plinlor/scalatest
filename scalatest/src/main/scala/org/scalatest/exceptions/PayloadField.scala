@@ -18,22 +18,20 @@ package org.scalatest.exceptions
 /**
  * Trait implemented by exception types that carry an optional payload.
  *
- * <p>
  * Many ScalaTest events include an optional "payload" field that can be used
  * to pass information to a custom reporter. This trait facilitates such customization, 
- * by allowing test code to include a payload in an exception (such as <code>TestFailedException</code>).
+ * by allowing test code to include a payload in an exception (such as `TestFailedException`).
  * ScalaTest looks for this trait and fires any payloads it finds in the relevant ScalaTest event
- * stimulated by the exception, such as a <a href="../events/TestFailed.html"><code>TestFailed</code></a> event stimulated by a <code>TestFailedException</code>.
+ * stimulated by the exception, such as a <a href="../events/TestFailed.html">`TestFailed`</a> event stimulated by a `TestFailedException`.
  * (Although in its initial
- * release there is only two subclasses of <code>PayloadField</code> in ScalaTest,
- * <a href="TestFailedException.html"><code>TestFailedException</code></a> and
- * <a href="TestCanceledException.html"><code>TestCanceledException</code></a>,
+ * release there is only two subclasses of `PayloadField` in ScalaTest,
+ * <a href="TestFailedException.html">`TestFailedException`</a> and
+ * <a href="TestCanceledException.html">`TestCanceledException`</a>,
  * in future version of ScalaTest, there could be more)
- * </p>
+ * 
  *
- * <p>
- * For an example of how payloads could be used, see the documentation for trait <a href="../Payloads.html"><code>Payloads</code></a>.
- * </p>
+ * For an example of how payloads could be used, see the documentation for trait <a href="../Payloads.html">`Payloads`</a>.
+ * 
  *
  * @author Bill Venners
  */

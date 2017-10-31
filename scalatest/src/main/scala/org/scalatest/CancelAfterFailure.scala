@@ -16,32 +16,30 @@
 package org.scalatest
 
 /**
- * Trait that when mixed into a <a href="TestSuite.html"><code>TestSuite</code></a> cancels any remaining tests in that
- * <code>TestSuite</code> instance after a test fails.
+ * Trait that when mixed into a <a href="TestSuite.html">`TestSuite`</a> cancels any remaining tests in that
+ * `TestSuite` instance after a test fails.
  *
- * <p>
  * The intended use case for this trait is if you have a suite of long-running tests that are
  * related such that if one fails, you aren't interested in running the others, you can use this
  * trait to simply cancel any remaining tests, so you need not wait long for them to complete.
- * </p>
+ * 
  *
- * <p>
- * Note that this trait only cancels tests in the same <code>TestSuite</code> instance, because
+ * Note that this trait only cancels tests in the same `TestSuite` instance, because
  * it uses a private volatile instance variable as a flag to indicate whether or not a test has failed.
  * If you are running each test in its own instance, therefore, it would not cancel the
  * remaining tests, because they would not see the same flag. For this reason, this trait contains
- * a final implementation of a method defined in <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>,
- * to prevent it from being mixed into any class that also mixes in <code>OneInstancePerTest</code>, 
- * including by mixing in <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a> or a <a href="path/package.html">path trait</a>.
- * </p>
+ * a final implementation of a method defined in <a href="OneInstancePerTest.html">`OneInstancePerTest`</a>,
+ * to prevent it from being mixed into any class that also mixes in `OneInstancePerTest`, 
+ * including by mixing in <a href="ParallelTestExecution.html">`ParallelTestExecution`</a> or a <a href="path/package.html">path trait</a>.
+ * 
  */
 trait CancelAfterFailure extends TestSuiteMixin { this: TestSuite =>
 
   @volatile private var cancelRemaining = false
 
   /**
-   * Stackable implementation of <code>withFixture</code> that cancels the current test if
-   * any previous test run in this <code>Suite</code> instance has failed.
+   * Stackable implementation of `withFixture` that cancels the current test if
+   * any previous test run in this `Suite` instance has failed.
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {
     if (cancelRemaining) 
@@ -56,7 +54,7 @@ trait CancelAfterFailure extends TestSuiteMixin { this: TestSuite =>
   }
 
   /**
-   * Method defined to prevent this trait from being mixed into any class that also mixes in <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>.
+   * Method defined to prevent this trait from being mixed into any class that also mixes in <a href="OneInstancePerTest.html">`OneInstancePerTest`</a>.
    */
   final def newInstance: Suite with OneInstancePerTest = throw new UnsupportedOperationException
 }

@@ -33,71 +33,65 @@ And this confusion of Success(Failed) is what the Or is intended to alleviate.
 */
 
 /**
- * Wrapper class for <code>Future[Outcome]</code> that presents a more convenient API for 
- * manipulation in <code>withFixture</code> methods in async styles.
+ * Wrapper class for `Future[Outcome]` that presents a more convenient API for 
+ * manipulation in `withFixture` methods in async styles.
  *
- * <p>
- * This type serves as the result type of both test functions and <code>withFixture</code> methods
- * in ScalaTest's async styles. A <code>Future[Outcome]</code> is not used as this result type
- * for two reasons. First, <code>Outcome</code> treats exceptions specially, and as a result
- * methods on <code>Future</code> would usually not yield the desired <code>Future[Outcome]</code> result.
- * Only run-aborting exceptions should result in a failed <code>Future[Outcome]</code>. Any other thrown exception
- * other than <code>TestCanceledException</code> or <code>TestPendingException</code>
- * should result in a successful<code>Future</code> containing a <code>org.scalatest.Failed</code>.
- * A thrown <code>TestCanceledException</code> should result in a successful <code>Future</code>
- * containing an <code>org.scalatest.Canceled</code>; A thrown <code>TestPendingException</code> should result in
- * a successful <code>Future</code> containing a <code>org.scalatest.Pending</code>.
- * If manipulating a <code>Future[Outcome]</code> directly, by contrast, any thrown exception would result in 
- * a failed <code>Future</code>.
- * </p>
+ * This type serves as the result type of both test functions and `withFixture` methods
+ * in ScalaTest's async styles. A `Future[Outcome]` is not used as this result type
+ * for two reasons. First, `Outcome` treats exceptions specially, and as a result
+ * methods on `Future` would usually not yield the desired `Future[Outcome]` result.
+ * Only run-aborting exceptions should result in a failed `Future[Outcome]`. Any other thrown exception
+ * other than `TestCanceledException` or `TestPendingException`
+ * should result in a successful`Future` containing a `org.scalatest.Failed`.
+ * A thrown `TestCanceledException` should result in a successful `Future`
+ * containing an `org.scalatest.Canceled`; A thrown `TestPendingException` should result in
+ * a successful `Future` containing a `org.scalatest.Pending`.
+ * If manipulating a `Future[Outcome]` directly, by contrast, any thrown exception would result in 
+ * a failed `Future`.
+ * 
  *
- * <p>
  * Additionally, to be consistent with corresponding transformations in traditional testing styles, 
  * methods registering callbacks should return a new future outcome that doesn't complete until
  * both the original future outcome has completed and the subsequent callback has completed execution.
  * Additionally, if the callback itself throws an exception, that exception should determine the result
  * of the future outcome returned by the callback registration method. This behavior is rather inconvenient
- * to obtain on the current <code>Future</code> API, so <code>FutureOutcome</code> provides well-named
+ * to obtain on the current `Future` API, so `FutureOutcome` provides well-named
  * methods that have this behavior.
- * </p>
- *
- * <p>
- * Lastly, the <code>FutureOutcome</code> is intended to help prevent confusion by eliminating the need
- * to work with types like <code>scala.util.Success(org.scalatest.Failed)</code>. For this purpose a
- * <code>org.scalactic.Or</code> is used instead of a <code>scala.util.Try</code> to describe results
- * of <code>FutureOutcome</code>.
- * </p>
- *
- * <p>
- * A <code>FutureOutcome</code> represents a computation that can result in an <code>Outcome</code> or an "abort." An abort means
- * that a run-aborting exception occurred during the computation. Any other, non-run-aborting exception will be represented
- * as an non-<code>Succeeded</code> <code>Outcome</code>: one of <code>Failed</code>, <code>Canceled</code>, or <code>Pending</code>.
- * </p>
  * 
- * <p>
- * The methods of <code>FutureOutcome</code> include the following callback registration methods:
- * </p>
+ *
+ * Lastly, the `FutureOutcome` is intended to help prevent confusion by eliminating the need
+ * to work with types like `scala.util.Success(org.scalatest.Failed)`. For this purpose a
+ * `org.scalactic.Or` is used instead of a `scala.util.Try` to describe results
+ * of `FutureOutcome`.
+ * 
+ *
+ * A `FutureOutcome` represents a computation that can result in an `Outcome` or an "abort." An abort means
+ * that a run-aborting exception occurred during the computation. Any other, non-run-aborting exception will be represented
+ * as an non-`Succeeded` `Outcome`: one of `Failed`, `Canceled`, or `Pending`.
+ * 
+ * 
+ * The methods of `FutureOutcome` include the following callback registration methods:
+ * 
  *
  * <ul>
- * <li><code>onSucceededThen</code> - registers a callback to be executed if the future outcome is <code>Succeeded</code>.</li>
- * <li><code>onFailedThen</code> - registers a callback to be executed if the future outcome is <code>Failed</code>.</li>
- * <li><code>onCanceledThen</code> - registers a callback to be executed if the future outcome is <code>Canceled</code>.</li>
- * <li><code>onPendingThen</code> - registers a callback to be executed if the future outcome is <code>Pending</code>.</li>
- * <li><code>onOutcomeThen</code> - registers a callback to be executed if the future outcome is actually an <code>Outcome</code>
+ * <li>`onSucceededThen` - registers a callback to be executed if the future outcome is `Succeeded`.</li>
+ * <li>`onFailedThen` - registers a callback to be executed if the future outcome is `Failed`.</li>
+ * <li>`onCanceledThen` - registers a callback to be executed if the future outcome is `Canceled`.</li>
+ * <li>`onPendingThen` - registers a callback to be executed if the future outcome is `Pending`.</li>
+ * <li>`onOutcomeThen` - registers a callback to be executed if the future outcome is actually an `Outcome`
  *      and not an abort.</li>
- * <li><code>onAbortedThen</code> - registers a callback to be executed if the future outcome aborts.</li>
- * <li><code>onCompletedThen</code> - registers a callback to be executed upon completion no matter how the future outcome completes.</li>
+ * <li>`onAbortedThen` - registers a callback to be executed if the future outcome aborts.</li>
+ * <li>`onCompletedThen` - registers a callback to be executed upon completion no matter how the future outcome completes.</li>
  * </ul>
  *
- * <p>
- * The callback methods listed previously can be used to perform a side effect once a <code>FutureOutcome</code> completes. To change an
- * <code>Outcome</code> into a different <code>Outcome</code> asynchronously, use the <code>change</code> registration method, which takes a function
- * from <code>Outcome</code> to <code>Outcome</code>. The other methods on <code>FutureOutcome</code>, <code>isCompleted</code> and
- * <code>value</code>, allow you to poll a <code>FutureOutcome</code>. None of the methods on <code>FutureOutcome</code> block.
- * Lastly, because an implicit <a href="enablers/Futuristic.html"><code>Futuristic</code></a> instance is provided for
- * <code>FutureOutcome</code>, you can use <a href="CompleteLastly.html"><code>complete</code>-<code>lastly</code> syntax</a>
- * with <code>FutureOutcome</code>.
- * </p>
+ * The callback methods listed previously can be used to perform a side effect once a `FutureOutcome` completes. To change an
+ * `Outcome` into a different `Outcome` asynchronously, use the `change` registration method, which takes a function
+ * from `Outcome` to `Outcome`. The other methods on `FutureOutcome`, `isCompleted` and
+ * `value`, allow you to poll a `FutureOutcome`. None of the methods on `FutureOutcome` block.
+ * Lastly, because an implicit <a href="enablers/Futuristic.html">`Futuristic`</a> instance is provided for
+ * `FutureOutcome`, you can use <a href="CompleteLastly.html">`complete`-`lastly` syntax</a>
+ * with `FutureOutcome`.
+ * 
  */
 class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
   // TODO: add tests for pretty toString
@@ -106,27 +100,25 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
    * Registers a callback function to be executed after this future completes, returning
    * a new future that completes only after the callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute when this <code>FutureOutcome</code> completes
+   * @param callback a side-effecting function to execute when this `FutureOutcome` completes
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
    *    and, subsequently, the passed callback function have completed execution.
    */
   def onCompletedThen(callback: (Outcome Or Throwable) => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
@@ -160,31 +152,29 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
 
   /**
    * Registers a callback function to be executed if this future completes with
-   * <code>Succeeded</code>, returning a new future that completes only after the
+   * `Succeeded`, returning a new future that completes only after the
    * callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute if and when this <code>FutureOutcome</code> completes with <code>Succeeded</code>
+   * @param callback a side-effecting function to execute if and when this `FutureOutcome` completes with `Succeeded`
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes with <code>Succeeded</code>, the
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes with `Succeeded`, the
    *    passed callback function has completed execution.
    */
   def onSucceededThen(callback: => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
@@ -208,31 +198,29 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
 
   /**
    * Registers a callback function to be executed if this future completes with
-   * <code>Failed</code>, returning a new future that completes only after the
+   * `Failed`, returning a new future that completes only after the
    * callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute if and when this <code>FutureOutcome</code> completes with <code>Failed</code>
+   * @param callback a side-effecting function to execute if and when this `FutureOutcome` completes with `Failed`
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes with <code>Failed</code>, the
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes with `Failed`, the
    *    passed callback function has completed execution.
    */
   def onFailedThen(callback: Throwable => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
@@ -259,31 +247,29 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
 
   /**
    * Registers a callback function to be executed if this future completes with
-   * <code>Canceled</code>, returning a new future that completes only after the
+   * `Canceled`, returning a new future that completes only after the
    * callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute if and when this <code>FutureOutcome</code> completes with <code>Canceled</code>
+   * @param callback a side-effecting function to execute if and when this `FutureOutcome` completes with `Canceled`
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes with <code>Canceled</code>, the
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes with `Canceled`, the
    *    passed callback function has completed execution.
    */
   def onCanceledThen(callback: TestCanceledException => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
@@ -310,31 +296,29 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
 
   /**
    * Registers a callback function to be executed if this future completes with
-   * <code>Pending</code>, returning a new future that completes only after the
+   * `Pending`, returning a new future that completes only after the
    * callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute if and when this <code>FutureOutcome</code> completes with <code>Pending</code>
+   * @param callback a side-effecting function to execute if and when this `FutureOutcome` completes with `Pending`
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes with <code>Pending</code>, the
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes with `Pending`, the
    *    passed callback function has completed execution.
    */
   def onPendingThen(callback: => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
@@ -358,32 +342,30 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
 
   /**
    * Registers a transformation function to be executed if this future completes with any
-   * <code>Outcome</code> (<em>i.e.</em>, no run-aborting exception is thrown), returning
-   * a new <code>FutureOutcome</code> representing the result of passing
-   * this <code>FutureOutcome</code>'s <code>Outcome</code> result to the given transformation function.
+   * `Outcome` (''i.e.'', no run-aborting exception is thrown), returning
+   * a new `FutureOutcome` representing the result of passing
+   * this `FutureOutcome`'s `Outcome` result to the given transformation function.
    *
-   * <p>
-   * If the passed function completes abruptly with an exception, the resulting <code>FutureOutcome</code>
+   * If the passed function completes abruptly with an exception, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param f a transformation function to execute if and when this <code>FutureOutcome</code> completes with an <code>Outcome</code>
+   * @param f a transformation function to execute if and when this `FutureOutcome` completes with an `Outcome`
    * @param executionContext an execution context that provides a strategy for executing the transformation function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes with a valid
-   *    <code>Outcome</code>, the passed callback function has completed execution.
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes with a valid
+   *    `Outcome`, the passed callback function has completed execution.
    */
   def change(f: Outcome => Outcome)(implicit executionContext: ExecutionContext): FutureOutcome = {
     FutureOutcome {
@@ -404,28 +386,26 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
    * a run-aborting exception was thrown, returning a new future that completes only after the
    * callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute if and when this <code>FutureOutcome</code> completes with an abort.
+   * @param callback a side-effecting function to execute if and when this `FutureOutcome` completes with an abort.
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes abnormally with
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes abnormally with
    *    a run-aborting exception, the passed callback function has completed execution.
    */
   def onAbortedThen(callback: Throwable => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
@@ -448,33 +428,31 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
 
   /**
    * Registers a callback function to be executed if this future completes with any
-   * <code>Outcome</code> (<em>i.e.</em>, no run-aborting exception is thrown), returning
+   * `Outcome` (''i.e.'', no run-aborting exception is thrown), returning
    * a new future that completes only after the callback has finished execution.
    *
-   * <p>
-   * The resulting <code>FutureOutcome</code> will have the same result as this <code>FutureOutcome</code>, unless
-   * the callback completes abruptly with an exception. In that case, the resulting <code>FutureOutcome</code>
+   * The resulting `FutureOutcome` will have the same result as this `FutureOutcome`, unless
+   * the callback completes abruptly with an exception. In that case, the resulting `FutureOutcome`
    * will be determined by the type of the thrown exception:
-   * </p>
+   * 
    *
    * <ul>
-   * <li><code>TestPendingException</code></li> - <code>Good(Pending)</code>
-   * <li><code>TestCanceledException</code></li> - <code>Good(Canceled(&lt;the exception&gt;))</code>
-   * <li>Any non-run-aborting <code>Throwable</code></li> - <code>Good(Failed(&lt;the exception&gt;))</code>
-   * <li>A run-aborting <code>Throwable</code></li> - <code>Bad(&lt;the run-aborting exception&gt;)</code>
+   * <li>`TestPendingException`</li> - `Good(Pending)`
+   * <li>`TestCanceledException`</li> - `Good(Canceled(&lt;the exception&gt;))`
+   * <li>Any non-run-aborting `Throwable`</li> - `Good(Failed(&lt;the exception&gt;))`
+   * <li>A run-aborting `Throwable`</li> - `Bad(&lt;the run-aborting exception&gt;)`
    * </ul>
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @param callback a side-effecting function to execute if and when this <code>FutureOutcome</code> completes with an <code>Outcome</code>
-   *    (<em>i.e.</em>, not an abort)
+   * @param callback a side-effecting function to execute if and when this `FutureOutcome` completes with an `Outcome`
+   *    (''i.e.'', not an abort)
    * @param executionContext an execution context that provides a strategy for executing the callback function
-   * @return a new <code>FutureOutcome</code> that will complete only after this <code>FutureOutcome</code>
-   *    has completed and, if this <code>FutureOutcome</code> completes with a valid
-   *    <code>Outcome</code>, the passed callback function has completed execution.
+   * @return a new `FutureOutcome` that will complete only after this `FutureOutcome`
+   *    has completed and, if this `FutureOutcome` completes with a valid
+   *    `Outcome`, the passed callback function has completed execution.
    */
   def onOutcomeThen(callback: Outcome => Unit)(implicit executionContext: ExecutionContext): FutureOutcome = {
     FutureOutcome {
@@ -494,35 +472,32 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
   }
 
   /**
-   * Indicates whether this <code>FutureOutcome</code> has completed.
+   * Indicates whether this `FutureOutcome` has completed.
    *
-   * <p>
    * This method does not block.
-   * </p>
+   * 
    *
-   * @return <code>true</code> if this <code>FutureOutcome</code> has completed; <code>false</code> otherwise.
+   * @return `true` if this `FutureOutcome` has completed; `false` otherwise.
    */
   def isCompleted: Boolean = underlying.isCompleted
 
   /**
-   * Returns a value that indicates whether this <code>FutureOutcome</code> has completed,
+   * Returns a value that indicates whether this `FutureOutcome` has completed,
    * and if so, indicates its result.
    *
-   * <p>
-   * If this <code>FutureOutcome</code> has not yet completed, this method will return
-   * <code>None</code>. Otherwise, this method will return a <code>Some</code> that contains
-   * either a <code>Good[Outcome]</code>, if this <code>FutureOutcome</code> completed with
-   * a valid <code>Outcome</code> result, or if it completed with a thrown run-aborting
-   * exception, a <code>Bad[Throwable]</code>.
-   * </p>
+   * If this `FutureOutcome` has not yet completed, this method will return
+   * `None`. Otherwise, this method will return a `Some` that contains
+   * either a `Good[Outcome]`, if this `FutureOutcome` completed with
+   * a valid `Outcome` result, or if it completed with a thrown run-aborting
+   * exception, a `Bad[Throwable]`.
+   * 
    *
-   * <p>
-   * For more information on <em>run-aborting</em> exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
-   * in the main Scaladoc for trait <code>Suite</code>.
-   * </p>
+   * For more information on ''run-aborting'' exceptions, see the <a href="Suite.html#errorHandling">Run-aborting exceptions</a> section
+   * in the main Scaladoc for trait `Suite`.
+   * 
    *
-   * @return a <code>Some</code> containing an <code>Or</code> value that indicates the result of this
-   *    <code>FutureOutcome</code> if it has completed; <code>None</code> otherwise.
+   * @return a `Some` containing an `Or` value that indicates the result of this
+   *    `FutureOutcome` if it has completed; `None` otherwise.
    */
   def value: Option[Outcome Or Throwable] =
     underlying.value match {
@@ -532,16 +507,16 @@ class FutureOutcome(private[scalatest] val underlying: Future[Outcome]) {
     }
 
   /**
-   * Converts this <code>FutureOutcome</code> to a <code>Future[Outcome]</code>.
+   * Converts this `FutureOutcome` to a `Future[Outcome]`.
    *
-   * @return the underlying <code>Future[Outcome]</code>
+   * @return the underlying `Future[Outcome]`
    */
   def toFuture: Future[Outcome] = underlying
 }
 
 /**
- * Companion object to <code>FutureOutcomes</code> that contains factory methods for creating already-completed
- * <code>FutureOutcomes</code>.
+ * Companion object to `FutureOutcomes` that contains factory methods for creating already-completed
+ * `FutureOutcomes`.
  */
 object FutureOutcome {
   // Make this private so only ScalaTest can make one, so we can "promise" that
@@ -550,81 +525,81 @@ object FutureOutcome {
   private[scalatest] def apply(underlying: Future[Outcome]): FutureOutcome = new FutureOutcome(underlying)
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Canceled</code> result.
+   * Factory method that creates an already completed `FutureOutcome` with a `Canceled` result.
    */
   def canceled(): FutureOutcome =
     FutureOutcome { Future.successful(Canceled()) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Canceled</code> result
-   * whose <code>TestCanceledException</code> contains the specified message.
+   * Factory method that creates an already completed `FutureOutcome` with a `Canceled` result
+   * whose `TestCanceledException` contains the specified message.
    *
-   * @message the message string to include in the <code>Canceled</code>'s <code>TestCanceledException</code>.
+   * @message the message string to include in the `Canceled`'s `TestCanceledException`.
    */
   def canceled(message: String): FutureOutcome =
     FutureOutcome { Future.successful(Canceled(message)) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Canceled</code> result
-   * whose <code>TestCanceledException</code> contains the specified cause.
+   * Factory method that creates an already completed `FutureOutcome` with a `Canceled` result
+   * whose `TestCanceledException` contains the specified cause.
    *
-   * @cause exception to include as the <code>Canceled</code>'s <code>TestCanceledException</code> cause.
+   * @cause exception to include as the `Canceled`'s `TestCanceledException` cause.
    */
   def canceled(cause: Throwable): FutureOutcome =
     FutureOutcome { Future.successful(Canceled(cause)) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Canceled</code> result
-   * whose <code>TestCanceledException</code> contains the specified message and cause.
+   * Factory method that creates an already completed `FutureOutcome` with a `Canceled` result
+   * whose `TestCanceledException` contains the specified message and cause.
    *
-   * @message the message string to include in the <code>Canceled</code>'s <code>TestCanceledException</code>.
-   * @cause exception to include as the <code>Canceled</code>'s <code>TestCanceledException</code> cause.
+   * @message the message string to include in the `Canceled`'s `TestCanceledException`.
+   * @cause exception to include as the `Canceled`'s `TestCanceledException` cause.
    */
   def canceled(message: String, cause: Throwable) =
     FutureOutcome { Future.successful(Canceled(message, cause)) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Succeeded</code> result.
+   * Factory method that creates an already completed `FutureOutcome` with a `Succeeded` result.
    */
   def succeeded: FutureOutcome =
     FutureOutcome { Future.successful(Succeeded) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Failed</code> result.
+   * Factory method that creates an already completed `FutureOutcome` with a `Failed` result.
    */
   def failed(): FutureOutcome =
     FutureOutcome { Future.successful(Failed()) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Failed</code> result
-   * containing a <code>TestFailedException</code> with the specified message.
+   * Factory method that creates an already completed `FutureOutcome` with a `Failed` result
+   * containing a `TestFailedException` with the specified message.
    *
-   * @message the message string to include in the <code>Failed</code>'s <code>TestFailedException</code>.
+   * @message the message string to include in the `Failed`'s `TestFailedException`.
    */
   def failed(message: String): FutureOutcome =
     FutureOutcome { Future.successful(Failed(message)) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Failed</code> result
-   * containing a <code>TestFailedException</code> with the specified message and cause.
+   * Factory method that creates an already completed `FutureOutcome` with a `Failed` result
+   * containing a `TestFailedException` with the specified message and cause.
    *
-   * @message the message string to include in the <code>Failed</code>'s <code>TestFailedException</code>.
-   * @cause exception to include as the <code>Failed</code>'s <code>TestFailedException</code> cause.
+   * @message the message string to include in the `Failed`'s `TestFailedException`.
+   * @cause exception to include as the `Failed`'s `TestFailedException` cause.
    */
   def failed(message: String, cause: Throwable) =
     FutureOutcome { Future.successful(Failed(message, cause)) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Failed</code> result
-   * containing a <code>TestFailedException</code> with the specified cause.
+   * Factory method that creates an already completed `FutureOutcome` with a `Failed` result
+   * containing a `TestFailedException` with the specified cause.
    *
-   * @cause exception to include as the <code>Failed</code>'s <code>TestFailedException</code> cause.
+   * @cause exception to include as the `Failed`'s `TestFailedException` cause.
    */
   def failed(cause: Throwable): FutureOutcome =
     FutureOutcome { Future.successful(Failed(cause)) }
 
   /**
-   * Factory method that creates an already completed <code>FutureOutcome</code> with a <code>Pending</code> result.
+   * Factory method that creates an already completed `FutureOutcome` with a `Pending` result.
    */
   def pending: FutureOutcome =
     FutureOutcome { Future.successful(Pending) }

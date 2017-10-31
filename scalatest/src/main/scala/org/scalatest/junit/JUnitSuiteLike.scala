@@ -27,22 +27,20 @@ import Suite.wrapReporterIfNecessary
 import collection.immutable.TreeSet
 
 /**
- * Implementation trait for class <code>JUnitSuite</code>, which represents
+ * Implementation trait for class `JUnitSuite`, which represents
  * a suite of tests that can be run with either JUnit or ScalaTest.
  * 
- * <p>
- * <a href="JUnitSuite.html"><code>JUnitSuite</code></a> is a class, not a
+ * <a href="JUnitSuite.html">`JUnitSuite`</a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
- * behavior of <code>JUnitSuite</code> into some other class, you can use this
- * trait instead, because class <code>JUnitSuite</code> does nothing more than
+ * behavior of `JUnitSuite` into some other class, you can use this
+ * trait instead, because class `JUnitSuite` does nothing more than
  * extend this trait.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="JUnitSuite.html">detailed
- * overview of <code>JUnitSuite</code></a>.
- * </p>
+ * overview of `JUnitSuite`</a>.
+ * 
  *
  * @author Bill Venners
  */
@@ -52,18 +50,17 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   @volatile private var theTracker = new Tracker
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * trait, given this trait's <code>run</code> method delegates to JUnit to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * trait, given this trait's `run` method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
-   * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
+   * to mix in a trait that overrides `runNestedSuites`. Because this
+   * trait does not actually use `runNestedSuites`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -73,20 +70,19 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   }
   
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * trait, given this trait's <code>run</code> method delegates to JUnit to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * trait, given this trait's `run` method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTests</code>. Because this
-   * trait does not actually use <code>runTests</code>, the attempt to mix
+   * to mix in a trait that overrides `runTests`. Because this
+   * trait does not actually use `runTests`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -95,19 +91,18 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   }
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * trait, given this traits's <code>run</code> method delegates to JUnit to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * trait, given this traits's `run` method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTest</code>. Because this
-   * trait does not actually use <code>runTest</code>, the attempt to mix
+   * to mix in a trait that overrides `runTest`. Because this
+   * trait does not actually use `runTest`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -116,15 +111,14 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   }
 
   /**
-   * Returns the set of test names that will be executed by JUnit when <code>run</code> is invoked
+   * Returns the set of test names that will be executed by JUnit when `run` is invoked
    * on an instance of this class, or the instance is passed directly to JUnit for running.
    *
-   * <p>
-   * The iterator obtained by invoking <code>elements</code> on this
-   * returned <code>Set</code> will produce the test names in their <em>natural order</em>, as determined by <code>String</code>'s
-   * <code>compareTo</code> method. Nevertheless, this method is not consulted by JUnit when it
+   * The iterator obtained by invoking `elements` on this
+   * returned `Set` will produce the test names in their ''natural order'', as determined by `String`'s
+   * `compareTo` method. Nevertheless, this method is not consulted by JUnit when it
    * runs the tests, and JUnit may run the tests in any order.
-   * </p>
+   * 
    */
   override def testNames: Set[String] = {
 
@@ -151,17 +145,16 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   }
 
   /**
-   * Returns the number of tests expected to be run by JUnit when <code>run</code> is invoked
-   * on this <code>JUnitSuite</code>.
+   * Returns the number of tests expected to be run by JUnit when `run` is invoked
+   * on this `JUnitSuite`.
    *
-   * <p>
-   * If <code>tagsToInclude</code> in the passed <code>Filter</code> is defined, this class's
+   * If `tagsToInclude` in the passed `Filter` is defined, this class's
    * implementation of this method returns 0. Else this class's implementation of this method
-   * returns the size of the set returned by <code>testNames</code> on the current instance,
-   * less the number of tests that were annotated with <code>org.junit.Ignore</code>.
-   * </p>
+   * returns the size of the set returned by `testNames` on the current instance,
+   * less the number of tests that were annotated with `org.junit.Ignore`.
+   * 
    *
-   * @param filter a <code>Filter</code> for test filtering
+   * @param filter a `Filter` for test filtering
    * @return number of expected test count
    */
   override def expectedTestCount(filter: Filter) =
@@ -188,9 +181,9 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   /**
    * Overrides to retrieve suite and test tags from annotations.
    *
-   * @param testName the name of the test for which to return a <code>TestData</code> instance
-   * @param theConfigMap the config map to include in the returned <code>TestData</code>
-   * @return a <code>TestData</code> instance for the specified test, which includes the specified config map
+   * @param testName the name of the test for which to return a `TestData` instance
+   * @param theConfigMap the config map to include in the returned `TestData`
+   * @return a `TestData` instance for the specified test, which includes the specified config map
    */
   override def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = {
     val suiteTags = for { 
@@ -221,10 +214,10 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   /**
    * Overrides to use JUnit 4 to run the test(s).
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
    *
    */
   override def run(testName: Option[String], args: Args): Status = {
@@ -254,7 +247,7 @@ trait JUnitSuiteLike extends Suite with AssertionsForJUnit { thisSuite =>
   /**
    * Suite style name.
    *
-   * @return <code>JUnitSuite</code>
+   * @return `JUnitSuite`
    */
   final override val styleName: String = "JUnitSuite"
 

@@ -18,18 +18,16 @@ package org.scalatest.concurrent
 import java.net.Socket
 
 /**
- * Strategy for signaling an operation in which <code>close</code> is called on the <code>java.net.Socket</code> passed to
+ * Strategy for signaling an operation in which `close` is called on the `java.net.Socket` passed to
  * the constructor.
  *
- * <p>
- * This class can be used for configuration when using traits <a href="TimeLimits.html"><code>TimeLimits</code></a>
- * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
+ * This class can be used for configuration when using traits <a href="TimeLimits.html">`TimeLimits`</a>
+ * and <a href="TimeLimitedTests.html">`TimeLimitedTests`</a>.
  */
 class SocketSignaler(socket: Socket) extends Signaler {
 
   /**
-   * Invokes <code>close</code> on the <code>java.net.Socket</code> passed to this class's constructor.
+   * Invokes `close` on the `java.net.Socket` passed to this class's constructor.
    *
    * @param testThread unused by this strategy
    */
@@ -39,14 +37,14 @@ class SocketSignaler(socket: Socket) extends Signaler {
 }
 
 /**
- * Companion object that provides a factory method for a <code>SocketSignaler</code>.
+ * Companion object that provides a factory method for a `SocketSignaler`.
  */
 object SocketSignaler {
 
   /**
-   * Factory method for a <code>SocketSignaler</code>.
+   * Factory method for a `SocketSignaler`.
    *
-   * @param socket the <code>java.net.Socket</code> to pass to the <code>SocketSignaler</code> constructor
+   * @param socket the `java.net.Socket` to pass to the `SocketSignaler` constructor
    */
   def apply(socket: Socket) = new SocketSignaler(socket)
 }

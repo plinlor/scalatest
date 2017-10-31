@@ -27,33 +27,30 @@ import org.scalactic.source
 /**
  * Offers two methods for transforming futures when exceptions are expected.
  *
- * <p>
  * This trait offers two methods for testing for expected exceptions in the context of
- * futures: <code>recoverToSucceededIf</code> and <code>recoverToExceptionIf</code>.
- * Because this trait is mixed into trait <code>AsyncTestSuite</code>, both of its methods are
+ * futures: `recoverToSucceededIf` and `recoverToExceptionIf`.
+ * Because this trait is mixed into trait `AsyncTestSuite`, both of its methods are
  * available by default in any async-style suite.
- * </p>
+ * 
  *
- * <p>
  * If you just want to ensure that a future fails with a particular exception type, and do
- * not need to inspect the exception further, use <code>recoverToSucceededIf</code>:
- * </p>
+ * not need to inspect the exception further, use `recoverToSucceededIf`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * recoverToSucceededIf[IllegalStateException] { // Result type: Future[Assertion]
  *   emptyStackActor ? Peek
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>recoverToSucceededIf</code> method performs a job similar to
- * <a href="Assertions.html#expectedExceptions"><code>assertThrows</code></a>, except
- * in the context of a future. It transforms a <code>Future</code> of any type into a
- * <code>Future[Assertion]</code> that succeeds only if the original future fails with the specified
+ * The `recoverToSucceededIf` method performs a job similar to
+ * <a href="Assertions.html#expectedExceptions">`assertThrows`</a>, except
+ * in the context of a future. It transforms a `Future` of any type into a
+ * `Future[Assertion]` that succeeds only if the original future fails with the specified
  * exception. Here's an example in the REPL:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import org.scalatest.RecoverMethods._
  * import org.scalatest.RecoverMethods._
  * 
@@ -70,13 +67,12 @@ import org.scalactic.source
  * 
  * scala&gt; res0.value
  * res1: Option[scala.util.Try[org.scalatest.Assertion]] = Some(Success(Succeeded))
- * </pre>
+ * }}}
  * 
- * <p>
- * Otherwise it fails with an error message similar to those given by <code>assertThrows</code>:
- * </p>
+ * Otherwise it fails with an error message similar to those given by `assertThrows`:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; recoverToSucceededIf[IllegalStateException] {
  *      |   Future { throw new RuntimeException }
  *      | }
@@ -97,30 +93,28 @@ import org.scalactic.source
  * res5: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: Expected exception
  *       java.lang.IllegalStateException to be thrown, but no exception was thrown))
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>recoverToExceptionIf</code> method differs from the <code>recoverToSucceededIf</code> in
- * its behavior when the assertion succeeds: <code>recoverToSucceededIf</code> yields a <code>Future[Assertion]</code>,
- * whereas <code>recoverToExceptionIf</code> yields a <code>Future[T]</code>, where <code>T</code> is the
+ * The `recoverToExceptionIf` method differs from the `recoverToSucceededIf` in
+ * its behavior when the assertion succeeds: `recoverToSucceededIf` yields a `Future[Assertion]`,
+ * whereas `recoverToExceptionIf` yields a `Future[T]`, where `T` is the
  * expected exception type.
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * recoverToExceptionIf[IllegalStateException] { // Result type: Future[IllegalStateException]
  *   emptyStackActor ? Peek
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * In other words, <code>recoverToExpectionIf</code> is to
- * <a href="Assertions.html#expectedExceptions"><code>intercept</code></a> as
- * <code>recovertToSucceededIf</code> is to <code>assertThrows</code>. The first one allows you to perform further
+ * In other words, `recoverToExpectionIf` is to
+ * <a href="Assertions.html#expectedExceptions">`intercept`</a> as
+ * `recovertToSucceededIf` is to `assertThrows`. The first one allows you to perform further
  * assertions on the expected exception. The second one gives you a result type that will satisfy the type checker
- * at the end of the test body. Here's an example showing <code>recoverToExceptionIf</code> in the REPL:
- * </p>
+ * at the end of the test body. Here's an example showing `recoverToExceptionIf` in the REPL:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; val futureEx =
  *      |   recoverToExceptionIf[IllegalStateException] {
  *      |     Future { throw new IllegalStateException("hello") }
@@ -137,24 +131,23 @@ import org.scalactic.source
  * scala&gt; res7.value
  * res8: Option[scala.util.Try[org.scalatest.Assertion]] =
  *     Some(Failure(org.scalatest.exceptions.TestFailedException: "[hello]" did not equal "[world]"))
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 trait RecoverMethods {
 
   /**
-   * Transforms a future of any type into a <code>Future[T]</code>, where <code>T</code> is a given
+   * Transforms a future of any type into a `Future[T]`, where `T` is a given
    * expected exception type, which succeeds if the given future
-   * completes with a <code>Failure</code> containing the specified exception type.
+   * completes with a `Failure` containing the specified exception type.
    *
-   * <p>
    * See the main documentation for this trait for more detail and examples.
-   * </p>
+   * 
    *
    * @param future A future of any type, which you expect to fail with an exception of the specified type T
    * @return a Future[T] containing on success the expected exception, or containing on failure
-   *   a <code>TestFailedException</code>
+   *   a `TestFailedException`
    */
   def recoverToExceptionIf[T <: AnyRef](future: Future[Any])(implicit classTag: ClassTag[T], exCtx: ExecutionContext, pos: source.Position): Future[T] = {
     val clazz = classTag.runtimeClass
@@ -174,16 +167,15 @@ trait RecoverMethods {
   }
 
   /**
-   * Transforms a future of any type into a <code>Future[Assertion]</code> that succeeds if the future
-   * completes with a <code>Failure</code> containing the specified exception type.
+   * Transforms a future of any type into a `Future[Assertion]` that succeeds if the future
+   * completes with a `Failure` containing the specified exception type.
    *
-   * <p>
    * See the main documentation for this trait for more detail and examples.
-   * </p>
+   * 
    *
    * @param future A future of any type, which you expect to fail with an exception of the specified type T
-   * @return a Future[Assertion] containing on success the <code>Succeeded</code> singleton, or containing on failure
-   *   a <code>TestFailedException</code>
+   * @return a Future[Assertion] containing on success the `Succeeded` singleton, or containing on failure
+   *   a `TestFailedException`
    */
   def recoverToSucceededIf[T <: AnyRef](future: Future[Any])(implicit classTag: ClassTag[T], exCtx: ExecutionContext, pos: source.Position): Future[Assertion] = {
     val clazz = classTag.runtimeClass
@@ -212,8 +204,8 @@ trait RecoverMethods {
 }
 
 /**
- * Companion object that facilitates the importing of <code>RecoverMethods</code>'s method as 
- * an alternative to mixing it in. One use case is to import <code>RecoverMethods</code>'s method so you can use
+ * Companion object that facilitates the importing of `RecoverMethods`'s method as 
+ * an alternative to mixing it in. One use case is to import `RecoverMethods`'s method so you can use
  * it in the Scala interpreter.
  *
  * @author Bill Venners

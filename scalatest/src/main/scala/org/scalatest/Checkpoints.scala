@@ -21,71 +21,64 @@ import org.scalatest.exceptions._
 import org.scalactic._
 
 /**
- * Trait providing class <code>Checkpoint</code>, which enables multiple assertions
+ * Trait providing class `Checkpoint`, which enables multiple assertions
  * to be performed within a test, with any failures accumulated and reported
  * together at the end of the test.
  *
- * <p>
  * Because ScalaTest uses exceptions to signal failed assertions, normally execution
  * of a test will stop as soon as the first failed assertion is encountered. Trait
- * <code>Checkpoints</code> provides an option when you want to continue executing
+ * `Checkpoints` provides an option when you want to continue executing
  * the remainder of the test body, or part of it, even if an assertion has already failed in that test.
- * </p>
- * <p>
- * To use a <code>Checkpoint</code> (once you've mixed in or imported the members of trait
- * <code>Checkpoints</code>), you first need to create one, like this:
- * </p>
+ * 
+ * To use a `Checkpoint` (once you've mixed in or imported the members of trait
+ * `Checkpoints`), you first need to create one, like this:
+ * 
  *
- * <pre>
+ * {{{
  * val cp = new Checkpoint
- * </pre>
+ * }}}
  *
- * <p>
- * Then give the <code>Checkpoint</code> assertions to execute by passing them (via a by-name parameter)
- * to its <code>apply</code> method, like this:
- * </p>
+ * Then give the `Checkpoint` assertions to execute by passing them (via a by-name parameter)
+ * to its `apply` method, like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val (x, y) = (1, 2)
  * cp { x should be &lt; 0 }
  * cp { y should be &gt; 9 }
- * </pre>
+ * }}}
  *
- * <p>
- * Both of the above assertions will fail, but it won't be reported yet. The <code>Checkpoint</code> will execute them
- * right away, each time its <code>apply</code> method is invoked. But it will catch the <code>TestFailedExceptions</code> and
- * save them, only reporting them later when <code>reportAll</code> is invoked. Thus, at the end of the test, you must call
- * <code>reportAll</code>, like this:
- * </p>
- *
- * <pre>
- * cp.reportAll()
- * </pre>
+ * Both of the above assertions will fail, but it won't be reported yet. The `Checkpoint` will execute them
+ * right away, each time its `apply` method is invoked. But it will catch the `TestFailedExceptions` and
+ * save them, only reporting them later when `reportAll` is invoked. Thus, at the end of the test, you must call
+ * `reportAll`, like this:
  * 
- * <p>
- * This <code>reportAll</code> invocation will complete abruptly with a <code>TestFailedException</code> whose message
- * includes the message, source file, and line number of each of the checkpointed assertions that previously failed. For example:
- * </p>
  *
- * <pre>
+ * {{{
+ * cp.reportAll()
+ * }}}
+ * 
+ * This `reportAll` invocation will complete abruptly with a `TestFailedException` whose message
+ * includes the message, source file, and line number of each of the checkpointed assertions that previously failed. For example:
+ * 
+ *
+ * {{{
  * 1 was not less than 0 (in Checkpoint) at ExampleSpec.scala:12
  * 2 was not greater than 9 (in Checkpoint) at ExampleSpec.scala:13
- * </pre>
+ * }}}
  *
- * <p>
- * Make sure you invoke <code>reportAll</code> before the test completes, otherwise any failures that were detected by the
- * <code>Checkpoint</code> will not be reported.
- * </p>
+ * Make sure you invoke `reportAll` before the test completes, otherwise any failures that were detected by the
+ * `Checkpoint` will not be reported.
+ * 
  *
- * <p>
- * Note that a <code>Checkpoint</code> will catch and record for later reporting (via <code>reportAll</code>) exceptions that mix in <code>StackDepth</code>
- * except for <code>TestCanceledException</code>, <code>TestRegistrationClosedException</code>, <code>NotAllowedException</code>,
- * and <code>DuplicateTestNameException</code>. If a block of code passed to a <code>Checkpoint</code>'s <code>apply</code> method completes
- * abruptly with any of the <code>StackDepth</code> exceptions in the previous list, or any non-<code>StackDepth</code> exception, that invocation
- * of the <code>apply</code> method will complete abruptly with the same exception immediately. Unless you put <code>reportAll</code> in a finally
+ * Note that a `Checkpoint` will catch and record for later reporting (via `reportAll`) exceptions that mix in `StackDepth`
+ * except for `TestCanceledException`, `TestRegistrationClosedException`, `NotAllowedException`,
+ * and `DuplicateTestNameException`. If a block of code passed to a `Checkpoint`'s `apply` method completes
+ * abruptly with any of the `StackDepth` exceptions in the previous list, or any non-`StackDepth` exception, that invocation
+ * of the `apply` method will complete abruptly with the same exception immediately. Unless you put `reportAll` in a finally
  * clause and handle this case, such an unexpected exception will cause you to lose any information about assertions that failed earlier in the test and were
- * recorded by the <code>Checkpoint</code>.
- * </p>
+ * recorded by the `Checkpoint`.
+ * 
  *
  * @author Bill Venners
  * @author George Berger
@@ -96,9 +89,8 @@ trait Checkpoints {
    * Class that allows multiple assertions to be performed within a test, with any
    * failures accumulated and reported together at the end of the test.
    * 
-   * <p>
-   * See the main documentation for trait <code>Checkpoints</code> for more information and an example.
-   * </p>
+   * See the main documentation for trait `Checkpoints` for more information and an example.
+   * 
    */
   class Checkpoint {
     private final val failures: ConcurrentLinkedQueue[Throwable with StackDepth] =
@@ -115,15 +107,14 @@ trait Checkpoints {
       }
 
     /**
-     * Executes the passed block of code and catches and records for later reporting (via <code>reportAll</code>) any exceptions that mix in <code>StackDepth</code>
-     * except for <code>TestCanceledException</code>, <code>TestRegistrationClosedException </code>, <code>NotAllowedException </code>,
-     * and <code>DuplicateTestNameException </code>.
+     * Executes the passed block of code and catches and records for later reporting (via `reportAll`) any exceptions that mix in `StackDepth`
+     * except for `TestCanceledException`, `TestRegistrationClosedException `, `NotAllowedException `,
+     * and `DuplicateTestNameException `.
      * 
-     * <p>
-     * If the block of code completes abruptly with any of the <code>StackDepth</code> exceptions in the
-     * previous list, or any non-<code>StackDepth</code> exception, that invocation of this <code>apply</code> method will complete abruptly
+     * If the block of code completes abruptly with any of the `StackDepth` exceptions in the
+     * previous list, or any non-`StackDepth` exception, that invocation of this `apply` method will complete abruptly
      * with the same exception.
-     * </p>
+     * 
      *
      * @param f the block of code, likely containing one or more assertions, to execute
      */
@@ -142,7 +133,7 @@ trait Checkpoints {
     }
 
     /**
-     * If any failures were caught by checkpoints, throws a <code>TestFailedException</code>
+     * If any failures were caught by checkpoints, throws a `TestFailedException`
      * whose detail message lists the failure messages and line numbers from each of the
      * failed checkpoints.
      */
@@ -162,8 +153,8 @@ trait Checkpoints {
 }
 
 /**
- * Companion object that facilitates the importing the members of trait <code>Checkpoints</code> as 
- * an alternative to mixing it in. One use case is to import <code>Checkpoints</code> so you can use
+ * Companion object that facilitates the importing the members of trait `Checkpoints` as 
+ * an alternative to mixing it in. One use case is to import `Checkpoints` so you can use
  * it in the Scala interpreter.
  *
  * @author Bill Venners

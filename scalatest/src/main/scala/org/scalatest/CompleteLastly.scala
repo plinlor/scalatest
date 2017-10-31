@@ -18,46 +18,42 @@ package org.scalatest
 import enablers.Futuristic
 
 /**
- * Trait that provides a <code>complete</code>-<code>lastly</code> construct, which ensures
- * cleanup code in <code>lastly</code> is executed whether the code passed to <code>complete</code>
- * completes abruptly with an exception or successfully results in a <code>Future</code>,
- * <a href="FutureOutcome.html"><code>FutureOutcome</code></a>, or other type with an
- * implicit <a href="enablers/Futuristic.html"><code>Futuristic</code></a> instance.
+ * Trait that provides a `complete`-`lastly` construct, which ensures
+ * cleanup code in `lastly` is executed whether the code passed to `complete`
+ * completes abruptly with an exception or successfully results in a `Future`,
+ * <a href="FutureOutcome.html">`FutureOutcome`</a>, or other type with an
+ * implicit <a href="enablers/Futuristic.html">`Futuristic`</a> instance.
  *
- * <p>
  * This trait is mixed into ScalaTest's async testing styles, to make it easy to ensure
- * cleanup code will execute whether code that produces a "futuristic" value (any type <code>F</code>
- * for which a <code>Futuristic[F]</code> instance is implicitly available). ScalaTest provides
- * implicit <code>Futuristic</code> instances for <code>Future[T]</code> for any type <code>T</code>
- * and <code>FutureOutcome</code>.
- * </p>
+ * cleanup code will execute whether code that produces a "futuristic" value (any type `F`
+ * for which a `Futuristic[F]` instance is implicitly available). ScalaTest provides
+ * implicit `Futuristic` instances for `Future[T]` for any type `T`
+ * and `FutureOutcome`.
+ * 
  *
- * <p>
- * If the future-producing code passed to <code>complete</code> throws an
- * exception, the cleanup code passed to <code>lastly</code> will be executed immediately, and the same exception will
- * be rethrown, unless the code passed to <code>lastly</code> also completes abruptly with an exception. In that case,
- * <code>complete</code>-<code>lastly</code> will complete abruptly with the exception thrown by the code passed to
- * <code>lastly</code> (this mimics the behavior of <code>finally</code>).
- * </p>
+ * If the future-producing code passed to `complete` throws an
+ * exception, the cleanup code passed to `lastly` will be executed immediately, and the same exception will
+ * be rethrown, unless the code passed to `lastly` also completes abruptly with an exception. In that case,
+ * `complete`-`lastly` will complete abruptly with the exception thrown by the code passed to
+ * `lastly` (this mimics the behavior of `finally`).
+ * 
  *
- * <p>
- * Otherwise, if the code passed to <code>complete</code> successfully returns a <code>Future</code> (or other "futuristic" type),
- * <code>complete</code>-<code>lastly</code>
+ * Otherwise, if the code passed to `complete` successfully returns a `Future` (or other "futuristic" type),
+ * `complete`-`lastly`
  * will register the cleanup code to be performed once the future completes and return a new future that will complete
- * once the original future completes <em>and</em> the subsequent cleanup code has completed execution. The future returned by
- * <code>complete</code>-<code>lastly</code> will have the same result as the original future passed to <code>complete</code>,
- * unless the cleanup code throws an exception. If the cleanup code passed to <code>lastly</code> throws
- * an exception, the future returned by <code>lastly</code> will fail with that exception.
- * </p>
+ * once the original future completes ''and'' the subsequent cleanup code has completed execution. The future returned by
+ * `complete`-`lastly` will have the same result as the original future passed to `complete`,
+ * unless the cleanup code throws an exception. If the cleanup code passed to `lastly` throws
+ * an exception, the future returned by `lastly` will fail with that exception.
+ * 
  *
- * <p>
- * The <code>complete</code>-<code>lastly</code> syntax is intended to be used to ensure cleanup code is executed
- * in async testing styles like <code>try</code>-<code>finally</code> is used in traditional testing styles.
- * Here's an example of <code>complete</code>-<code>lastly</code>
- * used in <code>withFixture</code> in an async testing style:
- * </p>
+ * The `complete`-`lastly` syntax is intended to be used to ensure cleanup code is executed
+ * in async testing styles like `try`-`finally` is used in traditional testing styles.
+ * Here's an example of `complete`-`lastly`
+ * used in `withFixture` in an async testing style:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // Your implementation
  * override def withFixture(test: NoArgAsyncTest) = {
  *
@@ -69,12 +65,12 @@ import enablers.Futuristic
  *     // Perform cleanup here
  *   }
  * }
- * </pre>
+ * }}}
  */
 trait CompleteLastly {
 
   /**
-   * Class that provides the <code>lastly</code> method of the <code>complete</code>-<code>lastly</code> syntax.
+   * Class that provides the `lastly` method of the `complete`-`lastly` syntax.
    *
    * @param futuristicBlock a by-name that produces a futuristic type
    * @param futuristic the futuristic typeclass instance
@@ -83,14 +79,13 @@ trait CompleteLastly {
 
    /**
     * Registers cleanup code to be executed immediately if the future-producing code passed
-    * to <code>complete</code> throws an exception, or otherwise asynchronously, when the future
-    * returned by the code passed to <code>complete</code> itself completes.
+    * to `complete` throws an exception, or otherwise asynchronously, when the future
+    * returned by the code passed to `complete` itself completes.
     *
-    * <p>
-    * See the main documentation for trait <code>CompleteLastly</code> for more detail.
-    * </p>
+    * See the main documentation for trait `CompleteLastly` for more detail.
+    * 
     *
-    * @param lastlyBlock cleanup code to execute whether the code passed to <code>complete</code>
+    * @param lastlyBlock cleanup code to execute whether the code passed to `complete`
     *           throws an exception or succesfully returns a futuristic value.
     */
     def lastly(lastlyBlock: => Unit): T = {
@@ -111,15 +106,14 @@ trait CompleteLastly {
   }
 
   /**
-   * Registers a block of code that produces any "futuristic" type (any type <code>F</code> for which
-   * an implicit <a href="enablers/Futuristic.html"><code>Futuristic[F]</code></a> instance is implicitly available), returning
-   * an object that offers a <code>lastly</code> method. 
+   * Registers a block of code that produces any "futuristic" type (any type `F` for which
+   * an implicit <a href="enablers/Futuristic.html">`Futuristic[F]`</a> instance is implicitly available), returning
+   * an object that offers a `lastly` method. 
     *
-    * <p>
-    * See the main documentation for trait <code>CompleteLastly</code> for more detail.
-    * </p>
+    * See the main documentation for trait `CompleteLastly` for more detail.
+    * 
     *
-    * @param completeBlock cleanup code to execute whether the code passed to <code>complete</code>
+    * @param completeBlock cleanup code to execute whether the code passed to `complete`
     *           throws an exception or succesfully returns a futuristic value.
    */
   def complete[T](completeBlock: => T)(implicit futuristic: Futuristic[T]): ResultOfCompleteInvocation[T] =
@@ -127,7 +121,7 @@ trait CompleteLastly {
 }
 
 /**
- * Companion object that facilitates the importing of <code>CompleteLastly</code> members as 
+ * Companion object that facilitates the importing of `CompleteLastly` members as 
  * an alternative to mixing it in.
  */
 object CompleteLastly extends CompleteLastly

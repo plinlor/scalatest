@@ -18,14 +18,13 @@ package org.scalatest
 import org.scalactic.source
 
 /**
- * Trait that contains methods named <code>given</code>, <code>when</code>, <code>then</code>, and <code>and</code>,
- * which take a string message and implicit <a href="Informer.html"><code>Informer</code></a>, and forward the message to the informer.
+ * Trait that contains methods named `given`, `when`, `then`, and `and`,
+ * which take a string message and implicit <a href="Informer.html">`Informer`</a>, and forward the message to the informer.
  *
- * <p>
  * Here's an example:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.flatspec.info
  * 
  * import collection.mutable
@@ -49,13 +48,12 @@ import org.scalactic.source
  *     info("That's all folks!")
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If you run this <code>SetSpec</code> from the interpreter, you will see the following output:
- * </p>
+ * If you run this `SetSpec` from the interpreter, you will see the following output:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">A mutable Set
  * - should allow an element to be added
@@ -64,14 +62,14 @@ import org.scalactic.source
  *   + Then the Set should have size 1 
  *   + And the Set should contain the added element 
  *   + That's all folks! </span>
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 trait GivenWhenThen { this: Informing =>
 
   /**
-   * Forwards a message to an implicit <code>Informer</code>, preceded by "Given."
+   * Forwards a message to an implicit `Informer`, preceded by "Given."
    *
    * @param message the message to forward to the passed informer
    */
@@ -80,7 +78,7 @@ trait GivenWhenThen { this: Informing =>
   }
   
   /**
-   * Forwards a message to an implicit <code>Informer</code>, preceded by "When ".
+   * Forwards a message to an implicit `Informer`, preceded by "When ".
    *
    * @param message the message to forward to the passed informer
    */
@@ -89,7 +87,7 @@ trait GivenWhenThen { this: Informing =>
   }
   
   /**
-   * Forwards a message to an implicit <code>Informer</code>, preceded by "Then ".
+   * Forwards a message to an implicit `Informer`, preceded by "Then ".
    *
    * @param message the message to forward to the passed informer
    */
@@ -98,7 +96,7 @@ trait GivenWhenThen { this: Informing =>
   }
   
    /**
-   * Forwards a message to an implicit <code>Informer</code>, preceded by "And ".
+   * Forwards a message to an implicit `Informer`, preceded by "And ".
    *
    * @param message the message to forward to the passed informer
    */

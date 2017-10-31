@@ -20,14 +20,13 @@ import org.scalatest.fixture
 import org.scalatest.OutcomeOf.outcomeOf
 
 /**
- * Trait that can pass a new <code>Conductor</code> fixture into tests.
+ * Trait that can pass a new `Conductor` fixture into tests.
  *
- * <p>
- * Here's an example of the use of this trait to test the <code>ArrayBlockingQueue</code>
- * class from <code>java.util.concurrent</code>:
- * </p>
+ * Here's an example of the use of this trait to test the `ArrayBlockingQueue`
+ * class from `java.util.concurrent`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest.fixture
  * import org.scalatest.concurrent.ConductorFixture
  * import org.scalatest.matchers.Matchers
@@ -77,40 +76,37 @@ import org.scalatest.OutcomeOf.outcomeOf
  *     }
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * For an explanation of how these tests work, see the documentation for <a href="Conductors.html"><code>Conductors</code></a>.
- * </p>
+ * For an explanation of how these tests work, see the documentation for <a href="Conductors.html">`Conductors`</a>.
+ * 
  *
  * @author Bill Venners
  */
 trait ConductorFixture extends TestSuiteMixin with Conductors { this: fixture.TestSuite =>
 
   /**
-   * Defines type <code>Fixture</code> to be <code>Conductor</code>.
+   * Defines type `Fixture` to be `Conductor`.
    */
   type FixtureParam = Conductor
   
   /**
-   * Creates a new <code>Conductor</code>, passes the <code>Conductor</code> to the
-   * specified test function, and ensures that <code>conduct</code> gets invoked
-   * on the <code>Conductor</code>.
+   * Creates a new `Conductor`, passes the `Conductor` to the
+   * specified test function, and ensures that `conduct` gets invoked
+   * on the `Conductor`.
    *
-   * <p>
    * After the test function returns (so long as it returns normally and doesn't
    * complete abruptly with an exception), this method will determine whether the
-   * <code>conduct</code> method has already been called (by invoking
-   * <code>conductingHasBegun</code> on the <code>Conductor</code>). If not,
-   * this method will invoke <code>conduct</code> to ensure that the
+   * `conduct` method has already been called (by invoking
+   * `conductingHasBegun` on the `Conductor`). If not,
+   * this method will invoke `conduct` to ensure that the
    * multi-threaded scenario is actually conducted.
-   * </p>
+   * 
    *
-   * <p>
-   * This trait is stackable with other traits that override <code>withFixture(NoArgTest)</code>, because
+   * This trait is stackable with other traits that override `withFixture(NoArgTest)`, because
    * instead of invoking the test function directly, it delegates responsibility for invoking the test
-   * function to <code>withFixture(NoArgTest)</code>.
-   * </p>
+   * function to `withFixture(NoArgTest)`.
+   * 
    */
   def withFixture(test: OneArgTest): Outcome = {
     val conductor = new Conductor

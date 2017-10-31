@@ -22,20 +22,20 @@ sealed abstract class Location extends Product with Serializable
 
 /**
  * The location in a source file where the class whose by the fully qualified name
- * is passed as <code>className</code> is declared.
+ * is passed as `className` is declared.
  *
  * @param className the fully qualified class name
  */
 final case class TopOfClass(className: String) extends Location
 
 /**
- * The location in a source file where the method identified by the passed <code>methodId</code> 
- * in the class whose fully qualified name is pased as <code>className</code> is declared.  
- * The methodId is obtained by calling <code>toGenericString</code> on the <code>java.lang.reflect.Method</code> 
+ * The location in a source file where the method identified by the passed `methodId` 
+ * in the class whose fully qualified name is pased as `className` is declared.  
+ * The methodId is obtained by calling `toGenericString` on the `java.lang.reflect.Method` 
  * object representing the method.
  *
  * @param className the fully qualified class name
- * @param methodId the method ID, obtained by calling <code>toGenericString</code> on the <code>java.lang.reflect.Method</code> object representing the method
+ * @param methodId the method ID, obtained by calling `toGenericString` on the `java.lang.reflect.Method` object representing the method
  */
 final case class TopOfMethod(className: String, methodId: String) extends Location
 

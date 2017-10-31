@@ -17,19 +17,18 @@ package org.scalatest.matchers
 
 /**
  * The result of a property match operation such as one performed by a
- * <a href="HavePropertyMatcher.html"><code>HavePropertyMatcher</code></a>,
- * which contains one field that indicates whether the match succeeded (<em>i.e.</em>, the 
+ * <a href="HavePropertyMatcher.html">`HavePropertyMatcher`</a>,
+ * which contains one field that indicates whether the match succeeded (''i.e.'', the 
  * property had its expected value), one field that provides
  * the name of the property, and two fields giving the expected and actual values.
- * <code>HavePropertyMatchResult</code>'s type parameter, <code>P</code>, specifies the type of the property.
+ * `HavePropertyMatchResult`'s type parameter, `P`, specifies the type of the property.
  *
- * <p>
- * For an example of a <code>HavePropertyMatchResult</code> in action, see the documentation for
- * <a href="HavePropertyMatcher.html"><code>HavePropertyMatcher</code></a>.
- * </p>
+ * For an example of a `HavePropertyMatchResult` in action, see the documentation for
+ * <a href="HavePropertyMatcher.html">`HavePropertyMatcher`</a>.
+ * 
  *
  * @param matches indicates whether or not the matcher matched (if the property had its expected value, it was a match)
- * @param propertyName the name of the property (of type <code>P</code>) that was matched against
+ * @param propertyName the name of the property (of type `P`) that was matched against
  * @param expectedValue the expected value of the property
  * @param actualValue the actual value of the property
  *
@@ -43,7 +42,7 @@ final case class HavePropertyMatchResult[P](
 )
 
 /**
- * Companion object for the <code>HavePropertyMatchResult</code> case class.
+ * Companion object for the `HavePropertyMatchResult` case class.
  *
  * @author Bill Venners
  */

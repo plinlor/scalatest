@@ -19,28 +19,27 @@ import org.scalatest._
 import org.scalatest.fixture
 
 /**
-  * Trait that will pass a new <code>JMockCycle</code> into any test that needs one.
+  * Trait that will pass a new `JMockCycle` into any test that needs one.
   *
-  * <p>
-  * This trait, which must be mixed into a <code>fixture.AsyncSuite</code>, defines the
-  * <code>Fixture</code> type to be <code>JMockCycle</code> and defines a
-  * <code>withFixture</code> method that instantiates a new <code>JMockCycle</code>
+  * This trait, which must be mixed into a `fixture.AsyncSuite`, defines the
+  * `Fixture` type to be `JMockCycle` and defines a
+  * `withFixture` method that instantiates a new `JMockCycle`
   * and passes it to the test function.
-  * </p>
+  * 
   *
   * @author Bill Venners
   */
 trait AsyncJMockCycleFixture { this: fixture.AsyncTestSuite =>
 
   /**
-    * Defines the <code>Fixture</code> type to be <code>JMockCycle</code>.
+    * Defines the `Fixture` type to be `JMockCycle`.
     */
   type FixtureParam = JMockCycle
 
   /**
-    * Instantiates a new <code>JMockCycle</code> and passes it to the test function.
+    * Instantiates a new `JMockCycle` and passes it to the test function.
     *
-    * @param test the test function to which to pass a new <code>JMockCycle</code>
+    * @param test the test function to which to pass a new `JMockCycle`
     */
   def withFixture(test: OneArgAsyncTest): FutureOutcome = {
     test(new JMockCycle)

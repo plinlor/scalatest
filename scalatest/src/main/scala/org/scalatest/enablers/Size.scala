@@ -16,17 +16,16 @@
 package org.scalatest.enablers
 
 /**
- * Supertrait for <code>Size</code> typeclasses.
+ * Supertrait for `Size` typeclasses.
  *
- * <p>
- * Trait <code>Size</code> is a typeclass trait for objects that can be queried for size.
- * Objects of type T for which an implicit <code>Size[T]</code> is available can be used
- * with the <code>should have size</code> syntax.
+ * Trait `Size` is a typeclass trait for objects that can be queried for size.
+ * Objects of type T for which an implicit `Size[T]` is available can be used
+ * with the `should have size` syntax.
  * In other words, this trait enables you to use the size checking
- * syntax with arbitrary objects. As an example, the following <code>Bridge</code> class:
- * </p>
+ * syntax with arbitrary objects. As an example, the following `Bridge` class:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import org.scalatest._
  * import org.scalatest._
  *
@@ -38,14 +37,13 @@ package org.scalatest.enablers
  *
  * scala&gt; case class Bridge(span: Int)
  * defined class Bridge
- * </pre>
+ * }}}
  *
- * <p>
- * Out of the box you can't use the <code>should have size</code> syntax with <code>Bridge</code>,
+ * Out of the box you can't use the `should have size` syntax with `Bridge`,
  * because ScalaTest doesn't know that a bridge's span means its size:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; val bridge = new Bridge(2000)
  * bridge: Bridge = Bridge(2000)
  *
@@ -54,26 +52,24 @@ package org.scalatest.enablers
  *     parameter sz: org.scalatest.enablers.Size[Bridge]
  *       bridge should have size 2000
  *                          ^
- * </pre>
+ * }}}
  *
- * <p>
- * You can teach this to ScalaTest, however, by defining an implicit <code>Size[Bridge]</code>.
- * </p>
+ * You can teach this to ScalaTest, however, by defining an implicit `Size[Bridge]`.
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; implicit val sizeOfBridge: Size[Bridge] =
  *      |   new Size[Bridge] {
  *      |     def sizeOf(b: Bridge): Long = b.span
  *      |   }
  * sizeOfBridge: org.scalatest.enablers.Size[Bridge] = $anon$1@3fa27a4a
- * </pre>
+ * }}}
  *
- * <p>
- * With the implicit <code>Size[Bridge]</code> in scope, you can now use ScalaTest's <code>should have size</code>
- * syntax with <code>Bridge</code> instances:
- * </p>
+ * With the implicit `Size[Bridge]` in scope, you can now use ScalaTest's `should have size`
+ * syntax with `Bridge` instances:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; bridge should have size 2000
  * res4: org.scalatest.Assertion = Succeeded
  * 
@@ -83,7 +79,7 @@ package org.scalatest.enablers
  *   at org.scalatest.MatchersHelper$.indicateFailure(MatchersHelper.scala:366)
  *   at org.scalatest.Matchers$ResultOfHaveWordForExtent.size(Matchers.scala:2720)
  *   ... 43 elided
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
@@ -99,31 +95,31 @@ trait Size[T] {
 }
 
 /**
- * Companion object for <code>Size</code> that provides implicit implementations for the following types:
+ * Companion object for `Size` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>scala.collection.GenTraversable</code></li>
- * <li><code>String</code></li>
- * <li><code>Array</code></li>
- * <li><code>java.util.Collection</code></li>
- * <li><code>java.util.Map</code></li>
- * <li>arbitary object with a <code>size()</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a parameterless <code>size</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a <code>getSize()</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a parameterless <code>getSize</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a <code>size()</code> method that returns <code>Long</code></li>
- * <li>arbitary object with a parameterless <code>size</code> method that returns <code>Long</code></li>
- * <li>arbitary object with a <code>getSize()</code> method that returns <code>Long</code></li>
- * <li>arbitary object with a parameterless <code>getSize</code> method that returns <code>Long</code></li>
+ * <li>`scala.collection.GenTraversable`</li>
+ * <li>`String`</li>
+ * <li>`Array`</li>
+ * <li>`java.util.Collection`</li>
+ * <li>`java.util.Map`</li>
+ * <li>arbitary object with a `size()` method that returns `Int`</li>
+ * <li>arbitary object with a parameterless `size` method that returns `Int`</li>
+ * <li>arbitary object with a `getSize()` method that returns `Int`</li>
+ * <li>arbitary object with a parameterless `getSize` method that returns `Int`</li>
+ * <li>arbitary object with a `size()` method that returns `Long`</li>
+ * <li>arbitary object with a parameterless `size` method that returns `Long`</li>
+ * <li>arbitary object with a `getSize()` method that returns `Long`</li>
+ * <li>arbitary object with a parameterless `getSize` method that returns `Long`</li>
  * </ul>
  */
 object Size {
 
   /**
-   * Enable <code>Size</code> implementation for <code>java.util.Collection</code>
+   * Enable `Size` implementation for `java.util.Collection`
    *
-   * @tparam JCOL any subtype of <code>java.util.Collection</code>
-   * @return <code>Size[JCOL]</code> that supports <code>java.util.Collection</code> in <code>have size</code> syntax
+   * @tparam JCOL any subtype of `java.util.Collection`
+   * @return `Size[JCOL]` that supports `java.util.Collection` in `have size` syntax
    */
   implicit def sizeOfJavaCollection[JCOL <: java.util.Collection[_]]: Size[JCOL] = 
     new Size[JCOL] {
@@ -131,10 +127,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for <code>java.util.Map</code>
+   * Enable `Size` implementation for `java.util.Map`
    *
-   * @tparam JMAP any subtype of <code>java.util.Map</code>
-   * @return <code>Size[JMAP]</code> that supports <code>java.util.Map</code> in <code>have size</code> syntax
+   * @tparam JMAP any subtype of `java.util.Map`
+   * @return `Size[JMAP]` that supports `java.util.Map` in `have size` syntax
    */
   implicit def sizeOfJavaMap[JMAP <: java.util.Map[_, _]]: Size[JMAP] = 
     new Size[JMAP] {
@@ -142,10 +138,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for <code>scala.collection.GenTraversable</code>
+   * Enable `Size` implementation for `scala.collection.GenTraversable`
    *
-   * @tparam TRAV any subtype of <code>scala.collection.GenTraversable</code>
-   * @return <code>Size[TRAV]</code> that supports <code>scala.collection.GenTraversable</code> in <code>have size</code> syntax
+   * @tparam TRAV any subtype of `scala.collection.GenTraversable`
+   * @return `Size[TRAV]` that supports `scala.collection.GenTraversable` in `have size` syntax
    */
   implicit def sizeOfGenTraversable[TRAV <: scala.collection.GenTraversable[_]]: Size[TRAV] = 
     new Size[TRAV] {
@@ -153,10 +149,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for <code>Array</code>
+   * Enable `Size` implementation for `Array`
    *
-   * @tparam E the type of the element in the <code>Array</code>
-   * @return <code>Size[Array[E]]</code> that supports <code>Array</code> in <code>have size</code> syntax
+   * @tparam E the type of the element in the `Array`
+   * @return `Size[Array[E]]` that supports `Array` in `have size` syntax
    */
   implicit def sizeOfArray[E]: Size[Array[E]] = 
     new Size[Array[E]] {
@@ -164,9 +160,9 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for <code>String</code>
+   * Enable `Size` implementation for `String`
    *
-   * @return <code>Size[String]</code> that supports <code>String</code> in <code>have size</code> syntax
+   * @return `Size[String]` that supports `String` in `have size` syntax
    */
   implicit val sizeOfString: Size[String] = 
     new Size[String] {
@@ -176,10 +172,10 @@ object Size {
   import scala.language.reflectiveCalls
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>size()</code> method that returns <code>Int</code>.
+   * Enable `Size` implementation for arbitary object with `size()` method that returns `Int`.
    *
-   * @tparam T any type with <code>size()</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with `size()` method that returns `Int`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithSizeMethodForInt[T <: AnyRef { def size(): Int}]: Size[T] = 
     new Size[T] {
@@ -187,10 +183,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with parameterless <code>size</code> method that returns <code>Int</code>.
+   * Enable `Size` implementation for arbitary object with parameterless `size` method that returns `Int`.
    *
-   * @tparam T any type with parameterless <code>size</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with parameterless `size` method that returns `Int`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithParameterlessSizeMethodForInt[T <: AnyRef { def size: Int}]: Size[T] = 
     new Size[T] {
@@ -198,10 +194,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>getSize()</code> method that returns <code>Int</code>.
+   * Enable `Size` implementation for arbitary object with `getSize()` method that returns `Int`.
    *
-   * @tparam T any type with <code>getSize()</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with `getSize()` method that returns `Int`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithGetSizeMethodForInt[T <: AnyRef { def getSize(): Int}]: Size[T] = 
     new Size[T] {
@@ -209,10 +205,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with parameterless <code>getSize</code> method that returns <code>Int</code>.
+   * Enable `Size` implementation for arbitary object with parameterless `getSize` method that returns `Int`.
    *
-   * @tparam T any type with parameterless <code>getSize</code> method that returns <code>Int</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with parameterless `getSize` method that returns `Int`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForInt[T <: AnyRef { def getSize: Int}]: Size[T] = 
     new Size[T] {
@@ -220,10 +216,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>size()</code> method that returns <code>Long</code>.
+   * Enable `Size` implementation for arbitary object with `size()` method that returns `Long`.
    *
-   * @tparam T any type with <code>size()</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with `size()` method that returns `Long`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithSizeMethodForLong[T <: AnyRef { def size(): Long}]: Size[T] = 
     new Size[T] {
@@ -231,10 +227,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with parameterless <code>size</code> method that returns <code>Long</code>.
+   * Enable `Size` implementation for arbitary object with parameterless `size` method that returns `Long`.
    *
-   * @tparam T any type with parameterless <code>size</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with parameterless `size` method that returns `Long`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithParameterlessSizeMethodForLong[T <: AnyRef { def size: Long}]: Size[T] = 
     new Size[T] {
@@ -242,10 +238,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>getSize()</code> method that returns <code>Long</code>.
+   * Enable `Size` implementation for arbitary object with `getSize()` method that returns `Long`.
    *
-   * @tparam T any type with <code>getSize()</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with `getSize()` method that returns `Long`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithGetSizeMethodForLong[T <: AnyRef { def getSize(): Long}]: Size[T] = 
     new Size[T] {
@@ -253,10 +249,10 @@ object Size {
     }
 
   /**
-   * Enable <code>Size</code> implementation for arbitary object with <code>getSize</code> method that returns <code>Long</code>.
+   * Enable `Size` implementation for arbitary object with `getSize` method that returns `Long`.
    *
-   * @tparam T any type with <code>getSize</code> method that returns <code>Long</code>
-   * @return <code>Size[T]</code> that supports <code>T</code> in <code>have size</code> syntax
+   * @tparam T any type with `getSize` method that returns `Long`
+   * @return `Size[T]` that supports `T` in `have size` syntax
    */
   implicit def sizeOfAnyRefWithParameterlessGetSizeMethodForLong[T <: AnyRef { def getSize: Long}]: Size[T] = 
     new Size[T] {

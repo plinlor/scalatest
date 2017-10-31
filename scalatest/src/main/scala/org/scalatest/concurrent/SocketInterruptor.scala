@@ -18,19 +18,17 @@ package org.scalatest.concurrent
 import java.net.Socket
 
 /**
- * Strategy for interrupting an operation in which <code>close</code> is called on the <code>java.net.Socket</code> passed to
+ * Strategy for interrupting an operation in which `close` is called on the `java.net.Socket` passed to
  * the constructor.
  *
- * <p>
- * This class can be used for configuration when using traits <a href="Timeouts.html"><code>Timeouts</code></a>
- * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
+ * This class can be used for configuration when using traits <a href="Timeouts.html">`Timeouts`</a>
+ * and <a href="TimeLimitedTests.html">`TimeLimitedTests`</a>.
  */
 @deprecated("Please use org.scalatest.concurrent.Signaler instead.")
 class SocketInterruptor(socket: Socket) extends Interruptor {
 
   /**
-   * Invokes <code>close</code> on the <code>java.net.Socket</code> passed to this class's constructor.
+   * Invokes `close` on the `java.net.Socket` passed to this class's constructor.
    *
    * @param testThread unused by this strategy
    */
@@ -40,14 +38,14 @@ class SocketInterruptor(socket: Socket) extends Interruptor {
 }
 
 /**
- * Companion object that provides a factory method for a <code>SocketInterruptor</code>.
+ * Companion object that provides a factory method for a `SocketInterruptor`.
  */
 object SocketInterruptor {
 
   /**
-   * Factory method for a <code>SocketInterruptor</code>.
+   * Factory method for a `SocketInterruptor`.
    *
-   * @param socket the <code>java.net.Socket</code> to pass to the <code>SocketInterruptor</code> constructor
+   * @param socket the `java.net.Socket` to pass to the `SocketInterruptor` constructor
    */
   def apply(socket: Socket) = new SocketInterruptor(socket)
 }

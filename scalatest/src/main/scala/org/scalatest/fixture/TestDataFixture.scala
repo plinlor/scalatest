@@ -18,14 +18,13 @@ package org.scalatest.fixture
 import org.scalatest._
 
 /**
- * Trait that when mixed into a <a href="Suite.html"><code>fixture.Suite</code></a> passes the
- * <a href="../TestData.html"><code>TestData</code></a> passed to <code>withFixture</code> as a fixture into each test.
+ * Trait that when mixed into a <a href="Suite.html">`fixture.Suite`</a> passes the
+ * <a href="../TestData.html">`TestData`</a> passed to `withFixture` as a fixture into each test.
  *
- * <p>
- * For example, here's how you could access the test's name in each test using <code>TestDataFixture</code>:
- * </p>
+ * For example, here's how you could access the test's name in each test using `TestDataFixture`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.fixture.testdatafixture
  *
  * import org.scalatest._
@@ -40,30 +39,29 @@ import org.scalatest._
  *     assert(td.name == "Accessing the test data should be fun!")
  *   }
  * }
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 trait TestDataFixture { this: fixture.TestSuite =>
 
   /**
-   * The type of the fixture, which is <code>TestData</code>.
+   * The type of the fixture, which is `TestData`.
    */
   type FixtureParam = TestData
 
   /**
    * Invoke the test function, passing to the the test function 
-   * the <code>TestData</code> for the test.
+   * the `TestData` for the test.
    *
-   * <p>
-   * To enable stacking of traits that define <code>withFixture(NoArgTest)</code>, this method does not
+   * To enable stacking of traits that define `withFixture(NoArgTest)`, this method does not
    * invoke the test function directly. Instead, it delegates responsibility for invoking the test function
-   * to <code>withFixture(NoArgTest)</code>.
-   * </p>
+   * to `withFixture(NoArgTest)`.
+   * 
    *
-   * @param test the <code>OneArgTest</code> to invoke, passing in the
-   *   <code>TestData</code> fixture
-   * @return an <code>Outcome</code> instance
+   * @param test the `OneArgTest` to invoke, passing in the
+   *   `TestData` fixture
+   * @return an `Outcome` instance
    */
   def withFixture(test: OneArgTest): Outcome = {
     withFixture(test.toNoArgTest(test))

@@ -16,12 +16,12 @@
 package org.scalatest
 
 /**
- * Trait that contains the <code>info</code> method, which can be used to send info to the reporter.
+ * Trait that contains the `info` method, which can be used to send info to the reporter.
  */
 trait Informing {
 
   /**
-   * Send info via an <code>InfoProvided</code> event to the reporter.
+   * Send info via an `InfoProvided` event to the reporter.
    */
   protected def info: Informer
 }

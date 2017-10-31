@@ -21,20 +21,19 @@ import scala.annotation.tailrec
 import org.scalactic._
 
 /**
- * Trait containing the <code>inside</code> construct, which allows you to make statements about nested object graphs using pattern matching.
+ * Trait containing the `inside` construct, which allows you to make statements about nested object graphs using pattern matching.
  *
- * <p>
  * For example, given the following case classes:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * case class Address(street: String, city: String, state: String, zip: String)
  * case class Name(first: String, middle: String, last: String)
  * case class Record(name: Name, address: Address, age: Int)
- * </pre>
+ * }}}
  *
  * You could write:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * inside (rec) { case Record(name, address, age) =&gt;
  *   inside (name) { case Name(first, middle, last) =&gt;
  *     first should be ("Sally")
@@ -49,30 +48,28 @@ import org.scalactic._
  *   }
  *   age should be &lt; 99
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If an assertion fails, the error message will include the <code>toString</code> of each value passed
- * to <code>inside</code> clauses enclosing the failed assertion. For example, if <code>rec</code> in 
+ * If an assertion fails, the error message will include the `toString` of each value passed
+ * to `inside` clauses enclosing the failed assertion. For example, if `rec` in 
  * the previous expression was defined like this:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * val rec = Record(
  *   Name("Sally", "Anna", "Jones"),
  *   Address("25 Main St", "Los Angeles", "CA", "12345"),
  *   38
  * )
- * </pre>
+ * }}}
  *
- * <p>
  * The error message will read:
- * </p>
+ * 
  *
- * <pre>
+ * {{{
  * "Ann[a]" was not equal to "Ann[]", inside Name(Sally,Anna,Jones),
  * inside Record(Name(Sally,Anna,Jones),Address(25 Main St,Los Angeles,CA,12345),38)
- * </pre>
+ * }}}
  *
  */
 trait Inside {
@@ -80,21 +77,19 @@ trait Inside {
   /**
    * Inspects inside the passed value using the passed partial function.
    *
-   * <p>
-   * The <code>inside</code> method checks to see whether the partial function passed as the second curried
+   * The `inside` method checks to see whether the partial function passed as the second curried
    * parameter is defined at the value passed as the first parameter, and if so, passes that value to the
    * partial function.
-   * </p>
+   * 
    *
-   * <p>
-   * If the partial function is not defined at the passed value, <code>inside</code> will throw a 
-   * <code>TestFailedException</code> with a detail message describing the problem. Otherwise, if the
-   * partial function returns normally, <code>inside</code> will return normally. If the partial function
-   * completes abruptly with an exception that mixes in <code>ModifiableMessage</code> (such as
-   * <code>TestFailedException</code>), <code>inside</code> will append the value's <code>toString</code> of
+   * If the partial function is not defined at the passed value, `inside` will throw a 
+   * `TestFailedException` with a detail message describing the problem. Otherwise, if the
+   * partial function returns normally, `inside` will return normally. If the partial function
+   * completes abruptly with an exception that mixes in `ModifiableMessage` (such as
+   * `TestFailedException`), `inside` will append the value's `toString` of
    * to the exception's detail message, and rethrow it. If the exception thrown by the partial function does not mix
-   * in <code>ModifiableMessage</code>, <code>inside</code> completes abruptly with that same exception.
-   * </p>
+   * in `ModifiableMessage`, `inside` completes abruptly with that same exception.
+   * 
    *
    * @param value the value inside of which to inspect
    * @param pf the partial function to use to inspect inside the passed value

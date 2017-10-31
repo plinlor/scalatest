@@ -28,25 +28,23 @@ import org.scalatest.events.{TopOfClass, TopOfMethod}
 
 
 /**
- * <strong>Trait <code>fixture.SpecLike</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
- * <code>org.scalatest.fixture.FunSpec</code> instead.</strong>
+ * '''Trait `fixture.SpecLike` has been deprecated and will be removed in a future version of ScalaTest. Please use
+ * `org.scalatest.fixture.FunSpec` instead.'''
  *
- * <p>
  * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
- * Thus in ScalaTest 3.0.0, class <code>org.scalatest.SpecLike</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
- * <code>RefSpecLike</code>, with the intention of later moving it to a separate module available only on the JVM. If the 
- * <code>org.scalatest.refspec._</code> package contained a <code>fixture</code> subpackage, then importing <code>org.scalatest.refspec._</code>
- * would import the name <code>fixture</code> as <code>org.scalatest.refspec.fixture</code>. This would likely be confusing for users,
- * who expect <code>fixture</code> to mean <code>org.scalatest.fixture</code>.
- * </p>
+ * Thus in ScalaTest 3.0.0, class `org.scalatest.SpecLike` was moved to the `org.scalatest.refspec` package and renamed
+ * `RefSpecLike`, with the intention of later moving it to a separate module available only on the JVM. If the 
+ * `org.scalatest.refspec._` package contained a `fixture` subpackage, then importing `org.scalatest.refspec._`
+ * would import the name `fixture` as `org.scalatest.refspec.fixture`. This would likely be confusing for users,
+ * who expect `fixture` to mean `org.scalatest.fixture`.
+ * 
  *
- * <p>
- * As a result this class has been deprecated and will <em>not</em>
- * be moved to package <code>org.scalatest.refspec</code>. Instead we recommend you rewrite any test classes that currently extend
- * <code>org.scalatest.fixture.SpecLike</code> to extend <a href="FunSpecLike.html"><code>org.scalatest.fixture.FunSpecLike</code></a> instead,
- * replacing any scope <code>object</code>
- * with a <code>describe</code> clause, and any test method with an <code>it</code> clause.
- * </p>
+ * As a result this class has been deprecated and will ''not''
+ * be moved to package `org.scalatest.refspec`. Instead we recommend you rewrite any test classes that currently extend
+ * `org.scalatest.fixture.SpecLike` to extend <a href="FunSpecLike.html">`org.scalatest.fixture.FunSpecLike`</a> instead,
+ * replacing any scope `object`
+ * with a `describe` clause, and any test method with an `it` clause.
+ * 
  *
  * @author Bill Venners
  */
@@ -193,59 +191,58 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   private[scalatest] val sourceFileName = "SpecLike.scala"
 
   /**
-   * Returns an <code>Informer</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Informer` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def info: Informer = atomicInformer.get
 
   /**
-   * Returns a <code>Notifier</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Notifier` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>Spec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `Spec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def note: Notifier = atomicNotifier.get
 
   /**
-   * Returns an <code>Alerter</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Alerter` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>Spec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `Spec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def alert: Alerter = atomicAlerter.get
 
   /**
-   * Returns a <code>Documenter</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Documenter` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def markup: Documenter = atomicDocumenter.get
   
   /**
-   * An immutable <code>Set</code> of test names. If this <code>Spec</code> contains no tests, this method returns an
-   * empty <code>Set</code>.
+   * An immutable `Set` of test names. If this `Spec` contains no tests, this method returns an
+   * empty `Set`.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
-   * of the concatenation of the name of each surrounding <em>scope object</em>, in order from outside in, and the name of the
-   * test method itself, with all components separated by a space. For example, consider this <code>Spec</code>:
-   * </p>
+   * of the concatenation of the name of each surrounding ''scope object'', in order from outside in, and the name of the
+   * test method itself, with all components separated by a space. For example, consider this `Spec`:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest.refspec.RefSpec
    *
    * class StackSpec extends RefSpec {
@@ -258,24 +255,22 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
    *     }
    *   }
    * }
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Invoking <code>testNames</code> on this <code>Spec</code> will yield a set that contains the following
+   * Invoking `testNames` on this `Spec` will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
-   * <pre class="stExamples">
+   * {{{ class="stExamples">
    * "A Stack (when not empty) must allow me to pop"
    * "A Stack (when not full) must allow me to push"
-   * </pre>
+   * }}}
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
-   * @return the <code>Set</code> of test names
+   * @return the `Set` of test names
    */
   override def testNames: Set[String] = {
     ensureScopesAndTestsRegistered()
@@ -284,19 +279,18 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   
   /**
    * Run a test. This trait's implementation runs the test registered with the name specified by
-   * <code>testName</code>. Each test's name is a concatenation of the text of all <em>scope objects</em> surrounding a test,
+   * `testName`. Each test's name is a concatenation of the text of all ''scope objects'' surrounding a test,
    * from outside in, and the test method's name, with one space placed between each item. (See the documentation
-   * for <code>testNames</code> for an example.)
+   * for `testNames` for an example.)
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
-   * @throws NullArgumentException if <code>testName</code> or <code>args</code> is <code>null</code>.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @throws NullArgumentException if `testName` or `args` is `null`.
    */
   protected override def runTest(testName: String, args: Args): Status = {
 
@@ -323,26 +317,24 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   }
   
   /**
-   * The total number of tests that are expected to run when this <code>Spec</code>'s <code>run</code> method is invoked.
+   * The total number of tests that are expected to run when this `Spec`'s `run` method is invoked.
    *
-   * <p>
    * This trait's implementation of this method returns the sum of:
-   * </p>
+   * 
    *
    * <ul>
-   * <li>the size of the <code>testNames</code> <code>List</code>, minus the number of tests marked as ignored and
-   * any tests that are exluded by the passed <code>Filter</code></li>
+   * <li>the size of the `testNames` `List`, minus the number of tests marked as ignored and
+   * any tests that are exluded by the passed `Filter`</li>
    * <li>the sum of the values obtained by invoking
-   *     <code>expectedTestCount</code> on every nested <code>Suite</code> contained in
-   *     <code>nestedSuites</code></li>
+   *     `expectedTestCount` on every nested `Suite` contained in
+   *     `nestedSuites`</li>
    * </ul>
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
-   * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
+   * @param filter a `Filter` with which to filter tests to count based on their tags
    * @return the expected number test count
    */
   final override def expectedTestCount(filter: Filter): Int = {
@@ -351,23 +343,20 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   }
 
   /**
-   * A <code>Map</code> whose keys are <code>String</code> tag names to which tests in this <code>Spec</code> belong, and values
-   * the <code>Set</code> of test names that belong to each tag. If this <code>Spec</code> contains no tags, this method returns an empty <code>Map</code>.
+   * A `Map` whose keys are `String` tag names to which tests in this `Spec` belong, and values
+   * the `Set` of test names that belong to each tag. If this `Spec` contains no tags, this method returns an empty `Map`.
    *
-   * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to 
-   * methods <code>test</code> and <code>ignore</code>. 
-   * </p>
+   * This trait's implementation returns tags that were passed as strings contained in `Tag` objects passed to 
+   * methods `test` and `ignore`. 
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = {
     ensureScopesAndTestsRegistered()
@@ -375,15 +364,15 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   }
 
   /**
-   * Run zero to many of this <code>Spec</code>'s tests.
+   * Run zero to many of this `Spec`'s tests.
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Spec</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
-   * @throws NullArgumentException if any of the passed parameters is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Spec</code>
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Spec`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
+   * @throws NullArgumentException if any of the passed parameters is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Spec`
    */
   protected override def runTests(testName: Option[String], args: Args): Status = {
     ensureScopesAndTestsRegistered()
@@ -391,37 +380,35 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   }
 
   /**
-   * Runs this <code>fixture.Spec</code>.
+   * Runs this `fixture.Spec`.
    *
-   * <p>If <code>testName</code> is <code>None</code>, this trait's implementation of this method
-   * calls these two methods on this object in this order:</p>
+   * <p>If `testName` is `None`, this trait's implementation of this method
+   * calls these two methods on this object in this order:
    *
    * <ol>
-   * <li><code>runNestedSuites(report, stopper, tagsToInclude, tagsToExclude, configMap, distributor)</code></li>
-   * <li><code>runTests(testName, report, stopper, tagsToInclude, tagsToExclude, configMap)</code></li>
+   * <li>`runNestedSuites(report, stopper, tagsToInclude, tagsToExclude, configMap, distributor)`</li>
+   * <li>`runTests(testName, report, stopper, tagsToInclude, tagsToExclude, configMap)`</li>
    * </ol>
    *
-   * <p>
-   * If <code>testName</code> is defined, then this trait's implementation of this method
-   * calls <code>runTests</code>, but does not call <code>runNestedSuites</code>. This behavior
-   * is part of the contract of this method. Subclasses that override <code>run</code> must take
-   * care not to call <code>runNestedSuites</code> if <code>testName</code> is defined. (The
-   * <code>OneInstancePerTest</code> trait depends on this behavior, for example.)
-   * </p>
+   * If `testName` is defined, then this trait's implementation of this method
+   * calls `runTests`, but does not call `runNestedSuites`. This behavior
+   * is part of the contract of this method. Subclasses that override `run` must take
+   * care not to call `runNestedSuites` if `testName` is defined. (The
+   * `OneInstancePerTest` trait depends on this behavior, for example.)
+   * 
    *
-   * <p>
    * This trait's implementation of this method will first ensure that the discovery of scope objects and test methods
    * has been performed.
-   * </p>
+   * 
    *
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>fixture.SpecLike</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
-   * @throws NullArgumentException if any passed parameter is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `fixture.SpecLike`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @throws NullArgumentException if any passed parameter is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   override def run(testName: Option[String], args: Args): Status = {
     ensureScopesAndTestsRegistered()
@@ -431,7 +418,7 @@ trait SpecLike extends TestSuite with Informing with Notifying with Alerting wit
   /**
    * Suite style name.
    *
-   * @return <code>org.scalatest.fixture.Spec</code>
+   * @return `org.scalatest.fixture.Spec`
    */
   final override val styleName: String = "org.scalatest.fixture.Spec"
 

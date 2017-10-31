@@ -16,20 +16,18 @@
 package org.scalatest.concurrent
 
 /**
- * Strategy for signaling an operation in which <code>interrupt</code> is called on the <code>Thread</code> passed
- * to <code>apply</code>.
+ * Strategy for signaling an operation in which `interrupt` is called on the `Thread` passed
+ * to `apply`.
  *
- * <p>
- * This object can be used for configuration when using traits <a href="TimeLimits.html"><code>TimeLimits</code></a>
- * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
+ * This object can be used for configuration when using traits <a href="TimeLimits.html">`TimeLimits`</a>
+ * and <a href="TimeLimitedTests.html">`TimeLimitedTests`</a>.
  */
 object ThreadSignaler extends Signaler {
 
   /**
-   * Invokes <code>interrupt</code> on the passed <code>Thread</code>.
+   * Invokes `interrupt` on the passed `Thread`.
    *
-   * @param testThread the <code>Thread</code> to interrupt
+   * @param testThread the `Thread` to interrupt
    */
   def apply(testThread: Thread): Unit = {
     testThread.interrupt()

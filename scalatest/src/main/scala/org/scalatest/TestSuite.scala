@@ -18,56 +18,52 @@ package org.scalatest
 import org.scalactic._
 
 /**
- * The base trait of ScalaTest's <em>synchronous testing styles</em>, which defines a 
- * <code>withFixture</code> lifecycle method that accepts as its parameter a test function
- * that returns an <a href="Outcome.html"><code>Outcome</code></a>.
+ * The base trait of ScalaTest's ''synchronous testing styles'', which defines a 
+ * `withFixture` lifecycle method that accepts as its parameter a test function
+ * that returns an <a href="Outcome.html">`Outcome`</a>.
  *
- * <p>
- * The <code>withFixture</code> method add by this trait has the 
+ * The `withFixture` method add by this trait has the 
  * following signature and implementation:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * def withFixture(test: NoArgTest): Outcome = {
  *   test()
  * }
- * </pre>
+ * }}}
  *
- * The <code>apply</code> method of test function interface,
- * <code>NoArgTest</code>, also returns <code>Outcome</code>:
- * </p>
+ * The `apply` method of test function interface,
+ * `NoArgTest`, also returns `Outcome`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // In trait NoArgTest:
  * def apply(): Outcome
- * </pre>
+ * }}}
  *
- * <p>
- * Because the result of a test is an <code>Outcome</code>, when the test function returns, the test body must have determined an outcome already. It
- * will already be one of <a href="Succeeded$.html"><code>Succeeded</code></a>, <a href="Failed.html"><code>Failed</code></a>, <a href="Canceled.html"><code>Canceled</code></a>, or <a href="Pending$.html"></code>Pending</code></a>. This is
- * also true when <code>withFixture(NoArgTest)</code> returns: because the result type of <code>withFixture(NoArgTest)</code> is <code>Outcome</code>,
+ * Because the result of a test is an `Outcome`, when the test function returns, the test body must have determined an outcome already. It
+ * will already be one of <a href="Succeeded$.html">`Succeeded`</a>, <a href="Failed.html">`Failed`</a>, <a href="Canceled.html">`Canceled`</a>, or <a href="Pending$.html">`Pending`</a>. This is
+ * also true when `withFixture(NoArgTest)` returns: because the result type of `withFixture(NoArgTest)` is `Outcome`,
  * the test has by definition already finished execution.
- * </p>
+ * 
  *
- * <p>
  * The recommended way to ensure cleanup is performed after a test body finishes execution is
- * to use a <code>try</code>-<code>finally</code> clause.
- * Using <code>try</code>-<code>finally</code> will ensure that cleanup will occur whether
+ * to use a `try`-`finally` clause.
+ * Using `try`-`finally` will ensure that cleanup will occur whether
  * the test function completes abruptly by throwing a suite-aborting exception, or returns
- * normally yielding an <code>Outcome</code>. Note that the only situation in which a test function
+ * normally yielding an `Outcome`. Note that the only situation in which a test function
  * will complete abruptly with an exception is if the test body throws a suite-aborting exception.
- * Any other exception will be caught and reported as either a <code>Failed</code>, <code>Canceled</code>,
- * or <code>Pending</code>.
- * </p>
+ * Any other exception will be caught and reported as either a `Failed`, `Canceled`,
+ * or `Pending`.
+ * 
  *
- * <p>
- * The <code>withFixture</code> method is designed to be stacked, and to enable this, you should always call the <code>super</code> implementation
- * of <code>withFixture</code>, and let it invoke the test function rather than invoking the test function directly. In other words, instead of writing
- * &ldquo;<code>test()</code>&rdquo;, you should write &ldquo;<code>super.withFixture(test)</code>&rdquo;. Thus, the recommended
- * structure of a <code>withFixture</code> implementation that performs cleanup looks like this:
- * </p>
+ * The `withFixture` method is designed to be stacked, and to enable this, you should always call the `super` implementation
+ * of `withFixture`, and let it invoke the test function rather than invoking the test function directly. In other words, instead of writing
+ * &ldquo;`test()`&rdquo;, you should write &ldquo;`super.withFixture(test)`&rdquo;. Thus, the recommended
+ * structure of a `withFixture` implementation that performs cleanup looks like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // Your implementation
  * override def withFixture(test: NoArgTest) = {
  *   // Perform setup here
@@ -77,28 +73,26 @@ import org.scalactic._
  *     // Perform cleanup here
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If you have no cleanup to perform, you can write <code>withFixture</code> like this instead:
- * </p>
+ * If you have no cleanup to perform, you can write `withFixture` like this instead:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // Your implementation
  * override def withFixture(test: NoArgTest) = {
  *   // Perform setup here
  *   super.withFixture(test) // Invoke the test function
  * }
- * </pre>
+ * }}}
  *
- * <p>
  * If you want to perform an action only for certain outcomes, you can use
  * a pattern match.
  * For example, if you want to perform an action if a test fails, you'd 
- * match on <code>Failed</code>, like this:
- * </p>
+ * match on `Failed`, like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // Your implementation
  * override def withFixture(test: NoArgTest) = {
  *
@@ -114,16 +108,15 @@ import org.scalactic._
  *     case other => other
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If you want to change the outcome in some way in <code>withFixture</code>, you can also
+ * If you want to change the outcome in some way in `withFixture`, you can also
  * use a pattern match.
  * For example, if a particular exception intermittently causes a test to fail, and can
  * transform those failures into cancelations, like this:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * // Your implementation
  * override def withFixture(test: NoArgTest) = {
  *
@@ -133,22 +126,21 @@ import org.scalactic._
  *     case other => other
  *   }
  * }
- * </pre>
+ * }}}
  */
 trait TestSuite extends Suite { thisTestSuite =>
 
   /**
-   * A test function taking no arguments and returning an <code>Outcome</code>.
+   * A test function taking no arguments and returning an `Outcome`.
    *
-   * <p>
    * For more detail and examples, see the relevant section in the 
-   * <a href="FlatSpec.html#withFixtureNoArgTest">documentation for trait <code>fixture.FlatSpec</code></a>.
-   * </p>
+   * <a href="FlatSpec.html#withFixtureNoArgTest">documentation for trait `fixture.FlatSpec`</a>.
+   * 
    */
   protected trait NoArgTest extends (() => Outcome) with TestData {
 
     /**
-     * Runs the body of the test, returning an <code>Outcome</code>.
+     * Runs the body of the test, returning an `Outcome`.
      */
     def apply(): Outcome
   }
@@ -171,24 +163,21 @@ trait TestSuite extends Suite { thisTestSuite =>
   /**
    * Run the passed test function in the context of a fixture established by this method.
    *
-   * <p>
    * This method should set up the fixture needed by the tests of the
    * current suite, invoke the test function, and if needed, perform any clean
-   * up needed after the test completes. Because the <code>NoArgTest</code> function
+   * up needed after the test completes. Because the `NoArgTest` function
    * passed to this method takes no parameters, preparing the fixture will require
-   * side effects, such as reassigning instance <code>var</code>s in this <code>Suite</code> or initializing
-   * a globally accessible external database. If you want to avoid reassigning instance <code>var</code>s
+   * side effects, such as reassigning instance `var`s in this `Suite` or initializing
+   * a globally accessible external database. If you want to avoid reassigning instance `var`s
    * you can use <a href="fixture/Suite.html">fixture.Suite</a>.
-   * </p>
+   * 
    *
-   * <p>
-   * This trait's implementation of <code>runTest</code> invokes this method for each test, passing
-   * in a <code>NoArgTest</code> whose <code>apply</code> method will execute the code of the test.
-   * </p>
+   * This trait's implementation of `runTest` invokes this method for each test, passing
+   * in a `NoArgTest` whose `apply` method will execute the code of the test.
+   * 
    *
-   * <p>
-   * This trait's implementation of this method simply invokes the passed <code>NoArgTest</code> function.
-   * </p>
+   * This trait's implementation of this method simply invokes the passed `NoArgTest` function.
+   * 
    *
    * @param test the no-arg test function to run with a fixture
    */
@@ -199,23 +188,21 @@ trait TestSuite extends Suite { thisTestSuite =>
   /**
    * Run an async test.
    *
-   * <p>
    * This method is redefine in this trait solely to narrow its contract. Subclasses must implement
-   * this method to call the <code>withFixture(NoArgTest)</code> method, which is defined in this trait.
-   * </p>
+   * this method to call the `withFixture(NoArgTest)` method, which is defined in this trait.
+   * 
    *
-   * <p>
-   * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
+   * This trait's implementation of this method simply returns `SucceededStatus` 
    * and has no other effect.
-   * </p>
+   * 
    *
    * @param testName the name of one async test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method
    *     has completed, and whether or not it failed.
    *
-   * @throws NullArgumentException if either <code>testName</code> or <code>args</code>
-   *     is <code>null</code>.
+   * @throws NullArgumentException if either `testName` or `args`
+   *     is `null`.
    */
   protected override def runTest(testName: String, args: Args): Status = SucceededStatus
 }

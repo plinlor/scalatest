@@ -24,15 +24,13 @@ import scala.util.{Success, Failure}
 /**
  * Trait that causes tests to be run in pseudo-random order.
  *
- * <p>
- * Although the tests are run in pseudo-random order, events will be fired in the &ldquo;normal&rdquo; order for the <code>Suite</code>
- * that mixes in this trait, as determined by <code>runTests</code>. 
- * </p>
+ * Although the tests are run in pseudo-random order, events will be fired in the &ldquo;normal&rdquo; order for the `Suite`
+ * that mixes in this trait, as determined by `runTests`. 
+ * 
  *
- * <p>
  * The purpose of this trait is to reduce the likelihood of unintentional order dependencies between tests
  * in the same test class.
- * </p>
+ * 
  *
  * @author Chee Seng
  */
@@ -43,39 +41,36 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
   private val suiteRunQueue = new ConcurrentLinkedQueue[DeferredSuiteRun]
 
   /**
-   * Modifies the behavior of <code>super.runTest</code> to facilitate pseudo-random order test execution.
+   * Modifies the behavior of `super.runTest` to facilitate pseudo-random order test execution.
    *
-   * <p>
-   * If <code>runTestInNewInstance</code> is <code>false</code>, this is the test-specific (distributed)
-   * instance, so this trait's implementation of this method simply invokes <code>super.runTest</code>,
-   * passing along the same <code>testName</code> and <code>args</code> object, delegating responsibility
-   * for actually running the test to the super implementation. After <code>super.runTest</code> returns
-   * (or completes abruptly by throwing an exception), it notifies <code>args.distributedTestSorter</code>
-   * that it has completed running the test by invoking <code>completedTest</code> on it,
-   * passing in the <code>testName</code>.
-   * </p>
+   * If `runTestInNewInstance` is `false`, this is the test-specific (distributed)
+   * instance, so this trait's implementation of this method simply invokes `super.runTest`,
+   * passing along the same `testName` and `args` object, delegating responsibility
+   * for actually running the test to the super implementation. After `super.runTest` returns
+   * (or completes abruptly by throwing an exception), it notifies `args.distributedTestSorter`
+   * that it has completed running the test by invoking `completedTest` on it,
+   * passing in the `testName`.
+   * 
    *
-   * <p>
-   * If <code>runTestInNewInstance</code> is <code>true</code>, it notifies <code>args.distributedTestSorter</code>
-   * that it is distributing the test by invoking <code>distributingTest</code> on it,
-   * passing in the <code>testName</code>.  The test execution will be deferred to be run in pseudo-random order later.
-   * </p>
+   * If `runTestInNewInstance` is `true`, it notifies `args.distributedTestSorter`
+   * that it is distributing the test by invoking `distributingTest` on it,
+   * passing in the `testName`.  The test execution will be deferred to be run in pseudo-random order later.
+   * 
    *
-   * <p>
-   * Note: this trait's implementation of this method is <code>final</code> to ensure that
-   * any other desired <code>runTest</code> behavior is executed by the same thread that executes
-   * the test. For example, if you were to mix in <code>BeforeAndAfter</code> after
-   * <code>RandomTestOrder</code>, the <code>before</code> and <code>after</code> code would
+   * Note: this trait's implementation of this method is `final` to ensure that
+   * any other desired `runTest` behavior is executed by the same thread that executes
+   * the test. For example, if you were to mix in `BeforeAndAfter` after
+   * `RandomTestOrder`, the `before` and `after` code would
    * be executed by the general instance on the main test thread, rather than by the test-specific
-   * instance on the distributed thread. Marking this method <code>final</code> ensures that
-   * traits like <code>BeforeAndAfter</code> can only be &lquot;super&rquot; to <code>RandomTestOrder</code>
-   * and, therefore, that its <code>before</code> and <code>after</code> code will be run
+   * instance on the distributed thread. Marking this method `final` ensures that
+   * traits like `BeforeAndAfter` can only be &lquot;super&rquot; to `RandomTestOrder`
+   * and, therefore, that its `before` and `after` code will be run
    * by the same distributed thread that runs the test itself.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
    */
   final protected abstract override def runTest(testName: String, args: Args): Status = {
 
@@ -104,29 +99,27 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
   }
 
   /**
-   * Construct a new instance of this <code>Suite</code>.
+   * Construct a new instance of this `Suite`.
    *
-   * <p>
-   * This trait's implementation of <code>runTests</code> invokes this method to create
-   * a new instance of this <code>Suite</code> for each test. This trait's implementation
-   * of this method uses reflection to call <code>this.getClass.newInstance</code>. This
-   * approach will succeed only if this <code>Suite</code>'s class has a public, no-arg
+   * This trait's implementation of `runTests` invokes this method to create
+   * a new instance of this `Suite` for each test. This trait's implementation
+   * of this method uses reflection to call `this.getClass.newInstance`. This
+   * approach will succeed only if this `Suite`'s class has a public, no-arg
    * constructor. In most cases this is likely to be true, because to be instantiated
-   * by ScalaTest's <code>Runner</code> a <code>Suite</code> needs a public, no-arg
-   * constructor. However, this will not be true of any <code>Suite</code> defined as
+   * by ScalaTest's `Runner` a `Suite` needs a public, no-arg
+   * constructor. However, this will not be true of any `Suite` defined as
    * an inner class of another class or trait, because every constructor of an inner
    * class type takes a reference to the enclosing instance. In such cases, and in
-   * cases where a <code>Suite</code> class is explicitly defined without a public,
+   * cases where a `Suite` class is explicitly defined without a public,
    * no-arg constructor, you will need to override this method to construct a new
-   * instance of the <code>Suite</code> in some other way.
-   * </p>
+   * instance of the `Suite` in some other way.
+   * 
    *
-   * <p>
-   * Here's an example of how you could override <code>newInstance</code> to construct
+   * Here's an example of how you could override `newInstance` to construct
    * a new instance of an inner class:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest._
    *
    * class Outer {
@@ -136,47 +129,44 @@ trait RandomTestOrder extends OneInstancePerTest { this: Suite =>
    *     override def newInstance = new InnerSuite
    *   }
    * }
-   * </pre>
+   * }}}
    */
   override def newInstance: Suite with RandomTestOrder = this.getClass.newInstance.asInstanceOf[Suite with RandomTestOrder]
 
   /**
    * A maximum amount of time to wait for out-of-order events generated by running the tests
-   * of this <code>Suite</code> in parallel while sorting the events back into a more
+   * of this `Suite` in parallel while sorting the events back into a more
    * user-friendly, sequential order.
    *
-   * <p>
-   * The default implementation of this method returns the value specified via <code>-T</code> to
-   * <a href="tools/Suite$.html"></code>Suite</code></a>, or 2 seconds, if no <code>-T</code> was supplied.
-   * </p>
+   * The default implementation of this method returns the value specified via `-T` to
+   * <a href="tools/Suite$.html">`Suite`</a>, or 2 seconds, if no `-T` was supplied.
+   * 
    *
    * @return a maximum amount of time to wait for events while resorting them into sequential order
    */
   protected def sortingTimeout: Span = Suite.testSortingReporterTimeout
 
   /**
-   * Modifies the behavior of <code>super.run</code> to facilitate pseudo-random order test execution.
+   * Modifies the behavior of `super.run` to facilitate pseudo-random order test execution.
    *
-   * <p>
-   * If both <code>testName</code> and <code>args.distributedTestSorter</code> are defined,
-   * this trait's implementation of this method will create a "test-specific reporter" whose <code>apply</code>
-   * method will invoke the <code>apply</code> method of the <code>DistributedTestSorter</code>, which takes
-   * a test name as well as the event. It will then invoke <code>super.run</code> passing along
-   * the same <code>testName</code> and an <code>Args</code> object that is the same except with the
+   * If both `testName` and `args.distributedTestSorter` are defined,
+   * this trait's implementation of this method will create a "test-specific reporter" whose `apply`
+   * method will invoke the `apply` method of the `DistributedTestSorter`, which takes
+   * a test name as well as the event. It will then invoke `super.run` passing along
+   * the same `testName` and an `Args` object that is the same except with the
    * original reporter replaced by the test-specific reporter.
-   * </p>
+   * 
    *
-   * <p>
-   * If either <code>testName</code> or <code>args.distributedTestSorter</code> is empty, it will create <code>TestSortingReporter</code>
-   * and override <code>args</code>'s <code>reporter</code> and <code>distributedTestSorter</code> with it.  It then call <code>super.run</code>
-   * to delegate the run to super's implementation, and to collect all children suites in <code>suiteRunQueue</code>.  After <code>super.run</code>
-   * completed, it then shuffle the order of the suites collected in <code>suiteRunQueue</code> and run them.
-   * </p>
+   * If either `testName` or `args.distributedTestSorter` is empty, it will create `TestSortingReporter`
+   * and override `args`'s `reporter` and `distributedTestSorter` with it.  It then call `super.run`
+   * to delegate the run to super's implementation, and to collect all children suites in `suiteRunQueue`.  After `super.run`
+   * completed, it then shuffle the order of the suites collected in `suiteRunQueue` and run them.
+   * 
    *
-   * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
-   *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to execute. If `None`, all relevant tests should be executed.
+   *                 I.e., `None` acts like a wildcard that means execute all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
    */
   abstract override def run(testName: Option[String], args: Args): Status = {
     (testName, args.distributedTestSorter) match {

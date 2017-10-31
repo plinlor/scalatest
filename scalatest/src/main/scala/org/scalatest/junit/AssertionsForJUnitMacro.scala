@@ -24,11 +24,11 @@ import reflect.macros.Context
 private[scalatest] object AssertionsForJUnitMacro {
 
   /**
-    * Provides assertion implementation for <code>Assertions.assert(booleanExpr: Boolean)</code>, with rich error message.
+    * Provides assertion implementation for `Assertions.assert(booleanExpr: Boolean)`, with rich error message.
     *
     * @param context macro context
     * @param condition original condition expression
-    * @return transformed expression that performs the assertion check and throw <code>TestFailedException</code> with rich error message if assertion failed
+    * @return transformed expression that performs the assertion check and throw `TestFailedException` with rich error message if assertion failed
     */
   def assert(context: Context)(condition: context.Expr[Boolean])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
     import context.universe._
@@ -57,12 +57,12 @@ private[scalatest] object AssertionsForJUnitMacro {
   }
 
   /**
-    * Provides assertion implementation for <code>Assertions.assert(booleanExpr: Boolean, clue: Any)</code>, with rich error message.
+    * Provides assertion implementation for `Assertions.assert(booleanExpr: Boolean, clue: Any)`, with rich error message.
     *
     * @param context macro context
     * @param condition original condition expression
     * @param clue original clue expression
-    * @return transformed expression that performs the assertion check and throw <code>TestFailedException</code> with rich error message (clue included) if assertion failed
+    * @return transformed expression that performs the assertion check and throw `TestFailedException` with rich error message (clue included) if assertion failed
     */
   def assertWithClue(context: Context)(condition: context.Expr[Boolean], clue: context.Expr[Any])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
     import context.universe._
@@ -91,11 +91,11 @@ private[scalatest] object AssertionsForJUnitMacro {
   }
 
   /**
-    * Provides implementation for <code>Assertions.assume(booleanExpr: Boolean)</code>, with rich error message.
+    * Provides implementation for `Assertions.assume(booleanExpr: Boolean)`, with rich error message.
     *
     * @param context macro context
     * @param condition original condition expression
-    * @return transformed expression that performs the assumption check and throw <code>TestCanceledException</code> with rich error message if assumption failed
+    * @return transformed expression that performs the assumption check and throw `TestCanceledException` with rich error message if assumption failed
     */
   def assume(context: Context)(condition: context.Expr[Boolean])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
     import context.universe._
@@ -124,12 +124,12 @@ private[scalatest] object AssertionsForJUnitMacro {
   }
 
   /**
-    * Provides implementation for <code>Assertions.assume(booleanExpr: Boolean, clue: Any)</code>, with rich error message.
+    * Provides implementation for `Assertions.assume(booleanExpr: Boolean, clue: Any)`, with rich error message.
     *
     * @param context macro context
     * @param condition original condition expression
     * @param clue original clue expression
-    * @return transformed expression that performs the assumption check and throw <code>TestCanceledException</code> with rich error message (clue included) if assumption failed
+    * @return transformed expression that performs the assumption check and throw `TestCanceledException` with rich error message (clue included) if assumption failed
     */
   def assumeWithClue(context: Context)(condition: context.Expr[Boolean], clue: context.Expr[Any])(prettifier: context.Expr[Prettifier], pos: context.Expr[source.Position]): context.Expr[Assertion] = {
     import context.universe._

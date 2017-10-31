@@ -21,7 +21,7 @@ import org.scalatest.MatchersHelper.indicateFailure
 import org.scalactic._
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -31,10 +31,10 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [Exception] should be thrownBy { ... }
    *                ^
-   * </pre>
+   * }}}
    **/
   def should(beWord: BeWord)(implicit prettifier: Prettifier, pos: source.Position): ResultOfBeWordForAnType[T] =
     new ResultOfBeWordForAnType[T](clazz, prettifier, pos)
@@ -42,12 +42,12 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [RuntimeException] should not
    *                       ^
-   * </pre>
+   * }}}
    *
-   * This method is here to direct people trying to use the above syntax to use <code>noException</code> instead.
+   * This method is here to direct people trying to use the above syntax to use `noException` instead.
    */
   def should(notWord: NotWord): PleaseUseNoExceptionShouldSyntaxInstead =
     new PleaseUseNoExceptionShouldSyntaxInstead
@@ -55,10 +55,10 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [RuntimeException] shouldBe thrownBy { ... }
    *                       ^
-   * </pre>
+   * }}}
    **/
   def shouldBe(thrownBy: ResultOfThrownByApplication)(implicit prettifier: Prettifier, pos: source.Position): org.scalatest.Assertion = {
     
@@ -85,10 +85,10 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [RuntimeException] should (be thrownBy { ... })
    *                       ^
-   * </pre>
+   * }}}
    **/
   def should(beThrownBy: ResultOfBeThrownBy)(implicit prettifier: Prettifier, pos: source.Position): org.scalatest.Assertion = {
     val throwables = beThrownBy.throwables
@@ -111,10 +111,10 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [Exception] must be thrownBy { ... }
    *                ^
-   * </pre>
+   * }}}
    **/
   def must(beWord: BeWord)(implicit prettifier: Prettifier, pos: source.Position): ResultOfBeWordForAnType[T] =
     new ResultOfBeWordForAnType[T](clazz, prettifier, pos)
@@ -122,12 +122,12 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [RuntimeException] must not
    *                       ^
-   * </pre>
+   * }}}
    *
-   * This method is here to direct people trying to use the above syntax to use <code>noException</code> instead.
+   * This method is here to direct people trying to use the above syntax to use `noException` instead.
    */
   def must(notWord: NotWord): PleaseUseNoExceptionShouldSyntaxInstead =
     new PleaseUseNoExceptionShouldSyntaxInstead
@@ -135,10 +135,10 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [RuntimeException] mustBe thrownBy { ... }
    *                       ^
-   * </pre>
+   * }}}
    **/
   def mustBe(thrownBy: ResultOfThrownByApplication)(implicit prettifier: Prettifier, pos: source.Position): org.scalatest.Assertion = {
 
@@ -165,10 +165,10 @@ final class ResultOfAnTypeInvocation[T](val clazz: Class[T]) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * an [RuntimeException] must (be thrownBy { ... })
    *                       ^
-   * </pre>
+   * }}}
    **/
   def must(beThrownBy: ResultOfBeThrownBy)(implicit prettifier: Prettifier, pos: source.Position): org.scalatest.Assertion = {
     val throwables = beThrownBy.throwables

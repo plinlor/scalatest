@@ -28,18 +28,16 @@ import java.lang.reflect.{Method, Modifier, InvocationTargetException}
 import org.scalactic.{source, Prettifier}
 
 /**
- * Implementation trait for class <code>RefSpec</code>, which facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD), in which tests
+ * Implementation trait for class `RefSpec`, which facilitates a &ldquo;behavior-driven&rdquo; style of development (BDD), in which tests
  * are methods, optionally nested inside singleton objects defining textual scopes.
  * 
- * <p>
- * <a href="RefSpec.html"><code>RefSpec</code></a> is a class, not a trait, to minimize compile time given there is a slight compiler overhead to
- * mixing in traits compared to extending classes. If you need to mix the behavior of <code>RefSpec</code>
- * into some other class, you can use this trait instead, because class <code>RefSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * <a href="RefSpec.html">`RefSpec`</a> is a class, not a trait, to minimize compile time given there is a slight compiler overhead to
+ * mixing in traits compared to extending classes. If you need to mix the behavior of `RefSpec`
+ * into some other class, you can use this trait instead, because class `RefSpec` does nothing more than extend this trait and add a nice `toString` implementation.
+ * 
  *
- * <p>
- * See the documentation of the class for a <a href="RefSpec.html">detailed overview of <code>RefSpec</code></a>.
- * </p>
+ * See the documentation of the class for a <a href="RefSpec.html">detailed overview of `RefSpec`</a>.
+ * 
  *
  * @author Bill Venners
  */
@@ -167,59 +165,58 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
   private[scalatest] val sourceFileName = "RefSpecLike.scala"
 
   /**
-   * Returns an <code>Informer</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Informer` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def info: Informer = atomicInformer.get
 
   /**
-   * Returns a <code>Notifier</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Notifier` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>RefSpec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `RefSpec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def note: Notifier = atomicNotifier.get
 
   /**
-   * Returns an <code>Alerter</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Alerter` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>RefSpec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `RefSpec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def alert: Alerter = atomicAlerter.get
 
   /**
-   * Returns a <code>Documenter</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Documenter` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def markup: Documenter = atomicDocumenter.get
   
   /**
-   * An immutable <code>Set</code> of test names. If this <code>RefSpec</code> contains no tests, this method returns an
-   * empty <code>Set</code>.
+   * An immutable `Set` of test names. If this `RefSpec` contains no tests, this method returns an
+   * empty `Set`.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
-   * example itself, with all components separated by a space. For example, consider this <code>RefSpec</code>:
-   * </p>
+   * example itself, with all components separated by a space. For example, consider this `RefSpec`:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest.RefSpec
    *
    * class StackSpec extends RefSpec {
@@ -232,17 +229,16 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
    *     }
    *   }
    * }
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Invoking <code>testNames</code> on this <code>RefSpec</code> will yield a set that contains the following
+   * Invoking `testNames` on this `RefSpec` will yield a set that contains the following
    * two test name strings:
-   * </p>
+   * 
    *
-   * <pre class="stExamples">
+   * {{{ class="stExamples">
    * "A Stack (when not empty) must allow me to pop"
    * "A Stack (when not full) must allow me to push"
-   * </pre>
+   * }}}
    */
   override def testNames: Set[String] = {
     ensureScopesAndTestsRegistered()
@@ -251,16 +247,16 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
   
   /**
    * Run a test. This trait's implementation runs the test registered with the name specified by
-   * <code>testName</code>. Each test's name is a concatenation of the text of all describers surrounding a test,
+   * `testName`. Each test's name is a concatenation of the text of all describers surrounding a test,
    * from outside in, and the test's  spec text, with one space placed between each item. (See the documenation
-   * for <code>testNames</code> for an example.)
+   * for `testNames` for an example.)
    *
    * @param testName the name of one test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
    *
-   * @throws NullPointerException if any of <code>testName</code>, <code>reporter</code>, <code>stopper</code>, or <code>configMap</code>
-   *     is <code>null</code>.
+   * @throws NullPointerException if any of `testName`, `reporter`, `stopper`, or `configMap`
+   *     is `null`.
    */
   protected override def runTest(testName: String, args: Args): Status = {
     requireNonNull(testName, args)
@@ -294,21 +290,19 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
 
 
   /**
-   * A <code>Map</code> whose keys are <code>String</code> names of tagged tests and whose associated values are
-   * the <code>Set</code> of tags for the test. If this <code>RefSpec</code> contains no tags, this method returns an empty <code>Map</code>.
+   * A `Map` whose keys are `String` names of tagged tests and whose associated values are
+   * the `Set` of tags for the test. If this `RefSpec` contains no tags, this method returns an empty `Map`.
    *
-   * <p>
    * This trait's implementation of this method uses Java reflection to discover any Java annotations attached to its test methods. The
-   * fully qualified name of each unique annotation that extends <code>TagAnnotation</code> is considered a tag. This trait's
+   * fully qualified name of each unique annotation that extends `TagAnnotation` is considered a tag. This trait's
    * implementation of this method, therefore, places one key/value pair into to the
-   * <code>Map</code> for each test for which a tag annotation is discovered through reflection.
-   * </p>
+   * `Map` for each test for which a tag annotation is discovered through reflection.
    * 
-   * <p>
+   * 
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.  
-   * For example, if you annotate <code>@Ignore</code> at the class level, all test methods in the class will be auto-annotated with
-   * <code>org.scalatest.Ignore</code>.
-   * </p>
+   * For example, if you annotate `@Ignore` at the class level, all test methods in the class will be auto-annotated with
+   * `org.scalatest.Ignore`.
+   * 
    */
   override def tags: Map[String, Set[String]] = {
     ensureScopesAndTestsRegistered()
@@ -316,16 +310,16 @@ trait RefSpecLike extends TestSuite with Informing with Notifying with Alerting 
   }
   
   /**
-   * Run zero to many of this <code>RefSpec</code>'s tests.
+   * Run zero to many of this `RefSpec`'s tests.
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullPointerException if any of the passed parameters is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @throws NullPointerException if any of the passed parameters is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   protected override def runTests(testName: Option[String], args: Args): Status = {
     ensureScopesAndTestsRegistered()

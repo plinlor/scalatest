@@ -17,19 +17,17 @@ package org.scalatest.concurrent
 import java.nio.channels.Selector
 
 /**
- * Strategy for interrupting an operation in which <code>wakeup</code> is called on the <code>java.nio.channels.Selector</code> passed to
+ * Strategy for interrupting an operation in which `wakeup` is called on the `java.nio.channels.Selector` passed to
  * the constructor.
  *
- * <p>
- * This class can be used for configuration when using traits <a href="Timeouts.html"><code>Timeouts</code></a>
- * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
+ * This class can be used for configuration when using traits <a href="Timeouts.html">`Timeouts`</a>
+ * and <a href="TimeLimitedTests.html">`TimeLimitedTests`</a>.
  */
 @deprecated("Please use org.scalatest.concurrent.Signaler instead.")
 class SelectorInterruptor(selector: Selector) extends Interruptor {
   
   /**
-   * Invokes <code>wakeup</code> on the <code>java.nio.channels.Selector</code> passed to this class's constructor.
+   * Invokes `wakeup` on the `java.nio.channels.Selector` passed to this class's constructor.
    *
    * @param testThread unused by this strategy
    */
@@ -39,14 +37,14 @@ class SelectorInterruptor(selector: Selector) extends Interruptor {
 }
 
 /**
- * Companion object that provides a factory method for a <code>SelectorInterruptor</code>.
+ * Companion object that provides a factory method for a `SelectorInterruptor`.
  */
 object SelectorInterruptor {
 
   /**
-   * Factory method for a <code>SelectorInterruptor</code>.
+   * Factory method for a `SelectorInterruptor`.
    *
-   * @param selector the <code>java.nio.channels.Selector</code> to pass to the <code>SelectorInterruptor</code> constructor
+   * @param selector the `java.nio.channels.Selector` to pass to the `SelectorInterruptor` constructor
    */
   def apply(selector: Selector) = new SelectorInterruptor(selector)
 }

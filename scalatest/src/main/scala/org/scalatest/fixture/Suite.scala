@@ -176,26 +176,24 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
   /**
    * Run a test.
    *
-   * <p>
-   * This trait's implementation uses Java reflection to invoke on this object the test method identified by the passed <code>testName</code>.
-   * </p>
+   * This trait's implementation uses Java reflection to invoke on this object the test method identified by the passed `testName`.
+   * 
    *
-   * <p>
-   * Implementations of this method are responsible for ensuring a <code>TestStarting</code> event
-   * is fired to the <code>Reporter</code> before executing any test, and either <code>TestSucceeded</code>,
-   * <code>TestFailed</code>, <code>TestPending</code> or <code>TestCanceled</code> after executing any nested
-   * <code>Suite</code>. (If a test is marked with the <code>org.scalatest.Ignore</code> tag, the
-   * <code>runTests</code> method is responsible for ensuring a <code>TestIgnored</code> event is fired and that
-   * this <code>runTest</code> method is not invoked for that ignored test.)
-   * </p>
+   * Implementations of this method are responsible for ensuring a `TestStarting` event
+   * is fired to the `Reporter` before executing any test, and either `TestSucceeded`,
+   * `TestFailed`, `TestPending` or `TestCanceled` after executing any nested
+   * `Suite`. (If a test is marked with the `org.scalatest.Ignore` tag, the
+   * `runTests` method is responsible for ensuring a `TestIgnored` event is fired and that
+   * this `runTest` method is not invoked for that ignored test.)
+   * 
    *
    * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
    *
-   * @throws NullArgumentException if any of <code>testName</code> or <code>args</code> is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @throws NullArgumentException if any of `testName` or `args` is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   // Can just inheirt the supertrait implementation of runTest that 
 /*
@@ -339,7 +337,7 @@ trait Suite extends org.scalatest.Suite { thisSuite =>
   /**
    * Suite style name.
    *
-   * @return <code>org.scalatest.fixture.Suite</code>
+   * @return `org.scalatest.fixture.Suite`
    */
   override val styleName: String = "org.scalatest.fixture.Suite"
 }

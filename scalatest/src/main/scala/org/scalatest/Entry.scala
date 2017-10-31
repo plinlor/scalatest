@@ -16,24 +16,23 @@
 package org.scalatest
 
 /**
- * A case class implementation of <code>java.util.Map.Entry</code> to make it easier to
- * test Java <code>Map</code>s with ScalaTest <a href="Matchers.html">Matchers</a>.
+ * A case class implementation of `java.util.Map.Entry` to make it easier to
+ * test Java `Map`s with ScalaTest <a href="Matchers.html">Matchers</a>.
  *
- * <p>
- * In Java, <code>java.util.Map</code> is not a subtype of <code>java.util.Collection</code>, and does not
- * actually define an element type. You can ask a Java <code>Map</code> for an &ldquo;entry set&rdquo;
- * via the <code>entrySet</code> method, which will return the <code>Map</code>'s key/value pairs
- * wrapped in a set of <code>java.util.Map.Entry</code>, but a <code>Map</code> is not actually
- * a collection of <code>Entry</code>. To make Java <code>Map</code>s easier to work with, however,
- * ScalaTest matchers allows you to treat a Java <code>Map</code> as a collection of <code>Entry</code>,
- * and defines this convenience implementation of <code>java.util.Map.Entry</code>.
+ * In Java, `java.util.Map` is not a subtype of `java.util.Collection`, and does not
+ * actually define an element type. You can ask a Java `Map` for an &ldquo;entry set&rdquo;
+ * via the `entrySet` method, which will return the `Map`'s key/value pairs
+ * wrapped in a set of `java.util.Map.Entry`, but a `Map` is not actually
+ * a collection of `Entry`. To make Java `Map`s easier to work with, however,
+ * ScalaTest matchers allows you to treat a Java `Map` as a collection of `Entry`,
+ * and defines this convenience implementation of `java.util.Map.Entry`.
  * Here's how you use it:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * javaMap should contain (Entry(2, 3))
  * javaMap should contain oneOf (Entry(2, 3), Entry(3, 4))
- * </pre>
+ * }}}
  *
  * @param key the key of this entry
  * @param value the value of this entry
@@ -44,7 +43,7 @@ case class Entry[K, V](key: K, value: V) extends java.util.Map.Entry[K, V] {
 //SCALATESTJS-ONLY case class Entry[K, V](key: K, value: V) {
 
   /**
-   * Returns the key corresponding to this <code>Entry</code>.
+   * Returns the key corresponding to this `Entry`.
    *
    * @return the key corresponding to this entry
    */
@@ -58,7 +57,7 @@ case class Entry[K, V](key: K, value: V) extends java.util.Map.Entry[K, V] {
   def getValue: V = value
 
   /**
-   * Throws <code>UnsupportedOperationException</code>.
+   * Throws `UnsupportedOperationException`.
    *
    * @throws UnsupportedOperationException unconditionally
    */
@@ -90,11 +89,11 @@ case class Entry[K, V](key: K, value: V) extends java.util.Map.Entry[K, V] {
   }
 
   /**
-   * Returns a <code>String</code> representation of this <code>Entry</code> consisting of
-   * concatenating the result of invoking <code>toString</code> on the <code>key</code>,
-   * an equals sign, and the result of invoking <code>toString</code> on the <code>value</code>.
+   * Returns a `String` representation of this `Entry` consisting of
+   * concatenating the result of invoking `toString` on the `key`,
+   * an equals sign, and the result of invoking `toString` on the `value`.
    *
-   * @return a <code>String</code> already!
+   * @return a `String` already!
    */
   override def toString: String = key.toString + "=" + value.toString
 }

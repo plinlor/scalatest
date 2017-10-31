@@ -23,20 +23,18 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
 /**
  * Exception thrown to indicate a test has been canceled.
  *
- * <p>
- * A <em>canceled test</em> is one that is unable to run because a needed dependency, such as
+ * A ''canceled test'' is one that is unable to run because a needed dependency, such as
  * an external database, is missing.
- * </p>
+ * 
  *
- * <p>
- * Canceled tests are ones that complete abruptly with a <code>TestCanceledException</code> after
+ * Canceled tests are ones that complete abruptly with a `TestCanceledException` after
  * starting.
- * </p>
+ * 
  *
- * @param messageFun a function that return an optional detail message for this <code>TestCanceledException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+ * @param messageFun a function that return an optional detail message for this `TestCanceledException`.
+ * @param cause an optional cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
  * @param posOrStackDepthFun either a source position or a function that return the depth in the stack trace of this exception at which the line of test code that failed resides.
- * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestCanceled</code> event
+ * @param payload an optional payload, which ScalaTest will include in a resulting `TestCanceled` event
  *
  * @author Travis Stevens
  * @author Chee Seng
@@ -49,12 +47,12 @@ class TestCanceledException(
 ) extends StackDepthException(messageFun, cause, posOrStackDepthFun/*, posOrElseStackDepthFun(pos, failedCodeStackDepthFun)*/) with ModifiableMessage[TestCanceledException] with PayloadField with ModifiablePayload[TestCanceledException] {
 
   /**
-    * Constructs a <code>TestCanceledException</code> with the given error message function, optional cause, source position and optional payload.
+    * Constructs a `TestCanceledException` with the given error message function, optional cause, source position and optional payload.
     *
-    * @param messageFun a function that return an optional detail message for this <code>TestCanceledException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+    * @param messageFun a function that return an optional detail message for this `TestCanceledException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
     * @param pos a source position
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestCanceled</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestCanceled` event
     */
   def this(
     messageFun: StackDepthException => Option[String],
@@ -64,10 +62,10 @@ class TestCanceledException(
   ) = this(messageFun, cause, Left(pos), payload)
 
   /**
-    * Constructs a <code>TestCanceledException</code> with the given error message function, optional cause and source position.
+    * Constructs a `TestCanceledException` with the given error message function, optional cause and source position.
     *
-    * @param messageFun a function that return an optional detail message for this <code>TestCanceledException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+    * @param messageFun a function that return an optional detail message for this `TestCanceledException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
     * @param pos a source position
     */
   def this(
@@ -77,14 +75,14 @@ class TestCanceledException(
   ) = this(messageFun, cause, Left(pos), None)
 
   /**
-   * Constructs a <code>TestCanceledException</code> with pre-determined <code>message</code> and <code>failedCodeStackDepth</code>. (This was
+   * Constructs a `TestCanceledException` with pre-determined `message` and `failedCodeStackDepth`. (This was
    * the primary constructor form prior to ScalaTest 1.5.)
    *
-   * @param message an optional detail message for this <code>TestCanceledException</code>.
-   * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+   * @param message an optional detail message for this `TestCanceledException`.
+   * @param cause an optional cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if either <code>message</code> of <code>cause</code> is <code>null</code>, or <code>Some(null)</code>.
+   * @throws NullArgumentException if either `message` of `cause` is `null`, or `Some(null)`.
    */
   def this(message: Option[String], cause: Option[Throwable], failedCodeStackDepth: Int) =
     this(
@@ -95,7 +93,7 @@ class TestCanceledException(
     )
 
   /**
-   * Create a <code>TestCanceledException</code> with specified stack depth and no detail message or cause.
+   * Create a `TestCanceledException` with specified stack depth and no detail message or cause.
    *
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
@@ -104,12 +102,12 @@ class TestCanceledException(
     this((_: StackDepthException) => None, None, Right((_: StackDepthException) => failedCodeStackDepth), None)
 
   /**
-   * Create a <code>TestCanceledException</code> with a specified stack depth and detail message.
+   * Create a `TestCanceledException` with a specified stack depth and detail message.
    *
-   * @param message A detail message for this <code>TestCanceledException</code>.
+   * @param message A detail message for this `TestCanceledException`.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if <code>message</code> is <code>null</code>.
+   * @throws NullArgumentException if `message` is `null`.
    */
   def this(message: String, failedCodeStackDepth: Int) =
     this(
@@ -122,14 +120,14 @@ class TestCanceledException(
     )
 
   /**
-   * Create a <code>TestCanceledException</code> with the specified stack depth and cause.  The
-   * <code>message</code> field of this exception object will be initialized to
-   * <code>if (cause.getMessage == null) "" else cause.getMessage</code>.
+   * Create a `TestCanceledException` with the specified stack depth and cause.  The
+   * `message` field of this exception object will be initialized to
+   * `if (cause.getMessage == null) "" else cause.getMessage`.
    *
-   * @param cause the cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+   * @param cause the cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if <code>cause</code> is <code>null</code>.
+   * @throws NullArgumentException if `cause` is `null`.
    */
   def this(cause: Throwable, failedCodeStackDepth: Int) =
     this(
@@ -143,18 +141,18 @@ class TestCanceledException(
     )
 
   /**
-   * Create a <code>TestCancelledException</code> with the specified stack depth, detail
+   * Create a `TestCancelledException` with the specified stack depth, detail
    * message, and cause.
    *
    * <p>Note that the detail message associated with cause is
-   * <em>not</em> automatically incorporated in this throwable's detail
+   * ''not'' automatically incorporated in this throwable's detail
    * message.
    *
-   * @param message A detail message for this <code>TestCanceledException</code>.
-   * @param cause the cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+   * @param message A detail message for this `TestCanceledException`.
+   * @param cause the cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if either <code>message</code> or <code>cause</code> is <code>null</code>.
+   * @throws NullArgumentException if either `message` or `cause` is `null`.
    */
   def this(message: String, cause: Throwable, failedCodeStackDepth: Int) =
     this(
@@ -170,12 +168,12 @@ class TestCanceledException(
     )
 
   /**
-    * Constructs a <code>TestCanceledException</code> with the given error message function, optional cause, stack depth function and optional payload.
+    * Constructs a `TestCanceledException` with the given error message function, optional cause, stack depth function and optional payload.
     *
-    * @param messageFun a function that return an optional detail message for this <code>TestCanceledException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+    * @param messageFun a function that return an optional detail message for this `TestCanceledException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
     * @param failedCodeStackDepthFun a function that return the depth in the stack trace of this exception at which the line of test code that failed resides.
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestCanceled</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestCanceled` event
     */
   def this(messageFun: StackDepthException => Option[String],
            cause: Option[Throwable],
@@ -183,7 +181,7 @@ class TestCanceledException(
            payload: Option[Any]) = this(messageFun, cause, Right(failedCodeStackDepthFun), payload)
 
   /**
-   * Returns an exception of class <code>TestCanceledException</code> with <code>failedExceptionStackDepth</code> set to 0 and
+   * Returns an exception of class `TestCanceledException` with `failedExceptionStackDepth` set to 0 and
    * all frames above this stack depth severed off. This can be useful when working with tools (such as IDEs) that do not
    * directly support ScalaTest. (Tools that directly support ScalaTest can use the stack depth information delivered
    * in the StackDepth exceptions.)
@@ -198,10 +196,10 @@ class TestCanceledException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the detail message option string replaced with the result of passing
-   * the current detail message to the passed function, <code>fun</code>.
+   * the current detail message to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional detail message, will produce
-   *            the modified optional detail message for the result instance of <code>TestCanceledException</code>.
+   *            the modified optional detail message for the result instance of `TestCanceledException`.
    */
   def modifyMessage(fun: Option[String] => Option[String]): TestCanceledException = {
     val mod = new TestCanceledException(StackDepthException.toExceptionFunction(fun(message)), cause, posOrStackDepthFun, payload)
@@ -212,10 +210,10 @@ class TestCanceledException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with the result of passing
-   * the current payload option to the passed function, <code>fun</code>.
+   * the current payload option to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional payload, will produce
-   * the modified optional payload for the result instance of <code>TestCanceledException</code>.
+   * the modified optional payload for the result instance of `TestCanceledException`.
    */
   def modifyPayload(fun: Option[Any] => Option[Any]): TestCanceledException = {
     val currentPayload = payload
@@ -231,9 +229,9 @@ class TestCanceledException(
 
   /**
    * Indicates whether this object is equal to the passed object. If the passed object is
-   * a <code>TestCanceledException</code>, equality requires equal <code>message</code>,
-   * <code>cause</code>, and <code>failedCodeStackDepth</code> fields, as well as equal
-   * return values of <code>getStackTrace</code>.
+   * a `TestCanceledException`, equality requires equal `message`,
+   * `cause`, and `failedCodeStackDepth` fields, as well as equal
+   * return values of `getStackTrace`.
    */
   override def equals(other: Any): Boolean =
     other match {

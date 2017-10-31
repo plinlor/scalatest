@@ -131,260 +131,238 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
 /**
  * Application that runs a suite of tests.
  *
- * <p>
  * Note: this application offers the full range of ScalaTest features via command line arguments described below. If you just want
  * to run a suite of tests from the command line and see results on the standard output, you may prefer to use <a href="../run$.html">ScalaTest's simple runner</a>.
- * </p>
+ * 
  *
- * <p>
- * The basic form of a <code>Runner</code> invocation is:
- * </p>
+ * The basic form of a `Runner` invocation is:
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * scala [-cp scalatest-&lt;version&gt;.jar:...] org.scalatest.tools.Runner [arguments]
- * </pre>
+ * }}}
  *
- * <p>
- * The arguments <code>Runner</code> accepts are described in the following table:
- * </p>
+ * The arguments `Runner` accepts are described in the following table:
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">argument</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">description</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">example</th></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-D<em>key</em>=<em>value</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">defines a key/value pair for the <a href="#configMapSection"><em>config map</em></a></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-DmaxConnections=100</code></a></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-R <em>&lt;runpath elements&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">the <a href="#specifyingARunpath">specifies the <em>runpath</em></a> from which tests classes will be<br/>discovered and loaded (Note: only one <code>-R</code> allowed)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><em>Unix</em>: <code>-R target/classes:target/generated/classes</code><br/><em>Windows</em>: <code>-R target\classes;target\generated\classes</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-n <em>&lt;tag name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#specifyingTagsToIncludeAndExclude">specifies a tag to include</a> (Note: only one tag name allowed per <code>-n</code>)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-n UnitTests -n FastTests</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-l <em>&lt;tag name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#specifyingTagsToIncludeAndExclude">specifies a tag to exclude</a> (Note: only one tag name allowed per <code>-l</code>)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-l SlowTests -l PerfTests</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-P<em>[S][integer thread count]</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#executingSuitesInParallel">specifies a parallel run</a>, with optional suite sorting and thread count<br/>(Note: only one <code>-P</code> allowed)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-P</code>, <code>-PS</code>, <code>-PS 8</code>, <em>or</em> <code>-P8</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-s <em>&lt;suite class name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies a <a href="#executingSuites">suite class</a> to run</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-s com.company.project.StackSpec</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-m <em>&lt;members-only package&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">requests that suites that are <a href="#membersOnlyWildcard">direct members of the specified package</a><br/> be discovered and run</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-m com.company.project</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-w <em>&lt;wildcard package&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">requests that suites that are <a href="#membersOnlyWildcard">members of the specified package or its subpackages</a><br/>be discovered and run</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-w com.company.project</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-q <em>&lt;suffixes&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specify <a href="#specifyingSuffixesToDiscover">suffixes to discover</a></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-q Spec -q Suite</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-Q</code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">discover only classes whose names end with <code>Spec</code> or <code>Suite</code><br/>(or other suffixes specified by <code>-q</code>)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-Q</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-j <em>&lt;JUnit class name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">instantiate and run a <a href="#specifyingJUnitTests">JUnit test class</a></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-j StackTestClass</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-b <em>&lt;TestNG XML file&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">run <a href="#specifyingTestNGXML">TestNG tests</a> using the specified TestNG XML file</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-b testng.xml</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-F <em>&lt;span scale factor&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">a factor by which to <a href="#scalingTimeSpans">scale time spans</a><br/>(Note: only one <code>-F</code> is allowed)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-F 10</code> <em>or</em> <code>-F 2.5</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-T <em>&lt;sorting timeout&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies a integer timeout (in seconds) for sorting the events of<br/>parallel runs back into sequential order</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-T 5</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-y <em>&lt;chosen styles&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies <a href="#specifyingChosenStyles">chosen styles</a> for your project</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-y org.scalatest.FlatSpec</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-i <em>&lt;suite ID&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies a <a href="#selectingSuitesAndTests">suite to run by ID</a> (Note: must follow <code>-s</code>, <br/>and is intended to be used primarily by tools such as IDEs.)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-i com.company.project.FileSpec-file1.txt</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-t <em>&lt;test name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#selectingSuitesAndTests">select the test</a> with the specified name</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-t "An empty Stack should complain when popped"</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-z <em>&lt;test name substring&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#selectingSuitesAndTests">select tests</a> whose names include the specified substring</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-z "popped"</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-g<em>[NCXEHLOPQMD]</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the graphical reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-g</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-f<em>[NCXEHLOPQMDWSFU] &lt;filename&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the file reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-f output.txt</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-u <em>&lt;directory name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the JUnit XML reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-u target/junitxmldir</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-h <em>&lt;directory name&gt;</em> [-Y <em>&lt;css file name&gt;</em>]</code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the HTML reporter, optionally including the specified CSS file</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-h target/htmldir -Y src/main/html/customStyles.css</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-v</code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">print the ScalaTest version</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-v</code> <em>or, also</em> <code>-version</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-o<em>[NCXEHLOPQMDWSFU]</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the standard output reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-o</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-e<em>[NCXEHLOPQMDWSFU]</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the standard error reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-e</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-C<em>[NCXEHLOPQMD] &lt;reporter class&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select a custom reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-C com.company.project.BarReporter</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-M <em>&lt;file name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">memorize failed and canceled tests in a file, so they can be rerun with -A (again)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-M rerun.txt</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-A <em>&lt;file name&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">used in conjunction with -M (momento) to select previously failed<br/>and canceled tests to rerun again</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-A rerun.txt</code></td></tr>
- * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-W <em>&lt;delay&gt;</em> <em>&lt;period&gt;</em></code></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">requests <a href="#slowpokeNotifications">notifications of <em>slowpoke</em> tests</a>, tests that have been running<br/>longer than <em>delay</em> seconds, every <em>period</em> seconds.</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><code>-W 60 60</code></td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-D''key''=''value''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">defines a key/value pair for the <a href="#configMapSection">''config map''</a></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-DmaxConnections=100`</a></td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-R ''&lt;runpath elements&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">the <a href="#specifyingARunpath">specifies the ''runpath''</a> from which tests classes will be<br/>discovered and loaded (Note: only one `-R` allowed)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">''Unix'': `-R target/classes:target/generated/classes`<br/>''Windows'': `-R target\classes;target\generated\classes`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-n ''&lt;tag name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#specifyingTagsToIncludeAndExclude">specifies a tag to include</a> (Note: only one tag name allowed per `-n`)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-n UnitTests -n FastTests`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-l ''&lt;tag name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#specifyingTagsToIncludeAndExclude">specifies a tag to exclude</a> (Note: only one tag name allowed per `-l`)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-l SlowTests -l PerfTests`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-P''[S][integer thread count]''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#executingSuitesInParallel">specifies a parallel run</a>, with optional suite sorting and thread count<br/>(Note: only one `-P` allowed)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-P`, `-PS`, `-PS 8`, ''or'' `-P8`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-s ''&lt;suite class name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies a <a href="#executingSuites">suite class</a> to run</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-s com.company.project.StackSpec`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-m ''&lt;members-only package&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">requests that suites that are <a href="#membersOnlyWildcard">direct members of the specified package</a><br/> be discovered and run</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-m com.company.project`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-w ''&lt;wildcard package&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">requests that suites that are <a href="#membersOnlyWildcard">members of the specified package or its subpackages</a><br/>be discovered and run</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-w com.company.project`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-q ''&lt;suffixes&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specify <a href="#specifyingSuffixesToDiscover">suffixes to discover</a></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-q Spec -q Suite`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-Q`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">discover only classes whose names end with `Spec` or `Suite`<br/>(or other suffixes specified by `-q`)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-Q`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-j ''&lt;JUnit class name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">instantiate and run a <a href="#specifyingJUnitTests">JUnit test class</a></td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-j StackTestClass`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-b ''&lt;TestNG XML file&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">run <a href="#specifyingTestNGXML">TestNG tests</a> using the specified TestNG XML file</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-b testng.xml`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-F ''&lt;span scale factor&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">a factor by which to <a href="#scalingTimeSpans">scale time spans</a><br/>(Note: only one `-F` is allowed)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-F 10` ''or'' `-F 2.5`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-T ''&lt;sorting timeout&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies a integer timeout (in seconds) for sorting the events of<br/>parallel runs back into sequential order</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-T 5`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-y ''&lt;chosen styles&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies <a href="#specifyingChosenStyles">chosen styles</a> for your project</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-y org.scalatest.FlatSpec`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-i ''&lt;suite ID&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">specifies a <a href="#selectingSuitesAndTests">suite to run by ID</a> (Note: must follow `-s`, <br/>and is intended to be used primarily by tools such as IDEs.)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-i com.company.project.FileSpec-file1.txt`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-t ''&lt;test name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#selectingSuitesAndTests">select the test</a> with the specified name</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-t "An empty Stack should complain when popped"`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-z ''&lt;test name substring&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center"><a href="#selectingSuitesAndTests">select tests</a> whose names include the specified substring</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-z "popped"`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-g''[NCXEHLOPQMD]''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the graphical reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-g`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-f''[NCXEHLOPQMDWSFU] &lt;filename&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the file reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-f output.txt`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-u ''&lt;directory name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the JUnit XML reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-u target/junitxmldir`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-h ''&lt;directory name&gt;'' [-Y ''&lt;css file name&gt;'']`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the HTML reporter, optionally including the specified CSS file</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-h target/htmldir -Y src/main/html/customStyles.css`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-v`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">print the ScalaTest version</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-v` ''or, also'' `-version`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-o''[NCXEHLOPQMDWSFU]''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the standard output reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-o`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-e''[NCXEHLOPQMDWSFU]''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select the standard error reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-e`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-C''[NCXEHLOPQMD] &lt;reporter class&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">select a custom reporter</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-C com.company.project.BarReporter`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-M ''&lt;file name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">memorize failed and canceled tests in a file, so they can be rerun with -A (again)</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-M rerun.txt`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-A ''&lt;file name&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">used in conjunction with -M (momento) to select previously failed<br/>and canceled tests to rerun again</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-A rerun.txt`</td></tr>
+ * <tr><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-W ''&lt;delay&gt;'' ''&lt;period&gt;''`</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">requests <a href="#slowpokeNotifications">notifications of ''slowpoke'' tests</a>, tests that have been running<br/>longer than ''delay'' seconds, every ''period'' seconds.</td><td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">`-W 60 60`</td></tr>
  * </table>
  *
- * <p>
- * The simplest way to start <code>Runner</code> is to specify the directory containing your compiled tests as the sole element of the runpath, for example:
- * </p>
+ * The simplest way to start `Runner` is to specify the directory containing your compiled tests as the sole element of the runpath, for example:
+ * 
  *
- * <pre class="stExamples">scala -classpath scalatest-&lt;version&gt;.jar org.scalatest.tools.Runner -R compiled_tests</pre>
+ * {{{ class="stExamples">scala -classpath scalatest-&lt;version&gt;.jar org.scalatest.tools.Runner -R compiled_tests</pre>
  *
- * <p>
- * Given the previous command, <code>Runner</code> will discover and execute all <code>Suite</code>s in the <code>compiled_tests</code> directory and its subdirectories,
+ * Given the previous command, `Runner` will discover and execute all `Suite`s in the `compiled_tests` directory and its subdirectories,
  * and show results in graphical user interface (GUI).
- * </p>
+ * 
  *
  * <a name="executingSuites"></a>
- * <h2>Executing suites</h2>
+ * ==Executing suites==
  *
- * <p>
- * Each <code>-s</code> argument must be followed by one and only one fully qualified class name. The class must either extend <code>Suite</code> and
- * have a public, no-arg constructor, or be annotated by a valid <code>WrapWith</code> annotation.
- * </p>
+ * Each `-s` argument must be followed by one and only one fully qualified class name. The class must either extend `Suite` and
+ * have a public, no-arg constructor, or be annotated by a valid `WrapWith` annotation.
+ * 
  *
  * <a name="configMapSection"></a>
- * <h2>Specifying the config map</h2>
+ * ==Specifying the config map==
  *
- * <p>
- * A <em>config map</em> contains pairs consisting of a string key and a value that may be of any type. (Keys that start with
+ * A ''config map'' contains pairs consisting of a string key and a value that may be of any type. (Keys that start with
  * &quot;org.scalatest.&quot; are reserved for ScalaTest. Configuration values that are themselves strings may be specified on the
- * <code>Runner</code> command line.
+ * `Runner` command line.
  * Each configuration pair is denoted with a "-D", followed immediately by the key string, an &quot;=&quot;, and the value string.
  * For example:
- * </p>
+ * 
  *
- * <pre class="stExamples">-Ddbname=testdb -Dserver=192.168.1.188</pre>
+ * {{{ class="stExamples">-Ddbname=testdb -Dserver=192.168.1.188</pre>
  *
  * <a name="specifyingARunpath"></a>
- * <h2>Specifying a runpath</h2>
+ * ==Specifying a runpath==
  *
- * <p>
- * A runpath is the list of filenames, directory paths, and/or URLs that <code>Runner</code>
- * uses to load classes for the running test. If runpath is specified, <code>Runner</code> creates
+ * A runpath is the list of filenames, directory paths, and/or URLs that `Runner`
+ * uses to load classes for the running test. If runpath is specified, `Runner` creates
  * a custom class loader to load classes available on the runpath.
  * The graphical user interface reloads the test classes anew for each run
  * by creating and using a new instance of the custom class loader for each run.
  * The classes that comprise the test may also be made available on
  * the classpath, in which case no runpath need be specified.
- * </p>
+ * 
  *
- * <p>
  * The runpath is specified with the <b>-R</b> option. The <b>-R</b> must be followed by a space,
- * a double quote (<code>"</code>), a white-space-separated list of
+ * a double quote (`"`), a white-space-separated list of
  * paths and URLs, and a double quote. If specifying only one element in the runpath, you can leave off
  * the double quotes, which only serve to combine a white-space separated list of strings into one
  * command line argument. If you have path elements that themselves have a space in them, you must
  * place a backslash (\) in front of the space. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stExamples">-R "serviceuitest-1.1beta4.jar myjini http://myhost:9998/myfile.jar target/class\ files"</pre>
+ * {{{ class="stExamples">-R "serviceuitest-1.1beta4.jar myjini http://myhost:9998/myfile.jar target/class\ files"</pre>
  *
  * <a name="specifyingReporters"></a>
- * <h2>Specifying reporters</h2>
+ * ==Specifying reporters==
  *
- * <p>
  * Reporters can be specified  on the command line in any of the following
  * ways:
- * </p>
+ * 
  *
  * <ul>
- * <li> <code><b>-g[configs...]</b></code> - causes display of a graphical user interface that allows
+ * <li> `<b>-g[configs...]</b>` - causes display of a graphical user interface that allows
  *    tests to be run and results to be investigated</li>
- * <li> <code><b>-f[configs...] &lt;filename&gt;</b></code> - causes test results to be written to
+ * <li> `<b>-f[configs...] &lt;filename&gt;</b>` - causes test results to be written to
  *     the named file</li>
- * <li> <code><b>-u &lt;directory&gt;</b></code> - causes test results to be written to
+ * <li> `<b>-u &lt;directory&gt;</b>` - causes test results to be written to
  *      junit-style xml files in the named directory</li>
- * <li> <code><b>-h &lt;directory&gt; [-Y &lt;CSS file&gt;]</b></code> - causes test results to be written to
+ * <li> `<b>-h &lt;directory&gt; [-Y &lt;CSS file&gt;]</b>` - causes test results to be written to
  *      HTML files in the named directory, optionally included the specified CSS file</li>
- * <li> <code><b>-a &lt;number of files to archive&gt;</b></code> - causes specified number of old
+ * <li> `<b>-a &lt;number of files to archive&gt;</b>` - causes specified number of old
  *      summary and durations files to be archived (in summaries/ and durations/ subdirectories)
  *      for dashboard reporter (default is two)</li>
- * <li> <code><b>-o[configs...]</b></code> - causes test results to be written to
+ * <li> `<b>-o[configs...]</b>` - causes test results to be written to
  *     the standard output</li>
- * <li> <code><b>-e[configs...]</b></code> - causes test results to be written to
+ * <li> `<b>-e[configs...]</b>` - causes test results to be written to
  *     the standard error</li>
- * <li> <code><b>-k &lt;host&gt; &lt;port&gt;</b></code> - causes test results to be written to
+ * <li> `<b>-k &lt;host&gt; &lt;port&gt;</b>` - causes test results to be written to
  *      socket in the named host and port number, using XML format</li>
- * <li> <code><b>-K &lt;host&gt; &lt;port&gt;</b></code> - causes test results to be written to
+ * <li> `<b>-K &lt;host&gt; &lt;port&gt;</b>` - causes test results to be written to
  *      socket in the named host and port number, using Java object binary format</li>
- * <li> <code><b>-C[configs...] &lt;reporterclass&gt;</b></code> - causes test results to be reported to
- *     an instance of the specified fully qualified <code>Reporter</code> class name</li>
+ * <li> `<b>-C[configs...] &lt;reporterclass&gt;</b>` - causes test results to be reported to
+ *     an instance of the specified fully qualified `Reporter` class name</li>
  * </ul>
  *
- * <p>
- * The <code><b>[configs...]</b></code> parameter, which is used to configure reporters, is described in the next section.
- * </p>
+ * The `<b>[configs...]</b>` parameter, which is used to configure reporters, is described in the next section.
+ * 
  *
- * <p>
- * The <code><b>-C</b></code> option causes the reporter specified in
- * <code><b>&lt;reporterclass&gt;</b></code> to be
+ * The `<b>-C</b>` option causes the reporter specified in
+ * `<b>&lt;reporterclass&gt;</b>` to be
  * instantiated.
  * Each reporter class specified with a <b>-C</b> option must be public, implement
- * <code>org.scalatest.Reporter</code>, and have a public no-arg constructor.
+ * `org.scalatest.Reporter`, and have a public no-arg constructor.
  * Reporter classes must be specified with fully qualified names. 
  * The specified reporter classes may be
  * deployed on the classpath. If a runpath is specified with the
- * <code>-R</code> option, the specified reporter classes may also be loaded from the runpath.
+ * `-R` option, the specified reporter classes may also be loaded from the runpath.
  * All specified reporter classes will be loaded and instantiated via their no-arg constructor.
- * </p>
+ * 
  *
- * <p>
- * For example, to run a suite named <code>MySuite</code> from the <code>mydir</code> directory
+ * For example, to run a suite named `MySuite` from the `mydir` directory
  * using two reporters, the graphical reporter and a file reporter
- * writing to a file named <code>"test.out"</code>, you would type:
- * </p>
+ * writing to a file named `"test.out"`, you would type:
+ * 
  *
- * <pre class="stExamples">java -jar scalatest.jar -R mydir <b>-g -f test.out</b> -s MySuite</pre>
+ * {{{ class="stExamples">java -jar scalatest.jar -R mydir <b>-g -f test.out</b> -s MySuite</pre>
  *
- * <p>
- * The <code><b>-g</b></code>, <code><b>-o</b></code>, or <code><b>-e</b></code> options can
+ * The `<b>-g</b>`, `<b>-o</b>`, or `<b>-e</b>` options can
  * appear at most once each in any single command line.
- * Multiple appearances of <code><b>-f</b></code> and <code><b>-C</b></code> result in multiple reporters
- * unless the specified <code><b>&lt;filename&gt;</b></code> or <code><b>&lt;reporterclass&gt;</b></code> is
- * repeated. If any of <code><b>-g</b></code>, <code><b>-o</b></code>, <code><b>-e</b></code>,
- * <code><b>&lt;filename&gt;</b></code> or <code><b>&lt;reporterclass&gt;</b></code> are repeated on
- * the command line, the <code>Runner</code> will print an error message and not run the tests.
- * </p>
+ * Multiple appearances of `<b>-f</b>` and `<b>-C</b>` result in multiple reporters
+ * unless the specified `<b>&lt;filename&gt;</b>` or `<b>&lt;reporterclass&gt;</b>` is
+ * repeated. If any of `<b>-g</b>`, `<b>-o</b>`, `<b>-e</b>`,
+ * `<b>&lt;filename&gt;</b>` or `<b>&lt;reporterclass&gt;</b>` are repeated on
+ * the command line, the `Runner` will print an error message and not run the tests.
+ * 
  *
- * <p>
- * <code>Runner</code> adds the reporters specified on the command line to a <em>dispatch reporter</em>,
- * which will dispatch each method invocation to each contained reporter. <code>Runner</code> will pass
+ * `Runner` adds the reporters specified on the command line to a ''dispatch reporter'',
+ * which will dispatch each method invocation to each contained reporter. `Runner` will pass
  * the dispatch reporter to executed suites. As a result, every
  * specified reporter will receive every report generated by the running suite of tests.
  * If no reporters are specified, a graphical
  * runner will be displayed that provides a graphical report of
  * executed suites.
- * </p>
+ * 
  *
  * <a name="configuringReporters"></a>
- * <h2>Configuring reporters</h2>
+ * ==Configuring reporters==
  *
- * <p>
  * Each reporter option on the command line can include configuration characters. Configuration characters
- * are specified immediately following the <code><b>-g</b></code>, <code><b>-o</b></code>,
- * <code><b>-e</b></code>, <code><b>-f</b></code>, or <code><b>-C</b></code>. The following configuration
+ * are specified immediately following the `<b>-g</b>`, `<b>-o</b>`,
+ * `<b>-e</b>`, `<b>-f</b>`, or `<b>-C</b>`. The following configuration
  * characters, which cause reports to be dropped, are valid for any reporter:
- * </p>
+ * 
  *
  * <ul>
- * <li> <code><b>N</b></code> - drop <code>TestStarting</code> events</li>
- * <li> <code><b>C</b></code> - drop <code>TestSucceeded</code> events</li>
- * <li> <code><b>X</b></code> - drop <code>TestIgnored</code> events</li>
- * <li> <code><b>E</b></code> - drop <code>TestPending</code> events</li>
- * <li> <code><b>H</b></code> - drop <code>SuiteStarting</code> events</li>
- * <li> <code><b>L</b></code> - drop <code>SuiteCompleted</code> events</li>
- * <li> <code><b>O</b></code> - drop <code>InfoProvided</code> events</li>
- * <li> <code><b>P</b></code> - drop <code>ScopeOpened</code> events</li>
- * <li> <code><b>Q</b></code> - drop <code>ScopeClosed</code> events</li>
- * <li> <code><b>R</b></code> - drop <code>ScopePending</code> events</li>
- * <li> <code><b>M</b></code> - drop <code>MarkupProvided</code> events</li>
+ * <li> `<b>N</b>` - drop `TestStarting` events</li>
+ * <li> `<b>C</b>` - drop `TestSucceeded` events</li>
+ * <li> `<b>X</b>` - drop `TestIgnored` events</li>
+ * <li> `<b>E</b>` - drop `TestPending` events</li>
+ * <li> `<b>H</b>` - drop `SuiteStarting` events</li>
+ * <li> `<b>L</b>` - drop `SuiteCompleted` events</li>
+ * <li> `<b>O</b>` - drop `InfoProvided` events</li>
+ * <li> `<b>P</b>` - drop `ScopeOpened` events</li>
+ * <li> `<b>Q</b>` - drop `ScopeClosed` events</li>
+ * <li> `<b>R</b>` - drop `ScopePending` events</li>
+ * <li> `<b>M</b>` - drop `MarkupProvided` events</li>
  * </ul>
  *
- * <p>
  * A dropped event will not be delivered to the reporter at all. So the reporter will not know about it and therefore not
- * present information about the event in its report. For example, if you specify <code>-oN</code>, the standard output reporter
- * will never receive any <code>TestStarting</code> events and will therefore never report them. The purpose of these
+ * present information about the event in its report. For example, if you specify `-oN`, the standard output reporter
+ * will never receive any `TestStarting` events and will therefore never report them. The purpose of these
  * configuration parameters is to allow users to selectively remove events they find add clutter to the report without
  * providing essential information.
- * </p>
+ * 
  *
- * <p>
  * The following three reporter configuration parameters may additionally be used on standard output (-o), standard error (-e),
  * and file (-f) reporters: 
- * </p>
+ * 
  *
  * <ul>
- * <li> <code><b>W</b></code> - without color</li>
- * <li> <code><b>D</b></code> - show all durations</li>
- * <li> <code><b>S</b></code> - show short stack traces</li>
- * <li> <code><b>F</b></code> - show full stack traces</li>
- * <li> <code><b>U</b></code> - unformatted mode</li>
- * <li> <code><b>I</b></code> - show reminder of failed and canceled tests without stack traces</li>
- * <li> <code><b>T</b></code> - show reminder of failed and canceled tests with short stack traces</li>
- * <li> <code><b>G</b></code> - show reminder of failed and canceled tests with full stack traces</li>
- * <li> <code><b>K</b></code> - exclude <code>TestCanceled</code> events from reminder</li>
+ * <li> `<b>W</b>` - without color</li>
+ * <li> `<b>D</b>` - show all durations</li>
+ * <li> `<b>S</b>` - show short stack traces</li>
+ * <li> `<b>F</b>` - show full stack traces</li>
+ * <li> `<b>U</b>` - unformatted mode</li>
+ * <li> `<b>I</b>` - show reminder of failed and canceled tests without stack traces</li>
+ * <li> `<b>T</b>` - show reminder of failed and canceled tests with short stack traces</li>
+ * <li> `<b>G</b>` - show reminder of failed and canceled tests with full stack traces</li>
+ * <li> `<b>K</b>` - exclude `TestCanceled` events from reminder</li>
  * </ul>
  *
- * <p>
- * If you specify a W, D, S, F, U, R, T, G, or K for any reporter other than standard output, standard error, or file reporters, <code>Runner</code>
+ * If you specify a W, D, S, F, U, R, T, G, or K for any reporter other than standard output, standard error, or file reporters, `Runner`
  * will complain with an error message and not perform the run.
- * </p>
+ * 
  *
- * <p>
- * Configuring a standard output, error, or file reporter with <code>D</code> will cause that reporter to
+ * Configuring a standard output, error, or file reporter with `D` will cause that reporter to
  * print a duration for each test and suite.  When running in the default mode, a duration will only be printed for
  * the entire run.
- * </p>
+ * 
  *
- * <p>
- * Configuring a standard output, error, or file reporter with <code>F</code> will cause that reporter to print full stack traces for all exceptions,
- * including <code>TestFailedExceptions</code>. Every <code>TestFailedException</code> contains a stack depth of the
+ * Configuring a standard output, error, or file reporter with `F` will cause that reporter to print full stack traces for all exceptions,
+ * including `TestFailedExceptions`. Every `TestFailedException` contains a stack depth of the
  * line of test code that failed so that users won't need to search through a stack trace to find it. When running in the default,
  * mode, these reporters will only show full stack traces when other exceptions are thrown, such as an exception thrown
- * by production code. When a <code>TestFailedException</code> is thrown in default mode, only the source filename and
+ * by production code. When a `TestFailedException` is thrown in default mode, only the source filename and
  * line number of the line of test code that caused the test to fail are printed along with the error message, not the full stack
  * trace. 
- * </p>
+ * 
  *
- * <p>
  * The 'U' unformatted configuration removes some formatting from the output and adds verbosity.
  * The purpose of unformatted (or, "ugly") mode is to facilitate debugging of parallel runs. If you have
  * tests that fail or hang during parallel runs, but succeed when run sequentially, unformatted mode can help.
@@ -392,194 +370,173 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * look as pretty and human-readable as possible, unformatted mode will just print out verbose information about each event
  * as it arrives, helping you track down the problem
  * you are trying to debug.
- * </p>
+ * 
  *
- * <p>
  * By default, a standard output, error, or file reporter inserts ansi escape codes into the output printed to change and later reset
  * terminal colors. Information printed as a result of run starting, completed, and stopped events
  * is printed in cyan. Information printed as a result of ignored or pending test events is shown in yellow. Information printed
  * as a result of test failed, suite aborted, or run aborted events is printed in red. All other information is printed in green.
  * The purpose of these colors is to facilitate speedy reading of the output, especially the finding of failed tests, which can
- * get lost in a sea of passing tests. Configuring a standard output, error, or file reporter into without-color mode (<code>W</code>) will
+ * get lost in a sea of passing tests. Configuring a standard output, error, or file reporter into without-color mode (`W`) will
  * turn off this behavior. No ansi codes will be inserted.
- * </p>
+ * 
  *
- * <p>
- * The <code>R</code>, <code>T</code>, and <code>G</code> options enable "reminders" of failed and, optionally, canceled tests to be printed
+ * The `R`, `T`, and `G` options enable "reminders" of failed and, optionally, canceled tests to be printed
  * at the end of the summary. This minimizes or eliminates the need to search and scroll backwards to find out what tests failed or were canceled.
  * For large test suites, the actual failure message could have scrolled off the top of the buffer, making it otherwise impossible
  * to see what failed. You can configure the detail level of the stack trace for regular reports of failed and canceled tests independently
- * from that of reminders. To set the detail level for regular reports, use <code>S</code> for short stack traces, <code>F</code> for
- * full stack traces, or nothing for the default of no stack trace. To set the detail level for reminder reports, use <code>T</code> for
- * reminders with short stack traces, <code>G</code> for reminders with full stack traces in reminders, or <code>R</code> for reminders
- * with no stack traces. If you wish to exclude reminders of canceled tests, <em>i.e.</em>, only see reminders of failed tests, specify
- * <code>K</code> along with one of <code>R</code>, <code>T</code>, or <code>G</code>, as in <code>"-oRK"</code>.
- * </p>
+ * from that of reminders. To set the detail level for regular reports, use `S` for short stack traces, `F` for
+ * full stack traces, or nothing for the default of no stack trace. To set the detail level for reminder reports, use `T` for
+ * reminders with short stack traces, `G` for reminders with full stack traces in reminders, or `R` for reminders
+ * with no stack traces. If you wish to exclude reminders of canceled tests, ''i.e.'', only see reminders of failed tests, specify
+ * `K` along with one of `R`, `T`, or `G`, as in `"-oRK"`.
+ * 
  *
- * <p>
  * For example, to run a suite using two reporters, the graphical reporter configured to present every reported event
  * and a standard error reporter configured to present everything but test starting, test succeeded, test ignored, test
  * pending, suite starting, suite completed, and info provided events, you would type:
- * </p>
+ * 
  *
- * <p>
- * <code>scala -classpath scalatest-&lt;version&gt;.jar -R mydir <strong>-g -eNDXEHLO</strong> -s MySuite</code>
- * </p>
+ * `scala -classpath scalatest-&lt;version&gt;.jar -R mydir '''-g -eNDXEHLO''' -s MySuite`
+ * 
  *
- * <p>
  * Note that no white space is allowed between the reporter option and the initial configuration
- * parameters. So <code>"-e NDXEHLO"</code> will not work,
- * <code>"-eNDXEHLO"</code> will work.
- * </p>
+ * parameters. So `"-e NDXEHLO"` will not work,
+ * `"-eNDXEHLO"` will work.
+ * 
  *
  * <a name="specifyingTagsToIncludeAndExclude"></a>
- * <h2>Specifying tags to include and exclude</h2>
+ * ==Specifying tags to include and exclude==
  *
- * <p>
  * You can specify tag names of tests to include or exclude from a run. To specify tags to include,
- * use <code>-n</code> followed by a white-space-separated list of tag names to include, surrounded by
+ * use `-n` followed by a white-space-separated list of tag names to include, surrounded by
  * double quotes. (The double quotes are not needed if specifying just one tag.)  Similarly, to specify tags
- * to exclude, use <code>-l</code> followed by a white-space-separated
+ * to exclude, use `-l` followed by a white-space-separated
  * list of tag names to exclude, surrounded by double quotes. (As before, the double quotes are not needed
  * if specifying just one tag.) If tags to include is not specified, then all tests
- * except those mentioned in the tags to exclude (and in the <code>org.scalatest.Ignore</code> tag), will be executed.
- * (In other words, the absence of a <code>-n</code> option is like a wildcard, indicating all tests be included.)
- * If tags to include is specified, then only those tests whose tags are mentioned in the argument following <code>-n</code>
+ * except those mentioned in the tags to exclude (and in the `org.scalatest.Ignore` tag), will be executed.
+ * (In other words, the absence of a `-n` option is like a wildcard, indicating all tests be included.)
+ * If tags to include is specified, then only those tests whose tags are mentioned in the argument following `-n`
  * and not mentioned in the tags to exclude, will be executed. For more information on test tags, see
- * the <a href="../Suite.html">documentation for <code>Suite</code></a>. Here are some examples:
- * </p>
+ * the <a href="../Suite.html">documentation for `Suite`</a>. Here are some examples:
+ * 
  *
- * <p>
  * <ul>
- * <li><code>-n CheckinTests</code></li>
- * <li><code>-n FunctionalTests -l org.scalatest.tags.Slow</code></li>
- * <li><code>-n "CheckinTests FunctionalTests" -l "org.scalatest.tags.Slow org.scalatest.tags.Network"</code></li>
+ * <li>`-n CheckinTests`</li>
+ * <li>`-n FunctionalTests -l org.scalatest.tags.Slow`</li>
+ * <li>`-n "CheckinTests FunctionalTests" -l "org.scalatest.tags.Slow org.scalatest.tags.Network"`</li>
  * </ul>
- * </p>
+ * 
  *
  * <a name="specifyingSuffixesToDiscover"></a>
- * <h2>Specifying suffixes to discover</h2>
+ * ==Specifying suffixes to discover==
  *
- * <p>
- * You can specify suffixes of <code>Suite</code> names to discover. To specify suffixes to discover,
- * use <code>-q</code> followed by a vertical-bar-separated list of suffixes to discover, surrounded by
+ * You can specify suffixes of `Suite` names to discover. To specify suffixes to discover,
+ * use `-q` followed by a vertical-bar-separated list of suffixes to discover, surrounded by
  * double quotes. (The double quotes are not needed if specifying just one suffix.)  Or you can specify
  * them individually using multiple -q's.
  * If suffixes to discover is not specified, then all suffixes are considered.
  * If suffixes is specified, then only those Suites whose class names end in one of the specified suffixes
  * will be considered during discovery. Here are some examples:
- * </p>
+ * 
  *
- * <p>
  * <ul>
- * <li><code>-q Spec</code></li>
- * <li><code>-q "Spec|Suite"</code></li>
- * <li><code>-q Spec -q Suite</code></li>
+ * <li>`-q Spec`</li>
+ * <li>`-q "Spec|Suite"`</li>
+ * <li>`-q Spec -q Suite`</li>
  * </ul>
- * </p>
+ * 
  *
- * <p>
  * Option -Q can be used to specify a default set of suffixes "Spec|Suite". If you specify both -Q and -q, you'll get Spec
  * and Suite in addition to the other suffix or suffixes you specify with -q.
- * </p>
+ * 
  *
- * <p>
  * Specifying suffixes can speed up the discovery process because class files with names not ending the specified suffixes
- * can be immediately disqualified, without needing to load and inspect them to see if they either extend <code>Suite</code>
- * and declare a public, no-arg constructor, or are annotated with <code>WrapWith</code>. 
- * </p>
+ * can be immediately disqualified, without needing to load and inspect them to see if they either extend `Suite`
+ * and declare a public, no-arg constructor, or are annotated with `WrapWith`. 
+ * 
  *
  * <a name="executingSuitesInParallel"></a>
- * <h2>Executing <code>Suite</code>s in parallel</h2>
+ * ==Executing `Suite`s in parallel==
  *
- * <p>
  * With the proliferation of multi-core architectures, and the often parallelizable nature of tests, it is useful to be able to run
- * tests in parallel. If you include <code>-P</code> on the command line, <code>Runner</code> will pass a <code>Distributor</code> to
- * the <code>Suite</code>s you specify with <code>-s</code>. <code>Runner</code> will set up a thread pool to execute any <code>Suite</code>s
- * passed to the <code>Distributor</code>'s <code>put</code> method in parallel. Trait <code>Suite</code>'s implementation of
- * <code>runNestedSuites</code> will place any nested <code>Suite</code>s into this <code>Distributor</code>. Thus, if you have a <code>Suite</code>
- * of tests that must be executed sequentially, you should override <code>runNestedSuites</code> as described in the <a href="../Distributor.html">documentation for <code>Distributor</code></a>.
- * </p>
+ * tests in parallel. If you include `-P` on the command line, `Runner` will pass a `Distributor` to
+ * the `Suite`s you specify with `-s`. `Runner` will set up a thread pool to execute any `Suite`s
+ * passed to the `Distributor`'s `put` method in parallel. Trait `Suite`'s implementation of
+ * `runNestedSuites` will place any nested `Suite`s into this `Distributor`. Thus, if you have a `Suite`
+ * of tests that must be executed sequentially, you should override `runNestedSuites` as described in the <a href="../Distributor.html">documentation for `Distributor`</a>.
+ * 
  *
- * <p>
- * The <code>-P</code> option may optionally be appended with a number (e.g.
- * "<code>-P10</code>" -- no intervening space) to specify the number of
+ * The `-P` option may optionally be appended with a number (e.g.
+ * "`-P10`" -- no intervening space) to specify the number of
  * threads to be created in the thread pool.  If no number (or 0) is
  * specified, the number of threads will be decided based on the number of
  * processors available.
- * </p>
+ * 
  *
  * <a name="specifyingSuites"></a>
- * <h2>Specifying <code>Suite</code>s</h2>
+ * ==Specifying `Suite`s==
  *
- * <p>
  * Suites are specified on the command line with a <b>-s</b> followed by the fully qualified
- * name of a <code>Suite</code> subclass, as in:
- * </p>
+ * name of a `Suite` subclass, as in:
+ * 
  *
- * <pre class="stExamples">-s com.artima.serviceuitest.ServiceUITestkit</pre>
+ * {{{ class="stExamples">-s com.artima.serviceuitest.ServiceUITestkit</pre>
  *
- * <p>
  * Each specified suite class must be public, a subclass of
- * <code>org.scalatest.Suite</code>, and contain a public no-arg constructor.
- * <code>Suite</code> classes must be specified with fully qualified names. 
- * The specified <code>Suite</code> classes may be
+ * `org.scalatest.Suite`, and contain a public no-arg constructor.
+ * `Suite` classes must be specified with fully qualified names. 
+ * The specified `Suite` classes may be
  * loaded from the classpath. If a runpath is specified with the
- * <code>-R</code> option, specified <code>Suite</code> classes may also be loaded from the runpath.
- * All specified <code>Suite</code> classes will be loaded and instantiated via their no-arg constructor.
- * </p>
+ * `-R` option, specified `Suite` classes may also be loaded from the runpath.
+ * All specified `Suite` classes will be loaded and instantiated via their no-arg constructor.
+ * 
  *
- * <p>
- * The runner will invoke <code>execute</code> on each instantiated <code>org.scalatest.Suite</code>,
- * passing in the dispatch reporter to each <code>execute</code> method.
- * </p>
+ * The runner will invoke `execute` on each instantiated `org.scalatest.Suite`,
+ * passing in the dispatch reporter to each `execute` method.
+ * 
  *
- * <p>
- * <code>Runner</code> is intended to be used from the command line. It is included in <code>org.scalatest</code>
+ * `Runner` is intended to be used from the command line. It is included in `org.scalatest`
  * package as a convenience for the user. If this package is incorporated into tools, such as IDEs, which take
- * over the role of runner, object <code>org.scalatest.tools.Runner</code> may be excluded from that implementation of the package.
- * All other public types declared in package <code>org.scalatest.tools.Runner</code> should be included in any such usage, however,
+ * over the role of runner, object `org.scalatest.tools.Runner` may be excluded from that implementation of the package.
+ * All other public types declared in package `org.scalatest.tools.Runner` should be included in any such usage, however,
  * so client software can count on them being available.
- * </p>
+ * 
  *
  * <a name="membersOnlyWildcard"></a>
- * <h2>Specifying "members-only" and "wildcard" <code>Suite</code> paths</h2>
+ * ==Specifying "members-only" and "wildcard" `Suite` paths==
  *
- * <p>
- * If you specify <code>Suite</code> path names with <code>-m</code> or <code>-w</code>, <code>Runner</code> will automatically
- * discover and execute accessible <code>Suite</code>s in the runpath that are either a member of (in the case of <code>-m</code>)
- * or enclosed by (in the case of <code>-w</code>) the specified path. As used in this context, a <em>path</em> is a portion of a fully qualified name.
- * For example, the fully qualifed name <code>com.example.webapp.MySuite</code> contains paths <code>com</code>, <code>com.example</code>, and <code>com.example.webapp</code>.
- * The fully qualifed name <code>com.example.webapp.MyObject.NestedSuite</code> contains paths <code>com</code>, <code>com.example</code>,
- * <code>com.example.webapp</code>, and <code>com.example.webapp.MyObject</code>.
- * An <em>accessible <code>Suite</code></em> is a public class that extends <code>org.scalatest.Suite</code>
- * and defines a public no-arg constructor. Note that <code>Suite</code>s defined inside classes and traits do not have no-arg constructors,
- * and therefore won't be discovered. <code>Suite</code>s defined inside singleton objects, however, do get a no-arg constructor by default, thus
+ * If you specify `Suite` path names with `-m` or `-w`, `Runner` will automatically
+ * discover and execute accessible `Suite`s in the runpath that are either a member of (in the case of `-m`)
+ * or enclosed by (in the case of `-w`) the specified path. As used in this context, a ''path'' is a portion of a fully qualified name.
+ * For example, the fully qualifed name `com.example.webapp.MySuite` contains paths `com`, `com.example`, and `com.example.webapp`.
+ * The fully qualifed name `com.example.webapp.MyObject.NestedSuite` contains paths `com`, `com.example`,
+ * `com.example.webapp`, and `com.example.webapp.MyObject`.
+ * An ''accessible `Suite`'' is a public class that extends `org.scalatest.Suite`
+ * and defines a public no-arg constructor. Note that `Suite`s defined inside classes and traits do not have no-arg constructors,
+ * and therefore won't be discovered. `Suite`s defined inside singleton objects, however, do get a no-arg constructor by default, thus
  * they can be discovered.
- * </p>
+ * 
  *
- * <p>
- * For example, if you specify <code>-m com.example.webapp</code>
- * on the command line, and you've placed <code>com.example.webapp.RedSuite</code> and <code>com.example.webapp.BlueSuite</code>
- * on the runpath, then <code>Runner</code> will instantiate and execute both of those <code>Suite</code>s. The difference
- * between <code>-m</code> and <code>-w</code> is that for <code>-m</code>, only <code>Suite</code>s that are direct members of the named path
- * will be discovered. For <code>-w</code>, any <code>Suite</code>s whose fully qualified
- * name begins with the specified path will be discovered. Thus, if <code>com.example.webapp.controllers.GreenSuite</code>
- * exists on the runpath, invoking <code>Runner</code> with <code>-w com.example.webapp</code> will cause <code>GreenSuite</code>
- * to be discovered, because its fully qualifed name begins with <code>"com.example.webapp"</code>. But if you invoke <code>Runner</code>
- * with <code>-m com.example.webapp</code>, <code>GreenSuite</code> will <em>not</em> be discovered because it is directly
- * a member of <code>com.example.webapp.controllers</code>, not <code>com.example.webapp</code>.
- * </p>
+ * For example, if you specify `-m com.example.webapp`
+ * on the command line, and you've placed `com.example.webapp.RedSuite` and `com.example.webapp.BlueSuite`
+ * on the runpath, then `Runner` will instantiate and execute both of those `Suite`s. The difference
+ * between `-m` and `-w` is that for `-m`, only `Suite`s that are direct members of the named path
+ * will be discovered. For `-w`, any `Suite`s whose fully qualified
+ * name begins with the specified path will be discovered. Thus, if `com.example.webapp.controllers.GreenSuite`
+ * exists on the runpath, invoking `Runner` with `-w com.example.webapp` will cause `GreenSuite`
+ * to be discovered, because its fully qualifed name begins with `"com.example.webapp"`. But if you invoke `Runner`
+ * with `-m com.example.webapp`, `GreenSuite` will ''not'' be discovered because it is directly
+ * a member of `com.example.webapp.controllers`, not `com.example.webapp`.
+ * 
  *
- * <p>
- * If you specify no <code>-s</code>, <code>-m</code>, or <code>-w</code> arguments on the command line to <code>Runner</code>, it will discover and execute all accessible <code>Suite</code>s
+ * If you specify no `-s`, `-m`, or `-w` arguments on the command line to `Runner`, it will discover and execute all accessible `Suite`s
  * in the runpath.
- * </p>
+ * 
  *
  * <a name="specifyingChosenStyles"></a>
- * <h2>Specifying chosen styles</h2>
+ * ==Specifying chosen styles==
  *
- * <p>
  * You can optionally specify chosen styles for a ScalaTest run. ScalaTest supports different styles of
  * testing so that different teams can use the style or styles that best suits their situation and culture. But
  * in any one project, it is recommended you decide on one main style for unit testing, and
@@ -587,149 +544,134 @@ private[tools] case class SlowpokeConfig(delayInMillis: Long, periodInMillis: Lo
  * tests in your project, you may wish to pick a different style for them than you are using for unit testing.
  * You may want to allow certain styles to be used in special testing situations on a project, but in general,
  * it is best to minimize the styles used in any given project to a few, or one.
- * </p>
+ * 
  *
- * <p>
  * To facilitate the communication and enforcement of a team's style choices for a project, you can
  * specify the chosen styles in your project build. If chosen styles is defined, ScalaTest style traits that are
  * not among the chosen list will abort with a message complaining that the style trait is not one of the
  * chosen styles. The style name for each ScalaTest style trait is its fully qualified name. For example,
- * to specify that <code>org.scalatest.FunSpec</code> as your chosen style you'd pass this to
- * <code>Runner</code>:
- * </p>
+ * to specify that `org.scalatest.FunSpec` as your chosen style you'd pass this to
+ * `Runner`:
+ * 
  *
- * <pre class="stExamples">-y org.scalatest.FunSpec</pre>
+ * {{{ class="stExamples">-y org.scalatest.FunSpec</pre>
  *
- * <p>
- * If you wanted <code>org.scalatest.FunSpec</code> as your main unit testing style, but also wanted to
- * allow <code>PropSpec</code> for test matrixes and <code>FeatureSpec</code> for
+ * If you wanted `org.scalatest.FunSpec` as your main unit testing style, but also wanted to
+ * allow `PropSpec` for test matrixes and `FeatureSpec` for
  * integration tests, you would write:
- * </p>
+ * 
  *
- * <pre class="stExamples">-y org.scalatest.FunSpec -y org.scalatest.PropSpec -y org.scalatest.FeatureSpec</pre>
+ * {{{ class="stExamples">-y org.scalatest.FunSpec -y org.scalatest.PropSpec -y org.scalatest.FeatureSpec</pre>
  *
- * <p>
- * To select <code>org.scalatest.FlatSpec</code> as your main unit testing style, but allow
- * <code>org.scalatest.fixture.FlatSpec</code> for multi-threaded unit tests, you'd write:
- * </p>
+ * To select `org.scalatest.FlatSpec` as your main unit testing style, but allow
+ * `org.scalatest.fixture.FlatSpec` for multi-threaded unit tests, you'd write:
+ * 
  *
- * <pre class="stExamples">-y org.scalatest.FlatSpec -y org.scalatest.fixture.FlatSpec</pre>
+ * {{{ class="stExamples">-y org.scalatest.FlatSpec -y org.scalatest.fixture.FlatSpec</pre>
  *
- * <p>
- * The style name for a suite is obtained by invoking its <code>styleName</code> method. Custom style
+ * The style name for a suite is obtained by invoking its `styleName` method. Custom style
  * traits can override this method so that a custom style can participate in the chosen styles list.
- * </p>
+ * 
  *
- * <p>
  * Because ScalaTest is so customizable, a determined programmer could circumvent
- * the chosen styles check, but in practice <code>-y</code> should be persuasive enough tool
+ * the chosen styles check, but in practice `-y` should be persuasive enough tool
  * to keep most team members in line.
- * </p>
+ * 
  *
  * <a name="selectingSuitesAndTests"></a>
- * <h2>Selecting suites and tests</h2>
+ * ==Selecting suites and tests==
  *
- * <p>
- * <code>Runner</code> accepts three arguments that facilitate selecting suites and tests: <code>-i</code>, <code>-t</code>, and </code>-z</code>.
- * The <code>-i</code> option enables a suite to be selected by suite ID. This argument is intended to allow tools such as IDEs or build tools to
- * rerun specific tests or suites from information included in the results of a previous run.  A <code>-i</code> must follow a <code>-s</code>
- * that specifies a class with a public, no-arg constructor. The <code>-i</code> parameter can be used, for example, to rerun a nested suite that
- * declares no zero-arg constructor, which was created by containing suite that does declare a no-arg constructor. In this case, <code>-s</code> would be
- * used to specify the class ScalaTest can instantiate directly, the containing suite that has a public, no-arg constructor, and <code>-i</code> would be
- * used to select the desired nested suite. One important use case for <code>-i</code> is to enable such a nested suite that aborted during the previous run
+ * `Runner` accepts three arguments that facilitate selecting suites and tests: `-i`, `-t`, and `-z`.
+ * The `-i` option enables a suite to be selected by suite ID. This argument is intended to allow tools such as IDEs or build tools to
+ * rerun specific tests or suites from information included in the results of a previous run.  A `-i` must follow a `-s`
+ * that specifies a class with a public, no-arg constructor. The `-i` parameter can be used, for example, to rerun a nested suite that
+ * declares no zero-arg constructor, which was created by containing suite that does declare a no-arg constructor. In this case, `-s` would be
+ * used to specify the class ScalaTest can instantiate directly, the containing suite that has a public, no-arg constructor, and `-i` would be
+ * used to select the desired nested suite. One important use case for `-i` is to enable such a nested suite that aborted during the previous run
  * to be rerun. <!-- TODO: Need to point them to more info, maybe in SuiteMixin's rerunner method description? -->
- * </p>
+ * 
  *
- * <p>
- * The <code>-t</code> argument allows a test to be selected by its (complete) test name. Like <code>-i</code>, the <code>-t</code> argument is primarily intented
+ * The `-t` argument allows a test to be selected by its (complete) test name. Like `-i`, the `-t` argument is primarily intented
  * to be used by tools such as IDEs or build tools, to rerun selected tests based on information obtained from the results of a previous run.
- * For example, <code>-t</code> could be used to rerun a test that failed in the previous run.
- * The <code>-t</code> argument can be used directly by users, but because descriptive test names are usually rather long, the <code>-z</code> argument (described next), will
- * usually be a more practical choice for users. If a <code>-t</code> follows either <code>-s</code> or <code>-i</code>, then it only applies to the suite
- * identified.  If it is specified independent of a <code>-s</code> or <code>-i</code>, then discovery is performed to find all Suites containing the test name.
- * </p>
+ * For example, `-t` could be used to rerun a test that failed in the previous run.
+ * The `-t` argument can be used directly by users, but because descriptive test names are usually rather long, the `-z` argument (described next), will
+ * usually be a more practical choice for users. If a `-t` follows either `-s` or `-i`, then it only applies to the suite
+ * identified.  If it is specified independent of a `-s` or `-i`, then discovery is performed to find all Suites containing the test name.
+ * 
  *
- * <p>
- * The <code>-z</code> option allows tests to be selected by a simplified wildcard: any test whose name includes the substring specified after <code>-z</code>
- * will be selected. For example, <code>-z popped</code> would select tests named <code>"An empty stack should complain when popped"</code> and <code>"A non-empty stack
- * should return the last-pushed value when popped</code>, but not <code>"An empty stack should be empty"</code>. In short, <code>-z popped</code> would select any
- * tests whose name includes the substring <code>"popped"</code>, and not select any tests whose names don't include <code>"popped"</code>. This simplified
+ * The `-z` option allows tests to be selected by a simplified wildcard: any test whose name includes the substring specified after `-z`
+ * will be selected. For example, `-z popped` would select tests named `"An empty stack should complain when popped"` and `"A non-empty stack
+ * should return the last-pushed value when popped`, but not `"An empty stack should be empty"`. In short, `-z popped` would select any
+ * tests whose name includes the substring `"popped"`, and not select any tests whose names don't include `"popped"`. This simplified
  * approach to test name wildcards, which was suggested by Mathias Doenitz, works around the difficulty of finding an actual wildcard character that will work
- * reliably on different operating systems.  Like <code>-t</code>, if <code>-z</code> follows <code>-s</code> or <code>-i</code>, then it only applies to the Suite specified.  Otherwise discovery is performed to find all Suites containing test names that include the substring.
- * </p>
+ * reliably on different operating systems.  Like `-t`, if `-z` follows `-s` or `-i`, then it only applies to the Suite specified.  Otherwise discovery is performed to find all Suites containing test names that include the substring.
+ * 
  *
  * <a name="scalingTimeSpans"></a>
- * <h2>Specifying a span scale factor</h2>
+ * ==Specifying a span scale factor==
  *
- * <p>
- * If you specify a integer or floating point <em>span scale factor</em> with <code>-F</code>, trait <a href="../concurrent/ScaledTimeSpans.html"><code>ScaledTimeSpans</code></a>
- * trait will  return the specified value from its implementation of <code>spanScaleFactor</code>. This allows you to tune the "patience" of a run (how long to wait
- * for asynchronous operations) from the command line. For more information, see the documentation for trait <a href="../concurrent/ScaledTimeSpans.html"><code>ScaledTimeSpans</code></a>.
- * </p>
+ * If you specify a integer or floating point ''span scale factor'' with `-F`, trait <a href="../concurrent/ScaledTimeSpans.html">`ScaledTimeSpans`</a>
+ * trait will  return the specified value from its implementation of `spanScaleFactor`. This allows you to tune the "patience" of a run (how long to wait
+ * for asynchronous operations) from the command line. For more information, see the documentation for trait <a href="../concurrent/ScaledTimeSpans.html">`ScaledTimeSpans`</a>.
+ * 
  *
  * <a name="specifyingTestNGXML"></a>
- * <h2>Specifying TestNG XML config file paths</h2>
+ * ==Specifying TestNG XML config file paths==
  *
- * <p>
- * If you specify one or more file paths with <code>-b</code> (b for Beust, the last name of TestNG's creator), <code>Runner</code> will create a <code>org.scalatest.testng.TestNGWrapperSuite</code>,
- * passing in a <code>List</code> of the specified paths. When executed, the <code>TestNGWrapperSuite</code> will create one <code>TestNG</code> instance
- * and pass each specified file path to it for running. If you include <code>-b</code> arguments, you must include TestNG's jar file on the class path or runpath.
- * The <code>-b</code> argument will enable you to run existing <code>TestNG</code> tests, including tests written in Java, as part of a ScalaTest run.
- * You need not use <code>-b</code> to run suites written in Scala that extend <code>TestNGSuite</code>. You can simply run such suites with 
- * <code>-s</code>, <code>-m</code>, or </code>-w</code> parameters.
- * </p>
+ * If you specify one or more file paths with `-b` (b for Beust, the last name of TestNG's creator), `Runner` will create a `org.scalatest.testng.TestNGWrapperSuite`,
+ * passing in a `List` of the specified paths. When executed, the `TestNGWrapperSuite` will create one `TestNG` instance
+ * and pass each specified file path to it for running. If you include `-b` arguments, you must include TestNG's jar file on the class path or runpath.
+ * The `-b` argument will enable you to run existing `TestNG` tests, including tests written in Java, as part of a ScalaTest run.
+ * You need not use `-b` to run suites written in Scala that extend `TestNGSuite`. You can simply run such suites with 
+ * `-s`, `-m`, or `-w` parameters.
+ * 
  *
  * <a name="specifyingJUnitTests"></a>
- * <h2>Specifying JUnit tests</h2>
+ * ==Specifying JUnit tests==
  *
- * <p>
  * JUnit tests, including ones written in Java, may be run by specifying
- * <code>-j classname</code>, where the classname is a valid JUnit class
+ * `-j classname`, where the classname is a valid JUnit class
  * such as a TestCase, TestSuite, or a class implementing a static suite()
- * method returning a TestSuite. </p>
- * <p>
+ * method returning a TestSuite. 
  * To use this option you must include a JUnit jar file on your classpath.
- * </p>
+ * 
  *
  * <a name="memorizingAndRerunning"> </a>
- * <h2>Memorizing and rerunning failed and canceled tests</h2>
+ * ==Memorizing and rerunning failed and canceled tests==
  *
- * <p>
- * You can memorize failed and canceled tests using <code>-M</code>:
- * </p>
+ * You can memorize failed and canceled tests using `-M`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * -M failed-canceled.txt
- * </pre>
+ * }}}
  *
- * All failed and canceled tests will be memorized in <code>failed-canceled.txt</code>, to rerun them again, you use <code>-A</code>:
+ * All failed and canceled tests will be memorized in `failed-canceled.txt`, to rerun them again, you use `-A`:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * -A failed-canceled.txt
- * </pre>
+ * }}}
  *
  * <a name="slowpokeNotifications"> </a>
- * <h2>Slowpoke notifications</h2>
+ * ==Slowpoke notifications==
  *
- * <p>
- * You can request to recieve periodic notifications of <em>slowpokes</em>, tests that have been running longer than a given amount of time, specified in
- * seconds by the first integer after <code>-W</code>, the <em>delay</em>.
- * You specify the period between slowpoke notifications in seconds with the second integer after <code>-W</code>, the <em>period</em>. Thus to receive
+ * You can request to recieve periodic notifications of ''slowpokes'', tests that have been running longer than a given amount of time, specified in
+ * seconds by the first integer after `-W`, the ''delay''.
+ * You specify the period between slowpoke notifications in seconds with the second integer after `-W`, the ''period''. Thus to receive
  * notifications very minute of tests that have been running longer than two minutes, you'd use:
- * </p>
  * 
- * <pre class="stGray">
- * <code>-W 120 60</code>
- * </pre>
+ * 
+ * {{{ class="stGray">
+ * `-W 120 60`
+ * }}}
  *
- * <p>
- * Slowpoke notifications will be sent via <a href="../events/AlertProvided.html"><code>AlertProvided</code></a> events. The standard out reporter, for example, 
+ * Slowpoke notifications will be sent via <a href="../events/AlertProvided.html">`AlertProvided`</a> events. The standard out reporter, for example, 
  * will report such notifications like:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * <span class="stYellow">*** Test still running after 2 minutes, 13 seconds: suite name: ExampleSpec, test name: An egg timer should take 10 minutes.</span>
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  * @author George Berger
@@ -834,11 +776,11 @@ object Runner {
 
   /**
    * Runs a suite of tests, with optional GUI. See the main documentation for this singleton object for the details.
-   * The difference between this method and <code>main</code> is simply that this method will block until the run
-   * has completed, aborted, or been stopped, and return <code>true</code> if all tests executed and passed. In other
+   * The difference between this method and `main` is simply that this method will block until the run
+   * has completed, aborted, or been stopped, and return `true` if all tests executed and passed. In other
    * words, if any test fails, or if any suite aborts, or if the run aborts or is stopped, this method will
-   * return <code>false</code>. This value is used, for example, by the ScalaTest ant task to determine whether
-   * to continue the build if <code>haltOnFailure</code> is set to <code>true</code>.
+   * return `false`. This value is used, for example, by the ScalaTest ant task to determine whether
+   * to continue the build if `haltOnFailure` is set to `true`.
    *
    * @return true if all tests were executed and passed.
    */

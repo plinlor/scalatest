@@ -26,23 +26,21 @@ import words.BehaveWord
 
 
 /**
- * Implementation trait for class <code>fixture.FreeSpec</code>, which is
- * a sister class to <code>org.scalatest.FreeSpec</code> that can pass a
+ * Implementation trait for class `fixture.FreeSpec`, which is
+ * a sister class to `org.scalatest.FreeSpec` that can pass a
  * fixture object into its tests.
  *
- * <p>
- * <a href="FreeSpec.html"><code>fixture.FreeSpec</code></a> is a class,
+ * <a href="FreeSpec.html">`fixture.FreeSpec`</a> is a class,
  * not a trait, to minimize compile time given there is a slight compiler
  * overhead to mixing in traits compared to extending classes. If you need
- * to mix the behavior of <code>fixture.FreeSpec</code> into some other
+ * to mix the behavior of `fixture.FreeSpec` into some other
  * class, you can use this trait instead, because class
- * <code>fixture.FreeSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * `fixture.FreeSpec` does nothing more than extend this trait and add a nice `toString` implementation.
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="FreeSpec.html">detailed
- * overview of <code>fixture.FreeSpec</code></a>.
- * </p>
+ * overview of `fixture.FreeSpec`</a>.
+ * 
  *
  * @author Bill Venners
  */
@@ -57,43 +55,43 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
   private[scalatest] val sourceFileName = "FreeSpecLike.scala"
 
   /**
-   * Returns an <code>Informer</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Informer` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def info: Informer = atomicInformer.get
 
   /**
-   * Returns an <code>Notifier</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Notifier` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>fixture.FreeSpec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `fixture.FreeSpec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def note: Notifier = atomicNotifier.get
 
   /**
-   * Returns a <code>Alerter</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Alerter` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>fixture.FreeSpec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `fixture.FreeSpec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def alert: Alerter = atomicAlerter.get
 
   /**
-   * Returns a <code>Documenter</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Documenter` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def markup: Documenter = atomicDocumenter.get
@@ -118,11 +116,11 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
    * Register a test with the given spec text, optional tags, and test function value that takes no arguments.
    * An invocation of this method is called an &ldquo;example.&rdquo;
    *
-   * This method will register the test for later execution via an invocation of one of the <code>execute</code>
+   * This method will register the test for later execution via an invocation of one of the `execute`
    * methods. The name of the test will be a concatenation of the text of all surrounding describers,
    * from outside in, and the passed spec text, with one space placed between each item. (See the documenation
-   * for <code>testNames</code> for an example.) The resulting test name must not have been registered previously on
-   * this <code>FreeSpec</code> instance.
+   * for `testNames` for an example.) The resulting test name must not have been registered previously on
+   * this `FreeSpec` instance.
    *
    * @param specText the specification text, which will be combined with the descText of any surrounding describers
    * to form the test name
@@ -130,8 +128,8 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
    * @param methodName caller's method name
    * @param testFun the test function
    * @throws DuplicateTestNameException if a test with the same name has been registered previously
-   * @throws TestRegistrationClosedException if invoked after <code>run</code> has been invoked on this suite
-   * @throws NullArgumentException if <code>specText</code> or any passed test tag is <code>null</code>
+   * @throws TestRegistrationClosedException if invoked after `run` has been invoked on this suite
+   * @throws NullArgumentException if `specText` or any passed test tag is `null`
    */
   private def registerTestToRun(specText: String, testTags: List[Tag], methodName: String, testFun: FixtureParam => Any /* Assertion */, pos: source.Position): Unit = {
     // SKIP-SCALATESTJS-START
@@ -149,13 +147,13 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
 
   /**
    * Register a test to ignore, which has the given spec text, optional tags, and test function value that takes no arguments.
-   * This method will register the test for later ignoring via an invocation of one of the <code>execute</code>
-   * methods. This method exists to make it easy to ignore an existing test by changing the call to <code>it</code>
-   * to <code>ignore</code> without deleting or commenting out the actual test code. The test will not be executed, but a
+   * This method will register the test for later ignoring via an invocation of one of the `execute`
+   * methods. This method exists to make it easy to ignore an existing test by changing the call to `it`
+   * to `ignore` without deleting or commenting out the actual test code. The test will not be executed, but a
    * report will be sent that indicates the test was ignored. The name of the test will be a concatenation of the text of all surrounding describers,
    * from outside in, and the passed spec text, with one space placed between each item. (See the documenation
-   * for <code>testNames</code> for an example.) The resulting test name must not have been registered previously on
-   * this <code>FreeSpec</code> instance.
+   * for `testNames` for an example.) The resulting test name must not have been registered previously on
+   * this `FreeSpec` instance.
    *
    * @param specText the specification text, which will be combined with the descText of any surrounding describers
    * to form the test name
@@ -163,8 +161,8 @@ trait FreeSpecLike extends TestSuite with TestRegistration with Informing with N
    * @param methodName caller's method name
    * @param testFun the test function
    * @throws DuplicateTestNameException if a test with the same name has been registered previously
-   * @throws TestRegistrationClosedException if invoked after <code>run</code> has been invoked on this suite
-   * @throws NullArgumentException if <code>specText</code> or any passed test tag is <code>null</code>
+   * @throws TestRegistrationClosedException if invoked after `run` has been invoked on this suite
+   * @throws NullArgumentException if `specText` or any passed test tag is `null`
    */
   private def registerTestToIgnore(specText: String, testTags: List[Tag], methodName: String, testFun: FixtureParam => Any /* Assertion */, pos: source.Position): Unit = {
     // SKIP-SCALATESTJS-START

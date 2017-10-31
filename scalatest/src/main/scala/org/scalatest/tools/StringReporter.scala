@@ -24,8 +24,8 @@ import org.scalatest.exceptions.PropertyCheckFailedException
 import org.scalatest.exceptions.StackDepth
 
 /**
- * A <code>Reporter</code> that prints test status information to
- * a <code>Writer</code>, <code>OutputStream</code>, or file.
+ * A `Reporter` that prints test status information to
+ * a `Writer`, `OutputStream`, or file.
  *
  * @author Bill Venners
  */

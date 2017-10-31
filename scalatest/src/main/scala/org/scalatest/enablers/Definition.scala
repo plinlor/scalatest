@@ -16,38 +16,36 @@
 package org.scalatest.enablers
 
 /**
- * Supertrait for typeclasses that enable the <code>be defined</code> matcher syntax.
+ * Supertrait for typeclasses that enable the `be defined` matcher syntax.
  *
- * <p>
- * A <code>Definition[T]</code> provides access to the "definition nature" of type <code>S</code> in such
- * a way that <code>be defined</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
- * can be any type for which the concept of being defined makes sense, such as <code>scala.Option</code>. ScalaTest provides
- * implicit implementation for <code>scala.Option</code>. You can enable the <code>be defined</code> matcher syntax on your own
- * type <code>U</code> by defining a <code>Definition[U]</code> for the type and making it available implicitly.
+ * A `Definition[T]` provides access to the "definition nature" of type `S` in such
+ * a way that `be defined` matcher syntax can be used with type `T`. A `T`
+ * can be any type for which the concept of being defined makes sense, such as `scala.Option`. ScalaTest provides
+ * implicit implementation for `scala.Option`. You can enable the `be defined` matcher syntax on your own
+ * type `U` by defining a `Definition[U]` for the type and making it available implicitly.
  * 
- * <p>
- * ScalaTest provides an implicit <code>Definition</code> instance for <code>scala.Option</code>,
- * arbitary object with <code>isDefined()</code> or <code>isDefined</code> in the <code>Definition</code> companion object.
- * </p>
+ * ScalaTest provides an implicit `Definition` instance for `scala.Option`,
+ * arbitary object with `isDefined()` or `isDefined` in the `Definition` companion object.
+ * 
  */
 trait Definition[-T] {
 
   /**
-   * Determines whether the passed is defined, <em>i.e.</em>, the passed in <code>scala.Option</code> is defined.
+   * Determines whether the passed is defined, ''i.e.'', the passed in `scala.Option` is defined.
    *
    * @param thing the thing to check for definition
-   * @return <code>true</code> if passed thing is defined, <code>false</code> otherwise
+   * @return `true` if passed thing is defined, `false` otherwise
    */
   def isDefined(thing: T): Boolean
 }
 
 /**
- * Companion object for <code>Definition</code> that provides implicit implementations for the following types:
+ * Companion object for `Definition` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>scala.Option</code></li>
- * <li>arbitary object with a <code>isDefined()</code> method that returns <code>Boolean</code></li>
- * <li>arbitary object with a parameterless <code>isDefined</code> method that returns <code>Boolean</code></li>
+ * <li>`scala.Option`</li>
+ * <li>arbitary object with a `isDefined()` method that returns `Boolean`</li>
+ * <li>arbitary object with a parameterless `isDefined` method that returns `Boolean`</li>
  * </ul>
  */
 object Definition {
@@ -55,11 +53,11 @@ object Definition {
   import scala.language.higherKinds
 
   /**
-   * Provides <code>Definition</code> implementation for <code>scala.Option</code>
+   * Provides `Definition` implementation for `scala.Option`
    *
-   * @tparam E the type of the element in the <code>Option</code>
-   * @tparam OPT any subtype of <code>Option</code>
-   * @return <code>Definition[OPT[E]]</code> that supports <code>Option</code> in <code>be defined</code> syntax
+   * @tparam E the type of the element in the `Option`
+   * @tparam OPT any subtype of `Option`
+   * @return `Definition[OPT[E]]` that supports `Option` in `be defined` syntax
    */
   implicit def definitionOfOption[E, OPT[e] <: scala.Option[e]]: Definition[OPT[E]] =
     new Definition[OPT[E]] {
@@ -69,10 +67,10 @@ object Definition {
   import scala.language.reflectiveCalls
   
   /**
-   * Provides <code>Definition</code> implementation for any arbitrary object with a <code>isDefined()</code> method that returns <code>Boolean</code>
+   * Provides `Definition` implementation for any arbitrary object with a `isDefined()` method that returns `Boolean`
    *
-   * @tparam T any type that has a <code>isDefined()</code> method that returns <code>Boolean</code>
-   * @return <code>Definition[T]</code> that supports <code>T</code> in <code>be defined</code> syntax
+   * @tparam T any type that has a `isDefined()` method that returns `Boolean`
+   * @return `Definition[T]` that supports `T` in `be defined` syntax
    */
   implicit def definitionOfAnyRefWithIsDefinedMethod[T <: AnyRef { def isDefined(): Boolean}]: Definition[T] = 
     new Definition[T] {
@@ -80,10 +78,10 @@ object Definition {
     }
 
   /**
-   * Provides <code>Definition</code> implementation for any arbitrary object with a <code>isDefined</code> method that returns <code>Boolean</code>
+   * Provides `Definition` implementation for any arbitrary object with a `isDefined` method that returns `Boolean`
    *
-   * @tparam T any type that has a parameterless <code>isDefined</code> method that returns <code>Boolean</code>
-   * @return <code>Definition[T]</code> that supports <code>T</code> in <code>be defined</code> syntax
+   * @tparam T any type that has a parameterless `isDefined` method that returns `Boolean`
+   * @return `Definition[T]` that supports `T` in `be defined` syntax
    */
   implicit def definitionOfAnyRefWithParameterlessIsDefinedMethod[T <: AnyRef { def isDefined: Boolean}]: Definition[T] = 
     new Definition[T] {

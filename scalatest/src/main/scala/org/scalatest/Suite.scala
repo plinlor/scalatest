@@ -293,36 +293,33 @@ import tools.SuiteDiscoveryHelper
  */
 
 /**
- * A suite of tests. A <code>Suite</code> instance encapsulates a conceptual
- * suite (<em>i.e.</em>, a collection) of tests.
+ * A suite of tests. A `Suite` instance encapsulates a conceptual
+ * suite (''i.e.'', a collection) of tests.
  *
- * <p>
  * This trait provides an interface composed of "lifecycle methods" that allow suites of tests to be run.
  * Its implementation enables a default way of writing and executing tests.  Subtraits and subclasses can
- * override <code>Suite</code>'s lifecycle methods to enable other ways of writing and executing tests.
- * </p>
+ * override `Suite`'s lifecycle methods to enable other ways of writing and executing tests.
+ * 
  *
- * <h2>Nested suites</h2>
+ * ==Nested suites==
  *
- * <p>
- * A <code>Suite</code> can refer to a collection of other <code>Suite</code>s,
- * which are called <em>nested</em> <code>Suite</code>s. Those nested  <code>Suite</code>s can in turn have
- * their own nested  <code>Suite</code>s, and so on. Large test suites can be organized, therefore, as a tree of
- * nested <code>Suite</code>s.
- * This trait's <code>run</code> method, in addition to invoking its
- * test methods, invokes <code>run</code> on each of its nested <code>Suite</code>s.
- * </p>
+ * A `Suite` can refer to a collection of other `Suite`s,
+ * which are called ''nested'' `Suite`s. Those nested  `Suite`s can in turn have
+ * their own nested  `Suite`s, and so on. Large test suites can be organized, therefore, as a tree of
+ * nested `Suite`s.
+ * This trait's `run` method, in addition to invoking its
+ * test methods, invokes `run` on each of its nested `Suite`s.
+ * 
  *
- * <p>
- * A <code>List</code> of a <code>Suite</code>'s nested <code>Suite</code>s can be obtained by invoking its
- * <code>nestedSuites</code> method. If you wish to create a <code>Suite</code> that serves as a
- * container for nested <code>Suite</code>s, whether or not it has test methods of its own, simply override <code>nestedSuites</code>
- * to return a <code>List</code> of the nested <code>Suite</code>s. Because this is a common use case, ScalaTest provides
- * a convenience <code>Suites</code> class, which takes a variable number of nested <code>Suite</code>s as constructor
+ * A `List` of a `Suite`'s nested `Suite`s can be obtained by invoking its
+ * `nestedSuites` method. If you wish to create a `Suite` that serves as a
+ * container for nested `Suite`s, whether or not it has test methods of its own, simply override `nestedSuites`
+ * to return a `List` of the nested `Suite`s. Because this is a common use case, ScalaTest provides
+ * a convenience `Suites` class, which takes a variable number of nested `Suite`s as constructor
  * parameters. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.suite.nested
  *
  * import org.scalatest._
@@ -357,23 +354,21 @@ import tools.SuiteDiscoveryHelper
  *   new BSuite,
  *   new CSuite
  * )
- * </pre>
+ * }}}
  *
- * <p>
- * If you now run <code>ASCIISuite</code>:
- * </p>
+ * If you now run `ASCIISuite`:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; org.scalatest.run(new ASCIISuite)
- * </pre>
+ * }}}
  *
- * <p>
  * You will see reports printed to the standard output that indicate the nested
- * suites&#8212;<code>ASuite</code>, <code>BSuite</code>, and
- * <code>CSuite</code>&#8212;were run:
- * </p>
+ * suites&#8212;`ASuite`, `BSuite`, and
+ * `CSuite`&#8212;were run:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * <span class="stGreen">ASCIISuite:
  * ASuite:
  * - A should have ASCII value 41 hex
@@ -384,150 +379,137 @@ import tools.SuiteDiscoveryHelper
  * CSuite:
  * - C should have ASCII value 43 hex
  * - c should have ASCII value 63 hex</span>
- * </pre>
+ * }}}
  *
- * <p>
- * Note that <code>Runner</code> can discover <code>Suite</code>s automatically, so you need not
- * necessarily define nested <code>Suites</code> explicitly. See the <a href="tools/Runner$.html#membersOnlyWildcard">documentation
- * for <code>Runner</code></a> for more information.
- * </p>
+ * Note that `Runner` can discover `Suite`s automatically, so you need not
+ * necessarily define nested `Suites` explicitly. See the <a href="tools/Runner$.html#membersOnlyWildcard">documentation
+ * for `Runner`</a> for more information.
+ * 
  *
- * <a name="configMapSection"></a><h2>The config map</h2>
+ * <a name="configMapSection"></a>==The config map==
  *
- * <p>
  * In some cases you may need to pass information to a suite of tests.
  * For example, perhaps a suite of tests needs to grab information from a file, and you want
  * to be able to specify a different filename during different runs.  You can accomplish this in ScalaTest by passing
- * the filename in a <em>config map</em> of key-value pairs, which is passed to <code>run</code> as a <a href="ConfigMap.html"><code>ConfigMap</code></a>.
- * The values in the config map are called "config objects," because they can be used to <em>configure</em>
+ * the filename in a ''config map'' of key-value pairs, which is passed to `run` as a <a href="ConfigMap.html">`ConfigMap`</a>.
+ * The values in the config map are called "config objects," because they can be used to ''configure''
  * suites, reporters, and tests.
- * </p>
+ * 
  *
- * <p>
- * You can specify a string config object is via the ScalaTest <code>Runner</code>, either via the command line
+ * You can specify a string config object is via the ScalaTest `Runner`, either via the command line
  * or ScalaTest's ant task.
  * (See the <a href="tools/Runner$.html#configMapSection">documentation for Runner</a> for information on how to specify 
  * config objects on the command line.)
- * The config map is passed to <code>run</code>, <code>runNestedSuites</code>, <code>runTests</code>, and <code>runTest</code>,
+ * The config map is passed to `run`, `runNestedSuites`, `runTests`, and `runTest`,
  * so one way to access it in your suite is to override one of those methods. If you need to use the config map inside your tests, you
- * can access it from the <code>NoArgTest</code> passed to <code>withFixture</code>, or the <code>OneArgTest</code> passed to
- * <code>withFixture</code> in the traits in the <code>org.scalatest.fixture</code> package. (See the
- * <a href="fixture/Suite.html">documentation for <code>fixture.Suite</code></a>
+ * can access it from the `NoArgTest` passed to `withFixture`, or the `OneArgTest` passed to
+ * `withFixture` in the traits in the `org.scalatest.fixture` package. (See the
+ * <a href="fixture/Suite.html">documentation for `fixture.Suite`</a>
  * for instructions on how to access the config map in tests.)
- * </p>
+ * 
  *
- * <h2>Executing suites in parallel</h2>
+ * ==Executing suites in parallel==
  *
- * <p>
- * The <code>run</code> method takes as one of its parameters an optional <a href="Distributor.html"><code>Distributor</code></a>. If 
- * a <code>Distributor</code> is passed in, this trait's implementation of <code>run</code> puts its nested
- * <code>Suite</code>s into the distributor rather than executing them directly. The caller of <code>run</code>
- * is responsible for ensuring that some entity runs the <code>Suite</code>s placed into the 
- * distributor. The <code>-P</code> command line parameter to <code>Runner</code>, for example, will cause
- * <code>Suite</code>s put into the <code>Distributor</code> to be run in parallel via a pool of threads.
- * If you wish to execute the tests themselves in parallel, mix in <a href="ParallelTestExecution.html"><code>ParallelTestExecution</code></a>.
- * </p>
+ * The `run` method takes as one of its parameters an optional <a href="Distributor.html">`Distributor`</a>. If 
+ * a `Distributor` is passed in, this trait's implementation of `run` puts its nested
+ * `Suite`s into the distributor rather than executing them directly. The caller of `run`
+ * is responsible for ensuring that some entity runs the `Suite`s placed into the 
+ * distributor. The `-P` command line parameter to `Runner`, for example, will cause
+ * `Suite`s put into the `Distributor` to be run in parallel via a pool of threads.
+ * If you wish to execute the tests themselves in parallel, mix in <a href="ParallelTestExecution.html">`ParallelTestExecution`</a>.
+ * 
  *
  * <a name="errorHandling"></a>
- * <h2>"Run-aborting" exceptions</h2>
+ * =="Run-aborting" exceptions==
  *
- * <p>
- * The Javadoc documentation for <code>java.lang.Error</code> states:
- * </p>
+ * The Javadoc documentation for `java.lang.Error` states:
+ * 
  *
  * <blockquote>
- * An <code>Error</code> is a subclass of <code>Throwable</code> that indicates serious problems that a reasonable application
+ * An `Error` is a subclass of `Throwable` that indicates serious problems that a reasonable application
  * should not try to catch. Most
  * such errors are abnormal conditions.
  * </blockquote>
  *
- * <p>
- * Because <code>Error</code>s are used to denote serious errors, trait <code>Suite</code> and its subtypes in the ScalaTest API
- * do not always treat a test that completes abruptly with an <code>Error</code> as a test failure, but sometimes as an indication
+ * Because `Error`s are used to denote serious errors, trait `Suite` and its subtypes in the ScalaTest API
+ * do not always treat a test that completes abruptly with an `Error` as a test failure, but sometimes as an indication
  * that serious problems have arisen that should cause the run to abort. For example, if a test completes abruptly with an
- * <code>OutOfMemoryError</code>, it will not be reported as a test failure, but will instead cause the run to abort. Because not
- * everyone uses <code>Error</code>s only to represent serious
- * problems, however, ScalaTest only behaves this way for the following <em>run-aborting</em> exception types (and their subclasses):
- * </p>
+ * `OutOfMemoryError`, it will not be reported as a test failure, but will instead cause the run to abort. Because not
+ * everyone uses `Error`s only to represent serious
+ * problems, however, ScalaTest only behaves this way for the following ''run-aborting'' exception types (and their subclasses):
+ * 
  *
  * <ul>
- * <li><code>java.lang.annotation.AnnotationFormatError</code></li>
- * <li><code>java.awt.AWTError</code></li>
- * <li><code>java.nio.charset.CoderMalfunctionError</code></li>
- * <li><code>javax.xml.parsers.FactoryConfigurationError</code></li>
- * <li><code>java.lang.LinkageError</code></li>
- * <li><code>java.lang.ThreadDeath</code></li>
- * <li><code>javax.xml.transform.TransformerFactoryConfigurationError</code></li>
- * <li><code>java.lang.VirtualMachineError</code></li>
+ * <li>`java.lang.annotation.AnnotationFormatError`</li>
+ * <li>`java.awt.AWTError`</li>
+ * <li>`java.nio.charset.CoderMalfunctionError`</li>
+ * <li>`javax.xml.parsers.FactoryConfigurationError`</li>
+ * <li>`java.lang.LinkageError`</li>
+ * <li>`java.lang.ThreadDeath`</li>
+ * <li>`javax.xml.transform.TransformerFactoryConfigurationError`</li>
+ * <li>`java.lang.VirtualMachineError`</li>
  * </ul>
  *
- * <p>
- * The previous list includes all <code>Error</code>s that exist as part of Java 1.5 API, excluding <code>java.lang.AssertionError</code>.
- * ScalaTest does treat a thrown <code>AssertionError</code> as an indication of a test failure. In addition, any other
- * <code>Error</code> that is not an instance of a type mentioned in the previous list will be caught by the <code>Suite</code> traits
+ * The previous list includes all `Error`s that exist as part of Java 1.5 API, excluding `java.lang.AssertionError`.
+ * ScalaTest does treat a thrown `AssertionError` as an indication of a test failure. In addition, any other
+ * `Error` that is not an instance of a type mentioned in the previous list will be caught by the `Suite` traits
  * in the ScalaTest API and reported as the cause of a test failure. 
- * </p>
+ * 
  *
- * <p>
- * Although trait <code>Suite</code> and all its subtypes in the ScalaTest API consistently behave this way with regard to <code>Error</code>s,
- * this behavior is not required by the contract of <code>Suite</code>. Subclasses and subtraits that you define, for example, may treat all
- * <code>Error</code>s as test failures, or indicate errors in some other way that has nothing to do with exceptions.
- * </p>
+ * Although trait `Suite` and all its subtypes in the ScalaTest API consistently behave this way with regard to `Error`s,
+ * this behavior is not required by the contract of `Suite`. Subclasses and subtraits that you define, for example, may treat all
+ * `Error`s as test failures, or indicate errors in some other way that has nothing to do with exceptions.
+ * 
  *
  * <a name="lifecyle-methods"></a>
- * <h2>Extensibility</h2>
+ * ==Extensibility==
  *
- * <p>
- * Trait <code>Suite</code> provides default implementations of its methods that should
+ * Trait `Suite` provides default implementations of its methods that should
  * be sufficient for most applications, but many methods can be overridden when desired. Here's
  * a summary of the methods that are intended to be overridden:
- * </p>
+ * 
  *
  * <ul>
- * <li><code>run</code> - override this method to define custom ways to run suites of
+ * <li>`run` - override this method to define custom ways to run suites of
  *   tests.</li>
- * <li><code>runNestedSuites</code> - override this method to define custom ways to run nested suites.</li>
- * <li><code>runTests</code> - override this method to define custom ways to run a suite's tests.</li>
- * <li><code>runTest</code> - override this method to define custom ways to run a single named test.</li>
- * <li><code>testNames</code> - override this method to specify the <code>Suite</code>'s test names in a custom way.</li>
- * <li><code>tags</code> - override this method to specify the <code>Suite</code>'s test tags in a custom way.</li>
- * <li><code>nestedSuites</code> - override this method to specify the <code>Suite</code>'s nested <code>Suite</code>s in a custom way.</li>
- * <li><code>suiteName</code> - override this method to specify the <code>Suite</code>'s name in a custom way.</li>
- * <li><code>expectedTestCount</code> - override this method to count this <code>Suite</code>'s expected tests in a custom way.</li>
+ * <li>`runNestedSuites` - override this method to define custom ways to run nested suites.</li>
+ * <li>`runTests` - override this method to define custom ways to run a suite's tests.</li>
+ * <li>`runTest` - override this method to define custom ways to run a single named test.</li>
+ * <li>`testNames` - override this method to specify the `Suite`'s test names in a custom way.</li>
+ * <li>`tags` - override this method to specify the `Suite`'s test tags in a custom way.</li>
+ * <li>`nestedSuites` - override this method to specify the `Suite`'s nested `Suite`s in a custom way.</li>
+ * <li>`suiteName` - override this method to specify the `Suite`'s name in a custom way.</li>
+ * <li>`expectedTestCount` - override this method to count this `Suite`'s expected tests in a custom way.</li>
  * </ul>
  *
- * <p>
- * For example, this trait's implementation of <code>testNames</code> performs reflection to discover methods starting with <code>test</code>,
- * and places these in a <code>Set</code> whose iterator returns the names in alphabetical order. If you wish to run tests in a different
- * order in a particular <code>Suite</code>, perhaps because a test named <code>testAlpha</code> can only succeed after a test named
- * <code>testBeta</code> has run, you can override <code>testNames</code> so that it returns a <code>Set</code> whose iterator returns
- * <code>testBeta</code> <em>before</em> <code>testAlpha</code>. (This trait's implementation of <code>run</code> will invoke tests
- * in the order they come out of the <code>testNames</code> <code>Set</code> iterator.)
- * </p>
+ * For example, this trait's implementation of `testNames` performs reflection to discover methods starting with `test`,
+ * and places these in a `Set` whose iterator returns the names in alphabetical order. If you wish to run tests in a different
+ * order in a particular `Suite`, perhaps because a test named `testAlpha` can only succeed after a test named
+ * `testBeta` has run, you can override `testNames` so that it returns a `Set` whose iterator returns
+ * `testBeta` ''before'' `testAlpha`. (This trait's implementation of `run` will invoke tests
+ * in the order they come out of the `testNames` `Set` iterator.)
+ * 
  *
- * <p>
- * Alternatively, you may not like starting your test methods with <code>test</code>, and prefer using <code>@Test</code> annotations in
- * the style of Java's JUnit 4 or TestNG. If so, you can override <code>testNames</code> to discover tests using either of these two APIs
- * <code>@Test</code> annotations, or one of your own invention. (This is in fact
- * how <code>org.scalatest.junit.JUnitSuite</code> and <code>org.scalatest.testng.TestNGSuite</code> work.)
- * </p>
+ * Alternatively, you may not like starting your test methods with `test`, and prefer using `@Test` annotations in
+ * the style of Java's JUnit 4 or TestNG. If so, you can override `testNames` to discover tests using either of these two APIs
+ * `@Test` annotations, or one of your own invention. (This is in fact
+ * how `org.scalatest.junit.JUnitSuite` and `org.scalatest.testng.TestNGSuite` work.)
+ * 
  *
- * <p>
- * Moreover, <em>test</em> in ScalaTest does not necessarily mean <em>test method</em>. A test can be anything that can be given a name,
- * that starts and either succeeds or fails, and can be ignored. In <code>org.scalatest.FunSuite</code>, for example, tests are represented
+ * Moreover, ''test'' in ScalaTest does not necessarily mean ''test method''. A test can be anything that can be given a name,
+ * that starts and either succeeds or fails, and can be ignored. In `org.scalatest.FunSuite`, for example, tests are represented
  * as function values. This
  * approach might look foreign to JUnit users, but may feel more natural to programmers with a functional programming background.
- * To facilitate this style of writing tests, <code>FunSuite</code> overrides <code>testNames</code>, <code>runTest</code>, and <code>run</code> such that you can 
+ * To facilitate this style of writing tests, `FunSuite` overrides `testNames`, `runTest`, and `run` such that you can 
  * define tests as function values.
- * </p>
+ * 
  *
- * <p>
  * You can also model existing JUnit 3, JUnit 4, or TestNG tests as suites of tests, thereby incorporating tests written in Java into a ScalaTest suite.
- * The "wrapper" classes in packages <code>org.scalatest.junit</code> and <code>org.scalatest.testng</code> exist to make this easy.
- * No matter what legacy tests you may have, it is likely you can create or use an existing <code>Suite</code> subclass that allows you to model those tests
+ * The "wrapper" classes in packages `org.scalatest.junit` and `org.scalatest.testng` exist to make this easy.
+ * No matter what legacy tests you may have, it is likely you can create or use an existing `Suite` subclass that allows you to model those tests
  * as ScalaTest suites and tests and incorporate them into a ScalaTest suite. You can then write new tests in Scala and continue supporting
  * older tests in Java.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -536,194 +518,173 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   import Suite.InformerInParens
 
   /**
-  * An immutable <code>IndexedSeq</code> of this <code>Suite</code> object's nested <code>Suite</code>s. If this <code>Suite</code> contains no nested <code>Suite</code>s,
-  * this method returns an empty <code>IndexedSeq</code>. This trait's implementation of this method returns an empty <code>List</code>.
+  * An immutable `IndexedSeq` of this `Suite` object's nested `Suite`s. If this `Suite` contains no nested `Suite`s,
+  * this method returns an empty `IndexedSeq`. This trait's implementation of this method returns an empty `List`.
   */
   def nestedSuites: collection.immutable.IndexedSeq[Suite] = Vector.empty
 
   // SKIP-SCALATESTJS-START
   /**
-   * Executes one or more tests in this <code>Suite</code>, printing results to the standard output.
+   * Executes one or more tests in this `Suite`, printing results to the standard output.
    *
-   * <p>
-   * This method invokes <code>run</code> on itself, passing in values that can be configured via the parameters to this
+   * This method invokes `run` on itself, passing in values that can be configured via the parameters to this
    * method, all of which have default values. This behavior is convenient when working with ScalaTest in the Scala interpreter.
    * Here's a summary of this method's parameters and how you can use them:
-   * </p>
+   * 
    *
-   * <p>
-   * <strong>The <code>testName</code> parameter</strong>
-   * </p>
+   * '''The `testName` parameter'''
+   * 
    *
-   * <p>
-   * If you leave <code>testName</code> at its default value (of <code>null</code>), this method will pass <code>None</code> to
-   * the <code>testName</code> parameter of <code>run</code>, and as a result all the tests in this suite will be executed. If you
-   * specify a <code>testName</code>, this method will pass <code>Some(testName)</code> to <code>run</code>, and only that test
+   * If you leave `testName` at its default value (of `null`), this method will pass `None` to
+   * the `testName` parameter of `run`, and as a result all the tests in this suite will be executed. If you
+   * specify a `testName`, this method will pass `Some(testName)` to `run`, and only that test
    * will be run. Thus to run all tests in a suite from the Scala interpreter, you can write:
-   * </p>
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute()
-   * </pre>
+   * }}}
    *
-   * <p>
-   * (The above syntax actually invokes the overloaded parameterless form of <code>execute</code>, which calls this form with its default parameter values.)
-   * To run just the test named <code>"my favorite test"</code> in a suite from the Scala interpreter, you would write:
-   * </p>
+   * (The above syntax actually invokes the overloaded parameterless form of `execute`, which calls this form with its default parameter values.)
+   * To run just the test named `"my favorite test"` in a suite from the Scala interpreter, you would write:
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute("my favorite test")
-   * </pre>
+   * }}}
    *
-   * <p>
    * Or:
-   * </p>
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(testName = "my favorite test")
-   * </pre>
+   * }}}
    *
-   * <p>
-   * <strong>The <code>configMap</code> parameter</strong>
-   * </p>
+   * '''The `configMap` parameter'''
+   * 
    *
-   * <p>
-   * If you provide a value for the <code>configMap</code> parameter, this method will pass it to <code>run</code>. If not, the default value
-   * of an empty <code>Map</code> will be passed. For more information on how to use a config map to configure your test suites, see
+   * If you provide a value for the `configMap` parameter, this method will pass it to `run`. If not, the default value
+   * of an empty `Map` will be passed. For more information on how to use a config map to configure your test suites, see
    * the <a href="#configMapSection">config map section</a> in the main documentation for this trait. Here's an example in which you configure
    * a run with the name of an input file:
-   * </p>
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(configMap = Map("inputFileName" -&gt; "in.txt")
-   * </pre>
+   * }}}
    *
-   * <p>
-   * <strong>The <code>color</code> parameter</strong>
-   * </p>
+   * '''The `color` parameter'''
+   * 
    *
-   * <p>
-   * If you leave the <code>color</code> parameter unspecified, this method will configure the reporter it passes to <code>run</code> to print
-   * to the standard output in color (via ansi escape characters). If you don't want color output, specify false for <code>color</code>, like this:
-   * </p>
+   * If you leave the `color` parameter unspecified, this method will configure the reporter it passes to `run` to print
+   * to the standard output in color (via ansi escape characters). If you don't want color output, specify false for `color`, like this:
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(color = false)
-   * </pre>
+   * }}}
    *
-   * <p>
-   * <strong>The <code>durations</code> parameter</strong>
-   * </p>
+   * '''The `durations` parameter'''
+   * 
    *
-   * <p>
-   * If you leave the <code>durations</code> parameter unspecified, this method will configure the reporter it passes to <code>run</code> to
-   * <em>not</em> print durations for tests and suites to the standard output. If you want durations printed, specify true for <code>durations</code>,
+   * If you leave the `durations` parameter unspecified, this method will configure the reporter it passes to `run` to
+   * ''not'' print durations for tests and suites to the standard output. If you want durations printed, specify true for `durations`,
    * like this:
-   * </p>
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(durations = true)
-   * </pre>
+   * }}}
    *
-   * <p>
-   * <strong>The <code>shortstacks</code> and <code>fullstacks</code> parameters</strong>
-   * </p>
+   * '''The `shortstacks` and `fullstacks` parameters'''
+   * 
    *
-   * <p>
-   * If you leave both the <code>shortstacks</code> and <code>fullstacks</code> parameters unspecified, this method will configure the reporter
-   * it passes to <code>run</code> to <em>not</em> print stack traces for failed tests if it has a stack depth that identifies the offending
+   * If you leave both the `shortstacks` and `fullstacks` parameters unspecified, this method will configure the reporter
+   * it passes to `run` to ''not'' print stack traces for failed tests if it has a stack depth that identifies the offending
    * line of test code. If you prefer a short stack trace (10 to 15 stack frames) to be printed with any test failure, specify true for
-   * <code>shortstacks</code>:
-   * </p>
+   * `shortstacks`:
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(shortstacks = true)
-   * </pre>
+   * }}}
    *
-   * <p>
-   * For full stack traces, set <code>fullstacks</code> to true:
-   * </p>
+   * For full stack traces, set `fullstacks` to true:
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(fullstacks = true)
-   * </pre>
+   * }}}
    *
-   * <p>
-   * If you specify true for both <code>shortstacks</code> and <code>fullstacks</code>, you'll get full stack traces.
-   * </p>
+   * If you specify true for both `shortstacks` and `fullstacks`, you'll get full stack traces.
+   * 
    *
-   * <p>
-   * <strong>The <code>stats</code> parameter</strong>
-   * </p>
+   * '''The `stats` parameter'''
+   * 
    *
-   * <p>
-   * If you leave the <code>stats</code> parameter unspecified, this method will <em>not</em> fire <code>RunStarting</code> and either <code>RunCompleted</code>
-   * or <code>RunAborted</code> events to the reporter it passes to <code>run</code>.
-   * If you specify true for <code>stats</code>, this method will fire the run events to the reporter, and the reporter will print the
+   * If you leave the `stats` parameter unspecified, this method will ''not'' fire `RunStarting` and either `RunCompleted`
+   * or `RunAborted` events to the reporter it passes to `run`.
+   * If you specify true for `stats`, this method will fire the run events to the reporter, and the reporter will print the
    * expected test count before the run, and various statistics after, including the number of suites completed and number of tests that
    * succeeded, failed, were ignored or marked pending. Here's how you get the stats:
-   * </p>
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; (new ExampleSuite).execute(stats = true)
-   * </pre>
+   * }}}
    *
    *
-   * <p>
-   * To summarize, this method will pass to <code>run</code>:
-   * </p>
+   * To summarize, this method will pass to `run`:
+   * 
    * <ul>
-   * <li><code>testName</code> - <code>None</code> if this method's <code>testName</code> parameter is left at its default value of <code>null</code>, else <code>Some(testName)</code>.
-   * <li><code>reporter</code> - a reporter that prints to the standard output</li>
-   * <li><code>stopper</code> - a <code>Stopper</code> whose <code>apply</code> method always returns <code>false</code></li>
-   * <li><code>filter</code> - a <code>Filter</code> constructed with <code>None</code> for <code>tagsToInclude</code> and <code>Set()</code>
-   *   for <code>tagsToExclude</code></li>
-   * <li><code>configMap</code> - the <code>configMap</code> passed to this method</li>
-   * <li><code>distributor</code> - <code>None</code></li>
-   * <li><code>tracker</code> - a new <code>Tracker</code></li>
+   * <li>`testName` - `None` if this method's `testName` parameter is left at its default value of `null`, else `Some(testName)`.
+   * <li>`reporter` - a reporter that prints to the standard output</li>
+   * <li>`stopper` - a `Stopper` whose `apply` method always returns `false`</li>
+   * <li>`filter` - a `Filter` constructed with `None` for `tagsToInclude` and `Set()`
+   *   for `tagsToExclude`</li>
+   * <li>`configMap` - the `configMap` passed to this method</li>
+   * <li>`distributor` - `None`</li>
+   * <li>`tracker` - a new `Tracker`</li>
    * </ul>
    *
-   * <p>
    * Note:  In ScalaTest, the terms "execute" and "run" basically mean the same thing and
-   * can be used interchangably. The reason this method isn't named <code>run</code> is that it takes advantage of
-   * default arguments, and you can't mix overloaded methods and default arguments in Scala. (If named <code>run</code>,
-   * this method would have the same name but different arguments than the main <a href="#run"><code>run</code> method</a> that
+   * can be used interchangably. The reason this method isn't named `run` is that it takes advantage of
+   * default arguments, and you can't mix overloaded methods and default arguments in Scala. (If named `run`,
+   * this method would have the same name but different arguments than the main <a href="#run">`run` method</a> that
    * takes seven arguments. Thus it would overload and couldn't be used with default argument values.)
-   * </p>
+   * 
    *
-   * <p>
-   * Design note: This method has two "features" that may seem unidiomatic. First, the default value of <code>testName</code> is <code>null</code>.
-   * Normally in Scala the type of <code>testName</code> would be <code>Option[String]</code> and the default value would
-   * be <code>None</code>, as it is in this trait's <code>run</code> method. The <code>null</code> value is used here for two reasons. First, in
-   * ScalaTest 1.5, <code>execute</code> was changed from four overloaded methods to one method with default values, taking advantage of
+   * Design note: This method has two "features" that may seem unidiomatic. First, the default value of `testName` is `null`.
+   * Normally in Scala the type of `testName` would be `Option[String]` and the default value would
+   * be `None`, as it is in this trait's `run` method. The `null` value is used here for two reasons. First, in
+   * ScalaTest 1.5, `execute` was changed from four overloaded methods to one method with default values, taking advantage of
    * the default and named parameters feature introduced in Scala 2.8.
-   * To not break existing source code, <code>testName</code> needed to have type <code>String</code>, as it did in two of the overloaded
-   * <code>execute</code> methods prior to 1.5. The other reason is that <code>execute</code> has always been designed to be called primarily
+   * To not break existing source code, `testName` needed to have type `String`, as it did in two of the overloaded
+   * `execute` methods prior to 1.5. The other reason is that `execute` has always been designed to be called primarily
    * from an interpeter environment, such as the Scala REPL (Read-Evaluate-Print-Loop). In an interpreter environment, minimizing keystrokes is king.
-   * A <code>String</code> type with a <code>null</code> default value lets users type <code>suite.execute("my test name")</code> rather than
-   * <code>suite.execute(Some("my test name"))</code>, saving several keystrokes.
-   * </p>
+   * A `String` type with a `null` default value lets users type `suite.execute("my test name")` rather than
+   * `suite.execute(Some("my test name"))`, saving several keystrokes.
+   * 
    *
-   * <p>
-   * The second non-idiomatic feature is that <code>shortstacks</code> and <code>fullstacks</code> are all lower case rather than
-   * camel case. This is done to be consistent with the <a href="Shell.html"><code>Shell</code></a>, which also uses those forms. The reason 
-   * lower case is used in the <code>Shell</code> is to save keystrokes in an interpreter environment.  Most Unix commands, for
+   * The second non-idiomatic feature is that `shortstacks` and `fullstacks` are all lower case rather than
+   * camel case. This is done to be consistent with the <a href="Shell.html">`Shell`</a>, which also uses those forms. The reason 
+   * lower case is used in the `Shell` is to save keystrokes in an interpreter environment.  Most Unix commands, for
    * example, are all lower case, making them easier and quicker to type.  In the ScalaTest
-   * <code>Shell</code>, methods like <code>shortstacks</code>, <code>fullstacks</code>, and <code>nostats</code>, <em>etc.</em>, are 
+   * `Shell`, methods like `shortstacks`, `fullstacks`, and `nostats`, ''etc.'', are 
    * designed to be all lower case so they feel more like shell commands than methods.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
-   * @param configMap a <code>Map</code> of key-value pairs that can be used by the executing <code>Suite</code> of tests.
+   * @param configMap a `Map` of key-value pairs that can be used by the executing `Suite` of tests.
    * @param color a boolean that configures whether output is printed in color
    * @param durations a boolean that configures whether test and suite durations are printed to the standard output
    * @param shortstacks a boolean that configures whether short stack traces should be printed for test failures
    * @param fullstacks a boolean that configures whether full stack traces should be printed for test failures
    * @param stats a boolean that configures whether test and suite statistics are printed to the standard output
    *
-   * @throws NullArgumentException if the passed <code>configMap</code> parameter is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @throws NullArgumentException if the passed `configMap` parameter is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   final def execute(
     testName: String = null,
@@ -823,32 +784,30 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   }
 
   /**
-   * <strong>The parameterless <code>execute</code> method has been deprecated and will be removed in a future version
-   * of ScalaTest. Please invoke <code>execute</code> with empty parens instead: <code>execute()</code>.</strong>
+   * '''The parameterless `execute` method has been deprecated and will be removed in a future version
+   * of ScalaTest. Please invoke `execute` with empty parens instead: `execute()`.'''
    *
-   * <p>
-   * The original purpose of this method, which simply invokes the other overloaded form of <code>execute</code> with default parameter values,
-   * was to serve as a mini-DSL for the Scala interpreter. It allowed you to execute a <code>Suite</code> in the
+   * The original purpose of this method, which simply invokes the other overloaded form of `execute` with default parameter values,
+   * was to serve as a mini-DSL for the Scala interpreter. It allowed you to execute a `Suite` in the
    * interpreter with a minimum of finger typing:
-   * </p>
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * scala&gt; org.scalatest.run(new SetSpec)
    * <span class="stGreen">An empty Set</span>
    * <span class="stGreen">- should have size 0</span>
    * <span class="stYellow">- should produce NoSuchElementException when head is invoked !!! IGNORED !!!</span>
-   * </pre>
+   * }}}
    *
-   * <p>
    * However it uses postfix notation, which is now behind a language feature import. Thus better to use
-   * the other <code>execute</code> method or <code>org.scalatest.run</code>:
-   * </p>
+   * the other `execute` method or `org.scalatest.run`:
+   * 
    *
-   * <pre class="stREPL">
+   * {{{  <!-- class="stREPL" -->
    * (new ExampleSuite).execute()
    * // or
    * org.scalatest.run(new ExampleSuite)
-   * </pre>
+   * }}}
    */
     @deprecated("The parameterless execute method has been deprecated and will be removed in a future version of ScalaTest. Please invoke execute with empty parens instead: execute().")
    final def execute: Unit = { execute() }
@@ -856,36 +815,32 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   // SKIP-SCALATESTJS-END
 
   /**
-   * A <code>Map</code> whose keys are <code>String</code> names of tests that are tagged and
-   * whose associated values are the <code>Set</code> of tag names for the test.  If a test has no associated tags, its name
-   * does not appear as a key in the returned <code>Map</code>. If this <code>Suite</code> contains no tests with tags, this
-   * method returns an empty <code>Map</code>.
+   * A `Map` whose keys are `String` names of tests that are tagged and
+   * whose associated values are the `Set` of tag names for the test.  If a test has no associated tags, its name
+   * does not appear as a key in the returned `Map`. If this `Suite` contains no tests with tags, this
+   * method returns an empty `Map`.
    *
-   * <p>
    * This trait's implementation of this method uses Java reflection to discover any Java annotations attached to its test methods. The
-   * fully qualified name of each unique annotation that extends <code>TagAnnotation</code> is considered a tag. This trait's
+   * fully qualified name of each unique annotation that extends `TagAnnotation` is considered a tag. This trait's
    * implementation of this method, therefore, places one key/value pair into to the
-   * <code>Map</code> for each test for which a tag annotation is discovered through reflection.
-   * </p>
+   * `Map` for each test for which a tag annotation is discovered through reflection.
    * 
-   * <p>
+   * 
    * In addition to test methods annotations, this trait's implementation will also auto-tag test methods with class level annotations.  
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    *
-   * <p>
    * Subclasses may override this method to define and/or discover tags in a custom manner, but overriding method implementations
-   * should never return an empty <code>Set</code> as a value. If a test has no tags, its name should not appear as a key in the
-   * returned <code>Map</code>.
-   * </p>
+   * should never return an empty `Set` as a value. If a test has no tags, its name should not appear as a key in the
+   * returned `Map`.
+   * 
    */
   def tags: Map[String, Set[String]] = Map.empty
 
   /**
-   * A <code>Set</code> of test names. If this <code>Suite</code> contains no tests, this method returns an empty <code>Set</code>.
+   * A `Set` of test names. If this `Suite` contains no tests, this method returns an empty `Set`.
    *
-   * <p>
-   * This trait's implementation of this method returns an empty <code>Set</code>.
+   * This trait's implementation of this method returns an empty `Set`.
    */
   def testNames: Set[String] = Set.empty
 
@@ -942,87 +897,82 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * Run a test.
    *
-   * <p>
-   * This trait's implementation of this method simply returns <code>SucceededStatus</code> 
+   * This trait's implementation of this method simply returns `SucceededStatus` 
    * and has no other effect.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
    *
-   * @throws NullArgumentException if any of <code>testName</code> or <code>args</code> is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @throws NullArgumentException if any of `testName` or `args` is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   protected def runTest(testName: String, args: Args): Status = SucceededStatus
 
   /**
-   * Run zero to many of this <code>Suite</code>'s tests.
+   * Run zero to many of this `Suite`'s tests.
    *
-   * <p>
-   * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
-   * If <code>testName</code> is defined, this trait's implementation of this method 
-   * invokes <code>runTest</code> on this object, passing in:
-   * </p>
+   * This method takes a `testName` parameter that optionally specifies a test to invoke.
+   * If `testName` is defined, this trait's implementation of this method 
+   * invokes `runTest` on this object, passing in:
+   * 
    *
    * <ul>
-   * <li><code>testName</code> - the <code>String</code> value of the <code>testName</code> <code>Option</code> passed
+   * <li>`testName` - the `String` value of the `testName` `Option` passed
    *   to this method</li>
-   * <li><code>reporter</code> - the <code>Reporter</code> passed to this method, or one that wraps and delegates to it</li>
-   * <li><code>stopper</code> - the <code>Stopper</code> passed to this method, or one that wraps and delegates to it</li>
-   * <li><code>configMap</code> - the <code>configMap</code> <code>Map</code> passed to this method, or one that wraps and delegates to it</li>
+   * <li>`reporter` - the `Reporter` passed to this method, or one that wraps and delegates to it</li>
+   * <li>`stopper` - the `Stopper` passed to this method, or one that wraps and delegates to it</li>
+   * <li>`configMap` - the `configMap` `Map` passed to this method, or one that wraps and delegates to it</li>
    * </ul>
    *
-   * <p>
-   * This method takes a <code>Filter</code>, which encapsulates an optional <code>Set</code> of tag names that should be included
-   * (<code>tagsToInclude</code>) and a <code>Set</code> that should be excluded (<code>tagsToExclude</code>), when deciding which
-   * of this <code>Suite</code>'s tests to run.
-   * If <code>tagsToInclude</code> is <code>None</code>, all tests will be run
-   * except those those belonging to tags listed in the <code>tagsToExclude</code> <code>Set</code>. If <code>tagsToInclude</code> is defined, only tests
-   * belonging to tags mentioned in the <code>tagsToInclude</code> <code>Set</code>, and not mentioned in the <code>tagsToExclude</code <code>Set</code>
-   * will be run. However, if <code>testName</code> is defined, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
-   * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
-   * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. This trait's implementation
+   * This method takes a `Filter`, which encapsulates an optional `Set` of tag names that should be included
+   * (`tagsToInclude`) and a `Set` that should be excluded (`tagsToExclude`), when deciding which
+   * of this `Suite`'s tests to run.
+   * If `tagsToInclude` is `None`, all tests will be run
+   * except those those belonging to tags listed in the `tagsToExclude` `Set`. If `tagsToInclude` is defined, only tests
+   * belonging to tags mentioned in the `tagsToInclude` `Set`, and not mentioned in the `tagsToExclude</code `Set`
+   * will be run. However, if `testName` is defined, `tagsToInclude` and `tagsToExclude` are essentially ignored.
+   * Only if `testName` is `None` will `tagsToInclude` and `tagsToExclude` be consulted to
+   * determine which of the tests named in the `testNames` `Set` should be run. This trait's implementation
    * behaves this way, and it is part of the general contract of this method, so all overridden forms of this method should behave
-   * this way as well.  For more information on test tags, see the main documentation for this trait and for class <a href="Filter"><code>Filter</code></a>.
-   * Note that this means that even if a test is marked as ignored, for example a test method in a <code>Suite</code> annotated with
-   * <code>org.scalatest.Ignore</code>, if that test name is passed as <code>testName</code> to <code>runTest</code>, it will be invoked
-   * despite the <code>Ignore</code> annotation.
-   * </p>
+   * this way as well.  For more information on test tags, see the main documentation for this trait and for class <a href="Filter">`Filter`</a>.
+   * Note that this means that even if a test is marked as ignored, for example a test method in a `Suite` annotated with
+   * `org.scalatest.Ignore`, if that test name is passed as `testName` to `runTest`, it will be invoked
+   * despite the `Ignore` annotation.
+   * 
    *
-   * <p>
-   * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
-   * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially run.
-   * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
-   * this <code>Suite</code> that are selected by <code>tagsToInclude</code> and <code>tagsToExclude</code> should be run.)
-   * For each test in the <code>testName</code> <code>Set</code>, in the order
-   * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
-   * of this method checks whether the test should be run based on the <code>Filter</code>.
-   * If so, this implementation invokes <code>runTest</code>, passing in:
-   * </p>
+   * If `testName` is `None`, this trait's implementation of this method
+   * invokes `testNames` on this `Suite` to get a `Set` of names of tests to potentially run.
+   * (A `testNames` value of `None` essentially acts as a wildcard that means all tests in
+   * this `Suite` that are selected by `tagsToInclude` and `tagsToExclude` should be run.)
+   * For each test in the `testName` `Set`, in the order
+   * they appear in the iterator obtained by invoking the `elements` method on the `Set`, this trait's implementation
+   * of this method checks whether the test should be run based on the `Filter`.
+   * If so, this implementation invokes `runTest`, passing in:
+   * 
    *
    * <ul>
-   * <li><code>testName</code> - the <code>String</code> name of the test to run (which will be one of the names in the <code>testNames</code> <code>Set</code>)</li>
-   * <li><code>reporter</code> - the <code>Reporter</code> passed to this method, or one that wraps and delegates to it</li>
-   * <li><code>stopper</code> - the <code>Stopper</code> passed to this method, or one that wraps and delegates to it</li>
-   * <li><code>configMap</code> - the <code>configMap</code> passed to this method, or one that wraps and delegates to it</li>
+   * <li>`testName` - the `String` name of the test to run (which will be one of the names in the `testNames` `Set`)</li>
+   * <li>`reporter` - the `Reporter` passed to this method, or one that wraps and delegates to it</li>
+   * <li>`stopper` - the `Stopper` passed to this method, or one that wraps and delegates to it</li>
+   * <li>`configMap` - the `configMap` passed to this method, or one that wraps and delegates to it</li>
    * </ul>
    *
-   * <p>
-   * If a test is marked with the <code>org.scalatest.Ignore</code> tag, implementations
-   * of this method are responsible for ensuring a <code>TestIgnored</code> event is fired for that test
-   * and that <code>runTest</code> is not called for that test.
-   * </p>
+   * If a test is marked with the `org.scalatest.Ignore` tag, implementations
+   * of this method are responsible for ensuring a `TestIgnored` event is fired for that test
+   * and that `runTest` is not called for that test.
+   * 
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullArgumentException if any of the passed parameters is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @throws NullArgumentException if any of the passed parameters is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   protected def runTests(testName: Option[String], args: Args): Status = {
 
@@ -1078,53 +1028,51 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   /**
    * Runs this suite of tests.
    *
-   * <p>If <code>testName</code> is <code>None</code>, this trait's implementation of this method
-   * calls these two methods on this object in this order:</p>
+   * <p>If `testName` is `None`, this trait's implementation of this method
+   * calls these two methods on this object in this order:
    *
    * <ol>
-   * <li><code>runNestedSuites</code></li>
-   * <li><code>runTests</code></li>
+   * <li>`runNestedSuites`</li>
+   * <li>`runTests`</li>
    * </ol>
    *
-   * <p>
-   * If <code>testName</code> is defined, then this trait's implementation of this method
-   * calls <code>runTests</code>, but does not call <code>runNestedSuites</code>. This behavior
-   * is part of the contract of this method. Subclasses that override <code>run</code> must take
-   * care not to call <code>runNestedSuites</code> if <code>testName</code> is defined. (The
-   * <code>OneInstancePerTest</code> trait depends on this behavior, for example.)
-   * </p>
+   * If `testName` is defined, then this trait's implementation of this method
+   * calls `runTests`, but does not call `runNestedSuites`. This behavior
+   * is part of the contract of this method. Subclasses that override `run` must take
+   * care not to call `runNestedSuites` if `testName` is defined. (The
+   * `OneInstancePerTest` trait depends on this behavior, for example.)
+   * 
    *
-   * <p>
-   * Subclasses and subtraits that override this <code>run</code> method can implement them without
-   * invoking either the <code>runTests</code> or <code>runNestedSuites</code> methods, which
+   * Subclasses and subtraits that override this `run` method can implement them without
+   * invoking either the `runTests` or `runNestedSuites` methods, which
    * are invoked by this trait's implementation of this method. It is recommended, but not required,
-   * that subclasses and subtraits that override <code>run</code> in a way that does not
-   * invoke <code>runNestedSuites</code> also override <code>runNestedSuites</code> and make it
+   * that subclasses and subtraits that override `run` in a way that does not
+   * invoke `runNestedSuites` also override `runNestedSuites` and make it
    * final. Similarly it is recommended, but not required,
-   * that subclasses and subtraits that override <code>run</code> in a way that does not
-   * invoke <code>runTests</code> also override <code>runTests</code> (and <code>runTest</code>,
-   * which this trait's implementation of <code>runTests</code> calls) and make it
+   * that subclasses and subtraits that override `run` in a way that does not
+   * invoke `runTests` also override `runTests` (and `runTest`,
+   * which this trait's implementation of `runTests` calls) and make it
    * final. The implementation of these final methods can either invoke the superclass implementation
-   * of the method, or throw an <code>UnsupportedOperationException</code> if appropriate. The
+   * of the method, or throw an `UnsupportedOperationException` if appropriate. The
    * reason for this recommendation is that ScalaTest includes several traits that override
-   * these methods to allow behavior to be mixed into a <code>Suite</code>. For example, trait
-   * <code>BeforeAndAfterEach</code> overrides <code>runTests</code>s. In a <code>Suite</code>
-   * subclass that no longer invokes <code>runTests</code> from <code>run</code>, the
-   * <code>BeforeAndAfterEach</code> trait is not applicable. Mixing it in would have no effect.
-   * By making <code>runTests</code> final in such a <code>Suite</code> subtrait, you make
-   * the attempt to mix <code>BeforeAndAfterEach</code> into a subclass of your subtrait
-   * a compiler error. (It would fail to compile with a complaint that <code>BeforeAndAfterEach</code>
-   * is trying to override <code>runTests</code>, which is a final method in your trait.) 
-   * </p>
+   * these methods to allow behavior to be mixed into a `Suite`. For example, trait
+   * `BeforeAndAfterEach` overrides `runTests`s. In a `Suite`
+   * subclass that no longer invokes `runTests` from `run`, the
+   * `BeforeAndAfterEach` trait is not applicable. Mixing it in would have no effect.
+   * By making `runTests` final in such a `Suite` subtrait, you make
+   * the attempt to mix `BeforeAndAfterEach` into a subclass of your subtrait
+   * a compiler error. (It would fail to compile with a complaint that `BeforeAndAfterEach`
+   * is trying to override `runTests`, which is a final method in your trait.) 
+   * 
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
    *         
-   * @throws NullArgumentException if any passed parameter is <code>null</code>.
-   * @throws IllegalArgumentException if <code>testName</code> is defined, but no test with the specified test name
-   *     exists in this <code>Suite</code>
+   * @throws NullArgumentException if any passed parameter is `null`.
+   * @throws IllegalArgumentException if `testName` is defined, but no test with the specified test name
+   *     exists in this `Suite`
    */
   def run(testName: Option[String], args: Args): Status = {
 
@@ -1157,34 +1105,32 @@ trait Suite extends Assertions with Serializable { thisSuite =>
 
   /**
    *
-   * Run zero to many of this <code>Suite</code>'s nested <code>Suite</code>s.
+   * Run zero to many of this `Suite`'s nested `Suite`s.
    *
-   * <p>
-   * If the passed <code>distributor</code> is <code>None</code>, this trait's
-   * implementation of this method invokes <code>run</code> on each
-   * nested <code>Suite</code> in the <code>List</code> obtained by invoking <code>nestedSuites</code>.
-   * If a nested <code>Suite</code>'s <code>run</code>
+   * If the passed `distributor` is `None`, this trait's
+   * implementation of this method invokes `run` on each
+   * nested `Suite` in the `List` obtained by invoking `nestedSuites`.
+   * If a nested `Suite`'s `run`
    * method completes abruptly with an exception, this trait's implementation of this
-   * method reports that the <code>Suite</code> aborted and attempts to run the
-   * next nested <code>Suite</code>.
-   * If the passed <code>distributor</code> is defined, this trait's implementation
-   * puts each nested <code>Suite</code> 
-   * into the <code>Distributor</code> contained in the <code>Some</code>, in the order in which the
-   * <code>Suite</code>s appear in the <code>List</code> returned by <code>nestedSuites</code>, passing
-   * in a new <code>Tracker</code> obtained by invoking <code>nextTracker</code> on the <code>Tracker</code>
+   * method reports that the `Suite` aborted and attempts to run the
+   * next nested `Suite`.
+   * If the passed `distributor` is defined, this trait's implementation
+   * puts each nested `Suite` 
+   * into the `Distributor` contained in the `Some`, in the order in which the
+   * `Suite`s appear in the `List` returned by `nestedSuites`, passing
+   * in a new `Tracker` obtained by invoking `nextTracker` on the `Tracker`
    * passed to this method.
-   * </p>
+   * 
    *
-   * <p>
-   * Implementations of this method are responsible for ensuring <code>SuiteStarting</code> events
-   * are fired to the <code>Reporter</code> before executing any nested <code>Suite</code>, and either <code>SuiteCompleted</code>
-   * or <code>SuiteAborted</code> after executing any nested <code>Suite</code>.
-   * </p>
+   * Implementations of this method are responsible for ensuring `SuiteStarting` events
+   * are fired to the `Reporter` before executing any nested `Suite`, and either `SuiteCompleted`
+   * or `SuiteAborted` after executing any nested `Suite`.
+   * 
    *
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullArgumentException if any passed parameter is <code>null</code>.
+   * @throws NullArgumentException if any passed parameter is `null`.
    */
   protected def runNestedSuites(args: Args): Status = {
 
@@ -1265,62 +1211,58 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   }
 
   /**
-   * A user-friendly suite name for this <code>Suite</code>.
+   * A user-friendly suite name for this `Suite`.
    *
-   * <p>
    * This trait's
    * implementation of this method returns the simple name of this object's class. This
-   * trait's implementation of <code>runNestedSuites</code> calls this method to obtain a
-   * name for <code>Report</code>s to pass to the <code>suiteStarting</code>, <code>suiteCompleted</code>,
-   * and <code>suiteAborted</code> methods of the <code>Reporter</code>.
-   * </p>
+   * trait's implementation of `runNestedSuites` calls this method to obtain a
+   * name for `Report`s to pass to the `suiteStarting`, `suiteCompleted`,
+   * and `suiteAborted` methods of the `Reporter`.
+   * 
    *
-   * @return this <code>Suite</code> object's suite name.
+   * @return this `Suite` object's suite name.
    */
   def suiteName: String = getSimpleNameOfAnObjectsClass(thisSuite)
 
   /**
-   * A string ID for this <code>Suite</code> that is intended to be unique among all suites reported during a run.
+   * A string ID for this `Suite` that is intended to be unique among all suites reported during a run.
    *
-   * <p>
    * This trait's
    * implementation of this method returns the fully qualified name of this object's class. 
-   * Each suite reported during a run will commonly be an instance of a different <code>Suite</code> class,
+   * Each suite reported during a run will commonly be an instance of a different `Suite` class,
    * and in such cases, this default implementation of this method will suffice. However, in special cases
    * you may need to override this method to ensure it is unique for each reported suite. For example, if you write
-   * a <code>Suite</code> subclass that reads in a file whose name is passed to its constructor and dynamically
+   * a `Suite` subclass that reads in a file whose name is passed to its constructor and dynamically
    * creates a suite of tests based on the information in that file, you will likely need to override this method
-   * in your <code>Suite</code> subclass, perhaps by appending the pathname of the file to the fully qualified class name. 
+   * in your `Suite` subclass, perhaps by appending the pathname of the file to the fully qualified class name. 
    * That way if you run a suite of tests based on a directory full of these files, you'll have unique suite IDs for
    * each reported suite.
-   * </p>
+   * 
    *
-   * <p>
-   * The suite ID is <em>intended</em> to be unique, because ScalaTest does not enforce that it is unique. If it is not
+   * The suite ID is ''intended'' to be unique, because ScalaTest does not enforce that it is unique. If it is not
    * unique, then you may not be able to uniquely identify a particular test of a particular suite. This ability is used,
    * for example, to dynamically tag tests as having failed in the previous run when rerunning only failed tests.
-   * </p>
+   * 
    *
-   * @return this <code>Suite</code> object's ID.
+   * @return this `Suite` object's ID.
    */
   def suiteId: String = thisSuite.getClass.getName
 
   /**
-   * The total number of tests that are expected to run when this <code>Suite</code>'s <code>run</code> method is invoked.
+   * The total number of tests that are expected to run when this `Suite`'s `run` method is invoked.
    *
-   * <p>
    * This trait's implementation of this method returns the sum of:
-   * </p>
+   * 
    *
    * <ul>
-   * <li>the size of the <code>testNames</code> <code>List</code>, minus the number of tests marked as ignored and
-   * any tests that are exluded by the passed <code>Filter</code></li>
+   * <li>the size of the `testNames` `List`, minus the number of tests marked as ignored and
+   * any tests that are exluded by the passed `Filter`</li>
    * <li>the sum of the values obtained by invoking
-   *     <code>expectedTestCount</code> on every nested <code>Suite</code> contained in
-   *     <code>nestedSuites</code></li>
+   *     `expectedTestCount` on every nested `Suite` contained in
+   *     `nestedSuites`</li>
    * </ul>
    *
-   * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
+   * @param filter a `Filter` with which to filter tests to count based on their tags
    */
   def expectedTestCount(filter: Filter): Int = {
 
@@ -1362,17 +1304,16 @@ trait Suite extends Assertions with Serializable { thisSuite =>
   val styleName: String = "org.scalatest.Suite"
   
   /**
-   * Provides a <code>TestData</code> instance for the passed test name, given the passed config map.
+   * Provides a `TestData` instance for the passed test name, given the passed config map.
    *
-   * <p>
-   * This method is used to obtain a <code>TestData</code> instance to pass to <code>withFixture(NoArgTest)</code>
-   * and <code>withFixture(OneArgTest)</code> and the <code>beforeEach</code> and <code>afterEach</code> methods
-   * of trait <code>BeforeAndAfterEach</code>.
-   * </p>
+   * This method is used to obtain a `TestData` instance to pass to `withFixture(NoArgTest)`
+   * and `withFixture(OneArgTest)` and the `beforeEach` and `afterEach` methods
+   * of trait `BeforeAndAfterEach`.
+   * 
    *
-   * @param testName the name of the test for which to return a <code>TestData</code> instance
-   * @param theConfigMap the config map to include in the returned <code>TestData</code>
-   * @return a <code>TestData</code> instance for the specified test, which includes the specified config map
+   * @param testName the name of the test for which to return a `TestData` instance
+   * @param theConfigMap the config map to include in the returned `TestData`
+   * @return a `TestData` instance for the specified test, which includes the specified config map
    */
   def testDataFor(testName: String, theConfigMap: ConfigMap = ConfigMap.empty): TestData = {
     new TestData { // TODO: Document that we return a "null object" here. Seems odd actually, shouldn't this return an Option?

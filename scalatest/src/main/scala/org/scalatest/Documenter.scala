@@ -126,22 +126,21 @@ import org.scalactic.source
 /**
  * Trait to which markup text tests can be reported.
  * 
- * <p>
- * Note: <code>Documenter</code> will be described in more detail in a future 2.0 milestone release. As of this release
+ * Note: `Documenter` will be described in more detail in a future 2.0 milestone release. As of this release
  * you can't see its effects yet.
- * </p>
+ * 
  * 
  * @author Bill Venners
  */
 trait Documenter {
 
   /**
-   * Provide documentation to the <code>Reporter</code>.
+   * Provide documentation to the `Reporter`.
    *
-   * @param text an string of markup text that will be forwarded to the wrapped <code>Reporter</code>
-   *   via a <code>MarkupProvided</code> event.
+   * @param text an string of markup text that will be forwarded to the wrapped `Reporter`
+   *   via a `MarkupProvided` event.
    *
-   * @throws NullArgumentException if <code>message</code> reference is <code>null</code>
+   * @throws NullArgumentException if `message` reference is `null`
    */
   def apply(text: String)(implicit pos: source.Position): Unit
 }

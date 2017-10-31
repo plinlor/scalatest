@@ -19,9 +19,9 @@ package org.scalatest.exceptions
  * Exception that indicates an evaluation of a property should be discarded, because a condition
  * required by a property was not met by the passed values.
  *
- * This exception is thrown by the <code>whenever</code> method defined in trait <a href="../prop/Whenever.html"><code>Whenever</code></a>
- * when the given condition is false. The <code>forAll</code> methods defined in trait <a href="../prop/PropertyChecks.html"><code>PropertyChecks</code></a>
- * catch the <code>DiscardedEvaluationException</code> and ignore it, moving on to try the next set of parameter values it is checking
+ * This exception is thrown by the `whenever` method defined in trait <a href="../prop/Whenever.html">`Whenever`</a>
+ * when the given condition is false. The `forAll` methods defined in trait <a href="../prop/PropertyChecks.html">`PropertyChecks`</a>
+ * catch the `DiscardedEvaluationException` and ignore it, moving on to try the next set of parameter values it is checking
  * th property against.
  */
 class DiscardedEvaluationException extends RuntimeException

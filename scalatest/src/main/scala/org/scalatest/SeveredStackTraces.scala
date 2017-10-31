@@ -18,18 +18,18 @@ package org.scalatest
 import org.scalatest.exceptions.StackDepth
 
 /**
- * Trait that causes <a href="exceptions/StackDepth.html"><code>StackDepth</code></a> exceptions thrown by a running test (such as <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a>s) to have
+ * Trait that causes <a href="exceptions/StackDepth.html">`StackDepth`</a> exceptions thrown by a running test (such as <a href="exceptions/TestFailedException.html">`TestFailedException`</a>s) to have
  * the exception's stack trace severed at the stack depth. Because the stack depth indicates the exact line of code that caused
  * the exception to be thrown, the severed stack trace will show that offending line of code on top. This can make the line
  * of test code that discovered a problem to be more easily found in IDEs and tools that don't make use of
- * ScalaTest's <code>StackDepth</code> exceptions directly.
+ * ScalaTest's `StackDepth` exceptions directly.
  *
  * @author Bill Venners
  */
 trait SeveredStackTraces extends TestSuiteMixin { this: TestSuite =>
 
   /**
-   * Invokes <code>super.withFixture(test)</code> and transforms a thrown <code>StackDepth</code> exception by severing
+   * Invokes `super.withFixture(test)` and transforms a thrown `StackDepth` exception by severing
    * its stack trace at the stack depth.
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {

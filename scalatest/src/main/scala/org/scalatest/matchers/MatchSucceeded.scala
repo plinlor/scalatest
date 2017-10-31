@@ -18,30 +18,29 @@ package org.scalatest.matchers
 import org.scalactic.Prettifier
 
 /**
- * Singleton object that provides <code>unapply</code> method to extract negated failure message from <code>MatchResult</code>
- * having <code>matches</code> property value of <code>true</code>.
+ * Singleton object that provides `unapply` method to extract negated failure message from `MatchResult`
+ * having `matches` property value of `true`.
  *
  * @author Bill Venners
  * @author Chee Seng
  */
 object MatchSucceeded {
   /**
-   * Extractor enabling patterns that match <code>MatchResult</code> having <code>matches</code> property value of <code>true</code>,
+   * Extractor enabling patterns that match `MatchResult` having `matches` property value of `true`,
    * extracting the contained negated failure message.
    *
-   * <p>
-   * For example, you can use this extractor to get the negated failure message of a <code>MatchResult</code> like this:
-   * </p>
+   * For example, you can use this extractor to get the negated failure message of a `MatchResult` like this:
+   * 
    *
-   * <pre>
+   * {{{
    * matchResult match {
    *   case MatchSucceeded(negatedFailureMessage) => // do something with negatedFailureMessage
-   *   case _ => // when matchResult.matches equal to <code>false</code>
+   *   case _ => // when matchResult.matches equal to `false`
    * }
-   * </pre>
+   * }}}
    *
-   * @param matchResult the <code>MatchResult</code> to extract the negated failure message from.
-   * @return a <code>Some</code> wrapping the contained negated failure message if <code>matchResult.matches</code> is equal to <code>true</code>, else <code>None</code>.
+   * @param matchResult the `MatchResult` to extract the negated failure message from.
+   * @return a `Some` wrapping the contained negated failure message if `matchResult.matches` is equal to `true`, else `None`.
    */
   def unapply(matchResult: MatchResult)(implicit prettifier: Prettifier): Option[String] =
     if (matchResult.matches) Some(matchResult.negatedFailureMessage(prettifier)) else None

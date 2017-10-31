@@ -29,11 +29,11 @@ import org.junit.runner.Description
  suite class name to Report, just to satisfy JUnit integration.
 */
 /**
- * A JUnit <code>Runner</code> that knows how to run any ScalaTest <code>Suite</code>.
- * This enables you to provide a JUnit <code>RunWith</code> annotation on any
- * ScalaTest <code>Suite</code>. Here's an example:
+ * A JUnit `Runner` that knows how to run any ScalaTest `Suite`.
+ * This enables you to provide a JUnit `RunWith` annotation on any
+ * ScalaTest `Suite`. Here's an example:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.junit.runner.RunWith
  * import org.scalatest.junit.JUnitRunner
  * import org.scalatest.FunSuite
@@ -42,12 +42,11 @@ import org.junit.runner.Description
  * class MySuite extends FunSuite {
  *   // ...
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * This <code>RunWith</code> annotation will enable the <code>MySuite</code> class
+ * This `RunWith` annotation will enable the `MySuite` class
  * to be run by JUnit 4.
- * </p>
+ * 
  *
  * @param suiteClass suite class to be run
  *
@@ -64,9 +63,9 @@ final class JUnitRunner(suiteClass: java.lang.Class[_ <: Suite]) extends org.jun
   private val suiteToRun = suiteClass.newInstance
 
   /**
-   * Get a JUnit <code>Description</code> for this ScalaTest <code>Suite</code> of tests.
+   * Get a JUnit `Description` for this ScalaTest `Suite` of tests.
    *
-   * return a <code>Description</code> of this suite of tests
+   * return a `Description` of this suite of tests
    */
   val getDescription = createDescription(suiteToRun)
 
@@ -84,13 +83,13 @@ final class JUnitRunner(suiteClass: java.lang.Class[_ <: Suite]) extends org.jun
   }
 
   /**
-   * Run this <code>Suite</code> of tests, reporting results to the passed <code>RunNotifier</code>.
-   * This class's implementation of this method invokes <code>run</code> on an instance of the
-   * <code>suiteClass</code> <code>Class</code> passed to the primary constructor, passing
-   * in a <code>Reporter</code> that forwards to the  <code>RunNotifier</code> passed to this
-   * method as <code>notifier</code>.
+   * Run this `Suite` of tests, reporting results to the passed `RunNotifier`.
+   * This class's implementation of this method invokes `run` on an instance of the
+   * `suiteClass` `Class` passed to the primary constructor, passing
+   * in a `Reporter` that forwards to the  `RunNotifier` passed to this
+   * method as `notifier`.
    *
-   * @param notifier the JUnit <code>RunNotifier</code> to which to report the results of executing
+   * @param notifier the JUnit `RunNotifier` to which to report the results of executing
    * this suite of tests
    */
   def run(notifier: RunNotifier): Unit = {
@@ -107,7 +106,7 @@ final class JUnitRunner(suiteClass: java.lang.Class[_ <: Suite]) extends org.jun
   }
 
   /**
-   * Returns the number of tests that are expected to run when this ScalaTest <code>Suite</code>
+   * Returns the number of tests that are expected to run when this ScalaTest `Suite`
    * is run.
    *
    *  @return the expected number of tests that will run when this suite is run

@@ -18,53 +18,48 @@ package org.scalatest.enablers
 
 
 /**
- * Typeclass that enables for aggregations certain <code>contain</code> syntax in the ScalaTest matchers DSL.
+ * Typeclass that enables for aggregations certain `contain` syntax in the ScalaTest matchers DSL.
  *
- * <p>
- * An <code>Aggregating[A]</code> provides access to the "aggregating nature" of type <code>A</code> in such
- * a way that relevant <code>contain</code> matcher syntax can be used with type <code>A</code>. An <code>A</code>
- * can be any type of <em>aggregation</em>&#8212;an object that in some way aggregates or brings together other objects. ScalaTest provides
+ * An `Aggregating[A]` provides access to the "aggregating nature" of type `A` in such
+ * a way that relevant `contain` matcher syntax can be used with type `A`. An `A`
+ * can be any type of ''aggregation''&#8212;an object that in some way aggregates or brings together other objects. ScalaTest provides
  * implicit implementations for several types out of the box in the
- * <a href="Aggregating$.html"><code>Aggregating</code> companion object</a>:
- * </p>
+ * <a href="Aggregating$.html">`Aggregating` companion object</a>:
+ * 
  * 
  * <ul>
- * <li><code>scala.collection.GenTraversable</code></li>
- * <li><code>String</code></li>
- * <li><code>Array</code></li>
- * <li><code>java.util.Collection</code></li>
- * <li><code>java.util.Map</code></li>
+ * <li>`scala.collection.GenTraversable`</li>
+ * <li>`String`</li>
+ * <li>`Array`</li>
+ * <li>`java.util.Collection`</li>
+ * <li>`java.util.Map`</li>
  * </ul>
  * 
- * <p>
- * The <code>contain</code> syntax enabled by this trait is:
- * <p>
+ * The `contain` syntax enabled by this trait is:
  * 
  * <ul>
- * <li><code>result</code> <code>should</code> <code>contain</code> <code>atLeastOneOf</code> <code>(1, 2, 3)</code></li>
- * <li><code>result</code> <code>should</code> <code>contain</code> <code>atMostOneOf</code> <code>(1, 2, 3)</code></li>
- * <li><code>result</code> <code>should</code> <code>contain</code> <code>only</code> <code>(1, 2, 3)</code></li>
- * <li><code>result</code> <code>should</code> <code>contain</code> <code>allOf</code> <code>(1, 2, 3)</code></li>
- * <li><code>result</code> <code>should</code> <code>contain</code> <code>theSameElementsAs</code> <code>(List(1, 2, 3))</code></li>
+ * <li>`result` `should` `contain` `atLeastOneOf` `(1, 2, 3)`</li>
+ * <li>`result` `should` `contain` `atMostOneOf` `(1, 2, 3)`</li>
+ * <li>`result` `should` `contain` `only` `(1, 2, 3)`</li>
+ * <li>`result` `should` `contain` `allOf` `(1, 2, 3)`</li>
+ * <li>`result` `should` `contain` `theSameElementsAs` `(List(1, 2, 3))`</li>
  * </ul>
  * 
- * <p>
- * You can enable the <code>contain</code> matcher syntax enabled by <code>Aggregating</code> on your own
- * type <code>U</code> by defining an <code>Aggregating[U]</code> for the type and making it available implicitly.
- * </p>
+ * You can enable the `contain` matcher syntax enabled by `Aggregating` on your own
+ * type `U` by defining an `Aggregating[U]` for the type and making it available implicitly.
+ * 
  *
- * <p>
- * Note, for an explanation of the difference between <code>Containing</code> and <code>Aggregating</code>, both of which
- * enable <code>contain</code> matcher syntax, see the <a href="Containing.html#containingVersusAggregating">Containing
- * versus Aggregating</a> section of the main documentation for trait <code>Containing</code>.
- * </p>
+ * Note, for an explanation of the difference between `Containing` and `Aggregating`, both of which
+ * enable `contain` matcher syntax, see the <a href="Containing.html#containingVersusAggregating">Containing
+ * versus Aggregating</a> section of the main documentation for trait `Containing`.
+ * 
  */
 private[scalatest] trait Slicing[-A] {
 
 // TODO: Write tests that a NotAllowedException is thrown when no elements are passed, maybe if only one element is passed, and 
 // likely if an object is repeated in the list.
   /**
-   * Implements <code>contain</code> <code>atLeastOneOf</code> syntax for aggregations of type <code>A</code>.
+   * Implements `contain` `atLeastOneOf` syntax for aggregations of type `A`.
    *
    * @param aggregation an aggregation about which an assertion is being made
    * @param eles elements at least one of which should be contained in the passed aggregation
@@ -73,16 +68,16 @@ private[scalatest] trait Slicing[-A] {
   def includes(sequence: A, subSequence: A): Boolean
 
   /**
-   * Implements <code>contain</code> <code>theSameElementsAs</code> syntax for aggregations of type <code>A</code>.
+   * Implements `contain` `theSameElementsAs` syntax for aggregations of type `A`.
    *
    * @param leftAggregation an aggregation about which an assertion is being made
-   * @param rightAggregation an aggregation that should contain the same elements as the passed <code>leftAggregation</code>
-   * @return true if the passed <code>leftAggregation</code> contains the same elements as the passed <code>rightAggregation</code>
+   * @param rightAggregation an aggregation that should contain the same elements as the passed `leftAggregation`
+   * @return true if the passed `leftAggregation` contains the same elements as the passed `rightAggregation`
    */
   def startsWith(sequence: A, prefix: A): Boolean
 
   /**
-   * Implements <code>contain</code> <code>only</code> syntax for aggregations of type <code>A</code>.
+   * Implements `contain` `only` syntax for aggregations of type `A`.
    *
    * @param aggregation an aggregation about which an assertion is being made
    * @param eles the only elements that should be contained in the passed aggregation
@@ -92,23 +87,23 @@ private[scalatest] trait Slicing[-A] {
 }
 
 /**
- * Companion object for <code>Aggregating</code> that provides implicit implementations for the following types:
+ * Companion object for `Aggregating` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>scala.collection.GenTraversable</code></li>
- * <li><code>String</code></li>
- * <li><code>Array</code></li>
- * <li><code>java.util.Collection</code></li>
- * <li><code>java.util.Map</code></li>
+ * <li>`scala.collection.GenTraversable`</li>
+ * <li>`String`</li>
+ * <li>`Array`</li>
+ * <li>`java.util.Collection`</li>
+ * <li>`java.util.Map`</li>
  * </ul>
  */
 private[scalatest] object Slicing {
 
   /**
-   * Implicit to support <code>Aggregating</code> nature of <code>String</code>.
+   * Implicit to support `Aggregating` nature of `String`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of <code>Char</code> in the <code>String</code>
-   * @return <code>Aggregating[String]</code> that supports <code>String</code> in relevant <code>contain</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of `Char` in the `String`
+   * @return `Aggregating[String]` that supports `String` in relevant `contain` syntax
    */
   implicit def slicingNatureOfString: Slicing[String] = 
     new Slicing[String] {

@@ -23,7 +23,7 @@ import org.scalatest.UnquotedString
 import org.scalatest.MatchersHelper.fullyMatchRegexWithGroups
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -33,11 +33,11 @@ final class FullyMatchWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val decimal = """(-)?(\d+)(\.\d*)?"""
    * "1.7" should (fullyMatch regex (decimal) and fullyMatch regex (decimal))
    *                          ^
-   * </pre>
+   * }}}
    */
   def regex(rightRegexString: String): Matcher[String] =
     new Matcher[String] {
@@ -54,10 +54,10 @@ final class FullyMatchWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not { fullyMatch regex ("a(b*)c" withGroup "bb") } 
    *                          ^
-   * </pre>
+   * }}}
    */	
   def regex(regexWithGroups: RegexWithGroups) = 
     new Matcher[String] {
@@ -69,11 +69,11 @@ final class FullyMatchWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val decimalRegex = """(-)?(\d+)(\.\d*)?""".r
    * "1.7" should (fullyMatch regex (decimalRegex) and fullyMatch regex (decimalRegex))
    *                          ^
-   * </pre>
+   * }}}
    */
   def regex(rightRegex: Regex): Matcher[String] =
     new Matcher[String] {

@@ -38,7 +38,7 @@ import scala.xml.Elem
 import scala.xml.Node
 
 /**
- * A <code>Reporter</code> that writes test status information in xml format
+ * A `Reporter` that writes test status information in xml format
  * for use by Flex formatter.
  */
 private[scalatest] class DashboardReporter(directory: String,

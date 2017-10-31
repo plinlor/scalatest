@@ -29,14 +29,13 @@ import org.scalactic._
  * Trait that contains several &ldquo;check&rdquo; methods that perform ScalaCheck property checks.
  * If ScalaCheck finds a test case for which a property doesn't hold, the problem will be reported as a ScalaTest test failure.
  * 
- * <p>
  * To use ScalaCheck, you specify properties and, in some cases, generators that generate test data. You need not always
  * create generators, because ScalaCheck provides many default generators for you that can be used in many situations.
  * ScalaCheck will use the generators to generate test data and with that data run tests that check that the property holds.
  * Property-based tests can, therefore, give you a lot more testing for a lot less code than assertion-based tests.
- * Here's an example of using ScalaCheck from a <code>JUnitSuite</code>:
- * </p>
- * <pre class="stHighlight">
+ * Here's an example of using ScalaCheck from a `JUnitSuite`:
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest.junit.JUnitSuite
  * import org.scalatest.prop.Checkers
  * import org.scalacheck.Arbitrary._
@@ -48,54 +47,49 @@ import org.scalactic._
  *     check((a: List[Int], b: List[Int]) => a.size + b.size == (a ::: b).size)
  *   }
  * }
- * </pre>
- * <p>
- * The <code>check</code> method, defined in <code>Checkers</code>, makes it easy to write property-based tests inside
- * ScalaTest, JUnit, and TestNG test suites. This example specifies a property that <code>List</code>'s <code>:::</code> method
+ * }}}
+ * The `check` method, defined in `Checkers`, makes it easy to write property-based tests inside
+ * ScalaTest, JUnit, and TestNG test suites. This example specifies a property that `List`'s `:::` method
  * should obey. ScalaCheck properties are expressed as function values that take the required
  * test data as parameters. ScalaCheck will generate test data using generators and 
-repeatedly pass generated data to the function. In this case, the test data is composed of integer lists named <code>a</code> and <code>b</code>.
+repeatedly pass generated data to the function. In this case, the test data is composed of integer lists named `a` and `b`.
  * Inside the body of the function, you see:
- * </p>
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * a.size + b.size == (a ::: b).size
- * </pre>
- * <p>
- * The property in this case is a <code>Boolean</code> expression that will yield true if the size of the concatenated list is equal
+ * }}}
+ * The property in this case is a `Boolean` expression that will yield true if the size of the concatenated list is equal
  * to the size of each individual list added together. With this small amount
- * of code, ScalaCheck will generate possibly hundreds of value pairs for <code>a</code> and <code>b</code> and test each pair, looking for
+ * of code, ScalaCheck will generate possibly hundreds of value pairs for `a` and `b` and test each pair, looking for
  * a pair of integers for which the property doesn't hold. If the property holds true for every value ScalaCheck tries,
- * <code>check</code> returns normally. Otherwise, <code>check</code> will complete abruptly with a <code>TestFailedException</code> that
+ * `check` returns normally. Otherwise, `check` will complete abruptly with a `TestFailedException` that
  * contains information about the failure, including the values that cause the property to be false.
- * </p>
+ * 
  *
- * <p>
  * For more information on using ScalaCheck properties, see the documentation for ScalaCheck, which is available
  * from <a href="http://code.google.com/p/scalacheck/">http://code.google.com/p/scalacheck/</a>.
- * </p>
+ * 
  *
- * <p>
- * To execute a suite that mixes in <code>Checkers</code> with ScalaTest's <code>Runner</code>, you must include ScalaCheck's jar file on the class path or runpath.
- * </p>
+ * To execute a suite that mixes in `Checkers` with ScalaTest's `Runner`, you must include ScalaCheck's jar file on the class path or runpath.
+ * 
  *
- * <a name="propCheckConfig"></a><h2>Property check configuration</h2>
+ * <a name="propCheckConfig"></a>==Property check configuration==
  *
- * <p>
- * The property checks performed by the <code>check</code> methods of this trait can be flexibly configured via the services
- * provided by supertrait <code>Configuration</code>.  The five configuration parameters for property checks along with their
+ * The property checks performed by the `check` methods of this trait can be flexibly configured via the services
+ * provided by supertrait `Configuration`.  The five configuration parameters for property checks along with their
  * default values and meanings are described in the following table:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
  * <th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">
- * <strong>Configuration Parameter</strong>
+ * '''Configuration Parameter'''
  * </th>
  * <th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">
- * <strong>Default Value</strong>
+ * '''Default Value'''
  * </th>
  * <th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">
- * <strong>Meaning</strong>
+ * '''Meaning'''
  * </th>
  * </tr>
  * <tr>
@@ -155,71 +149,65 @@ repeatedly pass generated data to the function. In this case, the test data is c
  * </tr>
  * </table>
  *
- * <p>
- * The <code>check</code> methods of trait <code>Checkers</code> each take a <code>PropertyCheckConfiguration</code>
- * object as an implicit parameter. This object provides values for each of the five configuration parameters. Trait <code>Configuration</code>
- * provides an implicit <code>val</code> named <code>generatorDrivenConfig</code> with each configuration parameter set to its default value.
+ * The `check` methods of trait `Checkers` each take a `PropertyCheckConfiguration`
+ * object as an implicit parameter. This object provides values for each of the five configuration parameters. Trait `Configuration`
+ * provides an implicit `val` named `generatorDrivenConfig` with each configuration parameter set to its default value.
  * If you want to set one or more configuration parameters to a different value for all property checks in a suite you can override this
- * val (or hide it, for example, if you are importing the members of the <code>Checkers</code> companion object rather
+ * val (or hide it, for example, if you are importing the members of the `Checkers` companion object rather
  * than mixing in the trait.) For example, if
- * you want all parameters at their defaults except for <code>minSize</code> and <code>maxSize</code>, you can override
- * <code>generatorDrivenConfig</code>, like this:
+ * you want all parameters at their defaults except for `minSize` and `maxSize`, you can override
+ * `generatorDrivenConfig`, like this:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * implicit override val generatorDrivenConfig =
  *   PropertyCheckConfiguration(minSize = 10, sizeRange = 10)
- * </pre>
+ * }}}
  *
- * <p>
  * Or, if hide it by declaring a variable of the same name in whatever scope you want the changed values to be in effect:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * implicit val generatorDrivenConfig =
  *   PropertyCheckConfiguration(minSize = 10, sizeRange = 10)
- * </pre>
+ * }}}
  *
- * <p>
- * In addition to taking a <code>PropertyCheckConfiguration</code> object as an implicit parameter, the <code>check</code> methods of trait
- * <code>Checkers</code> also take a variable length argument list of <code>PropertyCheckConfigParam</code>
- * objects that you can use to override the values provided by the implicit <code>PropertyCheckConfiguration</code> for a single <code>check</code>
+ * In addition to taking a `PropertyCheckConfiguration` object as an implicit parameter, the `check` methods of trait
+ * `Checkers` also take a variable length argument list of `PropertyCheckConfigParam`
+ * objects that you can use to override the values provided by the implicit `PropertyCheckConfiguration` for a single `check`
  * invocation. You place these configuration settings after the property or property function, For example, if you want to
- * set <code>minSuccessful</code> to 500 for just one particular <code>check</code> invocation,
+ * set `minSuccessful` to 500 for just one particular `check` invocation,
  * you can do so like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * check((n: Int) => n + 0 == n, minSuccessful(500))
- * </pre>
+ * }}}
  *
- * <p>
- * This invocation of <code>check</code> will use 500 for <code>minSuccessful</code> and whatever values are specified by the
- * implicitly passed <code>PropertyCheckConfiguration</code> object for the other configuration parameters.
+ * This invocation of `check` will use 500 for `minSuccessful` and whatever values are specified by the
+ * implicitly passed `PropertyCheckConfiguration` object for the other configuration parameters.
  * If you want to set multiple configuration parameters in this way, just list them separated by commas:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * check((n: Int) => n + 0 == n, minSuccessful(500), maxDiscardedFactor(0.6))
- * </pre>
+ * }}}
  *
- * <p>
- * The previous configuration approach works the same in <code>Checkers</code> as it does in <code>GeneratorDrivenPropertyChecks</code>.
- * Trait <code>Checkers</code> also provides one <code>check</code> method that takes an <code>org.scalacheck.Test.Parameters</code> object,
+ * The previous configuration approach works the same in `Checkers` as it does in `GeneratorDrivenPropertyChecks`.
+ * Trait `Checkers` also provides one `check` method that takes an `org.scalacheck.Test.Parameters` object,
  * in case you want to configure ScalaCheck that way.
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalacheck.Prop
  * import org.scalacheck.Test.Parameters
  * import org.scalatest.prop.Checkers._
  *
  * check(Prop.forAll((n: Int) => n + 0 == n), Parameters.Default { override val minSuccessfulTests = 5 })
- * </pre>
+ * }}}
  *
- * <p>
  * For more information, see the documentation
- * for supertrait <a href="Configuration.html"><code>Configuration</code></a>.
- * </p>
+ * for supertrait <a href="Configuration.html">`Configuration`</a>.
+ * 
  *
  * @author Bill Venners
  */
@@ -374,8 +362,8 @@ trait Checkers extends Configuration {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Checkers</code> members as
- * an alternative to mixing it in. One use case is to import <code>Checkers</code> members so you can use
+ * Companion object that facilitates the importing of `Checkers` members as
+ * an alternative to mixing it in. One use case is to import `Checkers` members so you can use
  * them in the Scala interpreter.
  *
  * @author Bill Venners

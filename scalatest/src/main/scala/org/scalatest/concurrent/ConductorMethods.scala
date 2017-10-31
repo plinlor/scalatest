@@ -21,15 +21,14 @@ import _root_.java.util.concurrent.Callable
 import org.scalatest.OutcomeOf.outcomeOf
 
 /**
- * Trait that provides each test with access to a new <code>Conductor</code> 
+ * Trait that provides each test with access to a new `Conductor` 
  * via methods.
  *
- * <p>
- * Here's an example of the use of this trait to test the <code>ArrayBlockingQueue</code>
- * concurrency abstraction from <code>java.util.concurrent</code>:
- * </p>
+ * Here's an example of the use of this trait to test the `ArrayBlockingQueue`
+ * concurrency abstraction from `java.util.concurrent`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest.FunSuite
  * import org.scalatest.concurrent.ConductorMethods
  * import org.scalatest.matchers.Matchers
@@ -79,11 +78,10 @@ import org.scalatest.OutcomeOf.outcomeOf
  *     }
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * For an explanation of how these tests work, see the documentation for <a href="Conductors.html"><code>Conductors</code></a>.
- * </p>
+ * For an explanation of how these tests work, see the documentation for <a href="Conductors.html">`Conductors`</a>.
+ * 
  *
  * @author Josh Cough
  * @author Bill Venners
@@ -102,7 +100,7 @@ trait ConductorMethods extends TestSuiteMixin with Conductors { this: TestSuite 
   protected def thread(f: => Any): Thread = conductor.get.thread{ f }
 
   /**
-   * <strong>The overloaded thread method that takes a String name has been deprecated and will be removed in a future version of ScalaTest. Please use threadNamed instead.</strong>
+   * '''The overloaded thread method that takes a String name has been deprecated and will be removed in a future version of ScalaTest. Please use threadNamed instead.'''
    */
   @deprecated("The overloaded thread method that takes a String name has been deprecated and will be removed in a future version of ScalaTest. Please use threadNamed instead.")
   protected def thread(name: String)(f: => Any): Thread = conductor.get.thread(name){ f }
@@ -176,14 +174,13 @@ trait ConductorMethods extends TestSuiteMixin with Conductors { this: TestSuite 
   /**
    * Creates and initializes a private instance variable with a new Conductor,
    * ensuring it is visible to any thread, invokes the passed test function,
-   * and invokes <code>conduct</code> on the <code>Conductor</code>, if it
+   * and invokes `conduct` on the `Conductor`, if it
    * was not already invoked by the test.
    *
-   * <p>
-   * This trait is stackable with other traits that override <code>withFixture(NoArgTest)</code>, because
+   * This trait is stackable with other traits that override `withFixture(NoArgTest)`, because
    * instead of invoking the test function directly, it delegates responsibility for invoking the test
-   * function to <code>super.withFixture(NoArgTest)</code>.
-   * </p>
+   * function to `super.withFixture(NoArgTest)`.
+   * 
    */
   abstract override def withFixture(test: NoArgTest): Outcome = {
     conductor.compareAndSet(conductor.get, new Conductor)

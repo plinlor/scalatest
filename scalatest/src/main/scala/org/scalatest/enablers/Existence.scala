@@ -16,41 +16,39 @@
 package org.scalatest.enablers
 
 /**
- * Supertrait for typeclasses that enable the <code>exist</code> matcher syntax.
+ * Supertrait for typeclasses that enable the `exist` matcher syntax.
  *
- * <p>
- * An <code>Existence[S]</code> provides access to the "existence nature" of type <code>S</code> in such
- * a way that <code>exist</code> matcher syntax can be used with type <code>S</code>. A <code>S</code>
- * can be any type for which the concept of existence makes sense, such as <code>java.io.File</code>. ScalaTest provides
- * implicit implementations for <code>java.io.File</code>. You can enable the <code>exist</code> matcher syntax on your own
- * type <code>U</code> by defining a <code>Existence[U]</code> for the type and making it available implicitly.
+ * An `Existence[S]` provides access to the "existence nature" of type `S` in such
+ * a way that `exist` matcher syntax can be used with type `S`. A `S`
+ * can be any type for which the concept of existence makes sense, such as `java.io.File`. ScalaTest provides
+ * implicit implementations for `java.io.File`. You can enable the `exist` matcher syntax on your own
+ * type `U` by defining a `Existence[U]` for the type and making it available implicitly.
  * 
- * <p>
- * ScalaTest provides an implicit <code>Existence</code> instance for <code>java.io.File</code>
- * in the <code>Existence</code> companion object.
- * </p>
+ * ScalaTest provides an implicit `Existence` instance for `java.io.File`
+ * in the `Existence` companion object.
+ * 
  */
 trait Existence[-S] {
 
   /**
-   * Determines whether the passed thing exists, <em>i.e.</em>, whether the passed <code>java.io.File</code> exists.
+   * Determines whether the passed thing exists, ''i.e.'', whether the passed `java.io.File` exists.
    *
    * @param thing the thing to check for existence
-   * @return <code>true</code> if passed thing exists, <code>false</code> otherwise
+   * @return `true` if passed thing exists, `false` otherwise
    */
   def exists(thing: S): Boolean
 }
 
 /**
- * Companion object for <code>Existence</code> that provides implicit implementations for <code>java.io.File</code>.
+ * Companion object for `Existence` that provides implicit implementations for `java.io.File`.
  */
 object Existence {
 
   /**
-   * Enable <code>Existence</code> implementation for <code>java.io.File</code>
+   * Enable `Existence` implementation for `java.io.File`
    *
-   * @tparam FILE any subtype of <code>java.io.File</code>
-   * @return <code>Existence[FILE]</code> that supports <code>java.io.File</code> in <code>exist</code> syntax
+   * @tparam FILE any subtype of `java.io.File`
+   * @return `Existence[FILE]` that supports `java.io.File` in `exist` syntax
    */
   implicit def existenceOfFile[FILE <: java.io.File]: Existence[FILE] =
     new Existence[FILE] {

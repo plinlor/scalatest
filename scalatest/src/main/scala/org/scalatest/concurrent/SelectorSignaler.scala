@@ -17,18 +17,16 @@ package org.scalatest.concurrent
 import java.nio.channels.Selector
 
 /**
- * Strategy for signaling an operation in which <code>wakeup</code> is called on the <code>java.nio.channels.Selector</code> passed to
+ * Strategy for signaling an operation in which `wakeup` is called on the `java.nio.channels.Selector` passed to
  * the constructor.
  *
- * <p>
- * This class can be used for configuration when using traits <a href="TimeLimits.html"><code>TimeLimits</code></a>
- * and <a href="TimeLimitedTests.html"><code>TimeLimitedTests</code></a>.
- * <p>
+ * This class can be used for configuration when using traits <a href="TimeLimits.html">`TimeLimits`</a>
+ * and <a href="TimeLimitedTests.html">`TimeLimitedTests`</a>.
  */
 class SelectorSignaler(selector: Selector) extends Signaler {
   
   /**
-   * Invokes <code>wakeup</code> on the <code>java.nio.channels.Selector</code> passed to this class's constructor.
+   * Invokes `wakeup` on the `java.nio.channels.Selector` passed to this class's constructor.
    *
    * @param testThread unused by this strategy
    */
@@ -38,14 +36,14 @@ class SelectorSignaler(selector: Selector) extends Signaler {
 }
 
 /**
- * Companion object that provides a factory method for a <code>SelectorSignaler</code>.
+ * Companion object that provides a factory method for a `SelectorSignaler`.
  */
 object SelectorSignaler {
 
   /**
-   * Factory method for a <code>SelectorSignaler</code>.
+   * Factory method for a `SelectorSignaler`.
    *
-   * @param selector the <code>java.nio.channels.Selector</code> to pass to the <code>SelectorSignaler</code> constructor
+   * @param selector the `java.nio.channels.Selector` to pass to the `SelectorSignaler` constructor
    */
   def apply(selector: Selector) = new SelectorSignaler(selector)
 }

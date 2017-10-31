@@ -18,28 +18,26 @@ package org.scalatest
 import org.scalactic.source
 
 /**
- * Trait providing an <code>apply</code> method to which status updates about a running suite of tests can be reported.
+ * Trait providing an `apply` method to which status updates about a running suite of tests can be reported.
  * 
- * <p>
- * An <code>Notifier</code> is essentially
- * used to wrap a <code>Reporter</code> and provide easy ways to send status updates
- * to that <code>Reporter</code> via an <code>NoteProvided</code> event.
- * <code>Notifier</code> contains an <code>apply</code> method that takes a string and
- * an optional payload object of type <code>Any</code>.
- * The <code>Notifier</code> will forward the passed alert <code>message</code> string to the
- * <a href="Reporter.html"><code>Reporter</code></a> as the <code>message</code> parameter, and the optional
- * payload object as the <code>payload</code> parameter, of an <a href="NoteProvided.html"><code>NoteProvided</code></a> event.
- * </p>
+ * An `Notifier` is essentially
+ * used to wrap a `Reporter` and provide easy ways to send status updates
+ * to that `Reporter` via an `NoteProvided` event.
+ * `Notifier` contains an `apply` method that takes a string and
+ * an optional payload object of type `Any`.
+ * The `Notifier` will forward the passed alert `message` string to the
+ * <a href="Reporter.html">`Reporter`</a> as the `message` parameter, and the optional
+ * payload object as the `payload` parameter, of an <a href="NoteProvided.html">`NoteProvided`</a> event.
+ * 
  *
- * <p>
- * For insight into the differences between <code>Notifier</code>, <code>Alerter</code>, and <code>Informer</code>, see the
- * main documentation for trait <a href="Notifying.html"><code>Notifying</code></a>.
- * </p>
+ * For insight into the differences between `Notifier`, `Alerter`, and `Informer`, see the
+ * main documentation for trait <a href="Notifying.html">`Notifying`</a>.
+ * 
  */
 trait Notifier {
 
   /**
-   * Send a status update via an <code>NoteProvided</code> event to the reporter.
+   * Send a status update via an `NoteProvided` event to the reporter.
    */
   def apply(message: String, payload: Option[Any] = None)(implicit pos: source.Position): Unit
 }

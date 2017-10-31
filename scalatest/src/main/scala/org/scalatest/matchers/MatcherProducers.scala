@@ -16,13 +16,12 @@
 package org.scalatest.matchers
 
 /**
- * Provides an implicit conversion on functions that <em>produce</em> <code>Matcher</code>s, <em>i.e.</em>,
- * <code>T =&gt; Matcher[T]</code> that enables you to modify error messages when composing <code>Matcher</code>s.
+ * Provides an implicit conversion on functions that ''produce'' `Matcher`s, ''i.e.'',
+ * `T =&gt; Matcher[T]` that enables you to modify error messages when composing `Matcher`s.
  *
- * <p>
- * For an example of using <code>MatcherProducers</code>, see the <a href="Matcher.html#composingMatchers">Composing matchers</a>
- * section in the main documentation for trait <code>Matcher</code>.
- * </p>
+ * For an example of using `MatcherProducers`, see the <a href="Matcher.html#composingMatchers">Composing matchers</a>
+ * section in the main documentation for trait `Matcher`.
+ * 
  *
  * @author Bill Venners
  * @author Chee Seng
@@ -30,31 +29,29 @@ package org.scalatest.matchers
 trait MatcherProducers {
 
   /**
-   * Class used via an implicit conversion that adds <code>composeTwice</code>, <code>mapResult</code>, and
-   * <code>mapArgs</code> methods to functions that produce a <code>Matcher</code>.
+   * Class used via an implicit conversion that adds `composeTwice`, `mapResult`, and
+   * `mapArgs` methods to functions that produce a `Matcher`.
    */
   class Composifier[T](f: T => Matcher[T]) {
 
     /**
-     * Produces a new &ldquo;matcher producer&rdquo; function of type <code>U =&gt; Matcher[U]</code> from the
-     * <code>T =&gt; Matcher[T]</code> (named <code>f</code>) passed to the <code>Composifier</code> constructor and the given
-     * <code>T =&gt; U</code> transformation  function, <code>g</code>.
+     * Produces a new &ldquo;matcher producer&rdquo; function of type `U =&gt; Matcher[U]` from the
+     * `T =&gt; Matcher[T]` (named `f`) passed to the `Composifier` constructor and the given
+     * `T =&gt; U` transformation  function, `g`.
      *
-     * <p>
-     * The result of <code>composeTwice</code> is the result of the following function composition expression:
-     * </p>
-     *
-     * <pre class="stHighlight">
-     * (f compose g) andThen (_ compose g)
-     * </pre>
+     * The result of `composeTwice` is the result of the following function composition expression:
      * 
-     * <p>
-     * You would use <code>composeTwice</code> if you want to create a new matcher producer from an existing one, by transforming
-     * both the left and right sides of the expression with the same transformation function. As an example, the
-     * expression &ldquo;<code>be &gt; 7</code>&rdquo; produces a <code>Matcher[Int]</code>:
-     * </p>
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stHighlight" -->
+     * (f compose g) andThen (_ compose g)
+     * }}}
+     * 
+     * You would use `composeTwice` if you want to create a new matcher producer from an existing one, by transforming
+     * both the left and right sides of the expression with the same transformation function. As an example, the
+     * expression &ldquo;`be &gt; 7`&rdquo; produces a `Matcher[Int]`:
+     * 
+     *
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; import org.scalatest._
      * import org.scalatest._
      *
@@ -63,25 +60,23 @@ trait MatcherProducers {
      *
      * scala&gt; val beGreaterThanSeven = be &gt; 7
      * beGreaterThanSeven: org.scalatest.matchers.Matcher[Int] = be &gt; 7
-     * </pre>
+     * }}}
      *
-     * <p>
-     * Given this <code>Matcher[Int]</code>, you can now use it in a <code>should</code> expression like this:
-     * </p>
+     * Given this `Matcher[Int]`, you can now use it in a `should` expression like this:
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; 8 should beGreaterThanSeven
      *
      * scala&gt; 6 should beGreaterThanSeven
      * org.scalatest.exceptions.TestFailedException: 6 was not greater than 7
      * ...
-     * </pre>
+     * }}}
      *
-     * <p>
      * You can create a more general &ldquo;matcher producer&rdquo; function like this:
-     * </p>
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; val beGreaterThan = { (i: Int) =&gt; be &gt; i }
      * beGreaterThan: Int =&gt; org.scalatest.matchers.Matcher[Int] = &lt;function1&gt;
      *
@@ -89,15 +84,14 @@ trait MatcherProducers {
      *
      * scala&gt; 8 should beGreaterThan (9)
      * org.scalatest.exceptions.TestFailedException: 8 was not greater than 9
-     * </pre>
+     * }}}
      * 
-     * <p>
-     * Given <code>beGreaterThan</code> matcher producer function, you can create matcher producer function
-     * that takes a <code>String</code> and produces a <code>Matcher[String]</code> given a function from
-     * <code>Int =&gt; String</code> using <code>composeTwice</code>:
-     * </p>
+     * Given `beGreaterThan` matcher producer function, you can create matcher producer function
+     * that takes a `String` and produces a `Matcher[String]` given a function from
+     * `Int =&gt; String` using `composeTwice`:
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; val stringToInt = { (s: String) =&gt; s.toInt }
      * stringToInt: String =&gt; Int = &lt;function1&gt;
      *
@@ -109,13 +103,12 @@ trait MatcherProducers {
      * scala&gt; "7" should beAsIntsGreaterThan ("8")
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
      * ...
-     * </pre>
+     * }}}
      * 
-     * <p>
-     * The <code>composeTwice</code> method is just a shorthand for this function composition expression:
-     * </p>
+     * The `composeTwice` method is just a shorthand for this function composition expression:
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; val beAsIntsGreaterThan =
      *     (beGreaterThan compose stringToInt) andThen (_ compose stringToInt)
      * beAsIntsGreaterThan: String =&gt; org.scalatest.matchers.Matcher[String] = &lt;function1&gt;
@@ -124,39 +117,36 @@ trait MatcherProducers {
      *
      * scala&gt; "7" should beAsIntsGreaterThan ("8")
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
-     * </pre>
+     * }}}
      * 
-     * <p>
-     * The first part of that expression, <code>beGreaterThan</code> <code>compose</code> <code>stringToInt</code>,
-     * gives you a new matcher producer function that given a <code>String</code> will produce a <code>Matcher[Int]</code>:
-     * </p>
+     * The first part of that expression, `beGreaterThan` `compose` `stringToInt`,
+     * gives you a new matcher producer function that given a `String` will produce a `Matcher[Int]`:
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; val beAsIntGreaterThan = beGreaterThan compose stringToInt
      * beAsIntGreaterThan: String =&gt; org.scalatest.matchers.Matcher[Int] = &lt;function1&gt;
-     * </pre>
+     * }}}
      * 
-     * <p>
-     * This <code>compose</code> method is inherited from <code>Function1</code>: on any <code>Function1</code>,
-     * <code>(f</code> <code>compose</code> <code>g)(x)</code> means <code>f(g(x))</code>. You can use this
+     * This `compose` method is inherited from `Function1`: on any `Function1`,
+     * `(f` `compose` `g)(x)` means `f(g(x))`. You can use this
      * matcher producer like this:
-     * </p>
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; 7 should beAsIntGreaterThan ("6")
      *
      * scala&gt; 7 should beAsIntGreaterThan ("8")
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
-     * </pre>
+     * }}}
      *
-     * <p>
      * To get a matcher producer that will allow you to put a string on the right-hand-side, you'll need to transform
-     * the <code>String</code> <code>=&gt;</code> <code>Matcher[Int]</code> to a <code>String</code> <code>=&gt;</code>
-     * <code>Matcher[String]</code>. To accomplish this you can first just apply the function to get a <code>Matcher[Int]</code>,
+     * the `String` `=&gt;` `Matcher[Int]` to a `String` `=&gt;`
+     * `Matcher[String]`. To accomplish this you can first just apply the function to get a `Matcher[Int]`,
      * like this:
-     * </p>
      * 
-     * <pre class="stREPL">
+     * 
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; val beGreaterThanEight = beAsIntGreaterThan ("8")
      * beGreaterThanEight: org.scalatest.matchers.Matcher[Int] = be &gt; 8
      *
@@ -164,68 +154,65 @@ trait MatcherProducers {
      *
      * scala&gt; 7 should beGreaterThanEight
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
-     * </pre>
+     * }}}
      *
-     * <p>
-     * To transform <code>beGreaterThanEight</code>, a <code>Matcher[Int]</code>, to a <code>Matcher[String]</code>,
-     * you can again use <code>compose</code>. A ScalaTest <code>Matcher[T]</code> is a Scala function type <code>T</code>
-     * <code>=&gt;</code> <code>MatchResult</code>. To get a <code>Matcher[String]</code> therefore, just call
-     * <code>compose</code> on the <code>Matcher[Int]</code> and pass in a function from <code>String</code> <code>=&gt;</code>
-     * <code>Int</code>:
-     * </p>
+     * To transform `beGreaterThanEight`, a `Matcher[Int]`, to a `Matcher[String]`,
+     * you can again use `compose`. A ScalaTest `Matcher[T]` is a Scala function type `T`
+     * `=&gt;` `MatchResult`. To get a `Matcher[String]` therefore, just call
+     * `compose` on the `Matcher[Int]` and pass in a function from `String` `=&gt;`
+     * `Int`:
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; val beAsIntGreaterThanEight = beGreaterThanEight compose stringToInt
      * beAsIntGreaterThanEight: org.scalatest.matchers.Matcher[String] = &lt;function1&gt;
-     * </pre>
+     * }}}
      *
-     * <p>
-     * After the second call to <code>compose</code>, therefore, you have what you want:
-     * </p>
+     * After the second call to `compose`, therefore, you have what you want:
+     * 
      *
-     * <pre class="stREPL">
+     * {{{  <!-- class="stREPL" -->
      * scala&gt; "9" should beAsIntGreaterThanEight
      *
      * scala&gt; "7" should beAsIntGreaterThanEight
      * org.scalatest.exceptions.TestFailedException: 7 was not greater than 8
-     * </pre>
+     * }}}
      *
-     * <p>
-     * So in summary, what the result of <code>(beGreaterThan</code> <code>compose</code> <code>stringToInt)</code> <code>andThen</code>
-     * <code>(_</code> <code>compose</code> <code>stringToInt)</code> will do once it is applied to a (right-hand-side)
-     * <code>String</code>, is:
-     * </p>
+     * So in summary, what the result of `(beGreaterThan` `compose` `stringToInt)` `andThen`
+     * `(_` `compose` `stringToInt)` will do once it is applied to a (right-hand-side)
+     * `String`, is:
+     * 
      * 
      * <ol>
-     * <li>Transform <code>beGreaterThan</code> from an <code>Int</code> <code>=&gt;</code> <code>Matcher[Int]</code>
-     * to a <code>String</code> <code>=&gt;</code> <code>Matcher[Int]</code> with the first <code>compose</code></li>
-     * <li>Apply the given (right-hand-side) <code>String</code> to that to get a <code>Matcher[Int]</code> (the first part
-     * of <code>andThen</code>'s behavior)</li>
-     * <li>Pass the resulting <code>Matcher[Int]</code> to the given function,  <code>_</code> <code>compose</code>
-     * <code>stringToInt</code>, which will transform the <code>Matcher[Int]</code> to a <code>Matcher[String]</code> (the
-     * second part of the <code>andThen</code> behavior).</li>
+     * <li>Transform `beGreaterThan` from an `Int` `=&gt;` `Matcher[Int]`
+     * to a `String` `=&gt;` `Matcher[Int]` with the first `compose`</li>
+     * <li>Apply the given (right-hand-side) `String` to that to get a `Matcher[Int]` (the first part
+     * of `andThen`'s behavior)</li>
+     * <li>Pass the resulting `Matcher[Int]` to the given function,  `_` `compose`
+     * `stringToInt`, which will transform the `Matcher[Int]` to a `Matcher[String]` (the
+     * second part of the `andThen` behavior).</li>
      * </ol>
      */
     def composeTwice[U](g: U => T): U => Matcher[U] = (f compose g) andThen (_ compose g)
 
     /**
-     * Returns a function that given a <code>T</code> will return a <code>Matcher[T]</code> that will produce the
-     * <code>MatchResult</code> produced by <code>f</code> (passed to the <code>Composifier</code> constructor)
-     * transformed by the given <code>prettify</code> function.
+     * Returns a function that given a `T` will return a `Matcher[T]` that will produce the
+     * `MatchResult` produced by `f` (passed to the `Composifier` constructor)
+     * transformed by the given `prettify` function.
      *
-     * @param prettify a function with which to transform <code>MatchResult</code>s.
-     * @return a new <code>Matcher</code> producer function that produces prettified error messages
+     * @param prettify a function with which to transform `MatchResult`s.
+     * @return a new `Matcher` producer function that produces prettified error messages
      */
     def mapResult(prettify: MatchResult => MatchResult): T => Matcher[T] =
       (o: T) => f(o) mapResult prettify
 
     /**
-     * Returns a function that given a <code>T</code> will return a <code>Matcher[T]</code> that will produce the
-     * <code>MatchResult</code> produced by <code>f</code> (passed to the <code>Composifier</code> constructor)
-     * with arguments transformed by the given <code>prettify</code> function.
+     * Returns a function that given a `T` will return a `Matcher[T]` that will produce the
+     * `MatchResult` produced by `f` (passed to the `Composifier` constructor)
+     * with arguments transformed by the given `prettify` function.
      *
      * @param prettify a function with which to transform the arguments of error messages.
-     * @return a new <code>Matcher</code> producer function that produces prettified error messages
+     * @return a new `Matcher` producer function that produces prettified error messages
      */
     def mapArgs(prettify: Any => String): T => Matcher[T] =
       (o: T) => f(o) mapArgs prettify
@@ -234,12 +221,12 @@ trait MatcherProducers {
   import scala.language.implicitConversions
 
   /**
-   * Implicit conversion that converts a function of <code>T =&gt; Matcher[T]</code> to an object that has
-   * <code>composeTwice</code>, <code>mapResult</code> and <code>mapArgs</code> methods.
+   * Implicit conversion that converts a function of `T =&gt; Matcher[T]` to an object that has
+   * `composeTwice`, `mapResult` and `mapArgs` methods.
    *
    * The following shows how this trait is used to compose twice and modify error messages:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest._
    * import matchers._
    * import MatcherProducers._
@@ -263,25 +250,25 @@ trait MatcherProducers {
    *   }
    *
    * "7" should beAsIntsGreaterThan ("8")
-   * </pre>
+   * }}}
    *
    * The last assertion will fail with message like this:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "7".toInt was not greater than "8".toInt
-   * </pre>
+   * }}}
    *
-   * @param f a function that takes a <code>T</code> and return a <code>Matcher[T]</code>
-   * @tparam T the type used by function <code>f</code>
-   * @return an object that has <code>composeTwice</code>, <code>mapResult</code> and <code>mapArgs</code> methods.
+   * @param f a function that takes a `T` and return a `Matcher[T]`
+   * @tparam T the type used by function `f`
+   * @return an object that has `composeTwice`, `mapResult` and `mapArgs` methods.
    */
   implicit def convertToComposifier[T](f: T => Matcher[T]): Composifier[T] = new Composifier(f) 
 }
 
 /**
- * Companion object that facilitates the importing of <code>MatcherProducers</code> members as
- * an alternative to mixing it in. One use case is to import <code>MatcherProducers</code>'s members so you can use
- * <code>MatcherProducers</code> in the Scala interpreter.
+ * Companion object that facilitates the importing of `MatcherProducers` members as
+ * an alternative to mixing it in. One use case is to import `MatcherProducers`'s members so you can use
+ * `MatcherProducers` in the Scala interpreter.
  */
 object MatcherProducers extends MatcherProducers
 

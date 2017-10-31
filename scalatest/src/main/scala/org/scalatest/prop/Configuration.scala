@@ -22,8 +22,8 @@ import org.scalacheck.Test.TestCallback
 
 /**
  * Trait providing methods and classes used to configure property checks provided by the
- * the <code>forAll</code> methods of trait <code>GeneratorDrivenPropertyChecks</code> (for ScalaTest-style
- * property checks) and the <code>check</code> methods of trait <code>Checkers</code> (for ScalaCheck-style property checks).
+ * the `forAll` methods of trait `GeneratorDrivenPropertyChecks` (for ScalaTest-style
+ * property checks) and the `check` methods of trait `Checkers` (for ScalaCheck-style property checks).
  *
  * @author Bill Venners
  */
@@ -56,9 +56,8 @@ trait Configuration {
   /**
    * Configuration object for property checks.
    *
-   * <p>
    * The default values for the parameters are:
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
    * <tr>
@@ -108,12 +107,12 @@ trait Configuration {
    * @param minSize the minimum size parameter to provide to ScalaCheck, which it will use when generating objects for which size matters (such as strings or lists).
    * @param maxSize the maximum size parameter to provide to ScalaCheck, which it will use when generating objects for which size matters (such as strings or lists).
    * @param workers specifies the number of worker threads to use during property evaluation
-   * @throws IllegalArgumentException if the specified <code>minSuccessful</code> value is less than or equal to zero,
-   *   the specified <code>maxDiscarded</code> value is less than zero,
-   *   the specified <code>minSize</code> value is less than zero,
-   *   the specified <code>maxSize</code> value is less than zero,
-   *   the specified <code>minSize</code> is greater than the specified or default value of <code>maxSize</code>, or
-   *   the specified <code>workers</code> value is less than or equal to zero.
+   * @throws IllegalArgumentException if the specified `minSuccessful` value is less than or equal to zero,
+   *   the specified `maxDiscarded` value is less than zero,
+   *   the specified `minSize` value is less than zero,
+   *   the specified `maxSize` value is less than zero,
+   *   the specified `minSize` is greater than the specified or default value of `maxSize`, or
+   *   the specified `workers` value is less than or equal to zero.
    *
    * @author Bill Venners
    */
@@ -137,7 +136,7 @@ trait Configuration {
   import scala.language.implicitConversions
 
   /**
-   * Implicitly converts <code>PropertyCheckConfig</code>s to <code>PropertyCheckConfiguration</code>,
+   * Implicitly converts `PropertyCheckConfig`s to `PropertyCheckConfiguration`,
    * which enables a smoother upgrade path.
    */
   implicit def PropertyCheckConfig2PropertyCheckConfiguration(p: PropertyCheckConfig): PropertyCheckConfiguration = {
@@ -156,18 +155,17 @@ trait Configuration {
   /**
    * Abstract class defining a family of configuration parameters for property checks.
    * 
-   * <p>
    * The subclasses of this abstract class are used to pass configuration information to
-   * the <code>forAll</code> methods of traits <code>PropertyChecks</code> (for ScalaTest-style
-   * property checks) and <code>Checkers</code>(for ScalaCheck-style property checks).
-   * </p>
+   * the `forAll` methods of traits `PropertyChecks` (for ScalaTest-style
+   * property checks) and `Checkers`(for ScalaCheck-style property checks).
+   * 
    *
    * @author Bill Venners
    */
   sealed abstract class PropertyCheckConfigParam extends Product with Serializable
   
   /**
-   * A <code>PropertyCheckConfigParam</code> that specifies the minimum number of successful
+   * A `PropertyCheckConfigParam` that specifies the minimum number of successful
    * property evaluations required for the property to pass.
    *
    * @author Bill Venners
@@ -175,50 +173,46 @@ trait Configuration {
   case class MinSuccessful(value: PosInt) extends PropertyCheckConfigParam
 
   /**
-   * A <code>PropertyCheckConfigParam</code> that specifies the maximum number of discarded
+   * A `PropertyCheckConfigParam` that specifies the maximum number of discarded
    * property evaluations allowed during property evaluation.
    *
-   * <p>
-   * In <code>GeneratorDrivenPropertyChecks</code>, a property evaluation is discarded if it throws
-   * <code>DiscardedEvaluationException</code>, which is produce by <code>whenever</code> clause that
+   * In `GeneratorDrivenPropertyChecks`, a property evaluation is discarded if it throws
+   * `DiscardedEvaluationException`, which is produce by `whenever` clause that
    * evaluates to false. For example, consider this ScalaTest property check:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
-   * // forAll defined in <code>GeneratorDrivenPropertyChecks</code>
+   * {{{  <!-- class="stHighlight" -->
+   * // forAll defined in `GeneratorDrivenPropertyChecks`
    * forAll { (n: Int) => 
    *   whenever (n > 0) {
    *     doubleIt(n) should equal (n * 2)
    *   }
    * }
    *
-   * </pre>
+   * }}}
    *
-   * <p>
-   * In the above code, whenever a non-positive <code>n</code> is passed, the property function will complete abruptly
-   * with <code>DiscardedEvaluationException</code>.
-   * </p>
+   * In the above code, whenever a non-positive `n` is passed, the property function will complete abruptly
+   * with `DiscardedEvaluationException`.
+   * 
    *
-   * <p>
-   * Similarly, in <code>Checkers</code>, a property evaluation is discarded if the expression to the left
-   * of ScalaCheck's <code>==></code> operator is false. Here's an example:
-   * </p>
+   * Similarly, in `Checkers`, a property evaluation is discarded if the expression to the left
+   * of ScalaCheck's `==>` operator is false. Here's an example:
+   * 
    *
-   * <pre class="stHighlight">
-   * // forAll defined in <code>Checkers</code>
+   * {{{  <!-- class="stHighlight" -->
+   * // forAll defined in `Checkers`
    * forAll { (n: Int) => 
    *   (n > 0) ==> doubleIt(n) == (n * 2)
    * }
    *
-   * </pre>
+   * }}}
    *
-   * <p>
-   * For either kind of property check, <code>MaxDiscarded</code> indicates the maximum number of discarded 
+   * For either kind of property check, `MaxDiscarded` indicates the maximum number of discarded 
    * evaluations that will be allowed. As soon as one past this number of evaluations indicates it needs to be discarded,
    * the property check will fail.
-   * </p>
+   * 
    *
-   * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
+   * @throws IllegalArgumentException if specified `value` is less than zero.
    *
    * @author Bill Venners
    */
@@ -229,29 +223,28 @@ trait Configuration {
   case class MaxDiscardedFactor(value: PosZDouble) extends PropertyCheckConfigParam
   
   /**
-   * A <code>PropertyCheckConfigParam</code> that specifies the minimum size parameter to
+   * A `PropertyCheckConfigParam` that specifies the minimum size parameter to
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
+   * @throws IllegalArgumentException if specified `value` is less than zero.
    *
    * @author Bill Venners
    */
   case class MinSize(value: PosZInt) extends PropertyCheckConfigParam
   
   /**
-   * A <code>PropertyCheckConfigParam</code> that specifies the maximum size parameter to
+   * A `PropertyCheckConfigParam` that specifies the maximum size parameter to
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the maximum size should be greater than or equal to the minimum size. This requirement is
-   * enforced by the <code>PropertyCheckConfig</code> constructor and the <code>forAll</code> methods of
-   * traits <code>PropertyChecks</code> and <code>Checkers</code>. In other words, it is enforced at the point
+   * enforced by the `PropertyCheckConfig` constructor and the `forAll` methods of
+   * traits `PropertyChecks` and `Checkers`. In other words, it is enforced at the point
    * both a maximum and minimum size are provided together.
-   * </p>
    * 
-   * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
+   * 
+   * @throws IllegalArgumentException if specified `value` is less than zero.
    *
    * @author Bill Venners
    */
@@ -261,54 +254,53 @@ trait Configuration {
   }
 
   /**
-   * A <code>PropertyCheckConfigParam</code> that (with minSize) specifies the maximum size parameter to
+   * A `PropertyCheckConfigParam` that (with minSize) specifies the maximum size parameter to
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the size range is added to minSize in order to calculate the maximum size passed to ScalaCheck.
    * Using a range allows compile-time checking of a non-negative number being specified.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
   case class SizeRange(value: PosZInt) extends PropertyCheckConfigParam
   
   /**
-   * A <code>PropertyCheckConfigParam</code> that specifies the number of worker threads
+   * A `PropertyCheckConfigParam` that specifies the number of worker threads
    * to use when evaluating a property.
    *
-   * @throws IllegalArgumentException if specified <code>value</code> is less than or equal to zero.
+   * @throws IllegalArgumentException if specified `value` is less than or equal to zero.
    *
    * @author Bill Venners
    */
   case class Workers(value: PosInt) extends PropertyCheckConfigParam
   
   /**
-   * Returns a <code>MinSuccessful</code> property check configuration parameter containing the passed value, which specifies the minimum number of successful
+   * Returns a `MinSuccessful` property check configuration parameter containing the passed value, which specifies the minimum number of successful
    * property evaluations required for the property to pass.
    *
    */
   def minSuccessful(value: PosInt): MinSuccessful = new MinSuccessful(value)
 
   /**
-   * Returns a <code>MaxDiscarded</code> property check configuration parameter containing the passed value, which specifies the maximum number of discarded
+   * Returns a `MaxDiscarded` property check configuration parameter containing the passed value, which specifies the maximum number of discarded
    * property evaluations allowed during property evaluation.
    *
-   * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
+   * @throws IllegalArgumentException if specified `value` is less than zero.
    */
   @deprecated("use maxDiscardedFactor instead")
   def maxDiscarded(value: Int): MaxDiscarded = new MaxDiscarded(value)
 
   /**
-   * Returns a <code>MaxDiscardedFactor</code> property check configuration parameter containing the passed value, which specifies the factor of discarded
+   * Returns a `MaxDiscardedFactor` property check configuration parameter containing the passed value, which specifies the factor of discarded
    * property evaluations allowed during property evaluation.
    *
    */
   def maxDiscardedFactor(value: PosZDouble): MaxDiscardedFactor = MaxDiscardedFactor(value)
 
   /**
-   * Returns a <code>MinSize</code> property check configuration parameter containing the passed value, which specifies the minimum size parameter to
+   * Returns a `MinSize` property check configuration parameter containing the passed value, which specifies the minimum size parameter to
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
@@ -316,37 +308,35 @@ trait Configuration {
   def minSize(value: PosZInt): MinSize = new MinSize(value)
 
   /**
-   * Returns a <code>MaxSize</code> property check configuration parameter containing the passed value, which specifies the maximum size parameter to
+   * Returns a `MaxSize` property check configuration parameter containing the passed value, which specifies the maximum size parameter to
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the maximum size should be greater than or equal to the minimum size. This requirement is
-   * enforced by the <code>PropertyCheckConfig</code> constructor and the <code>forAll</code> methods of
-   * traits <code>PropertyChecks</code> and <code>Checkers</code>. In other words, it is enforced at the point
+   * enforced by the `PropertyCheckConfig` constructor and the `forAll` methods of
+   * traits `PropertyChecks` and `Checkers`. In other words, it is enforced at the point
    * both a maximum and minimum size are provided together.
-   * </p>
    * 
-   * @throws IllegalArgumentException if specified <code>value</code> is less than zero.
+   * 
+   * @throws IllegalArgumentException if specified `value` is less than zero.
    */
   @deprecated("use SizeRange instead") def maxSize(value: Int): MaxSize = new MaxSize(value)
 
   /**
-   * Returns a <code>SizeRange</code> property check configuration parameter containing the passed value, that (with minSize) specifies the maximum size parameter to
+   * Returns a `SizeRange` property check configuration parameter containing the passed value, that (with minSize) specifies the maximum size parameter to
    * provide to ScalaCheck, which it will use when generating objects for which size matters (such as
    * strings or lists).
    *
-   * <p>
    * Note that the size range is added to minSize in order to calculate the maximum size passed to ScalaCheck.
    * Using a range allows compile-time checking of a non-negative number being specified.
-   * </p>
+   * 
    *
    * @author Bill Venners
    */
   def sizeRange(value: PosZInt): SizeRange = SizeRange(value)
 
   /**
-   * Returns a <code>Workers</code> property check configuration parameter containing the passed value, which specifies the number of worker threads
+   * Returns a `Workers` property check configuration parameter containing the passed value, which specifies the number of worker threads
    * to use when evaluating a property.
    *
    */
@@ -451,14 +441,14 @@ trait Configuration {
   }
 
   /**
-   * Implicit <code>PropertyCheckConfig</code> value providing default configuration values.
+   * Implicit `PropertyCheckConfig` value providing default configuration values.
    */
   implicit val generatorDrivenConfig = PropertyCheckConfiguration()
 }
 
 /**
- * Companion object that facilitates the importing of <code>Configuration</code> members as
- * an alternative to mixing it in. One use case is to import <code>Configuration</code> members so you can use
+ * Companion object that facilitates the importing of `Configuration` members as
+ * an alternative to mixing it in. One use case is to import `Configuration` members so you can use
  * them in the Scala interpreter.
  */
 object Configuration extends Configuration

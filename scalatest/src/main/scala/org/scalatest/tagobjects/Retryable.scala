@@ -20,19 +20,17 @@ import org.scalatest.Tag
 /**
  * Tag object that indicates a test is a candidate for retrying on either failure, cancellation, or both.
  *
- * <p>
- * This tag object is intended to be used in conjunction with trait <a href="../Retries.html"><code>Retries</code></a>, to
+ * This tag object is intended to be used in conjunction with trait <a href="../Retries.html">`Retries`</a>, to
  * identify tests that are candidates for retrying.
- * </p>
  * 
- * <p>
- * The corresponding tag annotation for this tag object is <code>org.scalatest.tags.Retryable</code>.
- * This tag object can be used to tag test functions (in style traits other than <code>Spec</code>, in which tests are methods
+ * 
+ * The corresponding tag annotation for this tag object is `org.scalatest.tags.Retryable`.
+ * This tag object can be used to tag test functions (in style traits other than `Spec`, in which tests are methods
  * not functions) as being a candidate for retries.  See the "tagging tests" section in the documentation for your chosen styles to
- * see the syntax. Here's an example for <code>FlatSpec</code>:
- * </p>
+ * see the syntax. Here's an example for `FlatSpec`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.tagobjects.retryable
  * 
  * import org.scalatest._
@@ -51,6 +49,6 @@ import org.scalatest.Tag
  *     assert(Set.empty.size === 0)
  *   }
  * }
- * </pre>
+ * }}}
  */
 object Retryable extends Tag("org.scalatest.tags.Retryable") 

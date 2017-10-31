@@ -20,144 +20,130 @@ import org.jmock.lib.legacy.ClassImposteriser
 import scala.reflect.ClassTag
 
 /**
- * Class that wraps and manages the lifecycle of a single <code>org.jmock.Mockery</code> context object,
+ * Class that wraps and manages the lifecycle of a single `org.jmock.Mockery` context object,
  * provides some basic syntax sugar for using <a href="http://www.jmock.org/" target="_blank">JMock</a>
  * in Scala.
  *
- * <p>
- * Using the JMock API directly, you first need a <code>Mockery</code> context object:
- * </p>
+ * Using the JMock API directly, you first need a `Mockery` context object:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val context = new Mockery
- * </pre>
+ * }}}
  *
- * <p>
- * <code>JMockCycle</code> uses jMock's <code>ClassImposterizer</code> to support mocking of classes, so the following line
+ * `JMockCycle` uses jMock's `ClassImposterizer` to support mocking of classes, so the following line
  * would also be needed if you wanted that functionality as well:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * context.setImposteriser(ClassImposteriser.INSTANCE)
- * </pre>
+ * }}}
  *
- * <p>
  * When using this class, you would instead create an instance of this class (which will create and
- * wrap a <code>Mockery</code> object) and import its members, like this:
- * </p>
+ * wrap a `Mockery` object) and import its members, like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val cycle = new JMockCycle
  * import cycle._
- * </pre>
+ * }}}
  *
- * <p>
  * Using the JMock API directly, you would create a mock object like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val mockCollaborator = context.mock(classOf[Collaborator])
- * </pre>
+ * }}}
  *
- * <p>
  * Having imported the members of an instance of this class, you can shorten that to:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val mockCollaborator = mock[Collaborator]
- * </pre>
+ * }}}
  *
- * <p>
  * After creating mocks, you set expectations on them, using syntax like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * context.checking(
  *   new Expectations() {
  *     oneOf (mockCollaborator).documentAdded("Document")
  *     exactly(3).of (mockCollaborator).documentChanged("Document")
  *    }
  *  )
- * </pre>
+ * }}}
  *
- * <p>
  * Having imported the members of an instance of this class, you can shorten this step to:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * expecting { e => import e._
  *   oneOf (mockCollaborator).documentAdded("Document")
  *   exactly(3).of (mockCollaborator).documentChanged("Document")
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>expecting</code> method will create a new <code>Expectations</code> object, pass it into
- * the function you provide, which sets the expectations. After the function returns, the <code>expecting</code>
- * method will pass the <code>Expectations</code> object to the <code>checking</code>
- * method of its internal <code>Mockery</code> context.
- * </p>
+ * The `expecting` method will create a new `Expectations` object, pass it into
+ * the function you provide, which sets the expectations. After the function returns, the `expecting`
+ * method will pass the `Expectations` object to the `checking`
+ * method of its internal `Mockery` context.
+ * 
  *
- * <p>
- * The <code>expecting</code> method passes an instance of class
- * <code>org.scalatest.mock.JMockExpectations</code> to the function you pass into
- * <code>expectations</code>. <code>JMockExpectations</code> extends <code>org.jmock.Expectations</code> and
- * adds several overloaded <code>withArg</code> methods. These <code>withArg</code> methods simply
- * invoke corresponding <code>with</code> methods on themselves. Because <code>with</code> is
+ * The `expecting` method passes an instance of class
+ * `org.scalatest.mock.JMockExpectations` to the function you pass into
+ * `expectations`. `JMockExpectations` extends `org.jmock.Expectations` and
+ * adds several overloaded `withArg` methods. These `withArg` methods simply
+ * invoke corresponding `with` methods on themselves. Because `with` is
  * a keyword in Scala, to invoke these directly you must surround them in back ticks, like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * oneOf (mockCollaborator).documentAdded(`with`("Document"))
- * </pre>
+ * }}}
  *
- * <p>
- * By importing the members of the passed <code>JMockExpectations</code> object, you can
- * instead call <code>withArg</code> with no back ticks needed:
- * </p>
+ * By importing the members of the passed `JMockExpectations` object, you can
+ * instead call `withArg` with no back ticks needed:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * oneOf (mockCollaborator).documentAdded(withArg("Document"))
- * </pre>
+ * }}}
  *
- * <p>
  * Once you've set expectations on the mock objects, when using the JMock API directly, you use the mock, then invoke
- * <code>assertIsSatisfied</code> on the <code>Mockery</code> context to make sure the mock
+ * `assertIsSatisfied` on the `Mockery` context to make sure the mock
  * was used in accordance with the expectations you set on it. Here's how that looks:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * classUnderTest.addDocument("Document", new Array[Byte](0))
  * classUnderTest.addDocument("Document", new Array[Byte](0))
  * classUnderTest.addDocument("Document", new Array[Byte](0))
  * classUnderTest.addDocument("Document", new Array[Byte](0))
  * context.assertIsSatisfied()
- * </pre>
+ * }}}
  *
- * <p>
  * This class enables you to use the following, more declarative syntax instead:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * whenExecuting {
  *   classUnderTest.addDocument("Document", new Array[Byte](0))
  *   classUnderTest.addDocument("Document", new Array[Byte](0))
  *   classUnderTest.addDocument("Document", new Array[Byte](0))
  *   classUnderTest.addDocument("Document", new Array[Byte](0))
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>whenExecuting</code> method will execute the passed function, then
- * invoke <code>assertIsSatisfied</code> on its internal <code>Mockery</code>
+ * The `whenExecuting` method will execute the passed function, then
+ * invoke `assertIsSatisfied` on its internal `Mockery`
  * context object.
- * </p>
+ * 
  *
- * <p>
- * To summarize, here's what a typical test using <code>JMockCycle</code> looks like:
- * </p>
+ * To summarize, here's what a typical test using `JMockCycle` looks like:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val cycle = new JMockCycle
  * import cycle._
  *
@@ -174,12 +160,11 @@ import scala.reflect.ClassTag
  *   classUnderTest.addDocument("Document", new Array[Byte](0))
  *   classUnderTest.addDocument("Document", new Array[Byte](0))
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * ScalaTest also provides a <a href="JMockCycleFixture.html"><code>JMockCycleFixture</code></a> trait, which
- * will pass a new <code>JMockCycle</code> into each test that needs one.
- * </p>
+ * ScalaTest also provides a <a href="JMockCycleFixture.html">`JMockCycleFixture`</a> trait, which
+ * will pass a new `JMockCycle` into each test that needs one.
+ * 
  *
  * @author Bill Venners
  */
@@ -189,25 +174,23 @@ final class JMockCycle {
   context.setImposteriser(ClassImposteriser.INSTANCE)
 
   /**
-   * Invokes the <code>mock</code> method on this <code>JMockCycle</code>'s internal
-   * <code>Mockery</code> context object, passing in a class instance for the
+   * Invokes the `mock` method on this `JMockCycle`'s internal
+   * `Mockery` context object, passing in a class instance for the
    * specified type parameter.
    *
-   * <p>
    * Using the JMock API directly, you create a mock with:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val mockCollaborator = context.mock(classOf[Collaborator])
-   * </pre>
+   * }}}
    *
-   * <p>
    * Having imported the members of an instance of this class, you can shorten that to:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val mockCollaborator = mock[Collaborator]
-   * </pre>
+   * }}}
    */
   def mock[T <: AnyRef](implicit classTag: ClassTag[T]): T = {
     context.mock(classTag.runtimeClass.asInstanceOf[Class[T]])
@@ -216,59 +199,54 @@ final class JMockCycle {
   /**
    * Sets expectations on mock objects.
    *
-   * <p>
    * After creating mocks, you set expectations on them, using syntax like this:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * context.checking(
    *   new Expectations() {
    *     oneOf (mockCollaborator).documentAdded("Document")
    *     exactly(3).of (mockCollaborator).documentChanged("Document")
    *    }
    *  )
-   * </pre>
+   * }}}
    *
-   * <p>
    * Having imported the members of an instance of this class, you can shorten this step to:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * expecting { e => import e._
    *   oneOf (mockCollaborator).documentAdded("Document")
    *   exactly(3).of (mockCollaborator).documentChanged("Document")
    * }
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The <code>expecting</code> method will create a new <code>Expectations</code> object, pass it into
-   * the function you provide, which sets the expectations. After the function returns, the <code>expecting</code>
-   * method will pass the <code>Expectations</code> object to the <code>checking</code>
-   * method of its internal <code>Mockery</code> context.
-   * </p>
+   * The `expecting` method will create a new `Expectations` object, pass it into
+   * the function you provide, which sets the expectations. After the function returns, the `expecting`
+   * method will pass the `Expectations` object to the `checking`
+   * method of its internal `Mockery` context.
+   * 
    *
-   * <p>
-   * This method passes an instance of class <code>org.scalatest.mock.JMockExpectations</code> to the
-   * passed function. <code>JMockExpectations</code> extends <code>org.jmock.Expectations</code> and
-   * adds several overloaded <code>withArg</code> methods. These <code>withArg</code> methods simply
-   * invoke corresponding <code>with</code> methods on themselves. Because <code>with</code> is
+   * This method passes an instance of class `org.scalatest.mock.JMockExpectations` to the
+   * passed function. `JMockExpectations` extends `org.jmock.Expectations` and
+   * adds several overloaded `withArg` methods. These `withArg` methods simply
+   * invoke corresponding `with` methods on themselves. Because `with` is
    * a keyword in Scala, to invoke these directly you must surround them in back ticks, like this:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * oneOf (mockCollaborator).documentAdded(`with`("Document"))
-   * </pre>
+   * }}}
    *
-   * <p>
-   * By importing the members of the passed <code>JMockExpectations</code> object, you can
-   * instead call <code>withArg</code> with no back ticks needed:
-   * </p>
+   * By importing the members of the passed `JMockExpectations` object, you can
+   * instead call `withArg` with no back ticks needed:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * oneOf (mockCollaborator).documentAdded(withArg("Document"))
-   * </pre>
+   * }}}
    *
-   * @param fun a function that sets expectations on the passed <code>JMockExpectations</code>
+   * @param fun a function that sets expectations on the passed `JMockExpectations`
    *    object
    */
   def expecting(fun: JMockExpectations => Unit): Unit = {
@@ -280,38 +258,35 @@ final class JMockCycle {
   /**
    * Executes code using mocks with expectations set.
    * 
-   * <p>
    * Once you've set expectations on the mock objects, when using the JMock API directly, you use the mock, then invoke
-   * <code>assertIsSatisfied</code> on the <code>Mockery</code> context to make sure the mock
+   * `assertIsSatisfied` on the `Mockery` context to make sure the mock
    * was used in accordance with the expectations you set on it. Here's how that looks:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * classUnderTest.addDocument("Document", new Array[Byte](0))
    * classUnderTest.addDocument("Document", new Array[Byte](0))
    * classUnderTest.addDocument("Document", new Array[Byte](0))
    * classUnderTest.addDocument("Document", new Array[Byte](0))
    * context.assertIsSatisfied()
-   * </pre>
+   * }}}
    *
-   * <p>
    * This class enables you to use the following, more declarative syntax instead:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * whenExecuting {
    *   classUnderTest.addDocument("Document", new Array[Byte](0))
    *   classUnderTest.addDocument("Document", new Array[Byte](0))
    *   classUnderTest.addDocument("Document", new Array[Byte](0))
    *   classUnderTest.addDocument("Document", new Array[Byte](0))
    * }
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The <code>whenExecuting</code> method will execute the passed function, then
-   * invoke <code>assertIsSatisfied</code> on its internal <code>Mockery</code>
+   * The `whenExecuting` method will execute the passed function, then
+   * invoke `assertIsSatisfied` on its internal `Mockery`
    * context object.
-   * </p>
+   * 
    *
    * @param fun the code to execute under previously set expectations
    * @throws org.mock.ExpectationError if an expectation is not met

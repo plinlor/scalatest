@@ -24,7 +24,7 @@ import org.scalatest.MatchersHelper.indicateFailure
 import org.scalactic._
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -34,10 +34,10 @@ final class ResultOfBeWordForAType[T](clazz: Class[T], prettifier: Prettifier, p
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * a [RuntimeException] should be thrownBy { ... }
    *                                ^
-   * </pre>
+   * }}}
    **/
   def thrownBy(fun: => Any): Assertion = {
     try {

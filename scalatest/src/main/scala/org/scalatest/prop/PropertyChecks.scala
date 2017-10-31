@@ -19,19 +19,17 @@ package prop
 /**
  * Trait that facilitates property checks on data supplied by tables and generators.
  *
- * <p>
- * This trait extends both <a href="TableDrivenPropertyChecks.html"><code>TableDrivenPropertyChecks</code></a> and
- * <a href="GeneratorDrivenPropertyChecks.html"><code>GeneratorDrivenPropertyChecks</code></a>. Thus by mixing in
+ * This trait extends both <a href="TableDrivenPropertyChecks.html">`TableDrivenPropertyChecks`</a> and
+ * <a href="GeneratorDrivenPropertyChecks.html">`GeneratorDrivenPropertyChecks`</a>. Thus by mixing in
  * this trait you can perform property checks on data supplied either by tables or generators. For the details of
  * table- and generator-driven property checks, see the documentation for each by following the links above.
- * </p>
+ * 
  *
- * <p>
  * For a quick example of using both table and generator-driven property checks in the same suite of tests, however,
- * imagine you want to test this <code>Fraction</code> class:
- * </p>
+ * imagine you want to test this `Fraction` class:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class Fraction(n: Int, d: Int) {
  *
  *   require(d != 0)
@@ -43,14 +41,13 @@ package prop
  *
  *   override def toString = numer + " / " + denom
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If you mix in <code>PropertyChecks</code>, you could use a generator-driven property check to test that the passed values for numerator and
+ * If you mix in `PropertyChecks`, you could use a generator-driven property check to test that the passed values for numerator and
  * denominator are properly normalized, like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * forAll { (n: Int, d: Int) =&gt;
  *
  *   whenever (d != 0 && d != Integer.MIN_VALUE
@@ -68,14 +65,13 @@ package prop
  *     f.denom should be &gt; 0
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * And you could use a table-driven property check to test that all combinations of invalid values passed to the <code>Fraction</code> constructor
- * produce the expected <code>IllegalArgumentException</code>, like this:
- * </p>
+ * And you could use a table-driven property check to test that all combinations of invalid values passed to the `Fraction` constructor
+ * produce the expected `IllegalArgumentException`, like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val invalidCombos =
  *   Table(
  *     ("n",               "d"),
@@ -91,15 +87,15 @@ package prop
  *     new Fraction(n, d)
  *   }
  * }
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 trait PropertyChecks extends TableDrivenPropertyChecks with GeneratorDrivenPropertyChecks
 
 /**
- * Companion object that facilitates the importing of <code>PropertyChecks</code> members as 
- * an alternative to mixing it in. One use case is to import <code>PropertyChecks</code> members so you can use
+ * Companion object that facilitates the importing of `PropertyChecks` members as 
+ * an alternative to mixing it in. One use case is to import `PropertyChecks` members so you can use
  * them in the Scala interpreter.
  *
  * @author Bill Venners

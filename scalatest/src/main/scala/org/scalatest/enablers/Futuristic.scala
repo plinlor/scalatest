@@ -20,13 +20,12 @@ import scala.concurrent.ExecutionContext
 import org.scalatest.FutureOutcome
 
 /**
- * Supertrait for <code>Futureistic</code> typeclasses.
+ * Supertrait for `Futureistic` typeclasses.
  *
- * <p>
- * Trait <code>Futureistic</code> is a typeclass trait for objects that can be used with
- * the <code>complete</code>-<code>lastly</code> syntax of trait
- * <a href="../CompleteLastly.html"><code>CompleteLastly</code></a>.
- * </p>
+ * Trait `Futureistic` is a typeclass trait for objects that can be used with
+ * the `complete`-`lastly` syntax of trait
+ * <a href="../CompleteLastly.html">`CompleteLastly`</a>.
+ * 
  */
 trait Futuristic[T] {
 
@@ -35,11 +34,10 @@ trait Futuristic[T] {
    * returning a new instance of the same futuristic type that completes after the passed
    * futuristic and the subsequent cleanup function execution completes.
    *
-   * <p>
-   * The futuristic returned by this method will have the same result as the original futuristic passed to <code>withCleanup</code>,
-   * unless the cleanup code throws an exception. If the cleanup code passed to <code>withCleanup</code> throws
+   * The futuristic returned by this method will have the same result as the original futuristic passed to `withCleanup`,
+   * unless the cleanup code throws an exception. If the cleanup code passed to `withCleanup` throws
    * an exception, the returned futuristic will fail with that exception.
-   * </p>
+   * 
    *
    * @param futuristic a future-like type
    * @param cleanup a cleanup function to execute once the passed futuristic type completes
@@ -50,17 +48,17 @@ trait Futuristic[T] {
 }
 
 /**
- * Companion object for trait <code>Futuristic</code> that contains implicit <code>Futuristic</code> providers for
- * <code>FutureOutcome</code> and <code>Future[T]</code> for any type <code>T</code>.
+ * Companion object for trait `Futuristic` that contains implicit `Futuristic` providers for
+ * `FutureOutcome` and `Future[T]` for any type `T`.
  */
 object Futuristic {
 
   /**
-   * Provides a <code>Futuristic</code> value for <code>FutureOutcome</code> that performs cleanup using the
+   * Provides a `Futuristic` value for `FutureOutcome` that performs cleanup using the
    * implicitly provided execution context.
    *
    * @param executionContext an execution context that provides a strategy for executing the cleanup function
-   * @return a <code>Futuristic</code> instance for <code>FutureOutcome</code>
+   * @return a `Futuristic` instance for `FutureOutcome`
    */
   implicit def futuristicNatureOfFutureOutcome(implicit executionContext: ExecutionContext): Futuristic[FutureOutcome] =
     new Futuristic[FutureOutcome] {
@@ -70,11 +68,11 @@ object Futuristic {
     }
 
   /**
-   * Provides a <code>Futuristic</code> value for <code>Future[V]</code> for any type <code>V</code> that performs cleanup using the
+   * Provides a `Futuristic` value for `Future[V]` for any type `V` that performs cleanup using the
    * implicitly provided execution context.
    *
    * @param executionContext an execution context that provides a strategy for executing the cleanup function
-   * @return a <code>Futuristic</code> instance for <code>Future[V]</code>
+   * @return a `Futuristic` instance for `Future[V]`
    */
   implicit def futuristicNatureOfFutureOf[V](implicit executionContext: ExecutionContext): Futuristic[Future[V]] =
     new Futuristic[Future[V]] {

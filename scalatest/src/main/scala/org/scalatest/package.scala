@@ -24,47 +24,47 @@ package object scalatest {
   private val defaultShell = ShellImpl()
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>colorPassed</code> configuration parameter set to <code>true</code>.
+   * Returns a copy of this `Shell` with `colorPassed` configuration parameter set to `true`.
    */
   lazy val color: Shell = defaultShell.color
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>durationsPassed</code> configuration parameter set to <code>true</code>.
+   * Returns a copy of this `Shell` with `durationsPassed` configuration parameter set to `true`.
    */
   lazy val durations: Shell = defaultShell.durations
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>shortStacksPassed</code> configuration parameter set to <code>true</code>.
+   * Returns a copy of this `Shell` with `shortStacksPassed` configuration parameter set to `true`.
    */
   lazy val shortstacks: Shell = defaultShell.shortstacks
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>fullStacksPassed</code> configuration parameter set to <code>true</code>.
+   * Returns a copy of this `Shell` with `fullStacksPassed` configuration parameter set to `true`.
    */
   lazy val fullstacks: Shell = defaultShell.fullstacks
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>statsPassed</code> configuration parameter set to <code>true</code>.
+   * Returns a copy of this `Shell` with `statsPassed` configuration parameter set to `true`.
    */
   lazy val stats: Shell = defaultShell.stats
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>colorPassed</code> configuration parameter set to <code>false</code>.
+   * Returns a copy of this `Shell` with `colorPassed` configuration parameter set to `false`.
    */
   lazy val nocolor: Shell = defaultShell.nocolor
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>durationsPassed</code> configuration parameter set to <code>false</code>.
+   * Returns a copy of this `Shell` with `durationsPassed` configuration parameter set to `false`.
    */
   lazy val nodurations: Shell = defaultShell.nodurations
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>shortStacksPassed</code> configuration parameter set to <code>false</code>.
+   * Returns a copy of this `Shell` with `shortStacksPassed` configuration parameter set to `false`.
    */
   lazy val nostacks: Shell = defaultShell.nostacks
 
   /**
-   * Returns a copy of this <code>Shell</code> with <code>statsPassed</code> configuration parameter set to <code>false</code>.
+   * Returns a copy of this `Shell` with `statsPassed` configuration parameter set to `false`.
    */
   lazy val nostats: Shell = defaultShell.nostats
   // SKIP-SCALATESTJS-END
@@ -90,27 +90,25 @@ package object scalatest {
 
   // SKIP-SCALATESTJS-START
   /**
-   * <strong>The name <code>org.scalatest.SpecLike</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
-   * its new name, <code>org.scalatest.refspec.RefSpecLike</code>, instead.</strong>
+   * '''The name `org.scalatest.SpecLike` has been deprecated and will be removed in a future version of ScalaTest. Please use
+   * its new name, `org.scalatest.refspec.RefSpecLike`, instead.'''
    *
-   * <p>
    * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
-   * Thus in ScalaTest 3.0.0, class <code>org.scalatest.SpecLike</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
-   * <code>RefSpecLike</code>, with the intention of later moving it to a separate module available only on the JVM.
-   * </p>
+   * Thus in ScalaTest 3.0.0, class `org.scalatest.SpecLike` was moved to the `org.scalatest.refspec` package and renamed
+   * `RefSpecLike`, with the intention of later moving it to a separate module available only on the JVM.
+   * 
    */
   @deprecated("Please use org.scalatest.refspec.RefSpecLike instead")
   type SpecLike = refspec.RefSpecLike
 
   /**
-   * <strong>The name <code>org.scalatest.Spec</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
-   * its new name, <code>org.scalatest.refspec.RefSpec</code>, instead.</strong>
+   * '''The name `org.scalatest.Spec` has been deprecated and will be removed in a future version of ScalaTest. Please use
+   * its new name, `org.scalatest.refspec.RefSpec`, instead.'''
    *
-   * <p>
    * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
-   * Thus in ScalaTest 3.0.0, class <code>org.scalatest.Spec</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
-   * <code>RefSpec</code>, with the intention of later moving it to a separate module available only on the JVM.
-   * </p>
+   * Thus in ScalaTest 3.0.0, class `org.scalatest.Spec` was moved to the `org.scalatest.refspec` package and renamed
+   * `RefSpec`, with the intention of later moving it to a separate module available only on the JVM.
+   * 
    */
   @deprecated("Please use org.scalatest.refspec.RefSpec instead")
   type Spec = refspec.RefSpec

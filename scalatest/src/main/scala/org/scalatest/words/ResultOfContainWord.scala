@@ -30,7 +30,7 @@ import org.scalatest.MatchersHelper.indicateFailure
 import org.scalactic._
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -40,10 +40,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain oneOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def oneOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit containing: Containing[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -69,10 +69,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain oneElementOf List(1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def oneElementOf(elements: GenTraversable[Any])(implicit containing: Containing[L]): Assertion = {
     val right = elements.toList
@@ -84,10 +84,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain atLeastOneOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def atLeastOneOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit aggregating: Aggregating[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -113,10 +113,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain atLeastOneElementOf List(1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def atLeastOneElementOf(elements: GenTraversable[Any])(implicit aggregating: Aggregating[L]): Assertion = {
     val right = elements.toList
@@ -129,10 +129,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain noneOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def noneOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit containing: Containing[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -158,10 +158,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain noElementsOf List(1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def noElementsOf(elements: GenTraversable[Any])(implicit containing: Containing[L]): Assertion = {
     val right = elements.toList
@@ -174,10 +174,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain theSameElementsAs (List(1, 2))
    *                   ^
-   * </pre>
+   * }}}
    **/
   def theSameElementsAs(right: GenTraversable[_])(implicit aggregating: Aggregating[L]): Assertion = {
     if (aggregating.containsTheSameElementsAs(left, right) != shouldBeTrue)
@@ -189,10 +189,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain theSameElementsInOrderAs (List(1, 2))
    *                   ^
-   * </pre>
+   * }}}
    **/
   def theSameElementsInOrderAs(right: GenTraversable[_])(implicit sequencing: Sequencing[L]): Assertion = {
     if (sequencing.containsTheSameElementsInOrderAs(left, right) != shouldBeTrue)
@@ -204,10 +204,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain only (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def only(right: Any*)(implicit aggregating: Aggregating[L]): Assertion = {
     if (right.isEmpty)
@@ -250,10 +250,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain inOrderOnly (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def inOrderOnly(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit sequencing: Sequencing[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -279,10 +279,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain allOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def allOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit aggregating: Aggregating[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -308,10 +308,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain allElementsOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def allElementsOf[R](elements: GenTraversable[R])(implicit aggregating: Aggregating[L]): Assertion = {
     val right = elements.toList
@@ -324,10 +324,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain inOrder (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def inOrder(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit sequencing: Sequencing[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -353,10 +353,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain inOrderElementsOf List(1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def inOrderElementsOf[R](elements: GenTraversable[R])(implicit sequencing: Sequencing[L]): Assertion = {
     val right = elements.toList
@@ -369,10 +369,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * map should contain key ("one")
    *                    ^
-   * </pre>
+   * }}}
    **/
   def key(expectedKey: Any)(implicit keyMapping: KeyMapping[L]): Assertion = {
     if (keyMapping.containsKey(left, expectedKey) != shouldBeTrue)
@@ -384,10 +384,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * map should contain value ("one")
    *                    ^
-   * </pre>
+   * }}}
    **/
   def value(expectedValue: Any)(implicit valueMapping: ValueMapping[L]): Assertion = {
     if (valueMapping.containsValue(left, expectedValue) != shouldBeTrue)
@@ -399,10 +399,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain atMostOneOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def atMostOneOf(firstEle: Any, secondEle: Any, remainingEles: Any*)(implicit aggregating: Aggregating[L]): Assertion = {
     val right = firstEle :: secondEle :: remainingEles.toList
@@ -428,10 +428,10 @@ class ResultOfContainWord[L](left: L, shouldBeTrue: Boolean, prettifier: Prettif
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should contain atMostOneElementOf (1, 2)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def atMostOneElementOf[R](elements: GenTraversable[R])(implicit aggregating: Aggregating[L]): Assertion = {
     val right = elements.toList

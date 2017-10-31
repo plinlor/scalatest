@@ -22,25 +22,23 @@ import org.scalatest.events.{TopOfClass, TopOfMethod}
 
 
 /**
- * <strong>Class <code>fixture.Spec</code> has been deprecated and will be removed in a future version of ScalaTest. Please use
- * <code>org.scalatest.fixture.FunSpec</code> instead.</strong>
+ * '''Class `fixture.Spec` has been deprecated and will be removed in a future version of ScalaTest. Please use
+ * `org.scalatest.fixture.FunSpec` instead.'''
  *
- * <p>
  * Because this style uses reflection at runtime to discover scopes and tests, it can only be supported on the JVM, not Scala.js.
- * Thus in ScalaTest 3.0.0, class <code>org.scalatest.Spec</code> was moved to the <code>org.scalatest.refspec</code> package and renamed
- * <code>RefSpec</code>, with the intention of later moving it to a separate module available only on the JVM. If the 
- * <code>org.scalatest.refspec._</code> package contained a <code>fixture</code> subpackage, then importing <code>org.scalatest.refspec._</code>
- * would import the name <code>fixture</code> as <code>org.scalatest.refspec.fixture</code>. This would likely be confusing for users,
- * who expect <code>fixture</code> to mean <code>org.scalatest.fixture</code>.
- * </p>
+ * Thus in ScalaTest 3.0.0, class `org.scalatest.Spec` was moved to the `org.scalatest.refspec` package and renamed
+ * `RefSpec`, with the intention of later moving it to a separate module available only on the JVM. If the 
+ * `org.scalatest.refspec._` package contained a `fixture` subpackage, then importing `org.scalatest.refspec._`
+ * would import the name `fixture` as `org.scalatest.refspec.fixture`. This would likely be confusing for users,
+ * who expect `fixture` to mean `org.scalatest.fixture`.
+ * 
  *
- * <p>
- * As a result this class has been deprecated and will <em>not</em>
- * be moved to package <code>org.scalatest.refspec</code>. Instead we recommend you rewrite any test classes that currently extend
- * <code>org.scalatest.fixture.Spec</code> to extend <a href="FunSpec.html"><code>org.scalatest.fixture.FunSpec</code></a> instead,
- * replacing any scope <code>object</code>
- * with a <code>describe</code> clause, and any test method with an <code>it</code> clause.
- * </p>
+ * As a result this class has been deprecated and will ''not''
+ * be moved to package `org.scalatest.refspec`. Instead we recommend you rewrite any test classes that currently extend
+ * `org.scalatest.fixture.Spec` to extend <a href="FunSpec.html">`org.scalatest.fixture.FunSpec`</a> instead,
+ * replacing any scope `object`
+ * with a `describe` clause, and any test method with an `it` clause.
+ * 
  *
  * @author Bill Venners
  */
@@ -51,7 +49,7 @@ abstract class Spec extends SpecLike {
   /**
    * Returns a user friendly string for this suite, composed of the
    * simple name of the class (possibly simplified further by removing dollar signs if added by the Scala interpeter) and, if this suite
-   * contains nested suites, the result of invoking <code>toString</code> on each
+   * contains nested suites, the result of invoking `toString` on each
    * of the nested suites, separated by commas and surrounded by parentheses.
    *
    * @return a user-friendly string for this suite

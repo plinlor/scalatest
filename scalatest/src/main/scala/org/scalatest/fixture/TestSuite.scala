@@ -22,56 +22,53 @@ import org.scalactic._
 trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite { thisTestSuite =>
 
   /**
-   * A test function taking a fixture parameter and returning an <code>Outcome</code>.
+   * A test function taking a fixture parameter and returning an `Outcome`.
    *
-   * <p>
    * For more detail and examples, see the
-   * <a href="FlatSpec.html">documentation for trait <code>fixture.FlatSpec</code></a>.
-   * </p>
+   * <a href="FlatSpec.html">documentation for trait `fixture.FlatSpec`</a>.
+   * 
    */
   protected trait OneArgTest extends (FixtureParam => Outcome) with TestData { thisOneArgTest =>
 
     /**
-     * Runs the test, using the passed <code>FixtureParam</code>.
+     * Runs the test, using the passed `FixtureParam`.
      *
-     * @param fixture the <code>FixtureParam</code>
-     * @return an instance of <code>Outcome</code>
+     * @param fixture the `FixtureParam`
+     * @return an instance of `Outcome`
      */
     def apply(fixture: FixtureParam): Outcome
 
     /**
-     * Convert this <code>OneArgTest</code> to a <code>NoArgTest</code> whose
-     * <code>name</code> and <code>configMap</code> methods return the same values
-     * as this <code>OneArgTest</code>, and whose <code>apply</code> method invokes
-     * this <code>OneArgTest</code>'s apply method,
-     * passing in the given <code>fixture</code>.
+     * Convert this `OneArgTest` to a `NoArgTest` whose
+     * `name` and `configMap` methods return the same values
+     * as this `OneArgTest`, and whose `apply` method invokes
+     * this `OneArgTest`'s apply method,
+     * passing in the given `fixture`.
      *
-     * <p>
-     * This method makes it easier to invoke the <code>withFixture</code> method
-     * that takes a <code>NoArgTest</code>. For example, if a <code>fixture.Suite</code> 
-     * mixes in <code>SeveredStackTraces</code>, it will inherit an implementation
-     * of <code>withFixture(NoArgTest)</code> provided by
-     * <code>SeveredStackTraces</code> that implements the stack trace severing
-     * behavior. If the <code>fixture.Suite</code> does not delegate to that
-     * <code>withFixture(NoArgTest)</code> method, the stack trace severing behavior
-     * will not happen. Here's how that might look in a <code>fixture.Suite</code>
-     * whose <code>FixtureParam</code> is <code>StringBuilder</code>:
-     * </p>
+     * This method makes it easier to invoke the `withFixture` method
+     * that takes a `NoArgTest`. For example, if a `fixture.Suite` 
+     * mixes in `SeveredStackTraces`, it will inherit an implementation
+     * of `withFixture(NoArgTest)` provided by
+     * `SeveredStackTraces` that implements the stack trace severing
+     * behavior. If the `fixture.Suite` does not delegate to that
+     * `withFixture(NoArgTest)` method, the stack trace severing behavior
+     * will not happen. Here's how that might look in a `fixture.Suite`
+     * whose `FixtureParam` is `StringBuilder`:
+     * 
      *
-     * <pre class="stHighlight">
+     * {{{  <!-- class="stHighlight" -->
      * def withFixture(test: OneArgTest) = {
      *   withFixture(test.toNoArgTest(new StringBuilder))
      * }
-     * </pre>
+     * }}}
      *
-     * <p>
-     * Invoking this method has no side effect. It just returns a <code>NoArgTest</code> whose
-     * <code>apply</code> method invokes <code>apply</code> on this <code>OneArgTest</code>, passing
-     * in the <code>FixtureParam</code> passed to <code>toNoArgTest</code>.
-     * </p>
+     * Invoking this method has no side effect. It just returns a `NoArgTest` whose
+     * `apply` method invokes `apply` on this `OneArgTest`, passing
+     * in the `FixtureParam` passed to `toNoArgTest`.
+     * 
      *
-     * @param fixture the <code>FixtureParam</code>
-     * @return an new instance of <code>NoArgTest</code>
+     * @param fixture the `FixtureParam`
+     * @return an new instance of `NoArgTest`
      */
     def toNoArgTest(fixture: FixtureParam) = 
       new NoArgTest {
@@ -86,16 +83,16 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
   }
 
   /**
-   * Companion object for <code>OneArgTest</code> that provides factory method to create new <code>OneArgTest</code>
-   * instance by passing in a <code>OneArgTest</code> and a <code>FixtureParam</code> => <code>Outcome</code> function.
+   * Companion object for `OneArgTest` that provides factory method to create new `OneArgTest`
+   * instance by passing in a `OneArgTest` and a `FixtureParam` => `Outcome` function.
    */
   object OneArgTest {
     /**
-     * Create new <code>OneArgTest</code> instance.
+     * Create new `OneArgTest` instance.
      *
-     * @param test a <code>OneArgTest</code>
-     * @param f a <code>FixtureParam</code> => <code>Outcome</code> function
-     * @return a new instance of <code>OneArgTest</code>, which will call the passed <code>f</code> function in its <code>apply</code> method
+     * @param test a `OneArgTest`
+     * @param f a `FixtureParam` => `Outcome` function
+     * @return a new instance of `OneArgTest`, which will call the passed `f` function in its `apply` method
      */
     def apply(test: OneArgTest)(f: FixtureParam => Outcome): OneArgTest = {
       new OneArgTest {
@@ -113,15 +110,14 @@ trait TestSuite extends org.scalatest.fixture.Suite with org.scalatest.TestSuite
   /**
    *  Run the passed test function with a fixture created by this method.
    *
-   * <p>
    * This method should create the fixture object needed by the tests of the
    * current suite, invoke the test function (passing in the fixture object),
    * and if needed, perform any clean up needed after the test completes.
    * For more detail and examples, see the <a href="Suite.html">main documentation for this trait</a>.
-   * </p>
+   * 
    *
-   * @param test the <code>OneArgTest</code> to invoke, passing in a fixture
-   * @return an instance of <code>Outcome</code>
+   * @param test the `OneArgTest` to invoke, passing in a fixture
+   * @return an instance of `Outcome`
    */
   protected def withFixture(test: OneArgTest): Outcome
 

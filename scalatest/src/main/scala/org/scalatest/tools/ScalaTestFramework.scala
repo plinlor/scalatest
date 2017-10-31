@@ -35,58 +35,54 @@ import org.scalatools.testing.{Framework => SbtFramework, _}
 /**
  * Class that makes ScalaTest tests visible to SBT (prior to version 0.13).
  *
- * <p>
  * To use ScalaTest in SBT, you should add ScalaTest as dependency in your SBT build file, the following shows an example
  * for using ScalaTest 2.0 with Scala 2.10.x project:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * "org.scalatest" % "scalatest_2.10" % "2.0" % "test"
- * </pre>
+ * }}}
  *
- * <p>
- * To pass argument to ScalaTest from SBT, you can use <code>testOptions</code>:
- * </p>
+ * To pass argument to ScalaTest from SBT, you can use `testOptions`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * testOptions in Test += Tests.Argument("-u", "target/junit")  // Use JUnitXmlReporter
- * </pre>
+ * }}}
  *
- * <p>
  * If you are using multiple testing frameworks, you can pass arguments specific to ScalaTest only:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * testOptions in Test += Tests.Argument(TestFrameworks.ScalaTest, "-u", "target/junit") // Use JUnitXmlReporter
- * </pre>
+ * }}}
  *
- * <h3>Supported arguments</h3>
+ * ===Supported arguments===
  *
- * <p>
- * Integration in SBT 0.13 supports same argument format as [[org.scalatest.tools.Runner <code>Runner</code>]],
+ * Integration in SBT 0.13 supports same argument format as [[org.scalatest.tools.Runner `Runner`]],
  * except the following arguments:
- * </p>
+ * 
  *
  * <ul>
- *   <li><code>-R</code> -- runpath is not supported because test path and discovery is handled by SBT</li>
- *   <li><code>-s</code> -- suite is not supported because SBT's <code>test-only</code> serves the similar purpose</li>
- *   <li><code>-A</code> -- again is not supported because SBT's <code>test-quick</code> serves the similar purpose</li>
- *   <li><code>-j</code> -- junit is not supported because in SBT different test framework should be supported by its corresponding <code>Framework</code> implementation</li>
- *   <li><code>-b</code> -- testng is not supported because in SBT different test framework should be supported by its corresponding <code>Framework</code> implementation</li>
- *   <li><code>-P</code> -- concurrent/parallel is not supported because parallel execution is controlled by SBT.</li>
- *   <li><code>-q</code> is not supported because test discovery should be handled by SBT, and SBT's test-only or test filter serves the similar purpose</li>
- *   <li><code>-T</code> is not supported because correct ordering of text output is handled by SBT</li>
- *   <li><code>-g</code> is not supported because current Graphic Reporter implementation works differently than standard reporter</li>
+ *   <li>`-R` -- runpath is not supported because test path and discovery is handled by SBT</li>
+ *   <li>`-s` -- suite is not supported because SBT's `test-only` serves the similar purpose</li>
+ *   <li>`-A` -- again is not supported because SBT's `test-quick` serves the similar purpose</li>
+ *   <li>`-j` -- junit is not supported because in SBT different test framework should be supported by its corresponding `Framework` implementation</li>
+ *   <li>`-b` -- testng is not supported because in SBT different test framework should be supported by its corresponding `Framework` implementation</li>
+ *   <li>`-P` -- concurrent/parallel is not supported because parallel execution is controlled by SBT.</li>
+ *   <li>`-q` is not supported because test discovery should be handled by SBT, and SBT's test-only or test filter serves the similar purpose</li>
+ *   <li>`-T` is not supported because correct ordering of text output is handled by SBT</li>
+ *   <li>`-g` is not supported because current Graphic Reporter implementation works differently than standard reporter</li>
  * </ul>
  *
  *
- * <em>
+ * ''
  * It is highly recommended to upgrade to SBT 0.13 to enjoy the best of ScalaTest 2.0 SBT integration.  Due to limitations
  * in old Framework API (prior to SBT 0.13), it is hard to support ScalaTest features in the most efficient way.  One example is
  * the nested suites, where in old Framework API they has to be executed sequentially, while new Framework API (included in SBT
- * 0.13) the concept of nested <a href="https://github.com/sbt/test-interface/blob/master/src/main/java/sbt/testing/Task.java"><code>Task</code></a>
+ * 0.13) the concept of nested <a href="https://github.com/sbt/test-interface/blob/master/src/main/java/sbt/testing/Task.java">`Task`</a>
  * has enabled parallel execution of ScalaTest's nested suites.
- * </em>
+ * ''
  *
  * @author Bill Venners
  * @author Josh Cough
@@ -95,14 +91,14 @@ import org.scalatools.testing.{Framework => SbtFramework, _}
 class ScalaTestFramework extends SbtFramework {
   
   /**
-   * Returns <code>"ScalaTest"</code>, the human readable name for this test framework.
+   * Returns `"ScalaTest"`, the human readable name for this test framework.
    */
   def name = "ScalaTest"
 
   /**
    * Returns an array containing fingerprint for ScalaTest's test, which are classes  
-   * whose superclass name is <code>org.scalatest.Suite</code>
-   * or is annotated with <code>org.scalatest.WrapWith</code>.
+   * whose superclass name is `org.scalatest.Suite`
+   * or is annotated with `org.scalatest.WrapWith`.
    */
   def tests =
     Array(
@@ -293,8 +289,8 @@ class ScalaTestFramework extends SbtFramework {
   }
 
   /**
-   * Returns an <code>org.scalatools.testing.Runner</code> that will load test classes via the passed <code>testLoader</code>
-   * and direct output from running the tests to the passed array of <code>Logger</code>s.
+   * Returns an `org.scalatools.testing.Runner` that will load test classes via the passed `testLoader`
+   * and direct output from running the tests to the passed array of `Logger`s.
    */
   def testRunner(testLoader: ClassLoader, loggers: Array[Logger]) = {
     new ScalaTestRunner(testLoader, loggers)

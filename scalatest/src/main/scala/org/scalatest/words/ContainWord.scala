@@ -30,7 +30,7 @@ import org.scalatest.enablers.ValueMapping
 import org.scalatest.exceptions.NotAllowedException
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -40,10 +40,10 @@ final class ContainWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * list should contain (null)
    *                     ^
-   * </pre>
+   * }}}
    **/
   def apply(nullValue: Null): MatcherFactory1[Any, Containing] =
     new MatcherFactory1[Any, Containing] {
@@ -66,10 +66,10 @@ final class ContainWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * Array(1, 2) should (contain (2) and contain (1))
    *                             ^
-   * </pre>
+   * }}}
    **/
   def apply(expectedElement: Any): MatcherFactory1[Any, Containing] =
     new MatcherFactory1[Any, Containing] {
@@ -103,17 +103,17 @@ final class ContainWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * map should (contain key ("fifty five") or contain key ("twenty two"))
    *                     ^
-   * </pre>
+   * }}}
    *
    * The map's value type parameter cannot be inferred because only a key type is provided in
-   * an expression like <code>(contain key ("fifty five"))</code>. The matcher returned
-   * by this method matches <code>scala.collection.Map</code>s with the inferred key type and value type <code>Any</code>. Given
-   * <code>Map</code> is covariant in its value type, and <code>Matcher</code> is contravariant in
-   * its type parameter, a <code>Matcher[Map[Int, Any]]</code>, for example, is a subtype of <code>Matcher[Map[Int, String]]</code>.
-   * This will enable the matcher returned by this method to be used against any <code>Map</code> that has
+   * an expression like `(contain key ("fifty five"))`. The matcher returned
+   * by this method matches `scala.collection.Map`s with the inferred key type and value type `Any`. Given
+   * `Map` is covariant in its value type, and `Matcher` is contravariant in
+   * its type parameter, a `Matcher[Map[Int, Any]]`, for example, is a subtype of `Matcher[Map[Int, String]]`.
+   * This will enable the matcher returned by this method to be used against any `Map` that has
    * the inferred key type.
    */
   def key[K](expectedKey: Any): MatcherFactory1[Any, KeyMapping] =
@@ -145,20 +145,20 @@ final class ContainWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * Map("one" -&gt; 1, "two" -&gt; 2) should (not contain value (5) and not contain value (3))
    *                                                 ^
-   * </pre>
+   * }}}
    *
    * The map's key type parameter cannot be inferred because only a value type is provided in
-   * an expression like <code>(contain value (5))</code>. The matcher returned
-   * by this method matches <code>scala.collection.Map</code>s with the inferred value type and the existential key
-   * type <code>[K] forSome { type K }</code>. Even though <code>Matcher</code> is contravariant in its type parameter, because
-   * <code>Map</code> is nonvariant in its key type, 
-   * a <code>Matcher[Map[Any, Int]]</code>, for example, is <em>not</em> a subtype of <code>Matcher[Map[String, Int]]</code>,
-   * so the key type parameter of the <code>Map</code> returned by this method cannot be <code>Any</code>. By making it
+   * an expression like `(contain value (5))`. The matcher returned
+   * by this method matches `scala.collection.Map`s with the inferred value type and the existential key
+   * type `[K] forSome { type K }`. Even though `Matcher` is contravariant in its type parameter, because
+   * `Map` is nonvariant in its key type, 
+   * a `Matcher[Map[Any, Int]]`, for example, is ''not'' a subtype of `Matcher[Map[String, Int]]`,
+   * so the key type parameter of the `Map` returned by this method cannot be `Any`. By making it
    * an existential type, the Scala compiler will not infer it to anything more specific.
-   * This will enable the matcher returned by this method to be used against any <code>Map</code> that has
+   * This will enable the matcher returned by this method to be used against any `Map` that has
    * the inferred value type.
    *
    */
@@ -181,12 +181,12 @@ final class ContainWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>positiveNumber</code> and <code>validNumber</code> are, for example, of type <code>AMatcher</code>:
+   * This method enables the following syntax, where `positiveNumber` and `validNumber` are, for example, of type `AMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * Array(1, 2, 3) should (contain a positiveNumber and contain a validNumber)
    *                                ^
-   * </pre>
+   * }}}
    **/
   private[scalatest] def a[T](aMatcher: AMatcher[T]): Matcher[GenTraversable[T]] =
     new Matcher[GenTraversable[T]] {
@@ -204,12 +204,12 @@ final class ContainWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>oddNumber</code> and <code>invalidNumber</code> are, for example, of type <code>AnMatcher</code>:
+   * This method enables the following syntax, where `oddNumber` and `invalidNumber` are, for example, of type `AnMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * Array(1, 2, 3) should (contain an oddNumber and contain an invalidNumber)
    *                                ^
-   * </pre>
+   * }}}
    **/
   private[scalatest] def an[T](anMatcher: AnMatcher[T]): Matcher[GenTraversable[T]] =
     new Matcher[GenTraversable[T]] {

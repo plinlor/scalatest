@@ -24,59 +24,54 @@ import org.scalactic.Requirements._
  * Trait providing methods and classes used to configure timeouts and, where relevant, the interval
  * between retries.
  *
- * <p>
- * This trait is called <code>PatienceConfiguration</code> because it allows configuration of two
+ * This trait is called `PatienceConfiguration` because it allows configuration of two
  * values related to patience: The timeout specifies how much time asynchronous operations will be given
  * to succeed before giving up. The interval specifies how much time to wait between checks to determine
  * success when polling.
- * </p>
+ * 
  *
- * <p>
- * The default values for timeout and interval provided by trait <code>PatienceConfiguration</code> are tuned for unit testing,
+ * The default values for timeout and interval provided by trait `PatienceConfiguration` are tuned for unit testing,
  * where running tests as fast as
  * possible is a high priority and subsystems requiring asynchronous operations are therefore often replaced
  * by mocks. This table shows the default values:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
- * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Configuration Parameter</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Default Value</strong></th></tr>
+ * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Configuration Parameter'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Default Value'''</th></tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <code>timeout</code>
+ * `timeout`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <code>scaled(150 milliseconds)</code>
+ * `scaled(150 milliseconds)`
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <code>interval</code>
+ * `interval`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <code>scaled(15 milliseconds)</code>
+ * `scaled(15 milliseconds)`
  * </td>
  * </tr>
  * </table>
  *
- * <p>
  * Values more appropriate to integration testing, where asynchronous operations tend to take longer because the tests are run
- * against the actual subsytems (not mocks), can be obtained by mixing in trait <a href="IntegrationPatience.html"><code>IntegrationPatience</code></a>.
- * </p>
+ * against the actual subsytems (not mocks), can be obtained by mixing in trait <a href="IntegrationPatience.html">`IntegrationPatience`</a>.
+ * 
  *
- * <p>
- * The default values of both timeout and interval are passed to the <code>scaled</code> method, inherited
- * from <code>ScaledTimeSpans</code>, so that the defaults can be scaled up
- * or down together with other scaled time spans. See the documentation for trait <a href="ScaledTimeSpans.html"><code>ScaledTimeSpans</code></a>
+ * The default values of both timeout and interval are passed to the `scaled` method, inherited
+ * from `ScaledTimeSpans`, so that the defaults can be scaled up
+ * or down together with other scaled time spans. See the documentation for trait <a href="ScaledTimeSpans.html">`ScaledTimeSpans`</a>
  * for more information.
- * </p>
+ * 
  *
- * <p>
- * Timeouts are used by the <code>eventually</code> methods of trait
- * <a href="Eventually.html"><code>Eventually</code></a> and the <code>await</code> method of class
- * <code>Waiter</code>, a member of trait
- * <a href="Waiters.html"><code>Waiters</code></a>. Intervals are used by
- * the <code>eventually</code> methods.
- * </p>
+ * Timeouts are used by the `eventually` methods of trait
+ * <a href="Eventually.html">`Eventually`</a> and the `await` method of class
+ * `Waiter`, a member of trait
+ * <a href="Waiters.html">`Waiters`</a>. Intervals are used by
+ * the `eventually` methods.
+ * 
  *
  * @author Bill Venners
  */
@@ -85,23 +80,22 @@ trait PatienceConfiguration extends AbstractPatienceConfiguration {
   private val defaultPatienceConfig = PatienceConfig()
 
   /**
-   * Implicit <code>PatienceConfig</code> value providing default configuration values.
+   * Implicit `PatienceConfig` value providing default configuration values.
    *
-   * <p>
-   * To change the default configuration, override or hide this <code>def</code> with another implicit
-   * <code>PatienceConfig</code> containing your desired default configuration values.
-   * </p>
+   * To change the default configuration, override or hide this `def` with another implicit
+   * `PatienceConfig` containing your desired default configuration values.
+   * 
    */
   implicit def patienceConfig: PatienceConfig = defaultPatienceConfig
 
   /**
-   * Returns a <code>Timeout</code> configuration parameter containing the passed value, which
+   * Returns a `Timeout` configuration parameter containing the passed value, which
    * specifies the maximum amount to wait for an asynchronous operation to complete.
    */
   def timeout(value: Span) = Timeout(value)
 
   /**
-   * Returns an <code>Interval</code> configuration parameter containing the passed value, which
+   * Returns an `Interval` configuration parameter containing the passed value, which
    * specifies the amount of time to sleep after a retry.
    */
   def interval(value: Span) = Interval(value)    // TODO: Throw NPE
@@ -110,12 +104,11 @@ trait PatienceConfiguration extends AbstractPatienceConfiguration {
 object PatienceConfiguration {
 
   /**
-   * Abstract class defining a family of configuration parameters for traits <code>Eventually</code> and <code>Waiters</code>.
+   * Abstract class defining a family of configuration parameters for traits `Eventually` and `Waiters`.
    * 
-   * <p>
    * The subclasses of this abstract class are used to pass configuration information to
-   * the <code>eventually</code> methods of trait <code>Eventually</code> and the <code>await</code> methods of trait <code>Waiters</code>.
-   * </p>
+   * the `eventually` methods of trait `Eventually` and the `await` methods of trait `Waiters`.
+   * 
    *
    * @author Bill Venners
    * @author Chua Chee Seng
@@ -123,12 +116,12 @@ object PatienceConfiguration {
   sealed abstract class PatienceConfigParam extends Product with Serializable
 
   /**
-   * A <code>PatienceConfigParam</code> that specifies the maximum amount of time to wait for an asynchronous operation to
+   * A `PatienceConfigParam` that specifies the maximum amount of time to wait for an asynchronous operation to
    * complete. 
    *
    * @param value the maximum amount of time to retry before giving up and throwing
-   *   <code>TestFailedException</code>.
-   * @throws NullArgumentException if passed <code>value</code> is <code>null</code>
+   *   `TestFailedException`.
+   * @throws NullArgumentException if passed `value` is `null`
    *
    * @author Bill Venners
    */
@@ -137,11 +130,11 @@ object PatienceConfiguration {
   }
 
   /**
-   * A <code>PatienceConfigParam</code> that specifies the amount of time to sleep after
+   * A `PatienceConfigParam` that specifies the amount of time to sleep after
    * a retry.
    *
    * @param value the amount of time to sleep between each attempt
-   * @throws NullArgumentException if passed <code>value</code> is <code>null</code>
+   * @throws NullArgumentException if passed `value` is `null`
    *
    * @author Bill Venners
    */

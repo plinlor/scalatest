@@ -20,61 +20,56 @@ import org.scalatest.tools.{TestSpecificReporter, DistributedTestRunnerSuite, Te
 
 /**
  * Trait that causes that the tests of any suite it is mixed into to be run in parallel if
- * a <code>Distributor</code> is passed to <code>runTests</code>.
+ * a `Distributor` is passed to `runTests`.
  *
- * <p>
  * ScalaTest's normal approach for running suites of tests in parallel is to run different suites in parallel,
  * but the tests of any one suite sequentially. This approach should provide sufficient distribution of the work load
  * in most cases, but some suites may encapsulate multiple long-running tests. Such suites may dominate the execution
  * time of the run. If so, mixing in this trait into just those suites will allow their long-running tests to run in parallel with each
  * other, thereby helping to reduce the total time required to run an entire run.
- * </p>
+ * 
  *
- * <p>
  * To make it easier for users to write tests that run in parallel, this trait runs each test in its own instance of the class.
- * Running each test in its own instance enables tests to use the same instance <code>vars</code> and mutable objects referenced from
+ * Running each test in its own instance enables tests to use the same instance `vars` and mutable objects referenced from
  * instance variables without needing to synchronize. Although ScalaTest provides functional approaches to
  * factoring out common test code that can help avoid such issues, running each test in its own instance is an insurance policy that makes 
  * running tests in parallel easier and less error prone.
- * </p>
+ * 
  *
- * <p>
- * For the details on how <code>ParallelTestExecution</code> works, see the documentation for methods <code>run</code>, <code>runTests</code>, and <code>runTest</code>,
+ * For the details on how `ParallelTestExecution` works, see the documentation for methods `run`, `runTests`, and `runTest`,
  * which this trait overrides.
- * </p>
+ * 
  *
- * <p>
- * Note: This trait's implementation of <code>runTest</code> is <code>final</code>, to ensure that behavior
+ * Note: This trait's implementation of `runTest` is `final`, to ensure that behavior
  * related to individual tests are executed by the same thread that executes the actual test. This means,
- * for example, that you won't be allowed to write <code>...with ParallelTestExecution with BeforeAndAfter</code>.
- * Instead, you'd need to put <code>ParallelTestExecution</code> last, as
- * in: <code>with BeforeAndAfter with ParallelTestExecution</code>. For more details, see the documentation
- * for the <code>runTest</code> method.
- * </p>
+ * for example, that you won't be allowed to write `...with ParallelTestExecution with BeforeAndAfter`.
+ * Instead, you'd need to put `ParallelTestExecution` last, as
+ * in: `with BeforeAndAfter with ParallelTestExecution`. For more details, see the documentation
+ * for the `runTest` method.
+ * 
  *
  * @author Bill Venners
  */
 trait ParallelTestExecution extends OneInstancePerTest { this: Suite =>
 
   /**
-   * Modifies the behavior of <code>super.runTests</code> to facilitate parallel test execution.
+   * Modifies the behavior of `super.runTests` to facilitate parallel test execution.
    *
-   * <p>
-   * This trait's implementation of this method always invokes <code>super.runTests</code> to delegate
-   * to <code>OneInstancePerTest</code>'s implementation, but it may pass in a modified <code>args</code> object.
-   * If <code>args.runTestInNewInstance</code> is <code>false</code> and <code>args.distributor</code> is defined,
-   * this trait's implementation of this method will wrap the passed <code>args.reporter</code> in a new <code>Reporter</code>
+   * This trait's implementation of this method always invokes `super.runTests` to delegate
+   * to `OneInstancePerTest`'s implementation, but it may pass in a modified `args` object.
+   * If `args.runTestInNewInstance` is `false` and `args.distributor` is defined,
+   * this trait's implementation of this method will wrap the passed `args.reporter` in a new `Reporter`
    * that can sort events fired by parallel tests back into sequential order, with a timeout. It will pass this new reporter to
-   * <code>super.runTests</code> (in <code>args.reporter</code>) as well as a defined <code>DistributedTestSorter</code>
-   * (in args.distributedTestSorter) that can be used to communicate with the sorting reporter. Otherwise, if <code>args.runTestInNewInstance</code> is
-   * <code>true</code> or <code>args.distributor</code> is empty, this trait's implementation of this method simply calls <code>super.runTests</code>,
-   * passing along the same <code>testName</code> and <code>args</code>.
-   * </p>
+   * `super.runTests` (in `args.reporter`) as well as a defined `DistributedTestSorter`
+   * (in args.distributedTestSorter) that can be used to communicate with the sorting reporter. Otherwise, if `args.runTestInNewInstance` is
+   * `true` or `args.distributor` is empty, this trait's implementation of this method simply calls `super.runTests`,
+   * passing along the same `testName` and `args`.
+   * 
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
    */
   protected abstract override def runTests(testName: Option[String], args: Args): Status = {
     val newArgs =
@@ -98,52 +93,48 @@ trait ParallelTestExecution extends OneInstancePerTest { this: Suite =>
   }
 
   /**
-   * Modifies the behavior of <code>super.runTest</code> to facilitate parallel test execution.
+   * Modifies the behavior of `super.runTest` to facilitate parallel test execution.
    *
-   * <p>
    * This trait's implementation of this method only changes the supertrait implementation if
-   * <code>args.distributor</code> is defined. If <code>args.distributor</code> is empty, it
-   * simply invokes <code>super.runTests</code>, passing along the same <code>testName</code>
-   * and <code>args</code> object.
-   * </p>
+   * `args.distributor` is defined. If `args.distributor` is empty, it
+   * simply invokes `super.runTests`, passing along the same `testName`
+   * and `args` object.
+   * 
    *
-   * <p>
-   * If <code>args.distributor</code> is defined, then it uses the <code>args.runTestInNewInstance</code>
-   * flag to decide what to do. If <code>runTestInNewInstance</code>
-   * is <code>true</code>, this is the general instance responsible for running all tests, so
-   * it first notifies <code>args.distributedTestSorter</code> (if defined) that it is
-   * distributing this test by invoking <code>distributingTest</code> on it, passing in the
-   * <code>testName</code>. Then it wraps a new instance of this class, obtained by invoking
-   * <code>newInstance</code> in a suite whose run method will ensure that only the test whose
-   * name was passed to this method as <code>testName</code> is executed. Finally, this trait's
+   * If `args.distributor` is defined, then it uses the `args.runTestInNewInstance`
+   * flag to decide what to do. If `runTestInNewInstance`
+   * is `true`, this is the general instance responsible for running all tests, so
+   * it first notifies `args.distributedTestSorter` (if defined) that it is
+   * distributing this test by invoking `distributingTest` on it, passing in the
+   * `testName`. Then it wraps a new instance of this class, obtained by invoking
+   * `newInstance` in a suite whose run method will ensure that only the test whose
+   * name was passed to this method as `testName` is executed. Finally, this trait's
    * implementation of this method submits this wrapper suite to the distributor.
-   * </p>
+   * 
    *
-   * <p>
-   * If <code>runTestInNewInstance</code> is <code>false</code>, this is the test-specific (distributed)
-   * instance, so this trait's implementation of this method simply invokes <code>super.runTest</code>,
-   * passing along the same <code>testName</code> and <code>args</code> object, delegating responsibility
-   * for actually running the test to the super implementation. After <code>super.runTest</code> returns
-   * (or completes abruptly by throwing an exception), it notifies <code>args.distributedTestSorter</code>
-   * (if defined) that it has completed running the test by invoking <code>completedTest</code> on it,
-   * passing in the <code>testName</code>.
-   * </p>
+   * If `runTestInNewInstance` is `false`, this is the test-specific (distributed)
+   * instance, so this trait's implementation of this method simply invokes `super.runTest`,
+   * passing along the same `testName` and `args` object, delegating responsibility
+   * for actually running the test to the super implementation. After `super.runTest` returns
+   * (or completes abruptly by throwing an exception), it notifies `args.distributedTestSorter`
+   * (if defined) that it has completed running the test by invoking `completedTest` on it,
+   * passing in the `testName`.
+   * 
    *
-   * <p>
-   * Note: this trait's implementation of this method is <code>final</code> to ensure that
-   * any other desired <code>runTest</code> behavior is executed by the same thread that executes
-   * the test. For example, if you were to mix in <code>BeforeAndAfter</code> after
-   * <code>ParallelTestExecution</code>, the <code>before</code> and <code>after</code> code would
+   * Note: this trait's implementation of this method is `final` to ensure that
+   * any other desired `runTest` behavior is executed by the same thread that executes
+   * the test. For example, if you were to mix in `BeforeAndAfter` after
+   * `ParallelTestExecution`, the `before` and `after` code would
    * be executed by the general instance on the main test thread, rather than by the test-specific
-   * instance on the distributed thread. Marking this method <code>final</code> ensures that
-   * traits like <code>BeforeAndAfter</code> can only be "super" to <code>ParallelTestExecution</code>
-   * and, therefore, that its <code>before</code> and <code>after</code> code will be run
+   * instance on the distributed thread. Marking this method `final` ensures that
+   * traits like `BeforeAndAfter` can only be "super" to `ParallelTestExecution`
+   * and, therefore, that its `before` and `after` code will be run
    * by the same distributed thread that runs the test itself.
-   * </p>
+   * 
    *
    * @param testName the name of one test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
    */
   final protected abstract override def runTest(testName: String, args: Args): Status = {
 
@@ -174,29 +165,27 @@ trait ParallelTestExecution extends OneInstancePerTest { this: Suite =>
   }
 
   /**
-   * Construct a new instance of this <code>Suite</code>.
+   * Construct a new instance of this `Suite`.
    *
-   * <p>
-   * This trait's implementation of <code>runTests</code> invokes this method to create
-   * a new instance of this <code>Suite</code> for each test. This trait's implementation
-   * of this method uses reflection to call <code>this.getClass.newInstance</code>. This
-   * approach will succeed only if this <code>Suite</code>'s class has a public, no-arg
+   * This trait's implementation of `runTests` invokes this method to create
+   * a new instance of this `Suite` for each test. This trait's implementation
+   * of this method uses reflection to call `this.getClass.newInstance`. This
+   * approach will succeed only if this `Suite`'s class has a public, no-arg
    * constructor. In most cases this is likely to be true, because to be instantiated
-   * by ScalaTest's <code>Runner</code> a <code>Suite</code> needs a public, no-arg
-   * constructor. However, this will not be true of any <code>Suite</code> defined as
+   * by ScalaTest's `Runner` a `Suite` needs a public, no-arg
+   * constructor. However, this will not be true of any `Suite` defined as
    * an inner class of another class or trait, because every constructor of an inner
    * class type takes a reference to the enclosing instance. In such cases, and in
-   * cases where a <code>Suite</code> class is explicitly defined without a public,
+   * cases where a `Suite` class is explicitly defined without a public,
    * no-arg constructor, you will need to override this method to construct a new
-   * instance of the <code>Suite</code> in some other way.
-   * </p>
+   * instance of the `Suite` in some other way.
+   * 
    *
-   * <p>
-   * Here's an example of how you could override <code>newInstance</code> to construct
+   * Here's an example of how you could override `newInstance` to construct
    * a new instance of an inner class:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * import org.scalatest.Suite
    *
    * class Outer {
@@ -206,7 +195,7 @@ trait ParallelTestExecution extends OneInstancePerTest { this: Suite =>
    *     override def newInstance = new InnerSuite
    *   }
    * }
-   * </pre>
+   * }}}
    */
   // SKIP-SCALATESTJS-START
   override def newInstance: Suite with ParallelTestExecution = {
@@ -218,42 +207,39 @@ trait ParallelTestExecution extends OneInstancePerTest { this: Suite =>
 
   /**
    * A maximum amount of time to wait for out-of-order events generated by running the tests
-   * of this <code>Suite</code> in parallel while sorting the events back into a more
+   * of this `Suite` in parallel while sorting the events back into a more
    * user-friendly, sequential order.
    *
-   * <p>
-   * The default implementation of this method returns the value specified via <code>-T</code> to
-   * <a href="tools/Runner$.html"></code>Runner</code></a>, or 2 seconds, if no <code>-T</code> was supplied.
-   * </p>
+   * The default implementation of this method returns the value specified via `-T` to
+   * <a href="tools/Runner$.html">`Runner`</a>, or 2 seconds, if no `-T` was supplied.
+   * 
    *
    * @return a maximum amount of time to wait for events while resorting them into sequential order
    */
   protected def sortingTimeout: Span = Suite.testSortingReporterTimeout
 
   /**
-   * Modifies the behavior of <code>super.run</code> to facilitate parallel test execution.
+   * Modifies the behavior of `super.run` to facilitate parallel test execution.
    *
-   * <p>
    * This trait's implementation of this method only changes the supertrait implementation if both
-   * <code>testName</code> and <code>args.distributedTestSorter</code> are defined. If either
-   * <code>testName</code> or <code>args.distributedTestSorter</code> is empty, it
-   * simply invokes <code>super.run</code>, passing along the same <code>testName</code>
-   * and <code>args</code> object.
-   * </p>
+   * `testName` and `args.distributedTestSorter` are defined. If either
+   * `testName` or `args.distributedTestSorter` is empty, it
+   * simply invokes `super.run`, passing along the same `testName`
+   * and `args` object.
+   * 
    *
-   * <p>
-   * If both <code>testName</code> and <code>args.distributedTestSorter</code> are defined, however,
-   * this trait's implementation of this method will create a "test-specific reporter" whose <code>apply</code>
-   * method will invoke the <code>apply</code> method of the <code>DistributedTestSorter</code>, which takes
-   * a test name as well as the event. It will then invoke <code>super.run</code> passing along
-   * the same <code>testName</code> and an <code>Args</code> object that is the same except with the
+   * If both `testName` and `args.distributedTestSorter` are defined, however,
+   * this trait's implementation of this method will create a "test-specific reporter" whose `apply`
+   * method will invoke the `apply` method of the `DistributedTestSorter`, which takes
+   * a test name as well as the event. It will then invoke `super.run` passing along
+   * the same `testName` and an `Args` object that is the same except with the
    * original reporter replaced by the test-specific reporter.
-   * </p>
+   * 
    *
-   * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
-   *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to execute. If `None`, all relevant tests should be executed.
+   *                 I.e., `None` acts like a wildcard that means execute all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
    */
   abstract override def run(testName: Option[String], args: Args): Status = {
     (testName, args.distributedTestSorter) match {

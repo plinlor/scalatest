@@ -16,20 +16,19 @@
 package org.scalatest
 
 /**
- * Trait mixed into the result type of the <code>pending</code> statement of trait <code>Assertions</code>, which always throws <code>TestPendingException</code>. 
+ * Trait mixed into the result type of the `pending` statement of trait `Assertions`, which always throws `TestPendingException`. 
  *
- * <p>
- * This type is used primarily to facilitate the <code>is (pending)</code> syntax of
- * traits <a href="FlatSpec.html"><code>FlatSpec</code></a>, <a href="WordSpec.html"><code>WordSpec</code></a>, and
- * <a href="FlatSpec.html"><code>FLatSpec</code></a> as well the
- * <code>is (pending)</code> or <code>(pending)</code> syntax of sibling traits
- * in the <code>org.scalatest.fixture</code> package. Because the <code>pending</code>
- * method in <code>Assertions</code> always completes abruptly with an exception, its
- * type would be inferred to be <code>Nothing</code>, which is a relatively common
- * type. To make sure syntax like <code>is (pending)</code> only works with
- * method <code>pending</code>, it is helpful to have a specially named
- * "<code>Nothing</code>" type.
- * </p>
+ * This type is used primarily to facilitate the `is (pending)` syntax of
+ * traits <a href="FlatSpec.html">`FlatSpec`</a>, <a href="WordSpec.html">`WordSpec`</a>, and
+ * <a href="FlatSpec.html">`FLatSpec`</a> as well the
+ * `is (pending)` or `(pending)` syntax of sibling traits
+ * in the `org.scalatest.fixture` package. Because the `pending`
+ * method in `Assertions` always completes abruptly with an exception, its
+ * type would be inferred to be `Nothing`, which is a relatively common
+ * type. To make sure syntax like `is (pending)` only works with
+ * method `pending`, it is helpful to have a specially named
+ * "`Nothing`" type.
+ * 
  */
 sealed trait PendingStatement
 

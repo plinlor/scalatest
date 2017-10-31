@@ -21,7 +21,7 @@ import org.scalatest.matchers.MatcherFactory1
 import org.scalatest.matchers.MatcherFactory2
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -32,10 +32,10 @@ final class ResultOfNotExist(notWord: NotWord) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (not (exist) and be (existFile))
    *                        ^
-   * </pre>
+   * }}}
    */
   def and(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] =
     notWord.exist.and(anotherMatcher)
@@ -45,10 +45,10 @@ final class ResultOfNotExist(notWord: NotWord) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (not (exist) and equal (existFile))
    *                        ^
-   * </pre>
+   * }}}
    */
   def and[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
     notWord.exist.and(anotherMatcherFactory)
@@ -56,10 +56,10 @@ final class ResultOfNotExist(notWord: NotWord) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (not (exist) or be (existFile))
    *                        ^
-   * </pre>
+   * }}}
    */
   def or(anotherMatcher: Matcher[Any]): MatcherFactory1[Any, Existence] =
     notWord.exist.or(anotherMatcher)
@@ -67,10 +67,10 @@ final class ResultOfNotExist(notWord: NotWord) {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should (not (exist) or equal (existFile))
    *                        ^
-   * </pre>
+   * }}}
    */
   def or[TYPECLASS1[_]](anotherMatcherFactory: MatcherFactory1[Any, TYPECLASS1]): MatcherFactory2[Any, Existence, TYPECLASS1] = 
     notWord.exist.or(anotherMatcherFactory)  

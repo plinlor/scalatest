@@ -22,37 +22,33 @@ import scala.reflect.ClassTag
 
 /**
  * Trait extended by matcher objects that can match a value of the specified type.
- * <code>AnMatcher</code> represents a noun that appears after the word <code>an</code>, thus a nounName is required.
+ * `AnMatcher` represents a noun that appears after the word `an`, thus a nounName is required.
  *
- * <p>
- * The value to match is passed to the <code>AnMatcher</code>'s <code>apply</code> method. The result is a <code>MatchResult</code>.
- * An <code>AnMatcher</code> is, therefore, a function from the specified type, <code>T</code>, to a <code>MatchResult</code>.
- * </p>
+ * The value to match is passed to the `AnMatcher`'s `apply` method. The result is a `MatchResult`.
+ * An `AnMatcher` is, therefore, a function from the specified type, `T`, to a `MatchResult`.
+ * 
  *
- * <p>
- * Although <code>AnMatcher</code>
- * and <code>Matcher</code> represent very similar concepts, they have no inheritance relationship
- * because <code>Matcher</code> is intended for use right after <code>should</code> or <code>must</code>
- * whereas <code>AnMatcher</code> is intended for use right after <code>an</code>.
- * </p>
+ * Although `AnMatcher`
+ * and `Matcher` represent very similar concepts, they have no inheritance relationship
+ * because `Matcher` is intended for use right after `should` or `must`
+ * whereas `AnMatcher` is intended for use right after `an`.
+ * 
  *
- * <p>
- * As an example, you could create <code>AnMatcher[Int]</code>
- * called <code>oddNumber</code> that would match any odd <code>Int</code>, and one called <code>evenNumber</code> that would match
- * any even <code>Int</code>.
- * Given this pair of <code>AnMatcher</code>s, you could check whether an <code>Int</code> was odd or even number with expressions like:
- * </p>
+ * As an example, you could create `AnMatcher[Int]`
+ * called `oddNumber` that would match any odd `Int`, and one called `evenNumber` that would match
+ * any even `Int`.
+ * Given this pair of `AnMatcher`s, you could check whether an `Int` was odd or even number with expressions like:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * num should be an oddNumber
  * num should not be an evenNumber
- * </pre>
+ * }}}
  *
- * <p>
- * Here's is how you might define the oddNumber and evenNumber <code>AnMatchers</code>:
- * </p>
+ * Here's is how you might define the oddNumber and evenNumber `AnMatchers`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // Using AnMatcher.apply method
  * val oddNumber = AnMatcher[Int]("odd number"){ _ % 2 != 0 }
  *
@@ -66,13 +62,12 @@ import scala.reflect.ClassTag
  *       left + " was an " + nounName
  *     )
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * Here's an rather contrived example of how you might use <code>oddNumber</code> and <code>evenNumber</code>:
- * </p>
+ * Here's an rather contrived example of how you might use `oddNumber` and `evenNumber`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  *
  * val num1 = 1
  * num1 should be an oddNumber
@@ -81,22 +76,20 @@ import scala.reflect.ClassTag
  * num2 should be an evenNumber
  *
  * num1 should be an evenNumber
- * </pre>
+ * }}}
  *
- * <p>
  * The last assertion in the above test will fail with this failure message:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * 1 was not an even number
- * </pre>
+ * }}}
  *
- * <p>
- * For more information on <code>MatchResult</code> and the meaning of its fields, please
- * see the documentation for <a href="MatchResult.html"><code>MatchResult</code></a>. To understand why <code>AnMatcher</code>
+ * For more information on `MatchResult` and the meaning of its fields, please
+ * see the documentation for <a href="MatchResult.html">`MatchResult`</a>. To understand why `AnMatcher`
  * is contravariant in its type parameter, see the section entitled "Matcher's variance" in the
- * documentation for <a href="Matcher.html"><code>Matcher</code></a>.
- * </p>
+ * documentation for <a href="Matcher.html">`Matcher`</a>.
+ * 
  *
  * @tparam T The type used by this AnMatcher's apply method.
  * @author Bill Venners
@@ -104,34 +97,34 @@ import scala.reflect.ClassTag
  */
 private[scalatest] trait AnMatcher[-T] extends Function1[T, MatchResult] {
   /**
-   * The name of the noun that this <code>AnMatcher</code> represents.
+   * The name of the noun that this `AnMatcher` represents.
    */
   val nounName: String
 
   /**
-   * Check to see if the specified object, <code>left</code>, matches, and report the result in
-   * the returned <code>MatchResult</code>. The parameter is named <code>left</code>, because it is
-   * usually the value to the left of a <code>should</code> or <code>must</code> invocation. For example,
+   * Check to see if the specified object, `left`, matches, and report the result in
+   * the returned `MatchResult`. The parameter is named `left`, because it is
+   * usually the value to the left of a `should` or `must` invocation. For example,
    * in:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * num should be an oddNumber
-   * </pre>
+   * }}}
    *
-   * The <code>num should be</code> expression results in a regular <a href="../Matchers$ResultOfBeWordForAny.html"><code>ResultOfBeWordForAny</code></a> that hold
-   * a reference to <code>num</code> and has a method named <code>an</code> that takes a <code>AnMatcher</code>.  The <code>an</code> method
-   * calls <code>AnMatcher</code>'s apply method by passing in the <code>num</code>, and check if <code>num</code> matches.
+   * The `num should be` expression results in a regular <a href="../Matchers$ResultOfBeWordForAny.html">`ResultOfBeWordForAny`</a> that hold
+   * a reference to `num` and has a method named `an` that takes a `AnMatcher`.  The `an` method
+   * calls `AnMatcher`'s apply method by passing in the `num`, and check if `num` matches.
    *
    * @param left the value against which to match
-   * @return the <code>MatchResult</code> that represents the result of the match
+   * @return the `MatchResult` that represents the result of the match
    */
   def apply(left: T): MatchResult
 }
 
 /**
- * Companion object for trait <code>AnMatcher</code> that provides a
- * factory method that creates a <code>AnMatcher[T]</code> from a
- * passed noun name and function of type <code>(T =&gt; MatchResult)</code>.
+ * Companion object for trait `AnMatcher` that provides a
+ * factory method that creates a `AnMatcher[T]` from a
+ * passed noun name and function of type `(T =&gt; MatchResult)`.
  *
  * @author Bill Venners
  * @author Chee Seng
@@ -139,12 +132,12 @@ private[scalatest] trait AnMatcher[-T] extends Function1[T, MatchResult] {
 private[scalatest] object AnMatcher {
 
   /**
-   * Factory method that creates a <code>AnMatcher[T]</code> from a
-   * passed noun name and function of type <code>(T =&gt; MatchResult)</code>.
+   * Factory method that creates a `AnMatcher[T]` from a
+   * passed noun name and function of type `(T =&gt; MatchResult)`.
    *
    * @param name the noun name
-   * @param fun the function of type <code>(T =&gt; MatchResult)</code>
-   * @return <code>AnMatcher</code> instance that has the passed noun name and matches using the passed function
+   * @param fun the function of type `(T =&gt; MatchResult)`
+   * @return `AnMatcher` instance that has the passed noun name and matches using the passed function
    * @author Bill Venners
    * @author Chee Seng
    */

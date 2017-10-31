@@ -17,16 +17,15 @@ package org.scalatest.words
 
 
 /**
- * Class that supports the use of <em>after words</em> in <code>WordSpec</code>
- * and <code>fixture.WordSpec</code>.
+ * Class that supports the use of ''after words'' in `WordSpec`
+ * and `fixture.WordSpec`.
  *
- * <p>
- * A <code>ResultOfAfterWordApplication</code>, which encapsulates the text of the after word
+ * A `ResultOfAfterWordApplication`, which encapsulates the text of the after word
  * and a block,
- * is accepted by <code>when</code>, <code>should</code>, <code>must</code>, <code>can</code>, and <code>that</code>
+ * is accepted by `when`, `should`, `must`, `can`, and `that`
  * methods.  For more information, see the
- * <a href="../WordSpec.html#AfterWords">main documentation</code></a> for trait <code>WordSpec</code>.
- * </p>
+ * <a href="../WordSpec.html#AfterWords">main documentation`</a> for trait `WordSpec`.
+ * 
  */
 final class ResultOfAfterWordApplication(val text: String, val f: () => Unit) {
   /**

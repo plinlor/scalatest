@@ -20,24 +20,22 @@ import org.scalactic.source
 /**
  * Trait to which custom information about a running suite of tests can be reported.
  * 
- * <p>
- * An <code>Informer</code> is essentially
- * used to wrap a <code>Reporter</code> and provide easy ways to send custom information
- * to that <code>Reporter</code> via an <code>InfoProvided</code> event.
- * <code>Informer</code> contains an <code>apply</code> method that takes a string and
- * an optional payload object of type <code>Any</code>.
- * The <code>Informer</code> will forward the passed <code>message</code> string to the
- * <a href="Reporter.html"><code>Reporter</code></a> as the <code>message</code> parameter, and the optional
- * payload object as the <code>payload</code> parameter, of an <a href="InfoProvided.html"><code>InfoProvided</code></a> event.
- * </p>
- *
- * <p>
- * Here's an example in which the <code>Informer</code> is used both directly via <code>info</code>
- * method of trait <a href="FlatSpec.html"><code>FlatSpec</code></a> and indirectly via the methods of
- * trait <a href="GivenWhenThen.html"><code>GivenWhenThen</code></a>:
- * </p>
+ * An `Informer` is essentially
+ * used to wrap a `Reporter` and provide easy ways to send custom information
+ * to that `Reporter` via an `InfoProvided` event.
+ * `Informer` contains an `apply` method that takes a string and
+ * an optional payload object of type `Any`.
+ * The `Informer` will forward the passed `message` string to the
+ * <a href="Reporter.html">`Reporter`</a> as the `message` parameter, and the optional
+ * payload object as the `payload` parameter, of an <a href="InfoProvided.html">`InfoProvided`</a> event.
  * 
- * <pre class="stHighlight">
+ *
+ * Here's an example in which the `Informer` is used both directly via `info`
+ * method of trait <a href="FlatSpec.html">`FlatSpec`</a> and indirectly via the methods of
+ * trait <a href="GivenWhenThen.html">`GivenWhenThen`</a>:
+ * 
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.flatspec.info
  * 
  * import collection.mutable
@@ -61,13 +59,12 @@ import org.scalactic.source
  *     info("That's all folks!")
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * If you run this <code>SetSpec</code> from the interpreter, you will see the following output:
- * </p>
+ * If you run this `SetSpec` from the interpreter, you will see the following output:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; org.scalatest.run(new SetSpec)
  * <span class="stGreen">A mutable Set
  * - should allow an element to be added
@@ -76,22 +73,22 @@ import org.scalactic.source
  *   + Then the Set should have size 1 
  *   + And the Set should contain the added element 
  *   + That's all folks! </span>
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 trait Informer {
        // TODO: Make sure all the informer implementations check for null
   /**
-   * Provide information and optionally, a payload, to the <code>Reporter</code> via an
-   * <code>InfoProvided</code> event.
+   * Provide information and optionally, a payload, to the `Reporter` via an
+   * `InfoProvided` event.
    *
-   * @param message a string that will be forwarded to the wrapped <code>Reporter</code>
-   *   via an <code>InfoProvided</code> event.
-   * @param payload an optional object which will be forwarded to the wrapped <code>Reporter</code>
-   *   as a payload via an <code>InfoProvided</code> event.
+   * @param message a string that will be forwarded to the wrapped `Reporter`
+   *   via an `InfoProvided` event.
+   * @param payload an optional object which will be forwarded to the wrapped `Reporter`
+   *   as a payload via an `InfoProvided` event.
    *
-   * @throws NullArgumentException if <code>message</code> or <code>payload</code> reference is <code>null</code>
+   * @throws NullArgumentException if `message` or `payload` reference is `null`
    */
   def apply(message: String, payload: Option[Any] = None)(implicit pos: source.Position): Unit
 }

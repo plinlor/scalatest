@@ -18,29 +18,28 @@ package org.scalatest.words
 import scala.util.matching.Regex
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
- * <p>
- * The primary constructor enables the following syntax (with a passed <code>scala.util.matching.Regex</code>): 
- * </p>
+ * The primary constructor enables the following syntax (with a passed `scala.util.matching.Regex`): 
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""".r)
  *                               ^
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 final class ResultOfRegexWordApplication(val regex: Regex, val groups: IndexedSeq[String]) {
 
   /**
-   * This auxiliary constructor enables the following syntax (with a passed <code>java.lang.String</code>): 
+   * This auxiliary constructor enables the following syntax (with a passed `java.lang.String`): 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "eight" should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
    *                               ^
-   * </pre>
+   * }}}
    */
   def this(regexString: String, groups: IndexedSeq[String]) = this(new Regex(regexString), groups)
   

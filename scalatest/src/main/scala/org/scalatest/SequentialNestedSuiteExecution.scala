@@ -19,22 +19,22 @@ import org.scalactic.Requirements._
 
 /**
  * Trait that causes the nested suites of any suite it is mixed into to be run sequentially even if
- * a <code>Distributor</code> is passed to <code>runNestedSuites</code>. This trait overrides the 
- * <code>runNestedSuites</code> method and fowards every parameter passed to it to a superclass invocation
- * of <code>runNestedSuites</code>, except it always passes <code>None</code> for the <code>Distributor</code>.
+ * a `Distributor` is passed to `runNestedSuites`. This trait overrides the 
+ * `runNestedSuites` method and fowards every parameter passed to it to a superclass invocation
+ * of `runNestedSuites`, except it always passes `None` for the `Distributor`.
  * Mix in this trait into any suite whose nested suites need to be run sequentially even with the rest of the
  * run is being executed concurrently.
  */
 trait SequentialNestedSuiteExecution extends SuiteMixin { this: Suite =>
 
   /**
-   * This trait's implementation of <code>runNestedSuites</code>s invokes <code>runNestedSuites</code> on <code>super</code>,
-   * passing in <code>None</code> for the <code>Distributor</code>.
+   * This trait's implementation of `runNestedSuites`s invokes `runNestedSuites` on `super`,
+   * passing in `None` for the `Distributor`.
    *
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullArgumentException if any passed parameter is <code>null</code>.
+   * @throws NullArgumentException if any passed parameter is `null`.
    */
   abstract override protected def runNestedSuites(args: Args): Status = {
     requireNonNull(args)

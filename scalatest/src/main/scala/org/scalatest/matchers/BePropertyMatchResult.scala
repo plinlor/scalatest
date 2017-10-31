@@ -16,19 +16,18 @@
 package org.scalatest.matchers
 
 /**
- * The result of a <code>Boolean</code> property match operation, such as one performed by a
- * <a href="BePropertyMatcher.html"><code>BePropertyMatcher</code></a>,
- * which contains one field that indicates whether the match succeeded (<em>i.e.</em>, the <code>Boolean</code>
- * property was <code>true</code>) and one field that provides
+ * The result of a `Boolean` property match operation, such as one performed by a
+ * <a href="BePropertyMatcher.html">`BePropertyMatcher`</a>,
+ * which contains one field that indicates whether the match succeeded (''i.e.'', the `Boolean`
+ * property was `true`) and one field that provides
  * the name of the property.
  *
- * <p>
- * For an example of a <code>BePropertyMatchResult</code> in action, see the documentation for
- * <a href="BePropertyMatcher.html"><code>BePropertyMatcher</code></a>.
- * </p>
+ * For an example of a `BePropertyMatchResult` in action, see the documentation for
+ * <a href="BePropertyMatcher.html">`BePropertyMatcher`</a>.
+ * 
  *
- * @param matches indicates whether or not the matcher matched (if the <code>Boolean</code> property was true, it was a match)
- * @param propertyName the name of the <code>Boolean</code> property that was matched against
+ * @param matches indicates whether or not the matcher matched (if the `Boolean` property was true, it was a match)
+ * @param propertyName the name of the `Boolean` property that was matched against
  *
  * @author Bill Venners
  */
@@ -38,7 +37,7 @@ final case class BePropertyMatchResult(
 )
 
 /**
- * Companion object for the <code>BePropertyMatchResult</code> case class.
+ * Companion object for the `BePropertyMatchResult` case class.
  *
  * @author Bill Venners
  */

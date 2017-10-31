@@ -25,7 +25,7 @@ import scala.collection.GenTraversable
 import scala.collection.GenSeq
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -35,10 +35,10 @@ final class HaveWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * book should have length (9)
    *                  ^
-   * </pre>
+   * }}}
    */
   def length(expectedLength: Long): MatcherFactory1[Any, Length] =
     new MatcherFactory1[Any, Length] {
@@ -64,17 +64,16 @@ final class HaveWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * book should have size (9)
    *                  ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Currently, this method will produce a <code>Matcher[AnyRef]</code>, and if the
-   * <code>AnyRef</code> passed to that matcher's <code>apply</code> method does not have the appropriate <code>size</code> property
-   * structure, all will compile but a <code>TestFailedException</code> will result at runtime explaining the problem.
+   * Currently, this method will produce a `Matcher[AnyRef]`, and if the
+   * `AnyRef` passed to that matcher's `apply` method does not have the appropriate `size` property
+   * structure, all will compile but a `TestFailedException` will result at runtime explaining the problem.
    * In a future ScalaTest release, this may be tightened so that all is statically checked at compile time.
-   * </p>
+   * 
    */
   def size(expectedSize: Long): MatcherFactory1[Any, Size] =
     new MatcherFactory1[Any, Size] {
@@ -100,10 +99,10 @@ final class HaveWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should have message ("A message from Mars!")
    *                    ^
-   * </pre>
+   * }}}
    */
   def message(expectedMessage: String): MatcherFactory1[Any, Messaging] =
     new MatcherFactory1[Any, Messaging] {
@@ -127,23 +126,23 @@ final class HaveWord {
     }
 
   /**
-   * Enables parentheses to be placed around <code>length (N)</code> in expressions of the form: <code>should have (length (N))</code>.
+   * Enables parentheses to be placed around `length (N)` in expressions of the form: `should have (length (N))`.
    */
   def apply[T](resultOfLengthWordApplication: ResultOfLengthWordApplication): MatcherFactory1[Any, Length] = length(resultOfLengthWordApplication.expectedLength)
 
 
   /**
-   * Enables parentheses to be placed around <code>size (N)</code> in expressions of the form: <code>should have (size (N))</code>.
+   * Enables parentheses to be placed around `size (N)` in expressions of the form: `should have (size (N))`.
    */
   def apply[T](resultOfSizeWordApplication: ResultOfSizeWordApplication): MatcherFactory1[Any, Size] = size(resultOfSizeWordApplication.expectedSize)
 
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * book should have (title ("A Tale of Two Cities"))
    *                  ^
-   * </pre>
+   * }}}
    */
   def apply[T](firstPropertyMatcher: HavePropertyMatcher[T, _], propertyMatchers: HavePropertyMatcher[T, _]*): Matcher[T] =
 

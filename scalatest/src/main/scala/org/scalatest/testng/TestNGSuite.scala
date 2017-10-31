@@ -19,10 +19,10 @@ package org.scalatest.testng
 
 /**
  * A suite of tests that can be run with either TestNG or ScalaTest. This class allows you to mark any
- * method as a test using TestNG's <code>@Test</code> annotation, and supports all other TestNG annotations.
+ * method as a test using TestNG's `@Test` annotation, and supports all other TestNG annotations.
  * Here's an example:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest.testng.TestNGSuite
  * import org.testng.annotations.Test
  * import org.testng.annotations.Configuration
@@ -54,12 +54,11 @@ package org.scalatest.testng
  *     assert(lb.isEmpty)
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * To execute <code>TestNGSuite</code>s with ScalaTest's <code>Runner</code>, you must include TestNG's jar file on the class path or runpath.
- * This version of <code>TestNGSuite</code> was tested with TestNG version 6.3.1.
- * </p>
+ * To execute `TestNGSuite`s with ScalaTest's `Runner`, you must include TestNG's jar file on the class path or runpath.
+ * This version of `TestNGSuite` was tested with TestNG version 6.3.1.
+ * 
  *
  * @author Josh Cough
  * @author Bill Venners

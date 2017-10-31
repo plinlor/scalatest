@@ -29,22 +29,20 @@ import Suite.wrapReporterIfNecessary
 import events.MotionToSuppress
 
 /**
- * Implementation trait for class <code>TestNGSuite</code>, which represents
+ * Implementation trait for class `TestNGSuite`, which represents
  * a suite of tests that can be run with either TestNG or ScalaTest.
  * 
- * <p>
- * <a href="TestNGSuite.html"><code>TestNGSuite</code></a> is a class, not a
+ * <a href="TestNGSuite.html">`TestNGSuite`</a> is a class, not a
  * trait, to minimize compile time given there is a slight compiler overhead to
  * mixing in traits compared to extending classes. If you need to mix the
- * behavior of <code>TestNGSuite</code> into some other class, you can use this
- * trait instead, because class <code>TestNGSuite</code> does nothing more than
+ * behavior of `TestNGSuite` into some other class, you can use this
+ * trait instead, because class `TestNGSuite` does nothing more than
  * extend this trait.
- * </p>
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="TestNGSuite.html">detailed
- * overview of <code>TestNGSuite</code></a>.
- * </p>
+ * overview of `TestNGSuite`</a>.
+ * 
  *
  * @author Bill Venners
  */
@@ -137,11 +135,11 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
 */
 
   /**
-   * Execute this <code>TestNGSuite</code>.
+   * Execute this `TestNGSuite`.
    * 
-   * @param testName an optional name of one test to execute. If <code>None</code>, this class will execute all relevant tests.
-   *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>TestNGSuite</code>.
-   * @param args the <code>Args</code> for this run
+   * @param testName an optional name of one test to execute. If `None`, this class will execute all relevant tests.
+   *                 I.e., `None` acts like a wildcard that means execute all relevant tests in this `TestNGSuite`.
+   * @param args the `Args` for this run
    */
   override def run(testName: Option[String], args: Args): Status = {
     import args._
@@ -412,18 +410,17 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
   */
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * trait, given this trait's <code>run</code> method delegates to TestNG to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * trait, given this trait's `run` method delegates to TestNG to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
-   * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
+   * to mix in a trait that overrides `runNestedSuites`. Because this
+   * trait does not actually use `runNestedSuites`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -433,20 +430,19 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
   }
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * trait, given this trait's <code>run</code> method delegates to TestNG to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * trait, given this trait's `run` method delegates to TestNG to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTests</code>. Because this
-   * trait does not actually use <code>runTests</code>, the attempt to mix
+   * to mix in a trait that overrides `runTests`. Because this
+   * trait does not actually use `runTests`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -455,19 +451,18 @@ trait TestNGSuiteLike extends Suite { thisSuite =>
   }
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * trait, given this trait's <code>run</code> method delegates to TestNG to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * trait, given this trait's `run` method delegates to TestNG to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTest</code>. Because this
-   * trait does not actually use <code>runTest</code>, the attempt to mix
+   * to mix in a trait that overrides `runTest`. Because this
+   * trait does not actually use `runTest`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */

@@ -17,7 +17,7 @@ package org.scalatest.tools
 
 
 /**
- * A <code>Reporter</code> that prints test status information to
+ * A `Reporter` that prints test status information to
  * the standard error stream.
  *
  * @author Bill Venners

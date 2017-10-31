@@ -21,16 +21,16 @@ import org.scalactic.source
 /**
  * Exception that indicates a <a href="http://www.artima.com/shop/scalacheck">ScalaCheck</a> property check failed.
  *
- * @param messageFun a function that returns a detail message (not optional) for this <code>GeneratorDrivenPropertyCheckFailedException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>GeneratorDrivenPropertyCheckFailedException</code> to be thrown.
+ * @param messageFun a function that returns a detail message (not optional) for this `GeneratorDrivenPropertyCheckFailedException`.
+ * @param cause an optional cause, the `Throwable` that caused this `GeneratorDrivenPropertyCheckFailedException` to be thrown.
  * @param posOrStackDepthFun either a source position or a function that returns the depth in the stack trace of this exception at which the line of test code that failed resides.
- * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestFailed</code> event
+ * @param payload an optional payload, which ScalaTest will include in a resulting `TestFailed` event
  * @param undecoratedMessage just a short message that has no redundancy with args, labels, etc. The regular "message" has everything in it.
  * @param args the argument values, if any, that caused the property check to fail.
  * @param namesOfArgs an optional list of string names for the arguments.
  * @param labels the labels, if any (see the ScalaCheck user guide for information on labels)
  *
- * @throws NullArgumentException if any parameter is <code>null</code> or <code>Some(null)</code>.
+ * @throws NullArgumentException if any parameter is `null` or `Some(null)`.
  *
  * @author Bill Venners
  */
@@ -48,7 +48,7 @@ class GeneratorDrivenPropertyCheckFailedException(
 ) {
 
   /**
-    * Constructs a <code>GeneratorDrivenPropertyCheckFailedException</code> with the given message function, cause exception, source position, payload,
+    * Constructs a `GeneratorDrivenPropertyCheckFailedException` with the given message function, cause exception, source position, payload,
     * undecorated message, argument values, names and labels.
     *
     * @param messageFun the message function
@@ -73,7 +73,7 @@ class GeneratorDrivenPropertyCheckFailedException(
   ) = this(messageFun, cause, Left(pos), payload, undecoratedMessage, args, namesOfArgs, labels)
 
   /**
-    * Constructs a <code>GeneratorDrivenPropertyCheckFailedException</code> with the given message function, cause exception, stack depth function,
+    * Constructs a `GeneratorDrivenPropertyCheckFailedException` with the given message function, cause exception, stack depth function,
     * payload, undecorated message, argument values, names and labels.
     *
     * @param messageFun the message function
@@ -99,10 +99,10 @@ class GeneratorDrivenPropertyCheckFailedException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the detail message option string replaced with the result of passing
-   * the current detail message to the passed function, <code>fun</code>.
+   * the current detail message to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional detail message, will produce
-   * the modified optional detail message for the result instance of <code>GeneratorDrivenPropertyCheckFailedException</code>.
+   * the modified optional detail message for the result instance of `GeneratorDrivenPropertyCheckFailedException`.
    */
   override def modifyMessage(fun: Option[String] => Option[String]): GeneratorDrivenPropertyCheckFailedException = {
     val mod =
@@ -123,10 +123,10 @@ class GeneratorDrivenPropertyCheckFailedException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with the result of passing
-   * the current payload option to the passed function, <code>fun</code>.
+   * the current payload option to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional payload, will produce
-   * the modified optional payload for the result instance of <code>TableDrivenPropertyCheckFailedException</code>.
+   * the modified optional payload for the result instance of `TableDrivenPropertyCheckFailedException`.
    */
   override def modifyPayload(fun: Option[Any] => Option[Any]): GeneratorDrivenPropertyCheckFailedException = {
     val currentPayload = payload

@@ -19,15 +19,14 @@ import scala.xml.{NodeSeq}
 import org.scalactic.{NormMethods, Uniformity}
 
 /**
- * Subtrait of <a href="../scalactic/NormMethods.html"><code>NormMethods</code></a> that provides
- * an implicit <code>Uniformity[T]</code> for subtypes of <code>scala.xml.NodeSeq</code> that enables
- * you to streamline XML by invoking <code>.norm</code> on it.
+ * Subtrait of <a href="../scalactic/NormMethods.html">`NormMethods`</a> that provides
+ * an implicit `Uniformity[T]` for subtypes of `scala.xml.NodeSeq` that enables
+ * you to streamline XML by invoking `.norm` on it.
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; &lt;good&gt;&lt;day&gt;sunshine&lt;/day&gt;&lt;/good&gt; == &lt;good&gt;
  *      |   &lt;day&gt;
  *      |     sunshine
@@ -50,29 +49,28 @@ import org.scalactic.{NormMethods, Uniformity}
  *      |   &lt;/day&gt;
  *      | &lt;/good&gt;.norm
  * res2: Boolean = true
- * </pre>
+ * }}}
  */
 trait StreamlinedXmlNormMethods extends StreamlinedXml with NormMethods {
 
   /**
-   * Provides an implicit <a href="../scalactic/Uniformity.html"><code>Uniformity[T]</code></a>
-   * instance for any subtype of <code>scala.xml.NodeSeq</code> that will normalize the XML by removing empty text nodes and trimming
+   * Provides an implicit <a href="../scalactic/Uniformity.html">`Uniformity[T]`</a>
+   * instance for any subtype of `scala.xml.NodeSeq` that will normalize the XML by removing empty text nodes and trimming
    * non-empty text nodes.
    *
-   * <p>
-   * This <code>Uniformity[T]</code> enables normalization of XML by invoking the <code>.norm</code>
-   * method on subtypes of <code>scala.xml.NodeSeq</code>.  See the main documentation for this trait for more
+   * This `Uniformity[T]` enables normalization of XML by invoking the `.norm`
+   * method on subtypes of `scala.xml.NodeSeq`.  See the main documentation for this trait for more
    * details and examples.
-   * </p>
+   * 
    *
-   * @return a <code>Uniformity[T]</code> instance that normalizes XML for testing
+   * @return a `Uniformity[T]` instance that normalizes XML for testing
    */
   implicit override def streamlined[T <: NodeSeq]: Uniformity[T] = super.streamlined[T]
 }
 
 /**
- * Companion object that facilitates the importing of <code>StreamlinedXmlNormMethods</code> members as 
- * an alternative to mixing it the trait. One use case is to import <code>StreamlinedXmlNormMethods</code>'s implicit so you can use
+ * Companion object that facilitates the importing of `StreamlinedXmlNormMethods` members as 
+ * an alternative to mixing it the trait. One use case is to import `StreamlinedXmlNormMethods`'s implicit so you can use
  * it in the Scala interpreter.
  *
  * @author Bill Venners

@@ -29,13 +29,11 @@ import org.junit.runner.notification.RunListener
 import org.scalatest.Suite
 
 /**
- * <p>
  * A wrapper to allow JUnit tests to be run by the ScalaTest runner.
- * </p>
+ * 
  *
- * <p>
  * Instances of this trait are not thread safe.
- * </p>
+ * 
  *
  * @param junitClassName Fully qualified name of the JUnit suite
  * @param loader Class loader to load the JUnit suite
@@ -55,10 +53,10 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
   /**
    * Overrides to use JUnit to run the tests.
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
    *
    */
   override def run(testName: Option[String], args: Args): Status = {
@@ -81,7 +79,7 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
   /**
    * Overrides to use JUnit's API to retrieve the expected test count.
    *
-   * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
+   * @param filter a `Filter` with which to filter tests to count based on their tags
    * @return number of expected test count
    */
   override def expectedTestCount(filter: Filter): Int = {
@@ -140,18 +138,17 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
   }
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * class, given this class's <code>run</code> method delegates to JUnit to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * class, given this class's `run` method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runNestedSuites</code>. Because this
-   * trait does not actually use <code>runNestedSuites</code>, the attempt to mix
+   * to mix in a trait that overrides `runNestedSuites`. Because this
+   * trait does not actually use `runNestedSuites`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -161,20 +158,19 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
   }
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * class, given this class's <code>run</code> method delegates to JUnit to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * class, given this class's `run` method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTests</code>. Because this
-   * trait does not actually use <code>runTests</code>, the attempt to mix
+   * to mix in a trait that overrides `runTests`. Because this
+   * trait does not actually use `runTests`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */
@@ -183,19 +179,18 @@ class JUnitWrapperSuite(junitClassName: String, loader: ClassLoader) extends Sui
   }
 
   /**
-   * Throws <code>UnsupportedOperationException</code>, because this method is unused by this
-   * class, given this class's <code>run</code> method delegates to JUnit to run
+   * Throws `UnsupportedOperationException`, because this method is unused by this
+   * class, given this class's `run` method delegates to JUnit to run
    * its tests.
    *
-   * <p>
    * The main purpose of this method implementation is to render a compiler error an attempt
-   * to mix in a trait that overrides <code>runTest</code>. Because this
-   * trait does not actually use <code>runTest</code>, the attempt to mix
+   * to mix in a trait that overrides `runTest`. Because this
+   * trait does not actually use `runTest`, the attempt to mix
    * in behavior would very likely not work.
-   * </p>
+   * 
    *
    * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
+   * @param args the `Args` for this run
    *
    * @throws UnsupportedOperationException always.
    */

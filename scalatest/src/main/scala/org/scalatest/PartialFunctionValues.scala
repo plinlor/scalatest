@@ -20,91 +20,86 @@ import org.scalatest.exceptions.StackDepthException
 import org.scalatest.exceptions.TestFailedException
 
 /**
- * Trait that provides an implicit conversion that adds a <code>valueAt</code> method
- * to <code>PartialFunction</code>, which will return the value (result) of the function applied to the argument passed to <code>valueAt</code>,
- * or throw <code>TestFailedException</code> if the partial function is not defined at the argument.
+ * Trait that provides an implicit conversion that adds a `valueAt` method
+ * to `PartialFunction`, which will return the value (result) of the function applied to the argument passed to `valueAt`,
+ * or throw `TestFailedException` if the partial function is not defined at the argument.
  *
- * <p>
  * This construct allows you to express in one statement that a partial function should be defined for a particular input,
  * and that its result value should meet some expectation. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * pf.valueAt("IV") should equal (4)
- * </pre>
+ * }}}
  *
- * <p>
  * Or, using an assertion instead of a matcher expression:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * assert(pf.valueAt("IV") === 4)
- * </pre>
+ * }}}
  *
- * <p>
- * Were you to simply invoke <code>apply</code> on the <code>PartialFunction</code>, passing in an input value, 
+ * Were you to simply invoke `apply` on the `PartialFunction`, passing in an input value, 
  * if the partial function wasn't defined at that input, it would throw some exception, but likely not one
  * that provides a <a href="exceptions/StackDepth.html">stack depth</a>:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * // Note: a Map[K, V] is a PartialFunction[K, V]
  * val pf: PartialFunction[String, Int] = Map("I" -&gt; 1, "II" -&gt; 2, "III" -&gt; 3, "IV" -&gt; 4)
  *
  * pf("V") should equal (5) // pf("V") throws NoSuchElementException
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>NoSuchElementException</code> thrown in this situation would cause the test to fail, but without providing a stack depth pointing
- * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> (and a
+ * The `NoSuchElementException` thrown in this situation would cause the test to fail, but without providing a stack depth pointing
+ * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html">`TestFailedException`</a> (and a
  * few other ScalaTest exceptions), makes it quicker for
- * users to navigate to the cause of the failure. Without <code>PartialFunctionValues</code>, to get
+ * users to navigate to the cause of the failure. Without `PartialFunctionValues`, to get
  * a stack depth exception you would need to make two statements, like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val pf: PartialFunction[String, Int] = Map("I" -&gt; 1, "II" -&gt; 2, "III" -&gt; 3, "IV" -&gt; 4)
  *
  * pf.isDefinedAt("V") should be (true) // throws TestFailedException
  * pf("V") should equal (5)
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>PartialFunctionValues</code> trait allows you to state that more concisely:
- * </p>
+ * The `PartialFunctionValues` trait allows you to state that more concisely:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val pf: PartialFunction[String, Int] = Map("I" -&gt; 1, "II" -&gt; 2, "III" -&gt; 3, "IV" -&gt; 4)
  *
  * pf.valueAt("V") should equal (5) // pf.valueAt("V") throws TestFailedException
- * </pre>
+ * }}}
  */
 trait PartialFunctionValues {
 
   import scala.language.implicitConversions
 
   /**
-   * Implicit conversion that adds a <code>valueAt</code> method to <code>PartialFunction</code>.
+   * Implicit conversion that adds a `valueAt` method to `PartialFunction`.
    *
-   * @param pf the <code>PartialFunction</code> on which to add the <code>valueAt</code> method
+   * @param pf the `PartialFunction` on which to add the `valueAt` method
    */
   implicit def convertPartialFunctionToValuable[A, B](pf: PartialFunction[A, B])(implicit pos: source.Position): Valuable[A, B] = new Valuable(pf, pos)
   
   /**
-   * Wrapper class that adds a <code>valueAt</code> method to <code>PartialFunction</code>, allowing
+   * Wrapper class that adds a `valueAt` method to `PartialFunction`, allowing
    * you to make statements like:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * pf.valueAt("VI") should equal (6)
-   * </pre>
+   * }}}
    *
-   * @param pf An <code>PartialFunction</code> to convert to <code>Valuable</code>, which provides the <code>valueAt</code> method.
+   * @param pf An `PartialFunction` to convert to `Valuable`, which provides the `valueAt` method.
    */
   class Valuable[A, B](pf: PartialFunction[A, B], pos: source.Position) {
 
     /**
-     * Returns the result of applying the wrapped <code>PartialFunction</code> to the passed input, if it is defined at that input, else
-     * throws <code>TestFailedException</code> with a detail message indicating the <code>PartialFunction</code> was not defined at the given input.
+     * Returns the result of applying the wrapped `PartialFunction` to the passed input, if it is defined at that input, else
+     * throws `TestFailedException` with a detail message indicating the `PartialFunction` was not defined at the given input.
      */
     def valueAt(input: A): B = {
       if (pf.isDefinedAt(input)) {
@@ -117,11 +112,11 @@ trait PartialFunctionValues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>PartialFunctionValues</code> members as 
- * an alternative to mixing it in. One use case is to import <code>PartialFunctionValues</code>'s members so you can use
- * the <code>valueAt</code> method on <code>PartialFunction</code> in the Scala interpreter:
+ * Companion object that facilitates the importing of `PartialFunctionValues` members as 
+ * an alternative to mixing it in. One use case is to import `PartialFunctionValues`'s members so you can use
+ * the `valueAt` method on `PartialFunction` in the Scala interpreter:
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * $ scala -cp scalatest-1.7.jar
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
@@ -146,6 +141,6 @@ trait PartialFunctionValues {
  *   at scala.collection.MapLike$class.default(MapLike.scala:224)
  *   at scala.collection.immutable.Map$Map4.default(Map.scala:167)
  *   ...
- * </pre>
+ * }}}
  */
 object PartialFunctionValues extends PartialFunctionValues

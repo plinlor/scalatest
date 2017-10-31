@@ -19,7 +19,7 @@ import org.scalactic.Prettifier
 import org.scalatest.matchers.{MatchPatternMacro, MatchResult, Matcher}
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -32,10 +32,10 @@ final class MatchPatternWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should matchPattern { case Person("Bob", _) => }
    *               ^
-   * </pre>
+   * }}}
    */
   def apply(right: PartialFunction[Any, _]) = macro MatchPatternMacro.matchPatternMatcher
 

@@ -24,15 +24,15 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
 /**
  * Exception that indicates a property check failed.
  *
- * @param messageFun a function that returns a detail message (not optional) for this <code>PropertyCheckFailedException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>PropertyCheckFailedException</code> to be thrown.
+ * @param messageFun a function that returns a detail message (not optional) for this `PropertyCheckFailedException`.
+ * @param cause an optional cause, the `Throwable` that caused this `PropertyCheckFailedException` to be thrown.
  * @param posOrStackDepthFun either a source position or a function that returns the depth in the stack trace of this exception at which the line of test code that failed resides.
- * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestFailed</code> event
+ * @param payload an optional payload, which ScalaTest will include in a resulting `TestFailed` event
  * @param undecoratedMessage just a short message that has no redundancy with args, labels, etc. The regular "message" has everything in it.
  * @param args the argument values that caused the property check to fail.
  * @param optionalArgNames an optional list of string names for the arguments.
  *
- * @throws NullArgumentException if any parameter is <code>null</code> or <code>Some(null)</code>.
+ * @throws NullArgumentException if any parameter is `null` or `Some(null)`.
  *
  * @author Bill Venners
  */
@@ -47,13 +47,13 @@ abstract class PropertyCheckFailedException(
 ) extends TestFailedException((sde: StackDepthException) => Some(messageFun(sde)), cause, posOrStackDepthFun, payload) {
 
   /**
-    * Constructs a <code>PropertyCheckFailedException</code> with given error message function, optional cause, stack depth function,
+    * Constructs a `PropertyCheckFailedException` with given error message function, optional cause, stack depth function,
     * optional payload, undecorated message, arguments values and optional argument names.
     *
-    * @param messageFun a function that returns a detail message (not optional) for this <code>PropertyCheckFailedException</code>
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>PropertyCheckFailedException</code> to be thrown.
+    * @param messageFun a function that returns a detail message (not optional) for this `PropertyCheckFailedException`
+    * @param cause an optional cause, the `Throwable` that caused this `PropertyCheckFailedException` to be thrown.
     * @param failedCodeStackDepthFun a function that returns the depth in the stack trace of this exception at which the line of test code that failed resides
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestFailed</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestFailed` event
     * @param undecoratedMessage just a short message that has no redundancy with args, labels, etc. The regular "message" has everything in it.
     * @param args the argument values that caused the property check to fail.
     * @param optionalArgNames an optional list of string names for the arguments.
@@ -85,12 +85,11 @@ abstract class PropertyCheckFailedException(
   /**
    * A list of names for the arguments that caused the property check to fail.
    *
-   * <p>
-   * If the <code>optionalArgNames</code> class parameter is defined, this method returns
-   * the <code>List[String]</code> contained in the <code>Some</code>. Otherwise, it returns
-   * a list that gives <code>"arg0"</code> for the zeroeth argument, <code>"arg1"</code> for the
-   * first argument, <code>"arg2"</code> for the second argument, and so on.
-   * </p>
+   * If the `optionalArgNames` class parameter is defined, this method returns
+   * the `List[String]` contained in the `Some`. Otherwise, it returns
+   * a list that gives `"arg0"` for the zeroeth argument, `"arg1"` for the
+   * first argument, `"arg2"` for the second argument, and so on.
+   * 
    */
   def argNames: List[String] =
     optionalArgNames match {

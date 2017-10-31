@@ -22,44 +22,42 @@ import scala.annotation.tailrec
 import scala.collection.GenTraversable
 
 /**
- * Supertrait for typeclasses that enable <code>be empty</code> matcher syntax.
+ * Supertrait for typeclasses that enable `be empty` matcher syntax.
  *
- * <p>
- * An <code>Emptiness[T]</code> provides access to the "emptiness" of type <code>T</code> in such
- * a way that <code>be empty</code> matcher syntax can be used with type <code>T</code>. A <code>T</code>
+ * An `Emptiness[T]` provides access to the "emptiness" of type `T` in such
+ * a way that `be empty` matcher syntax can be used with type `T`. A `T`
  * can be any type that in some way can be empty. ScalaTest provides implicit implementations for several types. 
- * You can enable the <code>be empty</code> matcher syntax on your own type <code>U</code> by defining an <code>Emptiness[U]</code>
+ * You can enable the `be empty` matcher syntax on your own type `U` by defining an `Emptiness[U]`
  * for the type and making it available implicitly.
  * 
- * <p>
- * ScalaTest provides implicit <code>Emptiness</code> instances for <code>scala.collection.GenTraversable</code>,
- * <code>java.util.Collection</code>, <code>java.util.Map</code>, <code>String</code>, <code>Array</code>, 
- * and <code>scala.Option</code> in the <code>Emptiness</code> companion object.
- * </p>
+ * ScalaTest provides implicit `Emptiness` instances for `scala.collection.GenTraversable`,
+ * `java.util.Collection`, `java.util.Map`, `String`, `Array`, 
+ * and `scala.Option` in the `Emptiness` companion object.
+ * 
  */
 trait Emptiness[-T] {
 
   /**
-   * Determines whether the passed thing is readable, <em>i.e.</em>, the passed file is readable.
+   * Determines whether the passed thing is readable, ''i.e.'', the passed file is readable.
    *
    * @param thing the thing to check for emptiness
-   * @return <code>true</code> if passed thing is empty, <code>false</code> otherwise
+   * @return `true` if passed thing is empty, `false` otherwise
    */
   def isEmpty(thing: T): Boolean
 }
 
 /**
- * Companion object for <code>Emptiness</code> that provides implicit implementations for the following types:
+ * Companion object for `Emptiness` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>scala.collection.GenTraversable</code></li>
- * <li><code>String</code></li>
- * <li><code>Array</code></li>
- * <li><code>scala.Option</code></li>
- * <li><code>java.util.Collection</code></li>
- * <li><code>java.util.Map</code></li>
- * <li>arbitary object with a <code>isEmpty()</code> method that returns <code>Boolean</code></li>
- * <li>arbitary object with a parameterless <code>isEmpty</code> method that returns <code>Boolean</code></li>
+ * <li>`scala.collection.GenTraversable`</li>
+ * <li>`String`</li>
+ * <li>`Array`</li>
+ * <li>`scala.Option`</li>
+ * <li>`java.util.Collection`</li>
+ * <li>`java.util.Map`</li>
+ * <li>arbitary object with a `isEmpty()` method that returns `Boolean`</li>
+ * <li>arbitary object with a parameterless `isEmpty` method that returns `Boolean`</li>
  * </ul>
  */
 object Emptiness {
@@ -67,11 +65,11 @@ object Emptiness {
   import scala.language.higherKinds
 
   /**
-   * Enable <code>Emptiness</code> implementation for <code>scala.collection.GenTraversable</code>
+   * Enable `Emptiness` implementation for `scala.collection.GenTraversable`
    *
-   * @tparam E the type of the element in the <code>scala.collection.GenTraversable</code>
-   * @tparam TRAV any subtype of <code>scala.collection.GenTraversable</code>
-   * @return <code>Emptiness[TRAV[E]]</code> that supports <code>scala.collection.GenTraversable</code> in <code>be empty</code> syntax
+   * @tparam E the type of the element in the `scala.collection.GenTraversable`
+   * @tparam TRAV any subtype of `scala.collection.GenTraversable`
+   * @return `Emptiness[TRAV[E]]` that supports `scala.collection.GenTraversable` in `be empty` syntax
    */
   implicit def emptinessOfGenTraversable[E, TRAV[e] <: scala.collection.GenTraversable[e]]: Emptiness[TRAV[E]] =
     new Emptiness[TRAV[E]] {
@@ -79,10 +77,10 @@ object Emptiness {
     }
   
   /**
-   * Enable <code>Emptiness</code> implementation for <code>Array</code>
+   * Enable `Emptiness` implementation for `Array`
    *
-   * @tparam E the type of the element in the <code>Array</code>
-   * @return <code>Emptiness[Array[E]]</code> that supports <code>Array</code> in <code>be empty</code> syntax
+   * @tparam E the type of the element in the `Array`
+   * @return `Emptiness[Array[E]]` that supports `Array` in `be empty` syntax
    */
   implicit def emptinessOfArray[E]: Emptiness[Array[E]] =
     new Emptiness[Array[E]] {
@@ -90,9 +88,9 @@ object Emptiness {
     }
   
   /**
-   * Enable <code>Emptiness</code> implementation for <code>String</code>
+   * Enable `Emptiness` implementation for `String`
    *
-   * @return <code>Emptiness[String]</code> that supports <code>String</code> in <code>be empty</code> syntax
+   * @return `Emptiness[String]` that supports `String` in `be empty` syntax
    */
   implicit def emptinessOfString: Emptiness[String] =
     new Emptiness[String] {
@@ -100,11 +98,11 @@ object Emptiness {
     }
   
   /**
-   * Enable <code>Emptiness</code> implementation for <code>scala.Option</code>
+   * Enable `Emptiness` implementation for `scala.Option`
    *
-   * @tparam E the type of the element in the <code>scala.Option</code>
-   * @tparam OPT any subtype of <code>scala.Option</code>
-   * @return <code>Emptiness[OPT[E]]</code> that supports <code>scala.Option</code> in <code>be empty</code> syntax
+   * @tparam E the type of the element in the `scala.Option`
+   * @tparam OPT any subtype of `scala.Option`
+   * @return `Emptiness[OPT[E]]` that supports `scala.Option` in `be empty` syntax
    */
   implicit def emptinessOfOption[E, OPT[e] <: Option[e]]: Emptiness[OPT[E]] =
     new Emptiness[OPT[E]] {
@@ -112,11 +110,11 @@ object Emptiness {
     }
   
   /**
-   * Enable <code>Emptiness</code> implementation for <code>java.util.Collection</code>
+   * Enable `Emptiness` implementation for `java.util.Collection`
    *
-   * @tparam E the type of the element in the <code>java.util.Collection</code>
-   * @tparam JCOL any subtype of <code>java.util.Collection</code>
-   * @return <code>Emptiness[JCOL[E]]</code> that supports <code>java.util.Collection</code> in <code>be empty</code> syntax
+   * @tparam E the type of the element in the `java.util.Collection`
+   * @tparam JCOL any subtype of `java.util.Collection`
+   * @return `Emptiness[JCOL[E]]` that supports `java.util.Collection` in `be empty` syntax
    */
   implicit def emptinessOfJavaCollection[E, JCOL[e] <: java.util.Collection[e]]: Emptiness[JCOL[E]] =
     new Emptiness[JCOL[E]] {
@@ -124,12 +122,12 @@ object Emptiness {
     }
 
   /**
-   * Enable <code>Emptiness</code> implementation for <code>java.util.Map</code>
+   * Enable `Emptiness` implementation for `java.util.Map`
    *
-   * @tparam K the type of the key in the <code>java.util.Map</code>
-   * @tparam V the type of the value in the <code>java.util.Map</code>
-   * @tparam JMAP any subtype of <code>java.util.Map</code>
-   * @return <code>Emptiness[JMAP[K, V]]</code> that supports <code>java.util.Map</code> in <code>be empty</code> syntax
+   * @tparam K the type of the key in the `java.util.Map`
+   * @tparam V the type of the value in the `java.util.Map`
+   * @tparam JMAP any subtype of `java.util.Map`
+   * @return `Emptiness[JMAP[K, V]]` that supports `java.util.Map` in `be empty` syntax
    */
   implicit def emptinessOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]]: Emptiness[JMAP[K, V]] =
     new Emptiness[JMAP[K, V]] {
@@ -139,10 +137,10 @@ object Emptiness {
   import scala.language.reflectiveCalls
   
   /**
-   * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty()</code> method that returns <code>Boolean</code>
+   * Enable `Emptiness` implementation for any arbitrary object with a `isEmpty()` method that returns `Boolean`
    *
-   * @tparam T any type that has a <code>isEmpty()</code> method that returns <code>Boolean</code>
-   * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
+   * @tparam T any type that has a `isEmpty()` method that returns `Boolean`
+   * @return `Emptiness[T]` that supports `T` in `be empty` syntax
    */
   implicit def emptinessOfAnyRefWithIsEmptyMethod[T <: AnyRef { def isEmpty(): Boolean}]: Emptiness[T] = 
     new Emptiness[T] {
@@ -150,10 +148,10 @@ object Emptiness {
     }
   
   /**
-   * Enable <code>Emptiness</code> implementation for any arbitrary object with a <code>isEmpty</code> method that returns <code>Boolean</code>
+   * Enable `Emptiness` implementation for any arbitrary object with a `isEmpty` method that returns `Boolean`
    *
-   * @tparam T any type that has a parameterless <code>isEmpty</code> method that returns <code>Boolean</code>
-   * @return <code>Emptiness[T]</code> that supports <code>T</code> in <code>be empty</code> syntax
+   * @tparam T any type that has a parameterless `isEmpty` method that returns `Boolean`
+   * @return `Emptiness[T]` that supports `T` in `be empty` syntax
    */
   implicit def emptinessOfAnyRefWithParameterlessIsEmptyMethod[T <: AnyRef { def isEmpty: Boolean}]: Emptiness[T] = 
     new Emptiness[T] {

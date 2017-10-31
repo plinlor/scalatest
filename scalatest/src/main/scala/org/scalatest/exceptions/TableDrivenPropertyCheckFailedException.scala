@@ -21,21 +21,20 @@ import org.scalactic.source
 /**
  * Exception that indicates a table-driven property check failed.
  *
- * <p>
  * For an introduction to using tables, see the documentation for trait
  * <a href="../prop/TableDrivenPropertyChecks.html">TableDrivenPropertyChecks</a>.
- * </p>
+ * 
  *
- * @param messageFun a function that returns a detail message, not optional) for this <code>TableDrivenPropertyCheckFailedException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TableDrivenPropertyCheckFailedException</code> to be thrown.
+ * @param messageFun a function that returns a detail message, not optional) for this `TableDrivenPropertyCheckFailedException`.
+ * @param cause an optional cause, the `Throwable` that caused this `TableDrivenPropertyCheckFailedException` to be thrown.
  * @param posOrStackDepthFun either a source position or a function that returns the depth in the stack trace of this exception at which the line of test code that failed resides.
- * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestFailed</code> event
+ * @param payload an optional payload, which ScalaTest will include in a resulting `TestFailed` event
  * @param undecoratedMessage just a short message that has no redundancy with args, labels, etc. The regular "message" has everything in it
  * @param args the argument values
  * @param namesOfArgs a list of string names for the arguments
  * @param row the index of the table row that failed the property check, causing this exception to be thrown
  *
- * @throws NullArgumentException if any parameter is <code>null</code> or <code>Some(null)</code>.
+ * @throws NullArgumentException if any parameter is `null` or `Some(null)`.
  *
  * @author Bill Venners
  */
@@ -53,13 +52,13 @@ class TableDrivenPropertyCheckFailedException(
 ) {
 
   /**
-    * Constructs a <code>TableDrivenPropertyCheckFailedException</code> with given error message function, optional cause, source position,
+    * Constructs a `TableDrivenPropertyCheckFailedException` with given error message function, optional cause, source position,
     * optional payload, undecorated message, argument values and names, and index of the failing row.
     *
-    * @param messageFun a function that returns a detail message, not optional) for this <code>TableDrivenPropertyCheckFailedException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TableDrivenPropertyCheckFailedException</code> to be thrown.
+    * @param messageFun a function that returns a detail message, not optional) for this `TableDrivenPropertyCheckFailedException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TableDrivenPropertyCheckFailedException` to be thrown.
     * @param pos a source position
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestFailed</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestFailed` event
     * @param undecoratedMessage just a short message that has no redundancy with args, labels, etc. The regular "message" has everything in it
     * @param args the argument values
     * @param namesOfArgs a list of string names for the arguments
@@ -78,13 +77,13 @@ class TableDrivenPropertyCheckFailedException(
   ) = this(messageFun, cause, Left(pos), payload, undecoratedMessage, args, namesOfArgs, row)
 
   /**
-    * Constructs a <code>TableDrivenPropertyCheckFailedException</code> with given error message function, optional cause, source position,
+    * Constructs a `TableDrivenPropertyCheckFailedException` with given error message function, optional cause, source position,
     * optional payload, undecorated message, argument values and names, and index of the failing row.
     *
-    * @param messageFun a function that returns a detail message, not optional) for this <code>TableDrivenPropertyCheckFailedException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TableDrivenPropertyCheckFailedException</code> to be thrown.
+    * @param messageFun a function that returns a detail message, not optional) for this `TableDrivenPropertyCheckFailedException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TableDrivenPropertyCheckFailedException` to be thrown.
     * @param failedCodeStackDepthFun a function that returns the depth in the stack trace of this exception at which the line of test code that failed resides.
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestFailed</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestFailed` event
     * @param undecoratedMessage just a short message that has no redundancy with args, labels, etc. The regular "message" has everything in it
     * @param args the argument values
     * @param namesOfArgs a list of string names for the arguments
@@ -105,10 +104,10 @@ class TableDrivenPropertyCheckFailedException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the detail message option string replaced with the result of passing
-   * the current detail message to the passed function, <code>fun</code>.
+   * the current detail message to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional detail message, will produce
-   * the modified optional detail message for the result instance of <code>TestFailedDueToTimeoutException</code>.
+   * the modified optional detail message for the result instance of `TestFailedDueToTimeoutException`.
    */
   override def modifyMessage(fun: Option[String] => Option[String]): TableDrivenPropertyCheckFailedException = {
     val mod =
@@ -129,10 +128,10 @@ class TableDrivenPropertyCheckFailedException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with the result of passing
-   * the current payload option to the passed function, <code>fun</code>.
+   * the current payload option to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional payload, will produce
-   * the modified optional payload for the result instance of <code>TableDrivenPropertyCheckFailedException</code>.
+   * the modified optional payload for the result instance of `TableDrivenPropertyCheckFailedException`.
    */
   override def modifyPayload(fun: Option[Any] => Option[Any]): TableDrivenPropertyCheckFailedException = {
     val currentPayload = payload

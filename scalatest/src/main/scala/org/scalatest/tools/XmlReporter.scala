@@ -31,7 +31,7 @@ import scala.collection.mutable.ListBuffer
 import scala.xml
 
 /**
- * A <code>Reporter</code> that writes test status information in XML format.
+ * A `Reporter` that writes test status information in XML format.
  *
  * A separate file is written for each test suite, named [classname].xml,
  * to the directory specified.

@@ -18,28 +18,26 @@ package org.scalatest
 import org.scalactic.source
 
 /**
- * Trait providing an <code>apply</code> method to which alert messages about a running suite of tests can be reported.
+ * Trait providing an `apply` method to which alert messages about a running suite of tests can be reported.
  * 
- * <p>
- * An <code>Alerter</code> is essentially
- * used to wrap a <code>Reporter</code> and provide easy ways to send alert messages
- * to that <code>Reporter</code> via an <code>AlertProvided</code> event.
- * <code>Alerter</code> contains an <code>apply</code> method that takes a string and
- * an optional payload object of type <code>Any</code>.
- * The <code>Alerter</code> will forward the passed alert <code>message</code> string to the
- * <a href="Reporter.html"><code>Reporter</code></a> as the <code>message</code> parameter, and the optional
- * payload object as the <code>payload</code> parameter, of an <a href="AlertProvided.html"><code>AlertProvided</code></a> event.
- * </p>
+ * An `Alerter` is essentially
+ * used to wrap a `Reporter` and provide easy ways to send alert messages
+ * to that `Reporter` via an `AlertProvided` event.
+ * `Alerter` contains an `apply` method that takes a string and
+ * an optional payload object of type `Any`.
+ * The `Alerter` will forward the passed alert `message` string to the
+ * <a href="Reporter.html">`Reporter`</a> as the `message` parameter, and the optional
+ * payload object as the `payload` parameter, of an <a href="AlertProvided.html">`AlertProvided`</a> event.
+ * 
  *
- * <p>
- * For insight into the differences between <code>Alerter</code>, <code>Notifier</code>, and <code>Informer</code>, see the
- * main documentation for trait <a href="Alerting.html"><code>Alerting</code></a>.
- * </p>
+ * For insight into the differences between `Alerter`, `Notifier`, and `Informer`, see the
+ * main documentation for trait <a href="Alerting.html">`Alerting`</a>.
+ * 
  */
 trait Alerter {
 
   /**
-   * Send an alert message via an <code>AlertProvided</code> event to the reporter.
+   * Send an alert message via an `AlertProvided` event to the reporter.
    */
   def apply(message: String, payload: Option[Any] = None)(implicit pos: source.Position): Unit
 }

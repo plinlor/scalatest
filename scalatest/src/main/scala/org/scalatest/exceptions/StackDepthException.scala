@@ -27,11 +27,11 @@ import StackDepthExceptionHelper.getStackDepthFun
  * Having a stack depth is more useful in a testing environment in which test failures are implemented as
  * thrown exceptions, as is the case in ScalaTest's built-in suite traits.
  *
- * @param messageFun a function that produces an optional detail message for this <code>StackDepthException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>StackDepthException</code> to be thrown.
+ * @param messageFun a function that produces an optional detail message for this `StackDepthException`.
+ * @param cause an optional cause, the `Throwable` that caused this `StackDepthException` to be thrown.
  * @param posOrStackDepthFun either a source position or a function that produces the depth in the stack trace of this exception at which the line of test code that failed resides.
  *
- * @throws NullArgumentException if either <code>messageFun</code>, <code>cause</code> or <code>failedCodeStackDepthFun</code> is <code>null</code>, or <code>Some(null)</code>.
+ * @throws NullArgumentException if either `messageFun`, `cause` or `failedCodeStackDepthFun` is `null`, or `Some(null)`.
  *
  * @author Bill Venners
  */
@@ -57,11 +57,11 @@ abstract class StackDepthException(
   val position: Option[source.Position] = posOrStackDepthFun.left.toOption
 
   /**
-    * Constructs a <code>StackDepthException</code> with an optional pre-determined <code>message</code>, optional cause, and
+    * Constructs a `StackDepthException` with an optional pre-determined `message`, optional cause, and
     * a source position.
     *
-    * @param message an optional detail message for this <code>StackDepthException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>StackDepthException</code> to be thrown.
+    * @param message an optional detail message for this `StackDepthException`.
+    * @param cause an optional cause, the `Throwable` that caused this `StackDepthException` to be thrown.
     * @param position a source position.
     *.
     */
@@ -77,11 +77,11 @@ abstract class StackDepthException(
     )
 
   /**
-    * Constructs a <code>StackDepthException</code> with message function, optional cause, and
-    * a <code>failedCodeStackDepth</code> function.
+    * Constructs a `StackDepthException` with message function, optional cause, and
+    * a `failedCodeStackDepth` function.
     *
-    * @param messageFun a function that produces an optional detail message for this <code>StackDepthException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>StackDepthException</code> to be thrown.
+    * @param messageFun a function that produces an optional detail message for this `StackDepthException`.
+    * @param cause an optional cause, the `Throwable` that caused this `StackDepthException` to be thrown.
     * @param failedCodeStackDepthFun a function that return the depth in the stack trace of this exception at which the line of test code that failed resides.
     *.
     */
@@ -96,14 +96,14 @@ abstract class StackDepthException(
     )
 
   /**
-   * Constructs a <code>StackDepthException</code> with an optional pre-determined <code>message</code>, optional cause, and
-   * a <code>failedCodeStackDepth</code> function.
+   * Constructs a `StackDepthException` with an optional pre-determined `message`, optional cause, and
+   * a `failedCodeStackDepth` function.
    *
-   * @param message an optional detail message for this <code>StackDepthException</code>.
-   * @param cause an optional cause, the <code>Throwable</code> that caused this <code>StackDepthException</code> to be thrown.
+   * @param message an optional detail message for this `StackDepthException`.
+   * @param cause an optional cause, the `Throwable` that caused this `StackDepthException` to be thrown.
    * @param failedCodeStackDepthFun a function that return the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if either <code>message</code> or <code>cause</code> is <code>null</code> or <code>Some(null)</code>, or <code>failedCodeStackDepthFun</code> is <code>null</code>.
+   * @throws NullArgumentException if either `message` or `cause` is `null` or `Some(null)`, or `failedCodeStackDepthFun` is `null`.
    */
   def this(message: Option[String], cause: Option[Throwable], failedCodeStackDepthFun: StackDepthException => Int) =
     this(
@@ -120,15 +120,15 @@ abstract class StackDepthException(
     )
 
   /**
-   * Constructs a <code>StackDepthException</code> with an optional pre-determined <code>message</code>,
-   * optional <code>cause</code>, and and <code>failedCodeStackDepth</code>. (This was
+   * Constructs a `StackDepthException` with an optional pre-determined `message`,
+   * optional `cause`, and and `failedCodeStackDepth`. (This was
    * the primary constructor form prior to ScalaTest 1.5.)
    *
-   * @param message an optional detail message for this <code>StackDepthException</code>.
-   * @param cause an optional cause, the <code>Throwable</code> that caused this <code>StackDepthException</code> to be thrown.
+   * @param message an optional detail message for this `StackDepthException`.
+   * @param cause an optional cause, the `Throwable` that caused this `StackDepthException` to be thrown.
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if either <code>message</code> of <code>cause</code> is <code>null</code>, or <code>Some(null)</code>.
+   * @throws NullArgumentException if either `message` of `cause` is `null`, or `Some(null)`.
    */
   def this(message: Option[String], cause: Option[Throwable], failedCodeStackDepth: Int) =
     this(
@@ -142,16 +142,15 @@ abstract class StackDepthException(
     )
 
   /**
-   * An optional detail message for this <code>StackDepth</code> exception.
+   * An optional detail message for this `StackDepth` exception.
    *
-   * <p>
    * One reason this is lazy is to delay any searching of the stack trace until it is actually needed. It will
    * usually be needed, but not always. For example, exceptions thrown during a shrink phase of a failed property
-   * will often be <code>StackDepthException</code>s, but whose <code>message</code> will never be used. Another related reason is to remove the need
+   * will often be `StackDepthException`s, but whose `message` will never be used. Another related reason is to remove the need
    * to create a different exception before creating this one just for the purpose of searching through its stack
    * trace for the proper stack depth. Still one more reason is to allow the message to contain information about the
    * stack depth, such as the failed file name and line number.
-   * </p>
+   * 
    */
   lazy val message: Option[String] = messageFun(this)
  
@@ -160,14 +159,13 @@ abstract class StackDepthException(
   /**
    * The depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * <p>
    * One reason this is lazy is to delay any searching of the stack trace until it is actually needed. It will
    * usually be needed, but not always. For example, exceptions thrown during a shrink phase of a failed property
-   * will often be <code>StackDepthException</code>s, but whose <code>failedCodeStackDepth</code> will never be used. Another reason is to remove the need
+   * will often be `StackDepthException`s, but whose `failedCodeStackDepth` will never be used. Another reason is to remove the need
    * to create a different exception before creating this one just for the purpose of searching through its stack
    * trace for the proper stack depth. Still one more reason is to allow the message to contain information about the
    * stack depth, such as the failed file name and line number.
-   * </p>
+   * 
    */
   lazy val failedCodeStackDepth: Int = {
     val stackDepthFun =
@@ -179,9 +177,9 @@ abstract class StackDepthException(
   }
 
   /**
-   * Returns the detail message string of this <code>StackDepthException</code>.
+   * Returns the detail message string of this `StackDepthException`.
    *
-   * @return the detail message string of this <code>StackDepthException</code> instance (which may be <code>null</code>).
+   * @return the detail message string of this `StackDepthException` instance (which may be `null`).
    */
   override def getMessage: String = message.orNull
 
@@ -198,9 +196,9 @@ abstract class StackDepthException(
 
   /**
    * Indicates whether this object is equal to the passed object. If the passed object is
-   * a <code>StackDepthException</code>, equality requires equal <code>message</code>,
-   * <code>cause</code>, and <code>failedCodeStackDepth</code> fields, as well as equal
-   * return values of <code>getStackTrace</code>.
+   * a `StackDepthException`, equality requires equal `message`,
+   * `cause`, and `failedCodeStackDepth` fields, as well as equal
+   * return values of `getStackTrace`.
    */
   override def equals(other: Any): Boolean =
     other match {

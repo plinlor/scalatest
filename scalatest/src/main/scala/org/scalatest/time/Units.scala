@@ -20,15 +20,14 @@ import org.scalatest.Resources
 /**
  * Defines a family of singleton objects representing units of time.
  *
- * <p>
  * The singleton objects that extend this abstract class may be passed
- * to the constructor of <a href="Span.html"><code>Span</code></a> to specify
+ * to the constructor of <a href="Span.html">`Span`</a> to specify
  * units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Second)
- * </pre>
+ * }}}
  */
 sealed abstract class Units extends Product with Serializable {
   private[scalatest] def singularMessageFun(lengthString: String): String
@@ -38,14 +37,13 @@ sealed abstract class Units extends Product with Serializable {
 /**
  * Indicates units for a single nanosecond.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify nanosecond units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify nanosecond units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Nanosecond)
- * </pre>
+ * }}}
  */
 case object Nanosecond extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularNanosecondUnits(lengthString)
@@ -55,14 +53,13 @@ case object Nanosecond extends Units {
 /**
  * Indicates nanosecond units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify nanosecond units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Nanoseconds)
- * </pre>
+ * }}}
  */
 case object Nanoseconds extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularNanosecondUnits(lengthString)
@@ -72,14 +69,13 @@ case object Nanoseconds extends Units {
 /**
  * Indicates units for a single microsecond.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify microsecond units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify microsecond units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Microsecond)
- * </pre>
+ * }}}
  */
 case object Microsecond extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMicrosecondUnits(lengthString)
@@ -89,14 +85,13 @@ case object Microsecond extends Units {
 /**
  * Indicates microsecond units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify microsecond units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Microseconds)
- * </pre>
+ * }}}
  */
 case object Microseconds extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMicrosecondUnits(lengthString)
@@ -106,14 +101,13 @@ case object Microseconds extends Units {
 /**
  * Indicates units for a single millisecond.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify millisecond units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify millisecond units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Millisecond)
- * </pre>
+ * }}}
  */
 case object Millisecond extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMillisecondUnits(lengthString)
@@ -123,14 +117,13 @@ case object Millisecond extends Units {
 /**
  * Indicates millisecond units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify millisecond units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Milliseconds)
- * </pre>
+ * }}}
  */
 case object Milliseconds extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMillisecondUnits(lengthString)
@@ -139,20 +132,18 @@ case object Milliseconds extends Units {
 /**
  * Indicates millisecond units (shorthand form).
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify millisecond units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Millis)
- * </pre>
+ * }}}
  *
- * <p>
- * <em>Note: <code>Millis</code> is merely a shorthand for <a href="Milliseconds$.html"><code>Milliseconds</code></a>.
- * When passed to <code>Span</code>, <code>Millis</code> means exactly the same thing as
- * <code>Milliseconds</code>.</em>
- * </p>
+ * ''Note: `Millis` is merely a shorthand for <a href="Milliseconds$.html">`Milliseconds`</a>.
+ * When passed to `Span`, `Millis` means exactly the same thing as
+ * `Milliseconds`.''
+ * 
  */
 case object Millis extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMillisecondUnits(lengthString)
@@ -162,14 +153,13 @@ case object Millis extends Units {
 /**
  * Indicates units for a single second.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify second units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify second units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Second)
- * </pre>
+ * }}}
  */
 case object Second extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularSecondUnits(lengthString)
@@ -179,14 +169,13 @@ case object Second extends Units {
 /**
  * Indicates second units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify second units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Seconds)
- * </pre>
+ * }}}
  */
 case object Seconds extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularSecondUnits(lengthString)
@@ -196,14 +185,13 @@ case object Seconds extends Units {
 /**
  * Indicates units for a single minute.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify minute units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify minute units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Minute)
- * </pre>
+ * }}}
  */
 case object Minute extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMinuteUnits(lengthString)
@@ -213,14 +201,13 @@ case object Minute extends Units {
 /**
  * Indicates minute units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify minute units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Minutes)
- * </pre>
+ * }}}
  */
 case object Minutes extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularMinuteUnits(lengthString)
@@ -230,14 +217,13 @@ case object Minutes extends Units {
 /**
  * Indicates units for a single hour.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify hour units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify hour units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Hour)
- * </pre>
+ * }}}
  */
 case object Hour extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularHourUnits(lengthString)
@@ -247,14 +233,13 @@ case object Hour extends Units {
 /**
  * Indicates hour units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify hour units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Hours)
- * </pre>
+ * }}}
  */
 case object Hours extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularHourUnits(lengthString)
@@ -264,14 +249,13 @@ case object Hours extends Units {
 /**
  * Indicates units for a single day.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
- * specify day units of time, so long as the value passed to <code>Span</code> is 1. For example:
- * </p>
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
+ * specify day units of time, so long as the value passed to `Span` is 1. For example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(1, Day)
- * </pre>
+ * }}}
  */
 case object Day extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularDayUnits(lengthString)
@@ -281,14 +265,13 @@ case object Day extends Units {
 /**
  * Indicates day units.
  *
- * <p>
- * This singleton object may be passed to the constructor of <a href="Span.html"><code>Span</code></a> to
+ * This singleton object may be passed to the constructor of <a href="Span.html">`Span`</a> to
  * specify day units of time. For example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * Span(10, Days)
- * </pre>
+ * }}}
  */
 case object Days extends Units {
   private[scalatest] def singularMessageFun(lengthString: String): String = Resources.singularDayUnits(lengthString)

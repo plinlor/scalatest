@@ -19,166 +19,151 @@ import org.scalactic.Prettifier
 import org.scalatest.Resources
 
 /**
- * The result of a match operation, such as one performed by a <a href="Matcher.html"><code>Matcher</code></a> or
- * <a href="BeMatcher.html"><code>BeMatcher</code></a>, which 
+ * The result of a match operation, such as one performed by a <a href="Matcher.html">`Matcher`</a> or
+ * <a href="BeMatcher.html">`BeMatcher`</a>, which 
  * contains one field that indicates whether the match succeeded, four fields that provide
  * raw failure messages to report under different circumstances, four fields providing
  * arguments used to construct the final failure messages using raw failure messages
- * and a <a href="../../Prettifier.html"><code>Prettifier</code></a>.  Using the default constructor,
+ * and a <a href="../../Prettifier.html">`Prettifier`</a>.  Using the default constructor,
  * failure messages will be constructed lazily (when required).
  * 
- * <p>
- * A <code>MatchResult</code>'s <code>matches</code> field indicates whether a match succeeded. If it succeeded,
- * <code>matches</code> will be <code>true</code>.
- * There are four methods, <code>failureMessage</code>, <code>negatedfailureMessage</code>, <code>midSentenceFailureMessage</code>
- * and <code>negatedMidSentenceFailureMessage</code> that can be called to get final failure message strings, one of which will be
+ * A `MatchResult`'s `matches` field indicates whether a match succeeded. If it succeeded,
+ * `matches` will be `true`.
+ * There are four methods, `failureMessage`, `negatedfailureMessage`, `midSentenceFailureMessage`
+ * and `negatedMidSentenceFailureMessage` that can be called to get final failure message strings, one of which will be
  * presented to the user in case of a match failure. If a match succeeds, none of these strings will be used, because no failure
- * message will be reported (<em>i.e.</em>, because there was no failure to report). If a match fails (<code>matches</code> is <code>false</code>),
- * the <code>failureMessage</code> (or <code>midSentenceFailure</code>&#8212;more on that below) will be reported to help the user understand what went wrong.
- * </p>
+ * message will be reported (''i.e.'', because there was no failure to report). If a match fails (`matches` is `false`),
+ * the `failureMessage` (or `midSentenceFailure`&#8212;more on that below) will be reported to help the user understand what went wrong.
+ * 
  *
- * <h2>Understanding <code>negatedFailureMessage</code></h2>
+ * ==Understanding `negatedFailureMessage`==
  *
- * <p>
- * The <code>negatedFailureMessage</code> exists so that it can become the <code>failureMessage</code> if the matcher is <em>inverted</em>,
- * which happens, for instance, if it is passed to <code>not</code>. Here's an example:
- * </p>
+ * The `negatedFailureMessage` exists so that it can become the `failureMessage` if the matcher is ''inverted'',
+ * which happens, for instance, if it is passed to `not`. Here's an example:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val equalSeven = equal (7)
  * val notEqualSeven = not (equalSeven)
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>Matcher[Int]</code> that results from passing 7 to <code>equal</code>, which is assigned to the <code>equalSeven</code>
- * variable, will compare <code>Int</code>s passed to its
- * <code>apply</code> method with 7. If 7 is passed, the <code>equalSeven</code> match will succeed. If anything other than 7 is passed, it
- * will fail. By contrast, the <code>notEqualSeven</code> matcher, which results from passing <code>equalSeven</code> to <code>not</code>, does
- * just the opposite. If 7 is passed, the <code>notEqualSeven</code> match will fail. If anything other than 7 is passed, it will succeed.
- * </p>
+ * The `Matcher[Int]` that results from passing 7 to `equal`, which is assigned to the `equalSeven`
+ * variable, will compare `Int`s passed to its
+ * `apply` method with 7. If 7 is passed, the `equalSeven` match will succeed. If anything other than 7 is passed, it
+ * will fail. By contrast, the `notEqualSeven` matcher, which results from passing `equalSeven` to `not`, does
+ * just the opposite. If 7 is passed, the `notEqualSeven` match will fail. If anything other than 7 is passed, it will succeed.
+ * 
  *
- * <p>
- * For example, if 8 is passed, <code>equalSeven</code>'s <code>MatchResult</code> will contain:
- * </p>
+ * For example, if 8 is passed, `equalSeven`'s `MatchResult` will contain:
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  *            expression: equalSeven(8)
  *               matches: false
  *        failureMessage: 8 did not equal 7
  * negatedFailureMessage: 8 equaled 7
- * </pre>
+ * }}}
  *
- * <p>
- * Although the <code>negatedFailureMessage</code> is nonsensical, it will not be reported to the user. Only the <code>failureMessage</code>,
- * which does actually explain what caused the failure, will be reported by the user. If you pass 8 to <code>notEqualSeven</code>'s <code>apply</code>
- * method, by contrast, the <code>failureMessage</code> and <code>negatedFailureMessage</code> will be:
- * </p>
+ * Although the `negatedFailureMessage` is nonsensical, it will not be reported to the user. Only the `failureMessage`,
+ * which does actually explain what caused the failure, will be reported by the user. If you pass 8 to `notEqualSeven`'s `apply`
+ * method, by contrast, the `failureMessage` and `negatedFailureMessage` will be:
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  *            expression: notEqualSeven(8)
  *               matches: true
  *        failureMessage: 8 equaled 7
  * negatedFailureMessage: 8 did not equal 7
- * </pre>
+ * }}}
  *
- * <p>
- * Note that the messages are swapped from the <code>equalSeven</code> messages. This swapping was effectively performed by the <code>not</code> matcher,
- * which in addition to swapping the <code>failureMessage</code> and <code>negatedFailureMessage</code>, also inverted the
- * <code>matches</code> value. Thus when you pass the same value to both <code>equalSeven</code> and <code>notEqualSeven</code> the <code>matches</code>
- * field of one <code>MatchResult</code> will be <code>true</code> and the other <code>false</code>. Because the
- * <code>matches</code> field of the <code>MatchResult</code> returned by <code>notEqualSeven(8)</code> is <code>true</code>,
- * the nonsensical <code>failureMessage</code>, "<code>8 equaled 7</code>", will <em>not</em> be reported to the user.
- * </p>
+ * Note that the messages are swapped from the `equalSeven` messages. This swapping was effectively performed by the `not` matcher,
+ * which in addition to swapping the `failureMessage` and `negatedFailureMessage`, also inverted the
+ * `matches` value. Thus when you pass the same value to both `equalSeven` and `notEqualSeven` the `matches`
+ * field of one `MatchResult` will be `true` and the other `false`. Because the
+ * `matches` field of the `MatchResult` returned by `notEqualSeven(8)` is `true`,
+ * the nonsensical `failureMessage`, "`8 equaled 7`", will ''not'' be reported to the user.
+ * 
  *
- * <p>
- * If 7 is passed, by contrast, the <code>failureMessage</code> and <code>negatedFailureMessage</code> of <code>equalSeven</code>
+ * If 7 is passed, by contrast, the `failureMessage` and `negatedFailureMessage` of `equalSeven`
  * will be:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  *            expression: equalSeven(7)
  *               matches: true
  *        failureMessage: 7 did not equal 7
  * negatedFailureMessage: 7 equaled 7
- * </pre>
+ * }}}
  *
- * <p>
- * In this case <code>equalSeven</code>'s <code>failureMessage</code> is nonsensical, but because the match succeeded, the nonsensical message will
+ * In this case `equalSeven`'s `failureMessage` is nonsensical, but because the match succeeded, the nonsensical message will
  * not be reported to the user.
- * If you pass 7 to <code>notEqualSeven</code>'s <code>apply</code>
+ * If you pass 7 to `notEqualSeven`'s `apply`
  * method, you'll get:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  *            expression: notEqualSeven(7)
  *               matches: false
  *        failureMessage: 7 equaled 7
  * negatedFailureMessage: 7 did not equal 7
- * </pre>
+ * }}}
  *
- * <p>
- * Again the messages are swapped from the <code>equalSeven</code> messages, but this time, the <code>failureMessage</code> makes sense
- * and explains what went wrong: the <code>notEqualSeven</code> match failed because the number passed did in fact equal 7. Since
- * the match failed, this failure message, "<code>7 equaled 7</code>", will be reported to the user.
- * </p>
+ * Again the messages are swapped from the `equalSeven` messages, but this time, the `failureMessage` makes sense
+ * and explains what went wrong: the `notEqualSeven` match failed because the number passed did in fact equal 7. Since
+ * the match failed, this failure message, "`7 equaled 7`", will be reported to the user.
+ * 
  *
- * <h2>Understanding the "<code>midSentence</code>" messages</h2>
+ * ==Understanding the "`midSentence`" messages==
  *
- * <p>
- * When a ScalaTest matcher expression that involves <code>and</code> or <code>or</code> fails, the failure message that
- * results is composed from the failure messages of the left and right matcher operatnds to <code>and</code> or </code>or</code>.
+ * When a ScalaTest matcher expression that involves `and` or `or` fails, the failure message that
+ * results is composed from the failure messages of the left and right matcher operatnds to `and` or `or`.
  * For example:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * 8 should (equal (7) or equal (9))
- * </pre>
+ * }}}
  *
- * <p>
  * This above expression would fail with the following failure message reported to the user:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * 8 did not equal 7, and 8 did not equal 9
- * </pre>
+ * }}}
  *
- * <p>
  * This works fine, but what if the failure messages being combined begin with a capital letter, such as:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * The name property did not equal "Ricky"
- * </pre>
+ * }}}
  *
- * <p>
  * A combination of two such failure messages might result in an abomination of English punctuation, such as:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * The name property did not equal "Ricky", and The name property did not equal "Bobby"
- * </pre>
+ * }}}
  *
- * <p>
  * Because ScalaTest is an internationalized application, taking all of its strings from a property file
  * enabling it to be localized, it isn't a good idea to force the first character to lower case. Besides,
- * it might actually represent a String value which should stay upper case. The <code>midSentenceFailureMessage</code>
- * exists for this situation. If the failure message is used at the beginning of the sentence, <code>failureMessage</code>
- * will be used. But if it appears mid-sentence, or at the end of the sentence, <code>midSentenceFailureMessage</code>
+ * it might actually represent a String value which should stay upper case. The `midSentenceFailureMessage`
+ * exists for this situation. If the failure message is used at the beginning of the sentence, `failureMessage`
+ * will be used. But if it appears mid-sentence, or at the end of the sentence, `midSentenceFailureMessage`
  * will be used. Given these failure message strings:
- * </p>
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  *            failureMessage: The name property did not equal "Bobby"
  * midSentenceFailureMessage: the name property did not equal "Bobby"
- * </pre>
+ * }}}
  *
- * <p>
- * The resulting failure of the <code>or</code> expression involving to matchers would make any English teacher proud:
- * </p>
+ * The resulting failure of the `or` expression involving to matchers would make any English teacher proud:
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * The name property did not equal "Ricky", and the name property did not equal "Bobby"
- * </pre>
+ * }}}
  *
  * @param matches indicates whether or not the matcher matched
  * @param rawFailureMessage raw failure message to report if a match fails
@@ -206,12 +191,12 @@ final case class MatchResult(
 ) {
 
   /**
-   * Constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>rawFailureMessage</code>, and
-   * <code>rawNegativeFailureMessage</code> fields. The <code>rawMidSentenceFailureMessage</code> will return the same
-   * string as <code>rawFailureMessage</code>, and the <code>rawMidSentenceNegatedFailureMessage</code> will return the
-   * same string as <code>rawNegatedFailureMessage</code>.  <code>failureMessageArgs</code>, <code>negatedFailureMessageArgs</code>,
-   * <code>midSentenceFailureMessageArgs</code>, <code>midSentenceNegatedFailureMessageArgs</code> will be <code>Vector.empty</code>
-   * and <code>Prettifier.default</code> will be used.
+   * Constructs a new `MatchResult` with passed `matches`, `rawFailureMessage`, and
+   * `rawNegativeFailureMessage` fields. The `rawMidSentenceFailureMessage` will return the same
+   * string as `rawFailureMessage`, and the `rawMidSentenceNegatedFailureMessage` will return the
+   * same string as `rawNegatedFailureMessage`.  `failureMessageArgs`, `negatedFailureMessageArgs`,
+   * `midSentenceFailureMessageArgs`, `midSentenceNegatedFailureMessageArgs` will be `Vector.empty`
+   * and `Prettifier.default` will be used.
    *
    * @param matches indicates whether or not the matcher matched
    * @param rawFailureMessage raw failure message to report if a match fails
@@ -231,28 +216,28 @@ final case class MatchResult(
     )
 
   /**
-   * Construct failure message to report if a match fails, using <code>rawFailureMessage</code>, <code>failureMessageArgs</code> and <code>prettifier</code>
+   * Construct failure message to report if a match fails, using `rawFailureMessage`, `failureMessageArgs` and `prettifier`
    *
    * @return failure message to report if a match fails
    */
   def failureMessage(implicit prettifier: Prettifier): String = if (failureMessageArgs.isEmpty) rawFailureMessage else makeString(rawFailureMessage, failureMessageArgs, prettifier)
 
   /**
-   * Construct message with a meaning opposite to that of the failure message, using <code>rawNegatedFailureMessage</code>, <code>negatedFailureMessageArgs</code> and <code>prettifier</code>
+   * Construct message with a meaning opposite to that of the failure message, using `rawNegatedFailureMessage`, `negatedFailureMessageArgs` and `prettifier`
    *
    * @return message with a meaning opposite to that of the failure message
    */
   def negatedFailureMessage(implicit prettifier: Prettifier): String = if (negatedFailureMessageArgs.isEmpty) rawNegatedFailureMessage else makeString(rawNegatedFailureMessage, negatedFailureMessageArgs, prettifier)
 
   /**
-   * Construct failure message suitable for appearing mid-sentence, using <code>rawMidSentenceFailureMessage</code>, <code>midSentenceFailureMessageArgs</code> and <code>prettifier</code>
+   * Construct failure message suitable for appearing mid-sentence, using `rawMidSentenceFailureMessage`, `midSentenceFailureMessageArgs` and `prettifier`
    *
    * @return failure message suitable for appearing mid-sentence
    */
   def midSentenceFailureMessage(implicit prettifier: Prettifier): String = if (midSentenceFailureMessageArgs.isEmpty) rawMidSentenceFailureMessage else makeString(rawMidSentenceFailureMessage, midSentenceFailureMessageArgs, prettifier)
 
   /**
-   * Construct negated failure message suitable for appearing mid-sentence, using <code>rawMidSentenceNegatedFailureMessage</code>, <code>midSentenceNegatedFailureMessageArgs</code> and <code>prettifier</code>
+   * Construct negated failure message suitable for appearing mid-sentence, using `rawMidSentenceNegatedFailureMessage`, `midSentenceNegatedFailureMessageArgs` and `prettifier`
    *
    * @return negated failure message suitable for appearing mid-sentence
    */
@@ -270,18 +255,18 @@ final case class MatchResult(
 }
 
 /**
- * Companion object for the <code>MatchResult</code> case class.
+ * Companion object for the `MatchResult` case class.
  *
  * @author Bill Venners
  */
 object MatchResult {
 
   /**
-   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>failureMessage</code>, 
-   * <code>negativeFailureMessage</code>, <code>midSentenceFailureMessage</code>, 
-   * <code>midSentenceNegatedFailureMessage</code>, <code>failureMessageArgs</code>, and <code>negatedFailureMessageArgs</code> fields.
-   * <code>failureMessageArgs</code>, and <code>negatedFailureMessageArgs</code> will be used in place of <code>midSentenceFailureMessageArgs</code>
-   * and <code>midSentenceNegatedFailureMessageArgs</code>.
+   * Factory method that constructs a new `MatchResult` with passed `matches`, `failureMessage`, 
+   * `negativeFailureMessage`, `midSentenceFailureMessage`, 
+   * `midSentenceNegatedFailureMessage`, `failureMessageArgs`, and `negatedFailureMessageArgs` fields.
+   * `failureMessageArgs`, and `negatedFailureMessageArgs` will be used in place of `midSentenceFailureMessageArgs`
+   * and `midSentenceNegatedFailureMessageArgs`.
    *
    * @param matches indicates whether or not the matcher matched
    * @param rawFailureMessage raw failure message to report if a match fails
@@ -290,16 +275,16 @@ object MatchResult {
    * @param rawMidSentenceNegatedFailureMessage raw message with a meaning opposite to that of the failure message
    * @param failureMessageArgs arguments for constructing failure message to report if a match fails
    * @param negatedFailureMessageArgs arguments for constructing message with a meaning opposite to that of the failure message
-   * @return a <code>MatchResult</code> instance
+   * @return a `MatchResult` instance
    */
   def apply(matches: Boolean, rawFailureMessage: String, rawNegatedFailureMessage: String, rawMidSentenceFailureMessage: String,
       rawMidSentenceNegatedFailureMessage: String, failureMessageArgs: IndexedSeq[Any], negatedFailureMessageArgs: IndexedSeq[Any]): MatchResult =
     new MatchResult(matches, rawFailureMessage, rawNegatedFailureMessage, rawMidSentenceFailureMessage, rawMidSentenceNegatedFailureMessage, failureMessageArgs, negatedFailureMessageArgs, failureMessageArgs, negatedFailureMessageArgs)
 
   /**
-   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>rawFailureMessage</code>,
-   * <code>rawNegativeFailureMessage</code>, <code>rawMidSentenceFailureMessage</code>, and
-   * <code>rawMidSentenceNegatedFailureMessage</code> fields.  All argument fields will have <code>Vector.empty</code> values.
+   * Factory method that constructs a new `MatchResult` with passed `matches`, `rawFailureMessage`,
+   * `rawNegativeFailureMessage`, `rawMidSentenceFailureMessage`, and
+   * `rawMidSentenceNegatedFailureMessage` fields.  All argument fields will have `Vector.empty` values.
    * This is suitable to create MatchResult with eager error messages, and its mid-sentence messages need to be different.
    *
    * @param matches indicates whether or not the matcher matched
@@ -307,39 +292,39 @@ object MatchResult {
    * @param rawNegatedFailureMessage raw message with a meaning opposite to that of the failure message
    * @param rawMidSentenceFailureMessage raw failure message to report if a match fails
    * @param rawMidSentenceNegatedFailureMessage raw message with a meaning opposite to that of the failure message
-   * @return a <code>MatchResult</code> instance
+   * @return a `MatchResult` instance
    */
   def apply(matches: Boolean, rawFailureMessage: String, rawNegatedFailureMessage: String, rawMidSentenceFailureMessage: String,
       rawMidSentenceNegatedFailureMessage: String): MatchResult =
     new MatchResult(matches, rawFailureMessage, rawNegatedFailureMessage, rawMidSentenceFailureMessage, rawMidSentenceNegatedFailureMessage, Vector.empty, Vector.empty, Vector.empty, Vector.empty)
 
   /**
-   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>rawFailureMessage</code>, and
-   * <code>rawNegativeFailureMessage</code> fields. The <code>rawMidSentenceFailureMessage</code> will return the same
-   * string as <code>rawFailureMessage</code>, and the <code>rawMidSentenceNegatedFailureMessage</code> will return the
-   * same string as <code>rawNegatedFailureMessage</code>.  All argument fields will have <code>Vector.empty</code> values.
+   * Factory method that constructs a new `MatchResult` with passed `matches`, `rawFailureMessage`, and
+   * `rawNegativeFailureMessage` fields. The `rawMidSentenceFailureMessage` will return the same
+   * string as `rawFailureMessage`, and the `rawMidSentenceNegatedFailureMessage` will return the
+   * same string as `rawNegatedFailureMessage`.  All argument fields will have `Vector.empty` values.
    * This is suitable to create MatchResult with eager error messages that have same mid-sentence messages.
    *
    * @param matches indicates whether or not the matcher matched
    * @param rawFailureMessage raw failure message to report if a match fails
    * @param rawNegatedFailureMessage raw message with a meaning opposite to that of the failure message
-   * @return a <code>MatchResult</code> instance
+   * @return a `MatchResult` instance
    */
   def apply(matches: Boolean, rawFailureMessage: String, rawNegatedFailureMessage: String): MatchResult =
     new MatchResult(matches, rawFailureMessage, rawNegatedFailureMessage, rawFailureMessage, rawNegatedFailureMessage, Vector.empty, Vector.empty, Vector.empty, Vector.empty)
 
   /**
-   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>rawFailureMessage</code>,
-   * <code>rawNegativeFailureMessage</code> and <code>args</code> fields.  The <code>rawMidSentenceFailureMessage</code> will return the same
-   * string as <code>rawFailureMessage</code>, and the <code>rawMidSentenceNegatedFailureMessage</code> will return the
-   * same string as <code>rawNegatedFailureMessage</code>.  All argument fields will use <code>args</code> as arguments.
+   * Factory method that constructs a new `MatchResult` with passed `matches`, `rawFailureMessage`,
+   * `rawNegativeFailureMessage` and `args` fields.  The `rawMidSentenceFailureMessage` will return the same
+   * string as `rawFailureMessage`, and the `rawMidSentenceNegatedFailureMessage` will return the
+   * same string as `rawNegatedFailureMessage`.  All argument fields will use `args` as arguments.
    * This is suitable to create MatchResult with lazy error messages that have same mid-sentence messages and arguments.
    *
    * @param matches indicates whether or not the matcher matched
    * @param rawFailureMessage raw failure message to report if a match fails
    * @param rawNegatedFailureMessage raw message with a meaning opposite to that of the failure message
    * @param args arguments for error messages construction
-   * @return a <code>MatchResult</code> instance
+   * @return a `MatchResult` instance
    */
   def apply(matches: Boolean, rawFailureMessage: String, rawNegatedFailureMessage: String, args: IndexedSeq[Any]) =
     new MatchResult(
@@ -355,12 +340,12 @@ object MatchResult {
     )
 
   /**
-   * Factory method that constructs a new <code>MatchResult</code> with passed <code>matches</code>, <code>rawFailureMessage</code>,
-   * <code>rawNegativeFailureMessage</code>, <code>failureMessageArgs</code> and <code>negatedFailureMessageArgs</code> fields.
-   * The <code>rawMidSentenceFailureMessage</code> will return the same string as <code>rawFailureMessage</code>, and the
-   * <code>rawMidSentenceNegatedFailureMessage</code> will return the same string as <code>rawNegatedFailureMessage</code>.
-   * The <code>midSentenceFailureMessageArgs</code> will return the same as <code>failureMessageArgs</code>, and the
-   * <code>midSentenceNegatedFailureMessageArgs</code> will return the same as <code>negatedFailureMessageArgs</code>.
+   * Factory method that constructs a new `MatchResult` with passed `matches`, `rawFailureMessage`,
+   * `rawNegativeFailureMessage`, `failureMessageArgs` and `negatedFailureMessageArgs` fields.
+   * The `rawMidSentenceFailureMessage` will return the same string as `rawFailureMessage`, and the
+   * `rawMidSentenceNegatedFailureMessage` will return the same string as `rawNegatedFailureMessage`.
+   * The `midSentenceFailureMessageArgs` will return the same as `failureMessageArgs`, and the
+   * `midSentenceNegatedFailureMessageArgs` will return the same as `negatedFailureMessageArgs`.
    * This is suitable to create MatchResult with lazy error messages that have same mid-sentence and use different arguments for
    * negated messages.
    *
@@ -369,7 +354,7 @@ object MatchResult {
    * @param rawNegatedFailureMessage raw message with a meaning opposite to that of the failure message
    * @param failureMessageArgs arguments for constructing failure message to report if a match fails
    * @param negatedFailureMessageArgs arguments for constructing message with a meaning opposite to that of the failure message
-   * @return a <code>MatchResult</code> instance
+   * @return a `MatchResult` instance
    */
   def apply(matches: Boolean, rawFailureMessage: String, rawNegatedFailureMessage: String, failureMessageArgs: IndexedSeq[Any], negatedFailureMessageArgs: IndexedSeq[Any]) =
     new MatchResult(

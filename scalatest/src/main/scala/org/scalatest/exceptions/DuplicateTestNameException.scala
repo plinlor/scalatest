@@ -31,7 +31,7 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
  * @param posOrStackDepthFun either a source position or a function that return the depth in the stack trace of this exception at which the line of code that attempted
  *   to register the test with the duplicate name resides.
  *
- * @throws NullArgumentException if <code>testName</code> is <code>null</code>
+ * @throws NullArgumentException if `testName` is `null`
  *
  * @author Bill Venners
  */
@@ -47,7 +47,7 @@ class DuplicateTestNameException(
   requireNonNull(testName)
 
   /**
-    * Constructs a <code>DuplicateTestNameException</code> with given message and source position
+    * Constructs a `DuplicateTestNameException` with given message and source position
     *
     * @param message the error message
     * @param pos the source position
@@ -58,19 +58,19 @@ class DuplicateTestNameException(
   ) = this(message, Left(pos))
 
   /**
-   * Constructs a <code>DuplicateTestNameException</code> with pre-determined <code>failedCodeStackDepth</code>. (This was
+   * Constructs a `DuplicateTestNameException` with pre-determined `failedCodeStackDepth`. (This was
    * the primary constructor form prior to ScalaTest 1.5.)
    *
    * @param testName the test name found to be duplicate
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of test code that failed resides.
    *
-   * @throws NullArgumentException if <code>testName</code> is <code>null</code>
+   * @throws NullArgumentException if `testName` is `null`
    */
   def this(testName: String, failedCodeStackDepth: Int) =
     this(testName, Right((e: StackDepthException) => failedCodeStackDepth))
 
   /**
-    * Constructs a <code>DuplicateTestNameException</code> with given test name and stack depth function.
+    * Constructs a `DuplicateTestNameException` with given test name and stack depth function.
     *
     * @param testName the test name
     * @param failedCodeStackDepthFun the depth in the stack trace of this exception at which the line of test code that failed resides.
@@ -79,7 +79,7 @@ class DuplicateTestNameException(
     this(testName, Right(failedCodeStackDepthFun))
 
   /**
-   * Returns an exception of class <code>DuplicateTestNameException</code> with <code>failedExceptionStackDepth</code> set to 0 and 
+   * Returns an exception of class `DuplicateTestNameException` with `failedExceptionStackDepth` set to 0 and 
    * all frames above this stack depth severed off. This can be useful when working with tools (such as IDEs) that do not
    * directly support ScalaTest. (Tools that directly support ScalaTest can use the stack depth information delivered
    * in the StackDepth exceptions.)
@@ -98,9 +98,9 @@ class DuplicateTestNameException(
 
   /**
    * Indicates whether this object is equal to the passed object. If the passed object is
-   * a <code>DuplicateTestNameException</code>, equality requires equal <code>message</code>,
-   * <code>cause</code>, and <code>failedCodeStackDepth</code> fields, as well as equal
-   * return values of <code>getStackTrace</code>.
+   * a `DuplicateTestNameException`, equality requires equal `message`,
+   * `cause`, and `failedCodeStackDepth` fields, as well as equal
+   * return values of `getStackTrace`.
    */
   override def equals(other: Any): Boolean =
     other match {

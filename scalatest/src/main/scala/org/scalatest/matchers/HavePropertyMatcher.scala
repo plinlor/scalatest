@@ -19,40 +19,37 @@ import scala.reflect.ClassTag
 // T is the type of the object that has a property to verify with an instance of this trait, P is the type of that particular property
 // Since I should be able to pass 
 /**
- * Trait extended by matcher objects, which may appear after the word <code>have</code>, that can match against a 
- * property of the type specified by the <code>HavePropertyMatcher</code>'s second type parameter <code>P</code>.
- * <code>HavePropertyMatcher</code>'s first type parameter, <code>T</code>, specifies the type that declares the property. The match will succeed if and
+ * Trait extended by matcher objects, which may appear after the word `have`, that can match against a 
+ * property of the type specified by the `HavePropertyMatcher`'s second type parameter `P`.
+ * `HavePropertyMatcher`'s first type parameter, `T`, specifies the type that declares the property. The match will succeed if and
  * only if the value of the property equals the specified value.
  * The object containing the property
- * is passed to the <code>HavePropertyMatcher</code>'s
- * <code>apply</code> method. The result is a <code>HavePropertyMatchResult[P]</code>.
- * A <code>HavePropertyMatcher</code> is, therefore, a function from the specified type, <code>T</code>, to
- * a <code>HavePropertyMatchResult[P]</code>.
+ * is passed to the `HavePropertyMatcher`'s
+ * `apply` method. The result is a `HavePropertyMatchResult[P]`.
+ * A `HavePropertyMatcher` is, therefore, a function from the specified type, `T`, to
+ * a `HavePropertyMatchResult[P]`.
  *
- * <p>
- * Although <code>HavePropertyMatcher</code>
- * and <code>Matcher</code> represent similar concepts, they have no inheritance relationship
- * because <code>Matcher</code> is intended for use right after <code>should</code> or <code>must</code>
- * whereas <code>HavePropertyMatcher</code> is intended for use right after <code>have</code>.
- * </p>
+ * Although `HavePropertyMatcher`
+ * and `Matcher` represent similar concepts, they have no inheritance relationship
+ * because `Matcher` is intended for use right after `should` or `must`
+ * whereas `HavePropertyMatcher` is intended for use right after `have`.
+ * 
  *
- * <p>
- * A <code>HavePropertyMatcher</code> essentially allows you to write statically typed
+ * A `HavePropertyMatcher` essentially allows you to write statically typed
  * property assertions similar to the dynamic ones that use symbols:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * book should have ('title ("Moby Dick")) // dynamic: uses reflection
  * book should have (title ("Moby Dick"))  // type safe: only works on Books; no reflection used
- * </pre>
+ * }}}
  *
- * <p>
  * One good way to organize custom matchers is to place them inside one or more traits that
  * you can then mix into the suites or specs that need them. Here's an example that
- * includes two methods that produce <code>HavePropertyMatcher</code>s:
- * </p>
+ * includes two methods that produce `HavePropertyMatcher`s:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * case class Book(val title: String, val author: String)
  *
  * trait CustomMatchers {
@@ -79,22 +76,21 @@ import scala.reflect.ClassTag
  *         )
  *     }
  * }
- * </pre>
+ * }}}
  * 
- * <p>
- * Each time the <code>title</code> method is called, it returns a new <code>HavePropertyMatcher[Book, String]</code> that
- * can be used to match against the <code>title</code> property of the <code>Book</code> passed to its <code>apply</code>
- * method. Because the type parameter of these two <code>HavePropertyMatcher</code>s is <code>Book</code>, they 
+ * Each time the `title` method is called, it returns a new `HavePropertyMatcher[Book, String]` that
+ * can be used to match against the `title` property of the `Book` passed to its `apply`
+ * method. Because the type parameter of these two `HavePropertyMatcher`s is `Book`, they 
  * can only be used with instances of that type. (The compiler will enforce this.) The match will succeed if the
- * <code>title</code> property equals the value passed as <code>expectedValue</code>.
- * If the match succeeds, the <code>matches</code> field of the returned <code>HavePropertyMatchResult</code> will be <code>true</code>.
- * The second field, <code>propertyName</code>, is simply the string name of the property.
- * The third and fourth fields, <code>expectedValue</code> and <code>actualValue</code> indicate the expected and actual
+ * `title` property equals the value passed as `expectedValue`.
+ * If the match succeeds, the `matches` field of the returned `HavePropertyMatchResult` will be `true`.
+ * The second field, `propertyName`, is simply the string name of the property.
+ * The third and fourth fields, `expectedValue` and `actualValue` indicate the expected and actual
  * values, respectively, for the property.
- * Here's an example that uses these <code>HavePropertyMatchers</code>:
- * </p>
+ * Here's an example that uses these `HavePropertyMatchers`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class ExampleSpec extends RefSpec with Matchers with CustomMatchers {
  * 
  *   describe("A book") {
@@ -110,23 +106,21 @@ import scala.reflect.ClassTag
  *     }
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * These matches should succeed, but if for example the first property, <code>title ("Moby Dick")</code>, were to fail, you would get an error message like:
- * </p>
+ * These matches should succeed, but if for example the first property, `title ("Moby Dick")`, were to fail, you would get an error message like:
+ * 
  *
- * <pre class="stExamples">
+ * {{{ class="stExamples">
  * The title property had value "A Tale of Two Cities", instead of its expected value "Moby Dick",
  * on object Book(A Tale of Two Cities,Dickens)
- * </pre>
+ * }}}
  *
- * <p>
- * For more information on <code>HavePropertyMatchResult</code> and the meaning of its fields, please
- * see the documentation for <a href="HavePropertyMatchResult.html"><code>HavePropertyMatchResult</code></a>. To understand why <code>HavePropertyMatcher</code>
+ * For more information on `HavePropertyMatchResult` and the meaning of its fields, please
+ * see the documentation for <a href="HavePropertyMatchResult.html">`HavePropertyMatchResult`</a>. To understand why `HavePropertyMatcher`
  * is contravariant in its type parameter, see the section entitled "Matcher's variance" in the
- * documentation for <a href="../Matcher.html"><code>Matcher</code></a>.
- * </p>
+ * documentation for <a href="../Matcher.html">`Matcher`</a>.
+ * 
  *
  * @author Bill Venners
 */
@@ -135,28 +129,27 @@ trait HavePropertyMatcher[-T, P] extends Function1[T, HavePropertyMatchResult[P]
   thisHavePropertyMatcher =>
 
   /**
-   * Check to see if a property on the specified object, <code>objectWithProperty</code>, matches its
+   * Check to see if a property on the specified object, `objectWithProperty`, matches its
    * expected value, and report the result in
-   * the returned <code>HavePropertyMatchResult</code>. The <code>objectWithProperty</code> is
-   * usually the value to the left of a <code>should</code> or <code>must</code> invocation. For example, <code>book</code>
-   * would be passed as the <code>objectWithProperty</code> in:
+   * the returned `HavePropertyMatchResult`. The `objectWithProperty` is
+   * usually the value to the left of a `should` or `must` invocation. For example, `book`
+   * would be passed as the `objectWithProperty` in:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * book should have (title ("Moby Dick"))
-   * </pre>
+   * }}}
    *
    * @param objectWithProperty the object with the property against which to match
-   * @return the <code>HavePropertyMatchResult</code> that represents the result of the match
+   * @return the `HavePropertyMatchResult` that represents the result of the match
    */
   def apply(objectWithProperty: T): HavePropertyMatchResult[P]
 
   /**
-   * Compose this <code>HavePropertyMatcher</code> with the passed function, returning a new <code>HavePropertyMatcher</code>.
+   * Compose this `HavePropertyMatcher` with the passed function, returning a new `HavePropertyMatcher`.
    *
-   * <p>
-   * This method overrides <code>compose</code> on <code>Function1</code> to
-   * return a more specific function type of <code>HavePropertyMatcher</code>.
-   * </p>
+   * This method overrides `compose` on `Function1` to
+   * return a more specific function type of `HavePropertyMatcher`.
+   * 
    */
   override def compose[U](g: U => T): HavePropertyMatcher[U, P] =
     new HavePropertyMatcher[U, P] {
@@ -165,24 +158,23 @@ trait HavePropertyMatcher[-T, P] extends Function1[T, HavePropertyMatchResult[P]
 }
 
 /**
- * Companion object for trait <code>HavePropertyMatcher</code> that provides a
- * factory method that creates a <code>HavePropertyMatcher[T]</code> from a
- * passed function of type <code>(T =&gt; HavePropertyMatchResult)</code>.
+ * Companion object for trait `HavePropertyMatcher` that provides a
+ * factory method that creates a `HavePropertyMatcher[T]` from a
+ * passed function of type `(T =&gt; HavePropertyMatchResult)`.
  *
  * @author Bill Venners
  */
 object HavePropertyMatcher {
 
   /**
-   * Factory method that creates a <code>HavePropertyMatcher[T]</code> from a
-   * passed function of type <code>(T =&gt; HavePropertyMatchResult)</code>.
+   * Factory method that creates a `HavePropertyMatcher[T]` from a
+   * passed function of type `(T =&gt; HavePropertyMatchResult)`.
    *
-   * <p>
-   * This allows you to create a <code>HavePropertyMatcher</code> in a slightly
+   * This allows you to create a `HavePropertyMatcher` in a slightly
    * more concise way, for example:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    *  case class Person(name: String)
    *  def name(expectedName: String) = {
    *    HavePropertyMatcher { 
@@ -193,7 +185,7 @@ object HavePropertyMatcher {
    *        person.name
    *      ) 
    *    } 
-   * </pre>
+   * }}}
    *
    * @author Bill Venners
    */

@@ -25,15 +25,14 @@ import org.scalatest.exceptions.{TestPendingException, TestFailedException, Time
 import org.scalatest.time.Span
 
 /**
- * Provides an implicit conversion from <code>java.util.concurrent.Future[T]</code> to
- * <a href="Futures$FutureConcept.html"><code>FutureConcept[T]</code></a>.
+ * Provides an implicit conversion from `java.util.concurrent.Future[T]` to
+ * <a href="Futures$FutureConcept.html">`FutureConcept[T]`</a>.
  *
- * <p>
- * This trait enables you to invoke the methods defined on <code>FutureConcept</code> on a Java <code>Future</code>, as well as to pass a Java future
- * to the <code>whenReady</code> methods of supertrait <code>Futures</code>.
- * See the documentation for supertrait <a href="Futures.html"><code>Futures</code></a> for the details on the syntax this trait provides
+ * This trait enables you to invoke the methods defined on `FutureConcept` on a Java `Future`, as well as to pass a Java future
+ * to the `whenReady` methods of supertrait `Futures`.
+ * See the documentation for supertrait <a href="Futures.html">`Futures`</a> for the details on the syntax this trait provides
  * for testing with Java futures.
- * </p>
+ * 
  * 
  * @author Bill Venners
  */
@@ -42,30 +41,28 @@ trait JavaFutures extends Futures {
   import scala.language.implicitConversions
 
   /**
-   * Implicitly converts a <code>java.util.concurrent.Future[T]</code> to
-   * <code>FutureConcept[T]</code>, allowing you to invoke the methods
-   * defined on <code>FutureConcept</code> on a Java <code>Future</code>, as well as to pass a Java future
-   * to the <code>whenReady</code> methods of supertrait <a href="Futures.html"><code>Futures</code></a>.
+   * Implicitly converts a `java.util.concurrent.Future[T]` to
+   * `FutureConcept[T]`, allowing you to invoke the methods
+   * defined on `FutureConcept` on a Java `Future`, as well as to pass a Java future
+   * to the `whenReady` methods of supertrait <a href="Futures.html">`Futures`</a>.
    *
-   * <p>
-   * See the documentation for supertrait <a href="Futures.html"><code>Futures</code></a> for the details on the syntax this trait provides
+   * See the documentation for supertrait <a href="Futures.html">`Futures`</a> for the details on the syntax this trait provides
    * for testing with Java futures.
-   * </p>
+   * 
    *
-   * <p>If the <code>get</code> method of the underlying Java future throws <code>java.util.concurrent.ExecutionException</code>, and this
-   * exception contains a non-<code>null</code> cause, that cause will be included in the <code>TestFailedException</code> as its cause. The <code>ExecutionException</code>
-   * will be be included as the <code>TestFailedException</code>'s cause only if the <code>ExecutionException</code>'s cause is <code>null</code>.
-   * </p>
+   * <p>If the `get` method of the underlying Java future throws `java.util.concurrent.ExecutionException`, and this
+   * exception contains a non-`null` cause, that cause will be included in the `TestFailedException` as its cause. The `ExecutionException`
+   * will be be included as the `TestFailedException`'s cause only if the `ExecutionException`'s cause is `null`.
+   * 
    *
-   * <p>
-   * The <code>isExpired</code> method of the returned <code>FutureConcept</code> will always return <code>false</code>, because
-   * the underlying type, <code>java.util.concurrent.Future</code>, does not support the notion of a timeout. The <code>isCanceled</code>
-   * method of the returned <code>FutureConcept</code> will return the result of invoking <code>isCancelled</code> on the underlying
-   * <code>java.util.concurrent.Future</code>.
-   * </p>
+   * The `isExpired` method of the returned `FutureConcept` will always return `false`, because
+   * the underlying type, `java.util.concurrent.Future`, does not support the notion of a timeout. The `isCanceled`
+   * method of the returned `FutureConcept` will return the result of invoking `isCancelled` on the underlying
+   * `java.util.concurrent.Future`.
+   * 
    *
-   * @param javaFuture a <code>java.util.concurrent.Future[T]</code> to convert
-   * @return a <code>FutureConcept[T]</code> wrapping the passed <code>java.util.concurrent.Future[T]</code>
+   * @param javaFuture a `java.util.concurrent.Future[T]` to convert
+   * @return a `FutureConcept[T]` wrapping the passed `java.util.concurrent.Future[T]`
    */
   implicit def convertJavaFuture[T](javaFuture: FutureOfJava[T]): FutureConcept[T] =
     new FutureConcept[T] {

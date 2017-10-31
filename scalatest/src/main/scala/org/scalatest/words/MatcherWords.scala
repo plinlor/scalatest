@@ -22,7 +22,7 @@ import org.scalatest.Suite
 import org.scalactic.DefaultEquality.areEqualComparingArraysStructurally
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -32,40 +32,40 @@ trait MatcherWords {
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should (fullyMatch regex ("Hel*o, wor.d") and not have length (99))
    *                ^
-   * </pre>
+   * }}}
    **/
   val fullyMatch = new FullyMatchWord
 
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should (startWith ("Four") and include ("year"))
    *                ^
-   * </pre>
+   * }}}
    **/
   val startWith = new StartWithWord
 
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should (endWith ("ago") and include ("score"))
    *                ^
-   * </pre>
+   * }}}
    **/
   val endWith = new EndWithWord
 
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should (include ("hope") and not startWith ("no"))
    *                ^
-   * </pre>
+   * }}}
    **/
   val include = new IncludeWord
 
@@ -92,200 +92,197 @@ trait MatcherWords {
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * list should (have length (3) and not contain ('a'))
    *              ^
-   * </pre>
+   * }}}
    **/
   val have = new HaveWord
 
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * obj should (be theSameInstanceAs (string) and be theSameInstanceAs (string))
    *             ^
-   * </pre>
+   * }}}
    **/
   val be = new BeWord
 
   /**
    * This field enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * list should (contain ('a') and have length (7))
    *              ^
-   * </pre>
+   * }}}
    **/
   val contain = new ContainWord
 
   /**
    * This field enables syntax like the following: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * myFile should (not be an (directory) and not have ('name ("foo.bar")))
    *                ^
-   * </pre>
+   * }}}
    **/
   val not = new NotWord
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "hi" should not have length (3)
    *                      ^
-   * </pre>
+   * }}}
    **/
   val length = new LengthWord
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * set should not have size (3)
    *                     ^
-   * </pre>
+   * }}}
    **/
   val size = new SizeWord
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * seq should be (sorted)
    *               ^
-   * </pre>
+   * }}}
    **/
   val sorted = new SortedWord
 
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * seq should be (defined)
    *               ^
-   * </pre>
+   * }}}
    **/
   val defined = new DefinedWord
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * noException should be thrownBy
    * ^
-   * </pre>
+   * }}}
    **/
   def noException(implicit pos: source.Position) = new NoExceptionWord(pos)
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should exist
    *             ^
-   * </pre>
+   * }}}
    **/
   val exist = new ExistWord
 
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 
    * file should be (readable)
    *                 ^
-   * </pre>
+   * }}}
    **/
   val readable = new ReadableWord
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should be (writable)
    *                 ^
-   * </pre>
+   * }}}
    **/
   val writable = new WritableWord
   
   /**
    * This field enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 
    * list should be (empty)
    *                 ^
-   * </pre>
+   * }}}
    **/
   val empty = new EmptyWord
 
   /**
    * This field enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    *
    * "val a: String = 1" shouldNot compile
    *                               ^
-   * </pre>
+   * }}}
    **/
   val compile = new CompileWord
 
   /**
    * This field enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    *
    * "val a: String = 1" shouldNot typeCheck
    *                               ^
-   * </pre>
+   * }}}
    **/
   val typeCheck = new TypeCheckWord
 
   /**
    * This field enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    *
    * result should matchPattern { case Person("Bob", _) => }
    *               ^
-   * </pre>
+   * }}}
    **/
   val matchPattern = new MatchPatternWord
 
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should equal (7)
    *               ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The <code>left should equal (right)</code> syntax works by calling <code>==</code> on the <code>left</code>
-   * value, passing in the <code>right</code> value, on every type except arrays. If both <code>left</code> and right are arrays, <code>deep</code>
-   * will be invoked on both <code>left</code> and <code>right</code> before comparing them with <em>==</em>. Thus, even though this expression
-   * will yield false, because <code>Array</code>'s <code>equals</code> method compares object identity:
-   * </p>
+   * The `left should equal (right)` syntax works by calling `==` on the `left`
+   * value, passing in the `right` value, on every type except arrays. If both `left` and right are arrays, `deep`
+   * will be invoked on both `left` and `right` before comparing them with ''==''. Thus, even though this expression
+   * will yield false, because `Array`'s `equals` method compares object identity:
    * 
-   * <pre class="stHighlight">
+   * 
+   * {{{  <!-- class="stHighlight" -->
    * Array(1, 2) == Array(1, 2) // yields false
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The following expression will <em>not</em> result in a <code>TestFailedException</code>, because ScalaTest will compare
+   * The following expression will ''not'' result in a `TestFailedException`, because ScalaTest will compare
    * the two arrays structurally, taking into consideration the equality of the array's contents:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * Array(1, 2) should equal (Array(1, 2)) // succeeds (i.e., does not throw TestFailedException)
-   * </pre>
+   * }}}
    *
-   * <p>
    * If you ever do want to verify that two arrays are actually the same object (have the same identity), you can use the
-   * <code>be theSameInstanceAs</code> syntax.
-   * </p>
+   * `be theSameInstanceAs` syntax.
+   * 
    *
    */
   def equal(right: Any): MatcherFactory1[Any, Equality] =

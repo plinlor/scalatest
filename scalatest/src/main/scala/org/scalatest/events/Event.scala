@@ -26,26 +26,26 @@ import exceptions.StackDepthException
 
 /**
  * A base class for the events that can be passed to the report function passed
- * to the <code>execute</code> method of a <code>Suite</code>.
+ * to the `execute` method of a `Suite`.
  *
  * @author Bill Venners
  */
 sealed abstract class Event extends Ordered[Event] with Product with Serializable {
 
   /**
-   * An <code>Ordinal</code> that can be used to place this event in order in the context of
+   * An `Ordinal` that can be used to place this event in order in the context of
    * other events reported during the same run.
    */
   val ordinal: Ordinal
 
   /**
-   * An optional <code>Formatter</code> that provides extra information that can be used by reporters in determining
+   * An optional `Formatter` that provides extra information that can be used by reporters in determining
    * how to present this event to the user.
    */
   val formatter: Option[Formatter]
 
   /**
-   * An optional <code>Location</code> that provides information indicating where in the source code an event originated.
+   * An optional `Location` that provides information indicating where in the source code an event originated.
    * IDEs can use this information, for example, to allow the user to hop from an event report to the relevant
    * line of source code.
    */
@@ -57,19 +57,19 @@ sealed abstract class Event extends Ordered[Event] with Product with Serializabl
   val payload: Option[Any]
 
   /**
-   * A name for the <code>Thread</code> about whose activity this event was reported.
+   * A name for the `Thread` about whose activity this event was reported.
    */
   val threadName: String
 
   /**
-   * A <code>Long</code> indicating the time this event was reported, expressed in terms of the
+   * A `Long` indicating the time this event was reported, expressed in terms of the
    * number of milliseconds since the standard base time known as "the epoch":
    * January 1, 1970, 00:00:00 GMT.
    */
   val timeStamp: Long
 
   /**
-   * Comparing <code>this</code> event with the event passed as <code>that</code>. Returns
+   * Comparing `this` event with the event passed as `that`. Returns
    * x, where x &lt; 0 iff this &lt; that, x == 0 iff this == that, x &gt; 0 iff this &gt; that.
    *
    * @param that the event to compare to this event

@@ -18,7 +18,7 @@ package org.scalatest.words
 import org.scalactic.Prettifier
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -26,22 +26,21 @@ import org.scalactic.Prettifier
 final class ResultOfLessThanOrEqualToComparison[T : Ordering](val right: T) {
 
   /**
-   * This method is invoked by <code>be</code> methods to which instances of this class are passed, which
+   * This method is invoked by `be` methods to which instances of this class are passed, which
    * enables syntax such as:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be &lt;= (7)
    *                   ^  ... invoked by this be method
-   * </pre>
+   * }}}
    *
-   * <p>
    * or
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * num should (not be &lt;= (10) and not be &gt; (17))
    *                 ^  ... invoked by this be method
-   * </pre>
+   * }}}
    */
   def apply(left: T): Boolean = {
     val ordering = implicitly[Ordering[T]]

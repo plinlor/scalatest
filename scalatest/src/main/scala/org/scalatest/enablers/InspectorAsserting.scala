@@ -27,60 +27,59 @@ import scala.concurrent.{Future, ExecutionContext}
 import scala.util.{Try, Success, Failure}
 
 /**
- * Supertrait for <code>InspectorAsserting</code> typeclasses, which are used to implement and determine the result
- * type of <a href="../Inspectors.html"><code>Inspectors</code></a> methods such as <code>forAll</code>, <code>forBetween</code>, <em>etc</em>.
+ * Supertrait for `InspectorAsserting` typeclasses, which are used to implement and determine the result
+ * type of <a href="../Inspectors.html">`Inspectors`</a> methods such as `forAll`, `forBetween`, ''etc''.
  *
- * <p>
- * Currently, an inspector expression will have result type <code>Assertion</code>, if the function passed has result type <code>Assertion</code>,
- * else it will have result type <code>Unit</code>.
- * </p>
+ * Currently, an inspector expression will have result type `Assertion`, if the function passed has result type `Assertion`,
+ * else it will have result type `Unit`.
+ * 
  */
 trait InspectorAsserting[T] {
   type Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forAll</code> syntax.
+   * Implementation method for `Inspectors` `forAll` syntax.
    */
   def forAll[E](xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forAtLeast</code> syntax.
+   * Implementation method for `Inspectors` `forAtLeast` syntax.
    */
   def forAtLeast[E](min: Int, xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forAtMost</code> syntax.
+   * Implementation method for `Inspectors` `forAtMost` syntax.
    */
   def forAtMost[E](max: Int, xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forExactly</code> syntax.
+   * Implementation method for `Inspectors` `forExactly` syntax.
    */
   def forExactly[E](succeededCount: Int, xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forNo</code> syntax.
+   * Implementation method for `Inspectors` `forNo` syntax.
    */
   def forNo[E](xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forBetween</code> syntax.
+   * Implementation method for `Inspectors` `forBetween` syntax.
    */
   def forBetween[E](from: Int, upTo: Int, xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 
   /**
-   * Implementation method for <code>Inspectors</code> <code>forEvery</code> syntax.
+   * Implementation method for `Inspectors` `forEvery` syntax.
    */
   def forEvery[E](xs: GenTraversable[E], original: Any, shorthand: Boolean, prettifier: Prettifier, pos: source.Position)(fun: E => T): Result
 }
 
 /**
- * Class holding lowest priority <code>InspectorAsserting</code> implicit, which enables inspector expressions that have result type <code>Unit</code>.
+ * Class holding lowest priority `InspectorAsserting` implicit, which enables inspector expressions that have result type `Unit`.
  */
 abstract class UnitInspectorAsserting {
 
   /**
-   * Abstract subclass of <code>InspectorAsserting</code> that provides the bulk of the implementations of <code>InspectorAsserting</code>
+   * Abstract subclass of `InspectorAsserting` that provides the bulk of the implementations of `InspectorAsserting`
    * methods.
    */
   abstract class InspectorAssertingImpl[T] extends InspectorAsserting[T] {
@@ -308,8 +307,8 @@ abstract class UnitInspectorAsserting {
   }
 
   /**
-   * Provides an implicit <code>InspectorAsserting</code> instance for any type that did not match a
-   * higher priority implicit provider, enabling inspector syntax that has result type <code>Unit</code>.
+   * Provides an implicit `InspectorAsserting` instance for any type that did not match a
+   * higher priority implicit provider, enabling inspector syntax that has result type `Unit`.
    */
   implicit def assertingNatureOfT[T]: InspectorAsserting[T] { type Result = Unit } =
     new InspectorAssertingImpl[T] {
@@ -327,8 +326,8 @@ abstract class UnitInspectorAsserting {
 }
 
 /**
- * Abstract class that in the future will hold an intermediate priority <code>InspectorAsserting</code> implicit, which will enable inspector expressions
- * that have result type <code>Expectation</code>, a more composable form of assertion that returns a result instead of throwing an exception when it fails.
+ * Abstract class that in the future will hold an intermediate priority `InspectorAsserting` implicit, which will enable inspector expressions
+ * that have result type `Expectation`, a more composable form of assertion that returns a result instead of throwing an exception when it fails.
  */
 /*abstract class ExpectationInspectorAsserting extends UnitInspectorAsserting {
 

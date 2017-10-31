@@ -219,7 +219,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
   /**
     * This method is called after all tests in the suite completed execution, this implementation will update the slot state and fire all events accordingly.
     *
-    * @param suiteId the <code>suiteId</code> for the suite that's completed its tests execution
+    * @param suiteId the `suiteId` for the suite that's completed its tests execution
     */
   def completedTests(suiteId: String): Unit = {
     synchronized {
@@ -237,7 +237,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
   /**
     * This internal method is called by DispatchReporter when a slow poke is triggered.
     *
-    * @param event an <code>AlertProvided</code> event representing the slow poke.
+    * @param event an `AlertProvided` event representing the slow poke.
     */
   private[scalatest] def slowpokeEvent(event: AlertProvided): Unit = {
     synchronized {
@@ -255,7 +255,7 @@ private[scalatest] class SuiteSortingReporter(dispatch: Reporter, sortingTimeout
   /**
     * This method is called before first test in a suite is distributed to execute, this implementation will setup a new slot for the given suite.
     *
-    * @param suiteId the <code>suiteId</code> for the suite that's starting to execute its tests
+    * @param suiteId the `suiteId` for the suite that's starting to execute its tests
     */
   def distributingTests(suiteId: String): Unit = {
     synchronized {

@@ -16,33 +16,31 @@
 package org.scalatest
 
 /**
- * Stackable trait that can be mixed into suites that need code that makes use of test data (test name, tags, config map, <em>etc.</em>) executed
+ * Stackable trait that can be mixed into suites that need code that makes use of test data (test name, tags, config map, ''etc.'') executed
  * before and/or after running each test.
  *
  * <table><tr><td class="usage">
- * <strong>Recommended Usage</strong>:
- * Use trait <code>BeforeAndAfterEachTestData</code> when you want to stack traits that perform side-effects before and/or after tests, rather
+ * '''Recommended Usage''':
+ * Use trait `BeforeAndAfterEachTestData` when you want to stack traits that perform side-effects before and/or after tests, rather
  * than at the beginning or end of tests, when you need access to any test data (such as the config map) in the before and/or after code.
- * <em>Note: For more insight into where <code>BeforeAndAfterEachTestData</code> fits into the big picture, see the </em>
- * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for your chosen style trait.</em>
+ * ''Note: For more insight into where `BeforeAndAfterEachTestData` fits into the big picture, see the ''
+ * <a href="FlatSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for your chosen style trait.''
  * </td></tr></table>
  * 
- * <p>
- * A test <em>fixture</em> is composed of the objects and other artifacts (files, sockets, database
- * connections, <em>etc.</em>) tests use to do their work.
+ * A test ''fixture'' is composed of the objects and other artifacts (files, sockets, database
+ * connections, ''etc.'') tests use to do their work.
  * When multiple tests need to work with the same fixtures, it is important to try and avoid
  * duplicating the fixture code across those tests. The more code duplication you have in your
  * tests, the greater drag the tests will have on refactoring the actual production code.
- * Trait <code>BeforeAndAfterEachTestData</code> offers one way to eliminate such code duplication:
- * a <code>beforeEach(TestData)</code> method that will be run before each test (like JUnit's <code>setUp</code>),
- * and an <code>afterEach(TestData)</code> method that will be run after (like JUnit's <code>tearDown</code>).
- * </p>
+ * Trait `BeforeAndAfterEachTestData` offers one way to eliminate such code duplication:
+ * a `beforeEach(TestData)` method that will be run before each test (like JUnit's `setUp`),
+ * and an `afterEach(TestData)` method that will be run after (like JUnit's `tearDown`).
+ * 
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.flatspec.composingbeforeandaftereachtestdata
  * 
  * import org.scalatest._
@@ -97,30 +95,27 @@ package org.scalatest
  *     buffer += "clear"
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
- * To get the same ordering as <code>withFixture</code>, place your <code>super.beforeEach(TestData)</code> call at the end of each
- * <code>beforeEach(TestData)</code> method, and the <code>super.afterEach(TestData)</code> call at the beginning of each <code>afterEach(TestData)</code>
- * method, as shown in the previous example. It is a good idea to invoke <code>super.afterEach(TestData)</code> in a <code>try</code>
- * block and perform cleanup in a <code>finally</code> clause, as shown in the previous example, because this ensures the
- * cleanup code is performed even if <code>super.afterEach(TestData)</code> throws an exception.
- * </p>
+ * To get the same ordering as `withFixture`, place your `super.beforeEach(TestData)` call at the end of each
+ * `beforeEach(TestData)` method, and the `super.afterEach(TestData)` call at the beginning of each `afterEach(TestData)`
+ * method, as shown in the previous example. It is a good idea to invoke `super.afterEach(TestData)` in a `try`
+ * block and perform cleanup in a `finally` clause, as shown in the previous example, because this ensures the
+ * cleanup code is performed even if `super.afterEach(TestData)` throws an exception.
+ * 
  *
- * <p>
- * Besides enabling trait stacking, the other main advantage of <code>BeforeAndAfterEachTestData</code> over <code>BeforeAndAfter</code>
- * is that <code>BeforeAndAfterEachTestData</code> allows you to make use of test data (such as the test name and config map) in your before
- * and/or after code, whereas <code>BeforeAndAfter</code> does not.
- * </p>
+ * Besides enabling trait stacking, the other main advantage of `BeforeAndAfterEachTestData` over `BeforeAndAfter`
+ * is that `BeforeAndAfterEachTestData` allows you to make use of test data (such as the test name and config map) in your before
+ * and/or after code, whereas `BeforeAndAfter` does not.
+ * 
  *
- * <p>
- * The main disadvantage of <code>BeforeAndAfterEachTestData</code> compared to <code>BeforeAndAfter</code> and <code>BeforeAndAfterEach</code> is
- * that <code>BeforeAndAfterEachTestData</code> requires more boilerplate. If you don't need trait stacking or access to the test data, use
- * <a href="BeforeAndAfter.html"><code>BeforeAndAfter</code></a> instead
- * of <code>BeforeAndAfterEachTestData</code>.
- * If you need trait stacking, but not access to the <code>TestData</code>, use
- * <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a> instead.
- * </p>
+ * The main disadvantage of `BeforeAndAfterEachTestData` compared to `BeforeAndAfter` and `BeforeAndAfterEach` is
+ * that `BeforeAndAfterEachTestData` requires more boilerplate. If you don't need trait stacking or access to the test data, use
+ * <a href="BeforeAndAfter.html">`BeforeAndAfter`</a> instead
+ * of `BeforeAndAfterEachTestData`.
+ * If you need trait stacking, but not access to the `TestData`, use
+ * <a href="BeforeAndAfterEach.html">`BeforeAndAfterEach`</a> instead.
+ * 
  *
  * @author Bill Venners
  */
@@ -129,60 +124,56 @@ trait BeforeAndAfterEachTestData extends SuiteMixin {
   this: Suite =>
 
   /**
-   * Defines a method (that takes a <code>TestData</code>) to be run before
+   * Defines a method (that takes a `TestData`) to be run before
    * each of this suite's tests.
    *
-   * <p>
    * This trait's implementation
-   * of <code>runTest</code> invokes this method before running
-   * each test (passing in a TestData that includes the <code>configMap</code> passed to it), thus this
+   * of `runTest` invokes this method before running
+   * each test (passing in a TestData that includes the `configMap` passed to it), thus this
    * method can be used to set up a test fixture
    * needed by each test. This trait's implementation of this method does nothing.
-   * </p>
+   * 
    */
   protected def beforeEach(testData: TestData): Unit = {
   }
 
   /**
-   * Defines a method (that takes a <code>TestData</code>) to be run after
+   * Defines a method (that takes a `TestData`) to be run after
    * each of this suite's tests.
    *
-   * <p>
    * This trait's implementation
-   * of <code>runTest</code> invokes this method after running
-   * each test (passing in a <code>TestData</code> containing the <code>configMap</code> passed
+   * of `runTest` invokes this method after running
+   * each test (passing in a `TestData` containing the `configMap` passed
    * to it), thus this method can be used to tear down a test fixture
    * needed by each test. This trait's implementation of this method does nothing.
-   * </p>
+   * 
    */
   protected def afterEach(testData: TestData): Unit = {
   }
 
   /**
-   * Run a test surrounded by calls to <code>beforeEach</code> and <code>afterEach</code>.
+   * Run a test surrounded by calls to `beforeEach` and `afterEach`.
    *
-   * <p>
    * This trait's implementation of this method ("this method") invokes
-   * <code>beforeEach(TestData)</code>
-   * before running each test and <code>afterEach(TestData)</code>
-   * after running each test. It runs each test by invoking <code>super.runTest</code>, passing along
+   * `beforeEach(TestData)`
+   * before running each test and `afterEach(TestData)`
+   * after running each test. It runs each test by invoking `super.runTest`, passing along
    * the two parameters passed to it.
-   * </p>
    * 
-   * <p>
-   * If any invocation of <code>beforeEach(TestData)</code> completes abruptly with an exception, this
+   * 
+   * If any invocation of `beforeEach(TestData)` completes abruptly with an exception, this
    * method will complete abruptly with the same exception. If any call to
-   * <code>super.runTest</code> completes abruptly with an exception, this method
+   * `super.runTest` completes abruptly with an exception, this method
    * will complete abruptly with the same exception, however, before doing so, it will
-   * invoke <code>afterEach(TestData)</code>. If <code>afterEach(TestData)</code> <em>also</em> completes abruptly with an exception, this
-   * method will nevertheless complete abruptly with the exception previously thrown by <code>super.runTest</code>.
-   * If <code>super.runTest</code> returns normally, but <code>afterEach(TestData)</code> completes abruptly with an
-   * exception, this method will complete abruptly with the exception thrown by <code>afterEach(TestData)</code>.
-   * </p>
+   * invoke `afterEach(TestData)`. If `afterEach(TestData)` ''also'' completes abruptly with an exception, this
+   * method will nevertheless complete abruptly with the exception previously thrown by `super.runTest`.
+   * If `super.runTest` returns normally, but `afterEach(TestData)` completes abruptly with an
+   * exception, this method will complete abruptly with the exception thrown by `afterEach(TestData)`.
+   * 
    *
    * @param testName the name of one test to run.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
   */
   abstract protected override def runTest(testName: String, args: Args): Status = {
 

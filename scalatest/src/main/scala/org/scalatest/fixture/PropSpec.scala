@@ -18,48 +18,45 @@ package org.scalatest.fixture
 import org.scalatest._
 
 /**
- * A sister class to <code>org.scalatest.PropSpec</code> that can pass a fixture object into its tests.
+ * A sister class to `org.scalatest.PropSpec` that can pass a fixture object into its tests.
  *
  * <table><tr><td class="usage">
- * <strong>Recommended Usage</strong>:
- * Use class <code>fixture.PropSpec</code> in situations for which <a href="../PropSpec.html"><code>PropSpec</code></a>
+ * '''Recommended Usage''':
+ * Use class `fixture.PropSpec` in situations for which <a href="../PropSpec.html">`PropSpec`</a>
  * would be a good choice, when all or most tests need the same fixture objects
- * that must be cleaned up afterwards. <em>Note: <code>fixture.PropSpec</code> is intended for use in special
- * situations, with class <code>PropSpec</code> used for general needs. For
- * more insight into where <code>fixture.PropSpec</code> fits in the big picture, see
- * the <a href="../PropSpec.html#withFixtureOneArgTest"><code>withFixture(OneArgTest)</code></a> subsection of
- * the <a href="../PropSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for class <code>PropSpec</code>.</em>
+ * that must be cleaned up afterwards. ''Note: `fixture.PropSpec` is intended for use in special
+ * situations, with class `PropSpec` used for general needs. For
+ * more insight into where `fixture.PropSpec` fits in the big picture, see
+ * the <a href="../PropSpec.html#withFixtureOneArgTest">`withFixture(OneArgTest)`</a> subsection of
+ * the <a href="../PropSpec.html#sharedFixtures">Shared fixtures</a> section in the documentation for class `PropSpec`.''
  * </td></tr></table>
  * 
- * <p>
- * Class <code>fixture.PropSpec</code> behaves similarly to class <code>org.scalatest.PropSpec</code>, except that tests may have a
+ * Class `fixture.PropSpec` behaves similarly to class `org.scalatest.PropSpec`, except that tests may have a
  * fixture parameter. The type of the
- * fixture parameter is defined by the abstract <code>FixtureParam</code> type, which is a member of this class.
- * This class also has an abstract <code>withFixture</code> method. This <code>withFixture</code> method
- * takes a <code>OneArgTest</code>, which is a nested trait defined as a member of this class.
- * <code>OneArgTest</code> has an <code>apply</code> method that takes a <code>FixtureParam</code>.
- * This <code>apply</code> method is responsible for running a test.
- * This class's <code>runTest</code> method delegates the actual running of each test to <code>withFixture</code>, passing
- * in the test code to run via the <code>OneArgTest</code> argument. The <code>withFixture</code> method (abstract in this class) is responsible
+ * fixture parameter is defined by the abstract `FixtureParam` type, which is a member of this class.
+ * This class also has an abstract `withFixture` method. This `withFixture` method
+ * takes a `OneArgTest`, which is a nested trait defined as a member of this class.
+ * `OneArgTest` has an `apply` method that takes a `FixtureParam`.
+ * This `apply` method is responsible for running a test.
+ * This class's `runTest` method delegates the actual running of each test to `withFixture`, passing
+ * in the test code to run via the `OneArgTest` argument. The `withFixture` method (abstract in this class) is responsible
  * for creating the fixture argument and passing it to the test function.
- * </p>
  * 
- * <p>
- * Subclasses of this class must, therefore, do three things differently from a plain old <code>org.scalatest.PropSpec</code>:
- * </p>
+ * 
+ * Subclasses of this class must, therefore, do three things differently from a plain old `org.scalatest.PropSpec`:
+ * 
  * 
  * <ol>
- * <li>define the type of the fixture parameter by specifying type <code>FixtureParam</code></li>
- * <li>define the <code>withFixture(OneArgTest)</code> method</li>
+ * <li>define the type of the fixture parameter by specifying type `FixtureParam`</li>
+ * <li>define the `withFixture(OneArgTest)` method</li>
  * <li>write tests that take a fixture parameter</li>
  * <li>(You can also define tests that don't take a fixture parameter.)</li>
  * </ol>
  *
- * <p>
  * Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.fixture.propspec
  * 
  * import org.scalatest._
@@ -131,67 +128,60 @@ import org.scalatest._
  *     forAll { (i: Int) => i + i should equal (2 * i) }
  *   }
  * }
- * </pre>
+ * }}}
  *
- * <p>
  * Note: to run the examples on this page, you'll need to include <a href="http://www.scalacheck.org">ScalaCheck</a> on the classpath in addition to ScalaTest.
- * </p>
+ * 
  *
- * <p>
- * In the previous example, <code>withFixture</code> creates and initializes a temp file, then invokes the test function,
- * passing in a <code>FileReader</code> connected to that file.  In addition to setting up the fixture before a test,
- * the <code>withFixture</code> method also cleans it up afterwards. If you need to do some clean up
- * that must happen even if a test fails, you should invoke the test function from inside a <code>try</code> block and do
- * the cleanup in a <code>finally</code> clause, as shown in the previous example.
- * </p>
+ * In the previous example, `withFixture` creates and initializes a temp file, then invokes the test function,
+ * passing in a `FileReader` connected to that file.  In addition to setting up the fixture before a test,
+ * the `withFixture` method also cleans it up afterwards. If you need to do some clean up
+ * that must happen even if a test fails, you should invoke the test function from inside a `try` block and do
+ * the cleanup in a `finally` clause, as shown in the previous example.
+ * 
  *
- * <p>
- * If a test fails, the <code>OneArgTest</code> function will result in a [[org.scalatest.Failed Failed]] wrapping the
+ * If a test fails, the `OneArgTest` function will result in a [[org.scalatest.Failed Failed]] wrapping the
  * exception describing the failure.
- * The reason you must perform cleanup in a <code>finally</code> clause is that in case an exception propagates back through
- * <code>withFixture</code>, the <code>finally</code> clause will ensure the fixture cleanup happens as that exception
- * propagates back up the call stack to <code>runTest</code>.
- * </p>
+ * The reason you must perform cleanup in a `finally` clause is that in case an exception propagates back through
+ * `withFixture`, the `finally` clause will ensure the fixture cleanup happens as that exception
+ * propagates back up the call stack to `runTest`.
+ * 
  *
- * <p>
  * If a test doesn't need the fixture, you can indicate that by providing a no-arg instead of a one-arg function.
  * In other words, instead of starting your function literal
- * with something like &ldquo;<code>reader =&gt;</code>&rdquo;, you'd start it with &ldquo;<code>() =&gt;</code>&rdquo;, as is done
- * in the third test in the above example. For such tests, <code>runTest</code>
- * will not invoke <code>withFixture(OneArgTest)</code>. It will instead directly invoke <code>withFixture(NoArgTest)</code>.
- * </p>
+ * with something like &ldquo;`reader =&gt;`&rdquo;, you'd start it with &ldquo;`() =&gt;`&rdquo;, as is done
+ * in the third test in the above example. For such tests, `runTest`
+ * will not invoke `withFixture(OneArgTest)`. It will instead directly invoke `withFixture(NoArgTest)`.
+ * 
  *
  * <a name="multipleFixtures"></a>
- * <h2>Passing multiple fixture objects</h2>
+ * ==Passing multiple fixture objects==
  *
- * <p>
  * If the fixture you want to pass into your tests consists of multiple objects, you will need to combine
  * them into one object to use this class. One good approach to passing multiple fixture objects is
  * to encapsulate them in a case class. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * case class FixtureParam(builder: StringBuilder, buffer: ListBuffer[String])
- * </pre>
+ * }}}
  *
- * <p>
- * To enable the stacking of traits that define <code>withFixture(NoArgTest)</code>, it is a good idea to let
- * <code>withFixture(NoArgTest)</code> invoke the test function instead of invoking the test
- * function directly. To do so, you'll need to convert the <code>OneArgTest</code> to a <code>NoArgTest</code>. You can do that by passing
- * the fixture object to the <code>toNoArgTest</code> method of <code>OneArgTest</code>. In other words, instead of
- * writing &ldquo;<code>test(theFixture)</code>&rdquo;, you'd delegate responsibility for
- * invoking the test function to the <code>withFixture(NoArgTest)</code> method of the same instance by writing:
- * </p>
+ * To enable the stacking of traits that define `withFixture(NoArgTest)`, it is a good idea to let
+ * `withFixture(NoArgTest)` invoke the test function instead of invoking the test
+ * function directly. To do so, you'll need to convert the `OneArgTest` to a `NoArgTest`. You can do that by passing
+ * the fixture object to the `toNoArgTest` method of `OneArgTest`. In other words, instead of
+ * writing &ldquo;`test(theFixture)`&rdquo;, you'd delegate responsibility for
+ * invoking the test function to the `withFixture(NoArgTest)` method of the same instance by writing:
+ * 
  *
- * <pre>
+ * {{{
  * withFixture(test.toNoArgTest(theFixture))
- * </pre>
+ * }}}
  *
- * <p>
  * Here's a complete example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.fixture.propspec.multi
  * 
  * import org.scalatest._
@@ -238,7 +228,7 @@ import org.scalatest._
  *     }
  *   }
  * }
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
@@ -248,7 +238,7 @@ abstract class PropSpec extends PropSpecLike {
   /**
    * Returns a user friendly string for this suite, composed of the
    * simple name of the class (possibly simplified further by removing dollar signs if added by the Scala interpeter) and, if this suite
-   * contains nested suites, the result of invoking <code>toString</code> on each
+   * contains nested suites, the result of invoking `toString` on each
    * of the nested suites, separated by commas and surrounded by parentheses.
    *
    * @return a user-friendly string for this suite

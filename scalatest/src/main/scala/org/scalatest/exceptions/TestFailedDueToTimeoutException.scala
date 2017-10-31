@@ -20,21 +20,20 @@ import org.scalactic.source
 import StackDepthExceptionHelper.posOrElseStackDepthFun
 
 /**
- * Subclass of <a href="TestFailedException.html"><code>TestFailedException</code></a> representing tests that failed because of a timeout.
+ * Subclass of <a href="TestFailedException.html">`TestFailedException`</a> representing tests that failed because of a timeout.
  *
- * <p>
- * This exception is thrown by the <code>failAfter</code>
- * method of trait <a href="../concurrent/Timeouts.html"><code>Timeouts</code></a>, the <code>eventually</code> method of trait
- * <a href="../concurrent/Eventually.html"><code>Eventually</code></a>, and the <code>await</code> methods of trait
- * <a href="../concurrent/AsyncAssertions.html"><code>AsyncAssertions</code></a>.
- * </p>
+ * This exception is thrown by the `failAfter`
+ * method of trait <a href="../concurrent/Timeouts.html">`Timeouts`</a>, the `eventually` method of trait
+ * <a href="../concurrent/Eventually.html">`Eventually`</a>, and the `await` methods of trait
+ * <a href="../concurrent/AsyncAssertions.html">`AsyncAssertions`</a>.
+ * 
  *
- * @param messageFun a function that produces an optional detail message for this <code>TestFailedDueToTimeoutException</code>.
- * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestFailedDueToTimeoutException</code> to be thrown.
+ * @param messageFun a function that produces an optional detail message for this `TestFailedDueToTimeoutException`.
+ * @param cause an optional cause, the `Throwable` that caused this `TestFailedDueToTimeoutException` to be thrown.
  * @param posOrStackDepthFun either a source position or a function that produces the depth in the stack trace of this exception at which the line of test code that failed resides.
  * @param timeout the timeout that expired
  *
- * @throws NullArgumentException if either <code>messageFun</code>, <code>cause</code> or <code>failedCodeStackDepthFun</code> is <code>null</code>, or <code>Some(null)</code>.
+ * @throws NullArgumentException if either `messageFun`, `cause` or `failedCodeStackDepthFun` is `null`, or `Some(null)`.
  *
  * @author Bill Venners
  */
@@ -47,12 +46,12 @@ class TestFailedDueToTimeoutException(
 ) extends TestFailedException(messageFun, cause, posOrStackDepthFun, payload) with TimeoutField {
 
   /**
-    * Constructs a <code>TestFailedDueToTimeoutException</code> with the given error message function, optional cause, source position and optional payload.
+    * Constructs a `TestFailedDueToTimeoutException` with the given error message function, optional cause, source position and optional payload.
     *
-    * @param messageFun a function that return an optional detail message for this <code>TestCanceledException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestCanceledException</code> to be thrown.
+    * @param messageFun a function that return an optional detail message for this `TestCanceledException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TestCanceledException` to be thrown.
     * @param pos a source position
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestCanceled</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestCanceled` event
     */
   def this(
     messageFun: StackDepthException => Option[String],
@@ -63,12 +62,12 @@ class TestFailedDueToTimeoutException(
   ) = this(messageFun, cause, Left(pos), payload, timeout)
 
   /**
-    * Constructs a <code>TestFailedDueToTimeoutException</code> with the given error message function, optional cause, stack depth function, optional payload and timeout.
+    * Constructs a `TestFailedDueToTimeoutException` with the given error message function, optional cause, stack depth function, optional payload and timeout.
     *
-    * @param messageFun a function that return an optional detail message for this <code>TestFailedDueToTimeoutException</code>.
-    * @param cause an optional cause, the <code>Throwable</code> that caused this <code>TestFailedDueToTimeoutException</code> to be thrown.
+    * @param messageFun a function that return an optional detail message for this `TestFailedDueToTimeoutException`.
+    * @param cause an optional cause, the `Throwable` that caused this `TestFailedDueToTimeoutException` to be thrown.
     * @param failedCodeStackDepthFun a function that return the depth in the stack trace of this exception at which the line of test code that failed resides.
-    * @param payload an optional payload, which ScalaTest will include in a resulting <code>TestCanceled</code> event
+    * @param payload an optional payload, which ScalaTest will include in a resulting `TestCanceled` event
     * @param timeout the timeout that expired
     */
   def this(
@@ -82,10 +81,10 @@ class TestFailedDueToTimeoutException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the detail message option string replaced with the result of passing
-   * the current detail message to the passed function, <code>fun</code>.
+   * the current detail message to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional detail message, will produce
-   * the modified optional detail message for the result instance of <code>TestFailedDueToTimeoutException</code>.
+   * the modified optional detail message for the result instance of `TestFailedDueToTimeoutException`.
    */
   override def modifyMessage(fun: Option[String] => Option[String]): TestFailedDueToTimeoutException = {
     val mod = new TestFailedDueToTimeoutException((_: StackDepthException) => fun(message), cause, posOrStackDepthFun, payload, timeout)
@@ -96,10 +95,10 @@ class TestFailedDueToTimeoutException(
   /**
    * Returns an instance of this exception's class, identical to this exception,
    * except with the payload option replaced with the result of passing
-   * the current payload option to the passed function, <code>fun</code>.
+   * the current payload option to the passed function, `fun`.
    *
    * @param fun A function that, given the current optional payload, will produce
-   * the modified optional payload for the result instance of <code>TestFailedDueToTimeoutException</code>.
+   * the modified optional payload for the result instance of `TestFailedDueToTimeoutException`.
    */
   override def modifyPayload(fun: Option[Any] => Option[Any]): TestFailedDueToTimeoutException = {
     val currentPayload = payload

@@ -23,7 +23,7 @@ import org.scalatest.UnquotedString
 import org.scalatest.MatchersHelper.startWithRegexWithGroups
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -33,10 +33,10 @@ final class StartWithWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "1.7b" should (startWith ("1.7") and startWith ("1.7b"))
    *                          ^
-   * </pre>
+   * }}}
    */
   def apply(right: String): Matcher[String] =
     new Matcher[String] {
@@ -53,21 +53,21 @@ final class StartWithWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val decimal = """(-)?(\d+)(\.\d*)?"""
    * "1.7b" should (startWith regex (decimal) and startWith regex (decimal))
    *                          ^
-   * </pre>
+   * }}}
    */
   def regex[T <: String](right: T): Matcher[T] = regex(right.r)
   
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not { startWith regex ("a(b*)c" withGroup "bb") } 
    *                               ^
-   * </pre>
+   * }}}
    */	
   def regex(regexWithGroups: RegexWithGroups) = 
     new Matcher[String] {
@@ -79,11 +79,11 @@ final class StartWithWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val decimalRegex = """(-)?(\d+)(\.\d*)?""".r
    * "1.7" should (startWith regex (decimalRegex) and startWith regex (decimalRegex))
    *                         ^
-   * </pre>
+   * }}}
    */
   def regex(rightRegex: Regex): Matcher[String] =
     new Matcher[String] {

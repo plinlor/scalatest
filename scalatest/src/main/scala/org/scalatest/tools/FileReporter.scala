@@ -17,15 +17,15 @@ package org.scalatest.tools
 
 
 /**
- * A <code>Reporter</code> that prints test status information to a file.
+ * A `Reporter` that prints test status information to a file.
  *
- * The primary constructor creates a <code>FileReporter</code> with passed
- * <code>String</code> file name. Information about events reported to instances of this
+ * The primary constructor creates a `FileReporter` with passed
+ * `String` file name. Information about events reported to instances of this
  * class will be written to the specified file using the
  * default character encoding.
  *
- * @param filename the <code>String</code> name of the file to which to print reported info
- * @exception NullArgumentException if passed <code>file</code> reference is <code>null</code>
+ * @param filename the `String` name of the file to which to print reported info
+ * @exception NullArgumentException if passed `file` reference is `null`
  * @exception IOException if unable to open the specified file for writing
  *
  * @author Bill Venners

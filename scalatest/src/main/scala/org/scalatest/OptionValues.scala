@@ -21,88 +21,83 @@ import org.scalatest.exceptions.StackDepthException
 import org.scalatest.exceptions.TestFailedException
 
 /**
- * Trait that provides an implicit conversion that adds a <code>value</code> method
- * to <code>Option</code>, which will return the value of the option if it is defined,
- * or throw <code>TestFailedException</code> if not.
+ * Trait that provides an implicit conversion that adds a `value` method
+ * to `Option`, which will return the value of the option if it is defined,
+ * or throw `TestFailedException` if not.
  *
- * <p>
  * This construct allows you to express in one statement that an option should be defined
  * and that its value should meet some expectation. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * opt.value should be &gt; 9
- * </pre>
+ * }}}
  *
- * <p>
  * Or, using an assertion instead of a matcher expression:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * assert(opt.value &gt; 9)
- * </pre>
+ * }}}
  *
- * <p>
- * Were you to simply invoke <code>get</code> on the <code>Option</code>, 
- * if the option wasn't defined, it would throw a <code>NoSuchElementException</code>:
- * </p>
+ * Were you to simply invoke `get` on the `Option`, 
+ * if the option wasn't defined, it would throw a `NoSuchElementException`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val opt: Option[Int] = None
  *
  * opt.get should be &gt; 9 // opt.get throws NoSuchElementException
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>NoSuchElementException</code> would cause the test to fail, but without providing a <a href="exceptions/StackDepth.html">stack depth</a> pointing
- * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html"><code>TestFailedException</code></a> (and a
+ * The `NoSuchElementException` would cause the test to fail, but without providing a <a href="exceptions/StackDepth.html">stack depth</a> pointing
+ * to the failing line of test code. This stack depth, provided by <a href="exceptions/TestFailedException.html">`TestFailedException`</a> (and a
  * few other ScalaTest exceptions), makes it quicker for
- * users to navigate to the cause of the failure. Without <code>OptionValues</code>, to get
+ * users to navigate to the cause of the failure. Without `OptionValues`, to get
  * a stack depth exception you would need to make two statements, like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val opt: Option[Int] = None
  *
  * opt should be ('defined) // throws TestFailedException
  * opt.get should be &gt; 9
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>OptionValues</code> trait allows you to state that more concisely:
- * </p>
+ * The `OptionValues` trait allows you to state that more concisely:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val opt: Option[Int] = None
  *
  * opt.value should be &gt; 9 // opt.value throws TestFailedException
- * </pre>
+ * }}}
  */
 trait OptionValues {
 
   import scala.language.implicitConversions
 
   /**
-   * Implicit conversion that adds a <code>value</code> method to <code>Option</code>.
+   * Implicit conversion that adds a `value` method to `Option`.
    *
-   * @param opt the <code>Option</code> on which to add the <code>value</code> method
+   * @param opt the `Option` on which to add the `value` method
    */
   implicit def convertOptionToValuable[T](opt: Option[T])(implicit pos: source.Position): Valuable[T] = new Valuable(opt, pos)
 
   /**
-   * Wrapper class that adds a <code>value</code> method to <code>Option</code>, allowing
+   * Wrapper class that adds a `value` method to `Option`, allowing
    * you to make statements like:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * opt.value should be &gt; 9
-   * </pre>
+   * }}}
    *
-   * @param opt An option to convert to <code>Valuable</code>, which provides the <code>value</code> method.
+   * @param opt An option to convert to `Valuable`, which provides the `value` method.
    */
   class Valuable[T](opt: Option[T], pos: source.Position) {
 
     /**
-     * Returns the value contained in the wrapped <code>Option</code>, if defined, else throws <code>TestFailedException</code> with
+     * Returns the value contained in the wrapped `Option`, if defined, else throws `TestFailedException` with
      * a detail message indicating the option was not defined.
      */
     def value: T = {
@@ -118,11 +113,11 @@ trait OptionValues {
 }
 
 /**
- * Companion object that facilitates the importing of <code>OptionValues</code> members as 
- * an alternative to mixing it in. One use case is to import <code>OptionValues</code>'s members so you can use
- * <code>value</code> on option in the Scala interpreter:
+ * Companion object that facilitates the importing of `OptionValues` members as 
+ * an alternative to mixing it in. One use case is to import `OptionValues`'s members so you can use
+ * `value` on option in the Scala interpreter:
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * $ scala -cp scalatest-1.7.jar
  * Welcome to Scala version 2.9.1.final (Java HotSpot(TM) 64-Bit Server VM, Java 1.6.0_29).
  * Type in expressions to have them evaluated.
@@ -150,7 +145,7 @@ trait OptionValues {
  *   at org.scalatest.OptionValues$Valuable.value(OptionValues.scala:68)
  *   at .&lt;init&gt;(&lt;console&gt;:18)
  *   ...
- * </pre>
+ * }}}
  *
  */
 object OptionValues extends OptionValues

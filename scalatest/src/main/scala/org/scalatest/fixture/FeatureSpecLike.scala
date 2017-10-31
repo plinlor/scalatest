@@ -24,23 +24,21 @@ import org.scalatest.Suite.anExceptionThatShouldCauseAnAbort
 import org.scalatest.Suite.autoTagClassAnnotations
 
 /**
- * Implementation trait for class <code>fixture.FeatureSpec</code>, which is
- * a sister class to <a href="../FeatureSpec.html"><code>org.scalatest.FeatureSpec</code></a> that can pass a
+ * Implementation trait for class `fixture.FeatureSpec`, which is
+ * a sister class to <a href="../FeatureSpec.html">`org.scalatest.FeatureSpec`</a> that can pass a
  * fixture object into its tests.
  *
- * <p>
- * <a href="FeatureSpec.html"><code>fixture.FeatureSpec</code></a> is a class,
+ * <a href="FeatureSpec.html">`fixture.FeatureSpec`</a> is a class,
  * not a trait, to minimize compile time given there is a slight compiler
  * overhead to mixing in traits compared to extending classes. If you need
- * to mix the behavior of <code>fixture.FeatureSpec</code> into some other
+ * to mix the behavior of `fixture.FeatureSpec` into some other
  * class, you can use this trait instead, because class
- * <code>fixture.FeatureSpec</code> does nothing more than extend this trait and add a nice <code>toString</code> implementation.
- * </p>
+ * `fixture.FeatureSpec` does nothing more than extend this trait and add a nice `toString` implementation.
+ * 
  *
- * <p>
  * See the documentation of the class for a <a href="FeatureSpec.html">detailed
- * overview of <code>fixture.FeatureSpec</code></a>.
- * </p>
+ * overview of `fixture.FeatureSpec`</a>.
+ * 
  *
  * @author Bill Venners
  */
@@ -55,43 +53,43 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   private[scalatest] val sourceFileName = "FeatureSpecLike.scala"
 
   /**
-   * Returns an <code>Informer</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Informer` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def info: Informer = atomicInformer.get
 
   /**
-   * Returns a <code>Notifier</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Notifier` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>FeatureSpec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `FeatureSpec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def note: Notifier = atomicNotifier.get
 
   /**
-   * Returns an <code>Alerter</code> that during test execution will forward strings (and other objects) passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns an `Alerter` that during test execution will forward strings (and other objects) passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked while this
-   * <code>FeatureSpec</code> is being executed, such as from inside a test function, it will forward the information to
+   * `FeatureSpec` is being executed, such as from inside a test function, it will forward the information to
    * the current reporter immediately. If invoked at any other time, it will
    * print to the standard output. This method can be called safely by any thread.
    */
   protected def alert: Alerter = atomicAlerter.get
 
   /**
-   * Returns a <code>Documenter</code> that during test execution will forward strings passed to its
-   * <code>apply</code> method to the current reporter. If invoked in a constructor, it
+   * Returns a `Documenter` that during test execution will forward strings passed to its
+   * `apply` method to the current reporter. If invoked in a constructor, it
    * will register the passed string for forwarding later during test execution. If invoked from inside a scope,
    * it will forward the information to the current reporter immediately.  If invoked from inside a test function,
-   * it will record the information and forward it to the current reporter only after the test completed, as <code>recordedEvents</code>
-   * of the test completed event, such as <code>TestSucceeded</code>. If invoked at any other time, it will print to the standard output.
+   * it will record the information and forward it to the current reporter only after the test completed, as `recordedEvents`
+   * of the test completed event, such as `TestSucceeded`. If invoked at any other time, it will print to the standard output.
    * This method can be called safely by any thread.
    */
   protected def markup: Documenter = atomicDocumenter.get
@@ -140,19 +138,19 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
    * Register a test with the given spec text, optional tags, and test function value that takes no arguments.
    * An invocation of this method is called an &ldquo;example.&rdquo;
    *
-   * This method will register the test for later execution via an invocation of one of the <code>execute</code>
+   * This method will register the test for later execution via an invocation of one of the `execute`
    * methods. The name of the test will be a concatenation of the text of all surrounding describers,
    * from outside in, and the passed spec text, with one space placed between each item. (See the documenation
-   * for <code>testNames</code> for an example.) The resulting test name must not have been registered previously on
-   * this <code>FeatureSpec</code> instance.
+   * for `testNames` for an example.) The resulting test name must not have been registered previously on
+   * this `FeatureSpec` instance.
    *
    * @param specText the specification text, which will be combined with the descText of any surrounding describers
    * to form the test name
    * @param testTags the optional list of tags for this test
    * @param testFun the test function
    * @throws DuplicateTestNameException if a test with the same name has been registered previously
-   * @throws TestRegistrationClosedException if invoked after <code>run</code> has been invoked on this suite
-   * @throws NullArgumentException if <code>specText</code> or any passed test tag is <code>null</code>
+   * @throws TestRegistrationClosedException if invoked after `run` has been invoked on this suite
+   * @throws NullArgumentException if `specText` or any passed test tag is `null`
    */
   protected def Scenario(specText: String, testTags: Tag*): ResultOfScenarioInvocation =
     new ResultOfScenarioInvocation(specText, testTags: _*)
@@ -180,21 +178,21 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
 
   /**
    * Register a test to ignore, which has the given spec text, optional tags, and test function value that takes no arguments.
-   * This method will register the test for later ignoring via an invocation of one of the <code>execute</code>
-   * methods. This method exists to make it easy to ignore an existing test by changing the call to <code>it</code>
-   * to <code>ignore</code> without deleting or commenting out the actual test code. The test will not be executed, but a
+   * This method will register the test for later ignoring via an invocation of one of the `execute`
+   * methods. This method exists to make it easy to ignore an existing test by changing the call to `it`
+   * to `ignore` without deleting or commenting out the actual test code. The test will not be executed, but a
    * report will be sent that indicates the test was ignored. The name of the test will be a concatenation of the text of all surrounding describers,
    * from outside in, and the passed spec text, with one space placed between each item. (See the documenation
-   * for <code>testNames</code> for an example.) The resulting test name must not have been registered previously on
-   * this <code>FeatureSpec</code> instance.
+   * for `testNames` for an example.) The resulting test name must not have been registered previously on
+   * this `FeatureSpec` instance.
    *
    * @param specText the specification text, which will be combined with the descText of any surrounding describers
    * to form the test name
    * @param testTags the optional list of tags for this test
    * @param testFun the test function
    * @throws DuplicateTestNameException if a test with the same name has been registered previously
-   * @throws TestRegistrationClosedException if invoked after <code>run</code> has been invoked on this suite
-   * @throws NullArgumentException if <code>specText</code> or any passed test tag is <code>null</code>
+   * @throws TestRegistrationClosedException if invoked after `run` has been invoked on this suite
+   * @throws NullArgumentException if `specText` or any passed test tag is `null`
    */
   protected def ignore(specText: String, testTags: Tag*): ResultOfIgnoreInvocation =
     new ResultOfIgnoreInvocation(specText, testTags: _*)
@@ -204,8 +202,8 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
 
   /**
    * Describe a &ldquo;subject&rdquo; being specified and tested by the passed function value. The
-   * passed function value may contain more describers (defined with <code>describe</code>) and/or tests
-   * (defined with <code>it</code>). This trait's implementation of this method will register the
+   * passed function value may contain more describers (defined with `describe`) and/or tests
+   * (defined with `it`). This trait's implementation of this method will register the
    * description string and immediately invoke the passed function.
    *
    * @param description the description text
@@ -236,32 +234,30 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   }
 
   /**
-   * A <code>Map</code> whose keys are <code>String</code> tag names to which tests in this <code>FeatureSpec</code> belong, and values
-   * the <code>Set</code> of test names that belong to each tag. If this <code>FeatureSpec</code> contains no tags, this method returns an empty <code>Map</code>.
+   * A `Map` whose keys are `String` tag names to which tests in this `FeatureSpec` belong, and values
+   * the `Set` of test names that belong to each tag. If this `FeatureSpec` contains no tags, this method returns an empty `Map`.
    *
-   * <p>
-   * This trait's implementation returns tags that were passed as strings contained in <code>Tag</code> objects passed to
-   * methods <code>test</code> and <code>ignore</code>.
-   * </p>
+   * This trait's implementation returns tags that were passed as strings contained in `Tag` objects passed to
+   * methods `test` and `ignore`.
+   * 
    *
-   * <p>
    * In addition, this trait's implementation will also auto-tag tests with class level annotations.
    * For example, if you annotate @Ignore at the class level, all test methods in the class will be auto-annotated with @Ignore.
-   * </p>
+   * 
    */
   override def tags: Map[String, Set[String]] = autoTagClassAnnotations(atomic.get.tagsMap, this)
 
   /**
    * Run a test. This trait's implementation runs the test registered with the name specified by
-   * <code>testName</code>. Each test's name is a concatenation of the text of all describers surrounding a test,
+   * `testName`. Each test's name is a concatenation of the text of all describers surrounding a test,
    * from outside in, and the test's  spec text, with one space placed between each item. (See the documenation
-   * for <code>testNames</code> for an example.)
+   * for `testNames` for an example.)
    *
    * @param testName the name of one test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
-   * @throws NullArgumentException if <code>testName</code>, <code>reporter</code>, <code>stopper</code>, or <code>configMap</code>
-   *     is <code>null</code>.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @throws NullArgumentException if `testName`, `reporter`, `stopper`, or `configMap`
+   *     is `null`.
    */
   protected override def runTest(testName: String, args: Args): Status = {
 
@@ -287,60 +283,55 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   }
 
   /**
-   * <p>
-   * Run zero to many of this <code>FeatureSpec</code>'s tests.
-   * </p>
+   * Run zero to many of this `FeatureSpec`'s tests.
+   * 
    *
-   * <p>
-   * This method takes a <code>testName</code> parameter that optionally specifies a test to invoke.
-   * If <code>testName</code> is <code>Some</code>, this trait's implementation of this method
-   * invokes <code>runTest</code> on this object with passed <code>args</code>.
-   * </p>
+   * This method takes a `testName` parameter that optionally specifies a test to invoke.
+   * If `testName` is `Some`, this trait's implementation of this method
+   * invokes `runTest` on this object with passed `args`.
+   * 
    *
-   * <p>
-   * This method takes an <code>args</code> that contains a <code>Set</code> of tag names that should be included (<code>tagsToInclude</code>), and a <code>Set</code>
-   * that should be excluded (<code>tagsToExclude</code>), when deciding which of this <code>Suite</code>'s tests to execute.
-   * If <code>tagsToInclude</code> is empty, all tests will be executed
-   * except those those belonging to tags listed in the <code>tagsToExclude</code> <code>Set</code>. If <code>tagsToInclude</code> is non-empty, only tests
-   * belonging to tags mentioned in <code>tagsToInclude</code>, and not mentioned in <code>tagsToExclude</code>
-   * will be executed. However, if <code>testName</code> is <code>Some</code>, <code>tagsToInclude</code> and <code>tagsToExclude</code> are essentially ignored.
-   * Only if <code>testName</code> is <code>None</code> will <code>tagsToInclude</code> and <code>tagsToExclude</code> be consulted to
-   * determine which of the tests named in the <code>testNames</code> <code>Set</code> should be run. For more information on trait tags, see the main documentation for this trait.
-   * </p>
+   * This method takes an `args` that contains a `Set` of tag names that should be included (`tagsToInclude`), and a `Set`
+   * that should be excluded (`tagsToExclude`), when deciding which of this `Suite`'s tests to execute.
+   * If `tagsToInclude` is empty, all tests will be executed
+   * except those those belonging to tags listed in the `tagsToExclude` `Set`. If `tagsToInclude` is non-empty, only tests
+   * belonging to tags mentioned in `tagsToInclude`, and not mentioned in `tagsToExclude`
+   * will be executed. However, if `testName` is `Some`, `tagsToInclude` and `tagsToExclude` are essentially ignored.
+   * Only if `testName` is `None` will `tagsToInclude` and `tagsToExclude` be consulted to
+   * determine which of the tests named in the `testNames` `Set` should be run. For more information on trait tags, see the main documentation for this trait.
+   * 
    *
-   * <p>
-   * If <code>testName</code> is <code>None</code>, this trait's implementation of this method
-   * invokes <code>testNames</code> on this <code>Suite</code> to get a <code>Set</code> of names of tests to potentially execute.
-   * (A <code>testNames</code> value of <code>None</code> essentially acts as a wildcard that means all tests in
-   * this <code>Suite</code> that are selected by <code>tagsToInclude</code> and <code>tagsToExclude</code> should be executed.)
-   * For each test in the <code>testName</code> <code>Set</code>, in the order
-   * they appear in the iterator obtained by invoking the <code>elements</code> method on the <code>Set</code>, this trait's implementation
-   * of this method checks whether the test should be run based on the <code>tagsToInclude</code> and <code>tagsToExclude</code> <code>Set</code>s.
-   * If so, this implementation invokes <code>runTest</code> with passed in <code>args</code>.
-   * </p>
+   * If `testName` is `None`, this trait's implementation of this method
+   * invokes `testNames` on this `Suite` to get a `Set` of names of tests to potentially execute.
+   * (A `testNames` value of `None` essentially acts as a wildcard that means all tests in
+   * this `Suite` that are selected by `tagsToInclude` and `tagsToExclude` should be executed.)
+   * For each test in the `testName` `Set`, in the order
+   * they appear in the iterator obtained by invoking the `elements` method on the `Set`, this trait's implementation
+   * of this method checks whether the test should be run based on the `tagsToInclude` and `tagsToExclude` `Set`s.
+   * If so, this implementation invokes `runTest` with passed in `args`.
+   * 
    *
-   * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
-   *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>fixture.FeatureSpec</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
-   * @throws NullArgumentException if any of <code>testName</code> or <code>args</code> is <code>null</code>.
+   * @param testName an optional name of one test to execute. If `None`, all relevant tests should be executed.
+   *                 I.e., `None` acts like a wildcard that means execute all relevant tests in this `fixture.FeatureSpec`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
+   * @throws NullArgumentException if any of `testName` or `args` is `null`.
    */
   protected override def runTests(testName: Option[String], args: Args): Status = {
     runTestsImpl(thisSuite, testName, args, info, false, runTest)
   }
 
   /**
-   * An immutable <code>Set</code> of test names. If this <code>FeatureSpec</code> contains no tests, this method returns an
-   * empty <code>Set</code>.
+   * An immutable `Set` of test names. If this `FeatureSpec` contains no tests, this method returns an
+   * empty `Set`.
    *
-   * <p>
    * This trait's implementation of this method will return a set that contains the names of all registered tests. The set's
    * iterator will return those names in the order in which the tests were registered. Each test's name is composed
    * of the concatenation of the text of each surrounding describer, in order from outside in, and the text of the
    * example itself, with all components separated by a space.
-   * </p>
+   * 
    *
-   * @return the <code>Set</code> of test names
+   * @return the `Set` of test names
    */
   //override def testNames: Set[String] = ListSet(atomic.get.testsList.map(_.testName): _*)
   override def testNames: Set[String] = {
@@ -357,39 +348,36 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   /**
    * Registers shared scenarios.
    *
-   * <p>
-   * This method enables the following syntax for shared scenarios in a <code>FeatureSpec</code>:
-   * </p>
+   * This method enables the following syntax for shared scenarios in a `FeatureSpec`:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * ScenariosFor(nonEmptyStack(lastValuePushed))
-   * </pre>
+   * }}}
    *
-   * <p>
    * This method just provides syntax sugar intended to make the intent of the code clearer.
    * Because the parameter passed to it is
-   * type <code>Unit</code>, the expression will be evaluated before being passed, which
+   * type `Unit`, the expression will be evaluated before being passed, which
    * is sufficient to register the shared scenarios. For examples of shared scenarios, see the
    * <a href="../FeatureSpec.html#SharedScenarios">Shared scenarios section</a> in the main documentation for
-   * trait <code>FeatureSpec</code>.
-   * </p>
+   * trait `FeatureSpec`.
+   * 
    */
   protected def ScenariosFor(unit: Unit): Unit = {}
 
   import scala.language.implicitConversions
 
   /**
-   * Implicitly converts a function that takes no parameters and results in <code>PendingStatement</code> to
-   * a function from <code>FixtureParam</code> to <code>Any</code>, to enable pending tests to registered as by-name parameters
-   * by methods that require a test function that takes a <code>FixtureParam</code>.
+   * Implicitly converts a function that takes no parameters and results in `PendingStatement` to
+   * a function from `FixtureParam` to `Any`, to enable pending tests to registered as by-name parameters
+   * by methods that require a test function that takes a `FixtureParam`.
    *
-   * <p>
-   * This method makes it possible to write pending tests as simply <code>(pending)</code>, without needing
-   * to write <code>(fixture => pending)</code>.
-   * </p>
+   * This method makes it possible to write pending tests as simply `(pending)`, without needing
+   * to write `(fixture => pending)`.
+   * 
    *
    * @param f a function
-   * @return a function of <code>FixtureParam => Any</code>
+   * @return a function of `FixtureParam => Any`
    */
   protected implicit def convertPendingToFixtureFunction(f: => PendingStatement): FixtureParam => Any /* Assertion */ = {
     fixture => { f; Succeeded }
@@ -399,12 +387,12 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   // I can't overload on that. I could if I took the ScenarioWord approach, but that has possibly a worse
   // downside of people could just say scenario("...") and nothing else.
   /**
-   * Implicitly converts a function that takes no parameters and results in <code>Any</code> to
-   * a function from <code>FixtureParam</code> to <code>Any</code>, to enable no-arg tests to registered
-   * by methods that require a test function that takes a <code>FixtureParam</code>.
+   * Implicitly converts a function that takes no parameters and results in `Any` to
+   * a function from `FixtureParam` to `Any`, to enable no-arg tests to registered
+   * by methods that require a test function that takes a `FixtureParam`.
    *
    * @param fun a function
-   * @return a function of <code>FixtureParam => Any</code>
+   * @return a function of `FixtureParam => Any`
    */
 /*
   protected implicit def convertNoArgToFixtureFunction(fun: () => Any /* Assertion */): (FixtureParam => Any /* Assertion */) =
@@ -414,7 +402,7 @@ trait FeatureSpecLike extends TestSuite with TestRegistration with Informing wit
   /**
    * Suite style name.
    *
-   * @return <code>org.scalatest.fixture.FeatureSpec</code>
+   * @return `org.scalatest.fixture.FeatureSpec`
    */
   final override val styleName: String = "org.scalatest.fixture.FeatureSpec"
 

@@ -23,25 +23,23 @@ import scala.annotation.tailrec
 import scala.collection.GenTraversable
 
 /**
- * Supertrait for typeclasses that enable <code>contain key</code> matcher syntax.
+ * Supertrait for typeclasses that enable `contain key` matcher syntax.
  *
- * <p>
- * A <code>KeyMapping[M]</code> provides access to the "key mapping nature" of type <code>M</code> in such
- * a way that <code>contain key</code> matcher syntax can be used with type <code>M</code>. A <code>M</code>
- * can be any type for which <code>contain key</code> syntax makes sense. ScalaTest provides implicit implementations
- * for <code>scala.collection.GenMap</code> and <code>java.util.Map</code>. You can enable the <code>contain key</code>
- * matcher syntax on your own type <code>U</code> by defining a <code>KeyMapping[U]</code> for the type and making it
+ * A `KeyMapping[M]` provides access to the "key mapping nature" of type `M` in such
+ * a way that `contain key` matcher syntax can be used with type `M`. A `M`
+ * can be any type for which `contain key` syntax makes sense. ScalaTest provides implicit implementations
+ * for `scala.collection.GenMap` and `java.util.Map`. You can enable the `contain key`
+ * matcher syntax on your own type `U` by defining a `KeyMapping[U]` for the type and making it
  * available implicitly.
  * 
- * <p>
- * ScalaTest provides implicit <code>KeyMapping</code> instances for <code>scala.collection.GenMap</code>,
- * and <code>java.util.Map</code> in the <code>KeyMapping</code> companion object.
- * </p>
+ * ScalaTest provides implicit `KeyMapping` instances for `scala.collection.GenMap`,
+ * and `java.util.Map` in the `KeyMapping` companion object.
+ * 
  */
 trait KeyMapping[-M] {
 
   /**
-   * Check if the passed <code>map</code> contains the passed <code>key</code>.
+   * Check if the passed `map` contains the passed `key`.
    *
    * @param map a map about which an assertion is being made
    * @param key key of which should be contained in the passed map
@@ -51,20 +49,20 @@ trait KeyMapping[-M] {
 }
 
 /**
- * Companion object for <code>KeyMapping</code> that provides implicit implementations for <code>scala.collection.GenMap</code> and <code>java.util.Map</code>.
+ * Companion object for `KeyMapping` that provides implicit implementations for `scala.collection.GenMap` and `java.util.Map`.
  */
 object KeyMapping {
 
   import scala.language.higherKinds
 
   /**
-   * Enable <code>KeyMapping</code> implementation for <code>scala.collection.GenMap</code>.
+   * Enable `KeyMapping` implementation for `scala.collection.GenMap`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of key in the <code>scala.collection.GenMap</code>
-   * @tparam K the type of the key in the <code>scala.collection.GenMap</code>
-   * @tparam V the type of the value in the <code>scala.collection.GenMap</code>
-   * @tparam MAP any subtype of <code>scala.collection.GenMap</code>
-   * @return <code>KeyMapping[MAP[K, V]]</code> that supports <code>scala.collection.GenMap</code> in <code>contain key</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of key in the `scala.collection.GenMap`
+   * @tparam K the type of the key in the `scala.collection.GenMap`
+   * @tparam V the type of the value in the `scala.collection.GenMap`
+   * @tparam MAP any subtype of `scala.collection.GenMap`
+   * @return `KeyMapping[MAP[K, V]]` that supports `scala.collection.GenMap` in `contain key` syntax
    */
   implicit def keyMappingNatureOfGenMap[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](implicit equality: Equality[K]): KeyMapping[MAP[K, V]] = 
     new KeyMapping[MAP[K, V]] {
@@ -77,34 +75,34 @@ object KeyMapping {
   import scala.language.implicitConversions
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>K</code>
-   * into <code>KeyMapping</code> of type <code>MAP[K, V]</code>, where <code>MAP</code> is a subtype of <code>scala.collection.GenMap</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `K`
+   * into `KeyMapping` of type `MAP[K, V]`, where `MAP` is a subtype of `scala.collection.GenMap`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * (Map("one" -> 1) should contain key "ONE") (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>KeyMapping[Map[String, Int]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `KeyMapping[Map[String, Int]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>K</code>
-   * @tparam K the type of the key in the <code>scala.collection.GenMap</code>
-   * @tparam V the type of the value in the <code>scala.collection.GenMap</code>
-   * @tparam MAP any subtype of <code>scala.collection.GenMap</code>
-   * @return <code>KeyMapping</code> of type <code>MAP[K, V]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `K`
+   * @tparam K the type of the key in the `scala.collection.GenMap`
+   * @tparam V the type of the value in the `scala.collection.GenMap`
+   * @tparam MAP any subtype of `scala.collection.GenMap`
+   * @return `KeyMapping` of type `MAP[K, V]`
    */
   implicit def convertEqualityToGenMapKeyMapping[K, V, MAP[k, v] <: scala.collection.GenMap[k, v]](equality: Equality[K]): KeyMapping[MAP[K, V]] = 
     keyMappingNatureOfGenMap(equality)
 
   /**
-   * Enable <code>KeyMapping</code> implementation for <code>java.util.Map</code>.
+   * Enable `KeyMapping` implementation for `java.util.Map`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> type class that is used to check equality of key in the <code>java.util.Map</code>
-   * @tparam K the type of the key in the <code>java.util.Map</code>
-   * @tparam V the type of the value in the <code>java.util.Map</code>
-   * @tparam JMAP any subtype of <code>java.util.Map</code>
-   * @return <code>KeyMapping[JMAP[K, V]]</code> that supports <code>java.util.Map</code> in <code>contain</code> <code>key</code> syntax
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> type class that is used to check equality of key in the `java.util.Map`
+   * @tparam K the type of the key in the `java.util.Map`
+   * @tparam V the type of the value in the `java.util.Map`
+   * @tparam JMAP any subtype of `java.util.Map`
+   * @return `KeyMapping[JMAP[K, V]]` that supports `java.util.Map` in `contain` `key` syntax
    */
   implicit def keyMappingNatureOfJavaMap[K, V, JMAP[k, v] <: java.util.Map[k, v]](implicit equality: Equality[K]): KeyMapping[JMAP[K, V]] = 
     new KeyMapping[JMAP[K, V]] {
@@ -114,24 +112,24 @@ object KeyMapping {
     }
 
   /**
-   * Implicit conversion that converts an <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>K</code>
-   * into <code>KeyMapping</code> of type <code>JMAP[K, V]</code>, where <code>JMAP</code> is a subtype of <code>java.util.Map</code>.
-   * This is required to support the explicit <a href="../../scalactic/Equality.html"><code>Equality</code></a> syntax, for example:
+   * Implicit conversion that converts an <a href="../../scalactic/Equality.html">`Equality`</a> of type `K`
+   * into `KeyMapping` of type `JMAP[K, V]`, where `JMAP` is a subtype of `java.util.Map`.
+   * This is required to support the explicit <a href="../../scalactic/Equality.html">`Equality`</a> syntax, for example:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val javaMap = new java.util.HashMap[String, Int]()
    * javaMap.put("one", 1)
    * (javaMap should contain key "ONE") (after being lowerCased)
-   * </pre>
+   * }}}
    *
-   * <code>(after being lowerCased)</code> will returns an <a href="../../scalactic/Equality.html"><code>Equality[String]</code></a>
-   * and this implicit conversion will convert it into <code>KeyMapping[java.util.HashMap[String, Int]]</code>.
+   * `(after being lowerCased)` will returns an <a href="../../scalactic/Equality.html">`Equality[String]`</a>
+   * and this implicit conversion will convert it into `KeyMapping[java.util.HashMap[String, Int]]`.
    *
-   * @param equality <a href="../../scalactic/Equality.html"><code>Equality</code></a> of type <code>K</code>
-   * @tparam K the type of the key in the <code>java.util.Map</code>
-   * @tparam V the type of the value in the <code>java.util.Map</code>
-   * @tparam JMAP any subtype of <code>java.util.Map</code>
-   * @return <code>KeyMapping</code> of type <code>JMAP[K, V]</code>
+   * @param equality <a href="../../scalactic/Equality.html">`Equality`</a> of type `K`
+   * @tparam K the type of the key in the `java.util.Map`
+   * @tparam V the type of the value in the `java.util.Map`
+   * @tparam JMAP any subtype of `java.util.Map`
+   * @return `KeyMapping` of type `JMAP[K, V]`
    */
   implicit def convertEqualityToJavaMapKeyMapping[K, V, JMAP[k, v] <: java.util.Map[k, v]](equality: Equality[K]): KeyMapping[JMAP[K, V]] = 
     keyMappingNatureOfJavaMap(equality)

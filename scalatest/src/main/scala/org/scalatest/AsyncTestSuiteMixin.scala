@@ -17,15 +17,14 @@ package org.scalatest
 
 
 /**
- * Trait defining abstract "lifecycle" methods that are implemented in <a href="AsyncTestSuite.html#lifecycle-methods"><code>AsyncTestSuite</code></a>
+ * Trait defining abstract "lifecycle" methods that are implemented in <a href="AsyncTestSuite.html#lifecycle-methods">`AsyncTestSuite`</a>
  * and can be overridden in stackable modification traits.
  *
- * <p>
- * The main use case for this trait is to override <code>withFixture</code> in a mixin trait.
+ * The main use case for this trait is to override `withFixture` in a mixin trait.
  * Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * trait Builder extends AsyncTestSuiteMixin { this: AsyncTestSuite =&gt;
  * 
  *   final val builder = new ThreadSafeStringBuilder
@@ -39,23 +38,22 @@ package org.scalatest
  *     }
  *   }
  * }
- * </pre>
+ * }}}
  */
 trait AsyncTestSuiteMixin extends SuiteMixin { this: AsyncTestSuite =>
 
   /**
    * Run the passed test function in the context of a fixture established by this method.
    *
-   * <p>
    * This method should set up the fixture needed by the tests of the
    * current suite, invoke the test function, and if needed, register a callback
-   * on the resulting <code>FutureOutcome</code> to perform any clean
-   * up needed after the test completes. Because the <code>NoArgAsyncTest</code> function
+   * on the resulting `FutureOutcome` to perform any clean
+   * up needed after the test completes. Because the `NoArgAsyncTest` function
    * passed to this method takes no parameters, preparing the fixture will require
-   * side effects, such as reassigning instance <code>var</code>s in this <code>Suite</code> or initializing
-   * a globally accessible external database. If you want to avoid reassigning instance <code>var</code>s
+   * side effects, such as reassigning instance `var`s in this `Suite` or initializing
+   * a globally accessible external database. If you want to avoid reassigning instance `var`s
    * you can use <a href="fixture/AsyncTestSuite.html">fixture.AsyncTestSuite</a>.
-   * </p>
+   * 
    *
    * @param test the no-arg async test function to run with a fixture
    */

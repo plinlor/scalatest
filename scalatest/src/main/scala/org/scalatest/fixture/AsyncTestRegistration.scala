@@ -22,7 +22,7 @@ import org.scalatest.compatible
 
 /**
  * Trait declaring methods that can be used to register test functions that accept
- * a fixture parameter and have result type <code>Future[Assertion]</code>.
+ * a fixture parameter and have result type `Future[Assertion]`.
  */
 trait AsyncTestRegistration { theSuite: org.scalatest.fixture.AsyncTestSuite =>
 

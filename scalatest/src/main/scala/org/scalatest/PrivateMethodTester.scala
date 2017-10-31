@@ -21,117 +21,112 @@ import java.lang.reflect.{InvocationTargetException, Method, Modifier}
 /**
  * Trait that facilitates the testing of private methods.
  *
- * To test a private method, mix in trait <code>PrivateMethodTester</code> and
- * create a <code>PrivateMethod</code> object, like this: 
+ * To test a private method, mix in trait `PrivateMethodTester` and
+ * create a `PrivateMethod` object, like this: 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val decorateToStringValue = PrivateMethod[String]('decorateToStringValue)
- * </pre>
+ * }}}
  *
- * <p>
- * The type parameter on <code>PrivateMethod</code>, in this case <code>String</code>, is the result type of the private method
- * you wish to invoke. The symbol passed to the <code>PrivateMethod.apply</code> factory method, in this
- * case <code>'decorateToStringValue</code>, is the name of the private method to invoke. To test
- * the private method, use the <code>invokePrivate</code> operator, like this:
- * </p>
+ * The type parameter on `PrivateMethod`, in this case `String`, is the result type of the private method
+ * you wish to invoke. The symbol passed to the `PrivateMethod.apply` factory method, in this
+ * case `'decorateToStringValue`, is the name of the private method to invoke. To test
+ * the private method, use the `invokePrivate` operator, like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * targetObject invokePrivate decorateToStringValue(1)
- * </pre>
+ * }}}
  *
- * <p>
- * Here, <code>targetObject</code> is a variable or singleton object name referring to the object whose
+ * Here, `targetObject` is a variable or singleton object name referring to the object whose
  * private method you want to test. You pass the arguments to the private method in the parentheses after
- * the <code>PrivateMethod</code> object.
- * The result type of an <code>invokePrivate</code> operation will be the type parameter of the <code>PrivateMethod</code>
- * object, thus you need not cast the result to use it. In other words, after creating a <code>PrivateMethod</code> object, the
+ * the `PrivateMethod` object.
+ * The result type of an `invokePrivate` operation will be the type parameter of the `PrivateMethod`
+ * object, thus you need not cast the result to use it. In other words, after creating a `PrivateMethod` object, the
  * syntax to invoke the private method
- * looks like a regular method invocation, but with the dot (<code>.</code>) replaced by <code>invokePrivate</code>.
+ * looks like a regular method invocation, but with the dot (`.`) replaced by `invokePrivate`.
  * The private method is invoked dynamically via reflection, so if you have a typo in the method name symbol, specify the wrong result type,
- * or pass invalid parameters, the <code>invokePrivate</code> operation will compile, but throw an exception at runtime.
- * </p>
+ * or pass invalid parameters, the `invokePrivate` operation will compile, but throw an exception at runtime.
+ * 
  *
- * <p>
- * One limitation to be aware of is that you can't use <code>PrivateMethodTester</code> to test a private method
+ * One limitation to be aware of is that you can't use `PrivateMethodTester` to test a private method
  * declared in a trait, because the class the trait gets mixed into will not declare that private method. Only the
  * class generated to hold method implementations for the trait will have that private method. If you want to
  * test a private method declared in a trait, and that method does not use any state of that trait, you can move
- * the private method to a companion object for the trait and test it using <code>PrivateMethodTester</code> that
+ * the private method to a companion object for the trait and test it using `PrivateMethodTester` that
  * way. If the private trait method you want to test uses the trait's state, your best options are to test it
  * indirectly via a non-private trait method that calls the private method, or make the private method package access
  * and test it directly via regular static method invocations. 
- * </p>
+ * 
  *
  *
- * <p>
- * Also, if you want to use <code>PrivateMethodTester</code> to invoke a parameterless private method, you'll need to use
+ * Also, if you want to use `PrivateMethodTester` to invoke a parameterless private method, you'll need to use
  * empty parens. Instead of:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * targetObject invokePrivate privateParameterlessMethod
- * </pre>
+ * }}}
  *
- * <p>
  * You'll need to write:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * targetObject invokePrivate privateParameterlessMethod()
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
 trait PrivateMethodTester {
 
   /**
-   * Represent a private method, whose apply method returns an <code>Invocation</code> object that
+   * Represent a private method, whose apply method returns an `Invocation` object that
    * records the name of the private method to invoke, and any arguments to pass to it when invoked.
-   * The type parameter, <code>T</code>, is the return type of the private method.
+   * The type parameter, `T`, is the return type of the private method.
    *
-   * @param methodName a <code>Symbol</code> representing the name of the private method to invoke
-   * @throws NullArgumentException if <code>methodName</code> is <code>null</code>
+   * @param methodName a `Symbol` representing the name of the private method to invoke
+   * @throws NullArgumentException if `methodName` is `null`
    */
   final class PrivateMethod[T] private (methodName: Symbol) {
 
     requireNonNull(methodName)
 
     /**
-     * Apply arguments to a private method. This method returns an <code>Invocation</code>
-     * object, ready to be passed to an <code>invokePrivate</code> method call.
-     * The type parameter, <code>T</code>, is the return type of the private method.
+     * Apply arguments to a private method. This method returns an `Invocation`
+     * object, ready to be passed to an `invokePrivate` method call.
+     * The type parameter, `T`, is the return type of the private method.
      *
      * @param args zero to many arguments to pass to the private method when invoked
-     * @return an <code>Invocation</code> object that can be passed to <code>invokePrivate</code> to invoke
+     * @return an `Invocation` object that can be passed to `invokePrivate` to invoke
      * the private method
      */
     def apply(args: Any*) = new Invocation[T](methodName, args: _*)
   }
 
   /**
-   * Contains a factory method for instantiating <code>PrivateMethod</code> objects.
+   * Contains a factory method for instantiating `PrivateMethod` objects.
    */
   object PrivateMethod {
 
     /**
-     * Construct a new <code>PrivateMethod</code> object with passed <code>methodName</code> symbol.
-     * The type parameter, <code>T</code>, is the return type of the private method.
+     * Construct a new `PrivateMethod` object with passed `methodName` symbol.
+     * The type parameter, `T`, is the return type of the private method.
      *
-     * @param methodName a <code>Symbol</code> representing the name of the private method to invoke
-     * @throws NullArgumentException if <code>methodName</code> is <code>null</code>
+     * @param methodName a `Symbol` representing the name of the private method to invoke
+     * @throws NullArgumentException if `methodName` is `null`
      */
     def apply[T](methodName: Symbol) = new PrivateMethod[T](methodName)
   }
 
   /**
    * Class whose instances represent an invocation of a private method. Instances of this
-   * class contain the name of the private method (<code>methodName</code>) and the arguments
-   * to pass to it during the invocation (<code>args</code>).
-   * The type parameter, <code>T</code>, is the return type of the private method.
+   * class contain the name of the private method (`methodName`) and the arguments
+   * to pass to it during the invocation (`args`).
+   * The type parameter, `T`, is the return type of the private method.
    *
-   * @param methodName a <code>Symbol</code> representing the name of the private method to invoke
+   * @param methodName a `Symbol` representing the name of the private method to invoke
    * @param args zero to many arguments to pass to the private method when invoked
-   * @throws NullArgumentException if <code>methodName</code> is <code>null</code>
+   * @throws NullArgumentException if `methodName` is `null`
    */
   final class Invocation[T](val methodName: Symbol, val args: Any*) {
     requireNonNull(methodName)
@@ -146,15 +141,15 @@ trait PrivateMethodTester {
     
     /**
      * Invoke a private method. This method will attempt to invoke via reflection a private method.
-     * The name of the method to invoke is contained in the <code>methodName</code> field of the passed <code>Invocation</code>.
-     * The arguments to pass are contained in the <code>args</code> field. The object on which to invoke the private
-     * method is the <code>target</code> object passed to this <code>Invoker</code>'s primary constructor.
-     * The type parameter, <code>T</code>, is the return type of the private method.
+     * The name of the method to invoke is contained in the `methodName` field of the passed `Invocation`.
+     * The arguments to pass are contained in the `args` field. The object on which to invoke the private
+     * method is the `target` object passed to this `Invoker`'s primary constructor.
+     * The type parameter, `T`, is the return type of the private method.
      *
-     * @param invocation the <code>Invocation</code> object containing the method name symbol and args of the invocation.
+     * @param invocation the `Invocation` object containing the method name symbol and args of the invocation.
      * @return the value returned by the invoked private method
      * @throws IllegalArgumentException if the target object does not have a method of the name, with argument types
-     * compatible with the objects in the passed args array, specified in the passed <code>Invocation</code> object.
+     * compatible with the objects in the passed args array, specified in the passed `Invocation` object.
      */
     def invokePrivate[T](invocation: Invocation[T]): T = {
       import invocation._
@@ -271,21 +266,21 @@ trait PrivateMethodTester {
   import scala.language.implicitConversions
 
   /**
-   * Implicit conversion from <code>AnyRef</code> to <code>Invoker</code>, used to enable
+   * Implicit conversion from `AnyRef` to `Invoker`, used to enable
    * assertions testing of private methods.
    *
    * @param target the target object on which to invoke a private method.
-   * @throws NullArgumentException if <code>target</code> is <code>null</code>.
+   * @throws NullArgumentException if `target` is `null`.
    */
   implicit def anyRefToInvoker(target: AnyRef): Invoker = new Invoker(target)
 }
 
 /**
- * Companion object that facilitates the importing of <code>PrivateMethodTester</code> members as 
- * an alternative to mixing it in. One use case is to import <code>PrivateMethodTester</code> members so you can use
+ * Companion object that facilitates the importing of `PrivateMethodTester` members as 
+ * an alternative to mixing it in. One use case is to import `PrivateMethodTester` members so you can use
  * them in the Scala interpreter:
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * $scala -classpath scalatest.jar
  * Welcome to Scala version 2.7.5.final (Java HotSpot(TM) Client VM, Java 1.5.0_16).
  * Type in expressions to have them evaluated.
@@ -307,7 +302,7 @@ trait PrivateMethodTester {
  * &nbsp;
  * scala> example invokePrivate addSesame("open")                     
  * res0: String = open sesame
- * <pre>
+ * {{{
  *
  * @author Bill Venners
  */

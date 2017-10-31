@@ -20,7 +20,7 @@ import org.scalatest.Resources
 import org.scalatest.MatchersHelper.checkExpectedException
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -30,10 +30,10 @@ final class ResultOfTheTypeInvocation[T](clazz: Class[T], pos: source.Position) 
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val e = the [FileNotFoundException] thrownBy { ... }
    *                                     ^
-   * </pre>
+   * }}}
    **/
   def thrownBy(fun: => Any): T = {
     checkExpectedException(fun, clazz, Resources.wrongException _, Resources.exceptionExpected _, pos)

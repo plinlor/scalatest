@@ -22,16 +22,16 @@ import StackDepthExceptionHelper.posOrElseStackDepthFun
 
 /**
  * Exception that indicates something was attempted in test code that is not allowed.
- * For example, in a <a href="../FeatureSpec.html"><code>FeatureSpec</code></a>, it is not allowed to nest a <code>feature</code>
- * clause inside another <code>feature</code> clause. If this is attempted, the construction
- * of that suite will fail with a <code>NotAllowedException</code>.
+ * For example, in a <a href="../FeatureSpec.html">`FeatureSpec`</a>, it is not allowed to nest a `feature`
+ * clause inside another `feature` clause. If this is attempted, the construction
+ * of that suite will fail with a `NotAllowedException`.
  *
  * @param message a string that explains the problem
  * @param cause an optional cause
  * @param posOrStackDepthFun either a source position or a function that return the depth in the stack trace of this exception at which the line of code that attempted
  *    something not allowed resides.
  *
- * @throws NullArgumentException if either <code>message</code> or <code>failedCodeStackDepthFun</code> is <code>null</code>
+ * @throws NullArgumentException if either `message` or `failedCodeStackDepthFun` is `null`
  *
  * @author Bill Venners
  */
@@ -44,7 +44,7 @@ class NotAllowedException(
   requireNonNull(message, cause, posOrStackDepthFun)
 
   /**
-    * Constructs a <code>NotAllowedException</code> with given error message, optional cause and source position.
+    * Constructs a `NotAllowedException` with given error message, optional cause and source position.
     *
     * @param message the exception's detail message
     * @param cause the optional cause
@@ -57,7 +57,7 @@ class NotAllowedException(
   ) = this(message, cause, Left(pos))
 
   /**
-    * Constructs a <code>NotAllowedException</code> with given error message and source position.
+    * Constructs a `NotAllowedException` with given error message and source position.
     *
     * @param message the exception's detail message
     * @param pos the source position
@@ -68,32 +68,32 @@ class NotAllowedException(
   ) = this(message, None, Left(pos))
 
   /**
-   * Constructs a <code>NotAllowedException</code> with pre-determined <code>message</code> and
-   * <code>failedCodeStackDepth</code>. (This was the primary constructor form prior to ScalaTest 1.5.)
+   * Constructs a `NotAllowedException` with pre-determined `message` and
+   * `failedCodeStackDepth`. (This was the primary constructor form prior to ScalaTest 1.5.)
    *
    * @param message the exception's detail message
    * @param failedCodeStackDepth the depth in the stack trace of this exception at which the line of code that attempted
    *    something not allowed resides.
    *
-   * @throws NullArgumentException if <code>message</code> is <code>null</code>
+   * @throws NullArgumentException if `message` is `null`
    */
   def this(message: String, failedCodeStackDepth: Int) =
     this(message, None, Right((_: StackDepthException) => failedCodeStackDepth))
 
   /**
-   * Construct a <code>NotAllowedException</code> with pre-determined <code>message</code> and
+   * Construct a `NotAllowedException` with pre-determined `message` and
    * a function that returns the depth in the stack trace of this exception at which the line of code that attempted.
    *
    * @param message the exception's detail message
    * @param failedCodeStackDepthFun a function that return the depth in the stack trace of this exception at which the line of code that attempted
    *
-   * @throws NullArgumentException if <code>message</code> is <code>null</code>
+   * @throws NullArgumentException if `message` is `null`
    */
   def this(message: String, failedCodeStackDepthFun: StackDepthException => Int) =
     this(message, None, Right(failedCodeStackDepthFun))
 
   /**
-   * Returns an exception of class <code>NotAllowedException</code> with <code>failedExceptionStackDepth</code> set to 0 and 
+   * Returns an exception of class `NotAllowedException` with `failedExceptionStackDepth` set to 0 and 
    * all frames above this stack depth severed off. This can be useful when working with tools (such as IDEs) that do not
    * directly support ScalaTest. (Tools that directly support ScalaTest can use the stack depth information delivered
    * in the StackDepth exceptions.)
@@ -112,9 +112,9 @@ class NotAllowedException(
 
   /**
    * Indicates whether this object is equal to the passed object. If the passed object is
-   * a <code>NotAllowedException</code>, equality requires equal <code>message</code>,
-   * <code>cause</code>, and <code>failedCodeStackDepth</code> fields, as well as equal
-   * return values of <code>getStackTrace</code>.
+   * a `NotAllowedException`, equality requires equal `message`,
+   * `cause`, and `failedCodeStackDepth` fields, as well as equal
+   * return values of `getStackTrace`.
    */
   override def equals(other: Any): Boolean =
     other match {

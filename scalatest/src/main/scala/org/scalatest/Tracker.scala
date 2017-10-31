@@ -26,22 +26,21 @@ import org.scalatest.events.Ordinal
 // up an info that's useful during a run, then calls super.run(...).
 
 /**
- * Class that tracks the progress of a series of <code>Ordinal</code>s produced by invoking
- * <code>next</code> and <code>nextNewOldPair</code> on the current <code>Ordinal</code>.
+ * Class that tracks the progress of a series of `Ordinal`s produced by invoking
+ * `next` and `nextNewOldPair` on the current `Ordinal`.
  *
- * <p>
- * Instances of this class are thread safe. Multiple threads can invoke <code>nextOrdinal</code>
- * and <code>nextTracker</code> concurrently. This facilitates multi-threaded tests that send
- * <code>infoProvided</code> reports concurrently. When using a <code>Dispatcher</code> to execute
- * suites in parallel, the intention is that each <code>Tracker</code> will only be used by one
- * thread. For example, if the optional <code>Dispatcher</code>  passed to <code>Suite</code>'s implementation
- * of <a href="Suite.html#lifecycle-methods"<code>runNestedSuites</code></a> is defined, that method will obtain a new <code>Tracker</code> by invoking
- * <code>nextTracker</code> for each nested suite it passes to the <code>Dispatcher</code>.
- * </p>
+ * Instances of this class are thread safe. Multiple threads can invoke `nextOrdinal`
+ * and `nextTracker` concurrently. This facilitates multi-threaded tests that send
+ * `infoProvided` reports concurrently. When using a `Dispatcher` to execute
+ * suites in parallel, the intention is that each `Tracker` will only be used by one
+ * thread. For example, if the optional `Dispatcher`  passed to `Suite`'s implementation
+ * of <a href="Suite.html#lifecycle-methods"`runNestedSuites`</a> is defined, that method will obtain a new `Tracker` by invoking
+ * `nextTracker` for each nested suite it passes to the `Dispatcher`.
+ * 
  *
- * @param firstOrdinal the first <code>Ordinal</code> in the series of <code>Ordinal</code>s
- *        tracked by this <code>Tracker</code>, which will be used to initialize this <code>Tracker</code>'s
- *        current <code>Ordinal</code>.
+ * @param firstOrdinal the first `Ordinal` in the series of `Ordinal`s
+ *        tracked by this `Tracker`, which will be used to initialize this `Tracker`'s
+ *        current `Ordinal`.
  *
  * @author Bill Venners
  */
@@ -50,16 +49,15 @@ final class Tracker(firstOrdinal: Ordinal = new Ordinal(0)) {
   private var currentOrdinal = firstOrdinal
 
   /**
-   * Returns the next <code>Ordinal</code> in the series tracked by this <code>Tracker</code>.
+   * Returns the next `Ordinal` in the series tracked by this `Tracker`.
    *
-   * <p>
-   * This method saves the current <code>Ordinal</code> in a local variable, reassigns the current <code>Ordinal</code>
-   * with the value returned by invoking <code>nextOrdinal</code> on the saved <code>Ordinal</code>, then
-   * returns the saved <code>Ordinal</code>. As a result, if this method is invoked immediately after construction,
-   * this method will return the <code>Ordinal</code> passed as <code>firstOrdinal</code>.
-   * </p>
+   * This method saves the current `Ordinal` in a local variable, reassigns the current `Ordinal`
+   * with the value returned by invoking `nextOrdinal` on the saved `Ordinal`, then
+   * returns the saved `Ordinal`. As a result, if this method is invoked immediately after construction,
+   * this method will return the `Ordinal` passed as `firstOrdinal`.
+   * 
    *
-   * @return the next <code>Ordinal</code> in the series
+   * @return the next `Ordinal` in the series
    */
   def nextOrdinal(): Ordinal = {
     synchronized {
@@ -70,20 +68,19 @@ final class Tracker(firstOrdinal: Ordinal = new Ordinal(0)) {
   }
 
   /**
-   * Returns a <code>Tracker</code> initialized with the first element in the tuple returned by invoking
-   * <code>nextNewOldPair</code> on the current <code>Ordinal</code>, and reassigns the current <code>Ordinal</code>
-   * with the second element that was returned by the <code>nextNewOldPair</code> invocation.
+   * Returns a `Tracker` initialized with the first element in the tuple returned by invoking
+   * `nextNewOldPair` on the current `Ordinal`, and reassigns the current `Ordinal`
+   * with the second element that was returned by the `nextNewOldPair` invocation.
    *
-   * <p>
-   * The <code>Ordinal</code> series of the returned <code>Tracker</code> will be placed after all the
-   * <code>Ordinal</code>s previously returned by invoking <code>nextOrdinal</code> on this <code>Tracker</code> and
-   * before all the <code>Ordinal</code>s subsequently returned by invoking <code>nextOrdinal</code> on
-   * this <code>Tracker</code> in the future. This method is intended to be used when executing nested suites
-   * in parallel. Each nested suite passed to the <code>Distributor</code> will get its own <code>Tracker</code>
-   * obtained by invoking <code>nextTracker</code> on the current thread's <code>Tracker</code>.
-   * </p>
+   * The `Ordinal` series of the returned `Tracker` will be placed after all the
+   * `Ordinal`s previously returned by invoking `nextOrdinal` on this `Tracker` and
+   * before all the `Ordinal`s subsequently returned by invoking `nextOrdinal` on
+   * this `Tracker` in the future. This method is intended to be used when executing nested suites
+   * in parallel. Each nested suite passed to the `Distributor` will get its own `Tracker`
+   * obtained by invoking `nextTracker` on the current thread's `Tracker`.
+   * 
    *
-   * @return the next <code>Tracker</code> in this series
+   * @return the next `Tracker` in this series
    */
   def nextTracker(): Tracker = {
     synchronized {

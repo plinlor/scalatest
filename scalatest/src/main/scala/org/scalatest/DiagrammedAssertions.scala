@@ -21,12 +21,12 @@ import scala.collection.mutable.ListBuffer
 import collection.immutable.TreeMap
 
 /**
- * Sub-trait of <code>Assertions</code> that override <code>assert</code> and <code>assume</code> methods to include
+ * Sub-trait of `Assertions` that override `assert` and `assume` methods to include
  * a diagram showing the values of expression in the error message when the assertion or assumption fails.
  *
  * Here are some examples:
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import DiagrammedAssertions._
  * import DiagrammedAssertions._
  * 
@@ -107,27 +107,25 @@ import collection.immutable.TreeMap
  *         at org.scalatest.Assertions$class.newAssertionFailedException(Assertions.scala:422)
  *         ...
  * 
- * </pre>
+ * }}}
  *
- * <p>
- * If the expression passed to <code>assert</code> or <code>assume</code> spans more than one line, <code>DiagrammedAssertions</code> falls
+ * If the expression passed to `assert` or `assume` spans more than one line, `DiagrammedAssertions` falls
  * back to the default style of error message, since drawing a diagram would be difficult. Here's an example showing how
- * <code>DiagrammedAssertions</code> will treat a multi-line assertion (<em>i.e.</em>, you don't get a diagram):
- * </p>
+ * `DiagrammedAssertions` will treat a multi-line assertion (''i.e.'', you don't get a diagram):
  * 
- * <pre class="stREPL">
+ * 
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; assert("hello".startsWith("h") &amp;&amp;
  *      |   "goodbye".endsWith("y"))
  * org.scalatest.exceptions.TestFailedException: "hello" started with "h", but "goodbye" did not end with "y"
  *         at org.scalatest.Assertions$class.newAssertionFailedException(Assertions.scala:422)
  *         ...
- * </pre>
+ * }}}
  * 
- * <p>
- * Also, since an expression diagram essentially represents multi-line ascii art, if a clue string is provided, it appears <em>above</em> the diagram, not after it. It will often also show up in the diagram:
- * </p>
+ * Also, since an expression diagram essentially represents multi-line ascii art, if a clue string is provided, it appears ''above'' the diagram, not after it. It will often also show up in the diagram:
  * 
- * <pre class="stREPL">
+ * 
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; assert(None.isDefined, "Don't do this at home")
  * org.scalatest.exceptions.TestFailedException: Don't do this at home
  * 
@@ -148,9 +146,9 @@ import collection.immutable.TreeMap
  * 
  *         at org.scalatest.Assertions$class.newAssertionFailedException(Assertions.scala:422)
  *         ...
- * </pre>
+ * }}}
  *
- * <p>Trait <code>DiagrammedAssertions</code> was inspired by Peter Niederwieser's work in <a href="http://code.google.com/p/spock/">Spock</a> and <a href="https://github.com/pniederw/expecty">Expecty</a>.
+ * <p>Trait `DiagrammedAssertions` was inspired by Peter Niederwieser's work in <a href="http://code.google.com/p/spock/">Spock</a> and <a href="https://github.com/pniederw/expecty">Expecty</a>.
  */
 trait DiagrammedAssertions extends Assertions {
 
@@ -158,93 +156,87 @@ trait DiagrammedAssertions extends Assertions {
 
   /**
    * Assert that a boolean condition is true.
-   * If the condition is <code>true</code>, this method returns normally.
-   * Else, it throws <code>TestFailedException</code>.
+   * If the condition is `true`, this method returns normally.
+   * Else, it throws `TestFailedException`.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message that includes
    * a diagram showing expression values.
-   * </p>
+   * 
    *
-   * <p>
-   * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
+   * If multi-line `Boolean` is passed in, it will fallback to the macro implementation of `Assertions`
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assert
-   * @throws TestFailedException if the condition is <code>false</code>.
+   * @throws TestFailedException if the condition is `false`.
    */
   override def assert(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro DiagrammedAssertionsMacro.assert
 
   /**
-   * Assert that a boolean condition, described in <code>String</code>
-   * <code>message</code>, is true.
-   * If the condition is <code>true</code>, this method returns normally.
-   * Else, it throws <code>TestFailedException</code> with the
-   * <code>String</code> obtained by invoking <code>toString</code> on the
-   * specified <code>clue</code> as the exception's detail message and a
+   * Assert that a boolean condition, described in `String`
+   * `message`, is true.
+   * If the condition is `true`, this method returns normally.
+   * Else, it throws `TestFailedException` with the
+   * `String` obtained by invoking `toString` on the
+   * specified `clue` as the exception's detail message and a
    * diagram showing expression values.
    *
-   * <p>
-   * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
+   * If multi-line `Boolean` is passed in, it will fallback to the macro implementation of `Assertions`
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assert
-   * @param clue An objects whose <code>toString</code> method returns a message to include in a failure report.
-   * @throws TestFailedException if the condition is <code>false</code>.
-   * @throws NullArgumentException if <code>message</code> is <code>null</code>.
+   * @param clue An objects whose `toString` method returns a message to include in a failure report.
+   * @throws TestFailedException if the condition is `false`.
+   * @throws NullArgumentException if `message` is `null`.
    */
   override def assert(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro DiagrammedAssertionsMacro.assertWithClue
 
   /**
    * Assume that a boolean condition is true.
-   * If the condition is <code>true</code>, this method returns normally.
-   * Else, it throws <code>TestCanceledException</code>.
+   * If the condition is `true`, this method returns normally.
+   * Else, it throws `TestCanceledException`.
    *
-   * <p>
    * This method is implemented in terms of a Scala macro that will generate a more helpful error message that includes
    * a diagram showing expression values.
-   * </p>
+   * 
    *
-   * <p>
-   * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
+   * If multi-line `Boolean` is passed in, it will fallback to the macro implementation of `Assertions`
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assume
-   * @throws TestCanceledException if the condition is <code>false</code>.
+   * @throws TestCanceledException if the condition is `false`.
    */
   override def assume(condition: Boolean)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro DiagrammedAssertionsMacro.assume
 
   /**
-   * Assume that a boolean condition, described in <code>String</code>
-   * <code>message</code>, is true.
-   * If the condition is <code>true</code>, this method returns normally.
-   * Else, it throws <code>TestCanceledException</code> with the
-   * <code>String</code> obtained by invoking <code>toString</code> on the
-   * specified <code>clue</code> as the exception's detail message and a
+   * Assume that a boolean condition, described in `String`
+   * `message`, is true.
+   * If the condition is `true`, this method returns normally.
+   * Else, it throws `TestCanceledException` with the
+   * `String` obtained by invoking `toString` on the
+   * specified `clue` as the exception's detail message and a
    * diagram showing expression values.
    *
-   * <p>
-   * If multi-line <code>Boolean</code> is passed in, it will fallback to the macro implementation of <code>Assertions</code>
+   * If multi-line `Boolean` is passed in, it will fallback to the macro implementation of `Assertions`
    * that does not contain diagram.
-   * </p>
+   * 
    *
    * @param condition the boolean condition to assume
-   * @param clue An objects whose <code>toString</code> method returns a message to include in a failure report.
-   * @throws TestCanceledException if the condition is <code>false</code>.
-   * @throws NullArgumentException if <code>message</code> is <code>null</code>.
+   * @param clue An objects whose `toString` method returns a message to include in a failure report.
+   * @throws TestCanceledException if the condition is `false`.
+   * @throws NullArgumentException if `message` is `null`.
    */
   override def assume(condition: Boolean, clue: Any)(implicit prettifier: Prettifier, pos: source.Position): Assertion = macro DiagrammedAssertionsMacro.assumeWithClue
 }
 
 /**
- * Companion object that facilitates the importing of <code>DiagrammedAssertions</code> members as
- * an alternative to mixing it in. One use case is to import <code>DiagrammedAssertions</code> members so you can use
+ * Companion object that facilitates the importing of `DiagrammedAssertions` members as
+ * an alternative to mixing it in. One use case is to import `DiagrammedAssertions` members so you can use
  * them in the Scala interpreter:
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * $scala -classpath scalatest.jar
  * Welcome to Scala version 2.10.4.final (Java HotSpot(TM) Client VM, Java 1.6.0_45).
  * Type in expressions to have them evaluated.
@@ -270,12 +262,12 @@ trait DiagrammedAssertions extends Assertions {
  * 	    at .&lt;clinit&gt;(&lt;console&gt;)
  *  	  at $print(&lt;console&gt;)
  * 	    at sun.reflect.NativeMethodAccessorImpl.invoke...
- * </pre>
+ * }}}
  */
 object DiagrammedAssertions extends DiagrammedAssertions {
 
   /**
-    * Helper class used by code generated by the overriden <code>assert</code> macro.
+    * Helper class used by code generated by the overriden `assert` macro.
     */
   class DiagrammedAssertionsHelper {
 
@@ -345,11 +337,11 @@ object DiagrammedAssertions extends DiagrammedAssertions {
     }
 
     /**
-      * Assert that the passed in <code>Bool</code> is <code>true</code>, else fail with <code>TestFailedException</code>
+      * Assert that the passed in `Bool` is `true`, else fail with `TestFailedException`
       * with error message that include a diagram showing expression values.
       *
-      * @param bool the <code>Bool</code> to assert for
-      * @param clue optional clue to be included in <code>TestFailedException</code>'s error message when assertion failed
+      * @param bool the `Bool` to assert for
+      * @param clue optional clue to be included in `TestFailedException`'s error message when assertion failed
       */
     def macroAssert(bool: DiagrammedExpr[Boolean], clue: Any, sourceText: String, pos: source.Position): Assertion = {
       requireNonNull(clue)
@@ -362,11 +354,11 @@ object DiagrammedAssertions extends DiagrammedAssertions {
     }
 
     /**
-      * Assume that the passed in <code>Bool</code> is <code>true</code>, else throw <code>TestCanceledException</code>
+      * Assume that the passed in `Bool` is `true`, else throw `TestCanceledException`
       * with error message that include a diagram showing expression values.
       *
-      * @param bool the <code>Bool</code> to assume for
-      * @param clue optional clue to be included in <code>TestCanceledException</code>'s error message when assertion failed
+      * @param bool the `Bool` to assume for
+      * @param clue optional clue to be included in `TestCanceledException`'s error message when assertion failed
       */
     def macroAssume(bool: DiagrammedExpr[Boolean], clue: Any, sourceText: String, pos: source.Position): Assertion = {
       requireNonNull(clue)

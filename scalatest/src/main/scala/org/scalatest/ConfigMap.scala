@@ -34,68 +34,62 @@ import scala.collection.GenTraversable
 /**
  * A map of configuration data.
  *
- * <p>
- * A <code>ConfigMap</code> can be populated from the <a href="tools/Runner$.html"><code>Runner</code></a> command line via <code>-D</code> 
- * arguments. <code>Runner</code> passes it to many methods where you can use it to configure your
- * test runs. For example, <code>Runner</code> passed the <code>ConfigMap</code> to:
- * </p>
+ * A `ConfigMap` can be populated from the <a href="tools/Runner$.html">`Runner`</a> command line via `-D` 
+ * arguments. `Runner` passes it to many methods where you can use it to configure your
+ * test runs. For example, `Runner` passed the `ConfigMap` to:
+ * 
  * 
  * <ul>
- * <li>the <code>apply</code> method of <a href="Reporter.html"><code>Reporter</code></a>s via <code>RunStarting</code> events</li>
- * <li>the <code>run</code> method of <a href="Suite.html"><code>Suite</code></a>
- * <li>the <code>runNestedSuites</code> method of <code>Suite</code>
- * <li>the <code>runTests</code> method of <code>Suite</code>
- * <li>the <code>runTest</code> method of <code>Suite</code>
- * <li>the <code>withFixture(NoArgTest)</code> method of <code>Suite</code>
- * <li>the <code>withFixture(OneArgTest)</code> method of <a href="fixture/Suite.html"><code>fixture.Suite</code></a>
- * <li>the <code>beforeEach(TestData)</code> method of <a href="BeforeAndAfterEachTestData.html"><code>BeforeAndAfterEachTestData</code></a>
- * <li>the <code>afterEach(TestData)</code> method of <code>BeforeAndAfterEachTestData</code>
+ * <li>the `apply` method of <a href="Reporter.html">`Reporter`</a>s via `RunStarting` events</li>
+ * <li>the `run` method of <a href="Suite.html">`Suite`</a>
+ * <li>the `runNestedSuites` method of `Suite`
+ * <li>the `runTests` method of `Suite`
+ * <li>the `runTest` method of `Suite`
+ * <li>the `withFixture(NoArgTest)` method of `Suite`
+ * <li>the `withFixture(OneArgTest)` method of <a href="fixture/Suite.html">`fixture.Suite`</a>
+ * <li>the `beforeEach(TestData)` method of <a href="BeforeAndAfterEachTestData.html">`BeforeAndAfterEachTestData`</a>
+ * <li>the `afterEach(TestData)` method of `BeforeAndAfterEachTestData`
  * </ul>
  *
- * <p>
- * In addition to accessing the <code>ConfigMap</code> in overriden implementations of the above methods, you can also transform
- * and pass along a modified <code>ConfigMap</code>.
- * </p>
+ * In addition to accessing the `ConfigMap` in overriden implementations of the above methods, you can also transform
+ * and pass along a modified `ConfigMap`.
+ * 
  *
- * <p>
- * A <code>ConfigMap</code> maps string keys to values of any type, <em>i.e.</em>, it is a <code>Map[String, Any]</code>.
+ * A `ConfigMap` maps string keys to values of any type, ''i.e.'', it is a `Map[String, Any]`.
  * To get a configuration value in a variable of the actual type of that value, therefore, you'll need to perform an unsafe cast. If
- * this cast fails, you'll get an exception, which so long as the <code>ConfigMap</code> is used only in tests, will
+ * this cast fails, you'll get an exception, which so long as the `ConfigMap` is used only in tests, will
  * result in either a failed or canceled test or aborted suite. To give such exceptions nice stack depths and error messages, and to
- * eliminate the need for using <code>asInstanceOf</code> in your test code, <code>ConfigMap</code> provides three
+ * eliminate the need for using `asInstanceOf` in your test code, `ConfigMap` provides three
  * methods for accessing values at expected types.
- * </p>
+ * 
  *
- * <p>
- * The <code>getRequired</code> method returns the value bound to a key cast to a specified type, or throws <a href="exceptions/TestCanceledException.html"><code>TestCanceledException</code></a>
+ * The `getRequired` method returns the value bound to a key cast to a specified type, or throws <a href="exceptions/TestCanceledException.html">`TestCanceledException`</a>
  * if either the key is not bound or is bound to an incompatible type. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val tempFileName: String = configMap.getRequired[String]("tempFileName")
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>getOptional</code> method returns the value bound to a key cast to a specified type, wrapped in a <code>Some</code>,
- * returns <code>None</code> if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
+ * The `getOptional` method returns the value bound to a key cast to a specified type, wrapped in a `Some`,
+ * returns `None` if the key is not bound, or throws `TestCanceledException` if the key exists but is
  * bound to an incompatible type. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val tempFileName: Option[String] = configMap.getOptional[String]("tempFileName")
- * </pre>
+ * }}}
  *
- * <p>
- * The <code>getWithDefault</code> method returns the value bound to a key cast to a specified type,
- * returns a specified default value if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
+ * The `getWithDefault` method returns the value bound to a key cast to a specified type,
+ * returns a specified default value if the key is not bound, or throws `TestCanceledException` if the key exists but is
  * either not bound or is bound to an incompatible type. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val tempFileName: String = configMap.getWithDefault[String]("tempFileName", "tmp.txt")
- * </pre>
+ * }}}
  *
- * @param underlying an immutable <code>Map</code> that holds the key/value pairs contained in this <code>ConfigMap</code>
+ * @param underlying an immutable `Map` that holds the key/value pairs contained in this `ConfigMap`
  * 
  * @author Bill Venners
  */
@@ -112,18 +106,17 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
   override def empty: ConfigMap = new ConfigMap(Map.empty[String, Any])
 
   /**
-   * <p>
-   * Returns the value bound to a key cast to a specified type, wrapped in a <code>Some</code>,
-   * returns <code>None</code> if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
+   * Returns the value bound to a key cast to a specified type, wrapped in a `Some`,
+   * returns `None` if the key is not bound, or throws `TestCanceledException` if the key exists but is
    * bound to an incompatible type. Here's an example:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val tempFileName: Option[String] = configMap.getOptional[String]("tempFileName")
-   * </pre>
+   * }}}
    *
    * @param key the key with which the desired value should be associated
-   * @param classTag an implicit <code>ClassTag</code> specifying the expected type for the desired value
+   * @param classTag an implicit `ClassTag` specifying the expected type for the desired value
    */
   def getOptional[V](key: String)(implicit classTag: ClassTag[V]): Option[V] = {
     if (underlying.contains(key)) Some(getRequired[V](key))
@@ -131,19 +124,18 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
   }
 
   /**
-   * <p>
-   * Returns the value bound to a key cast to the specified type <code>V</code>,
-   * returns a specified default value if the key is not bound, or throws </code>TestCanceledException</code> if the key exists but is
+   * Returns the value bound to a key cast to the specified type `V`,
+   * returns a specified default value if the key is not bound, or throws `TestCanceledException` if the key exists but is
    * if either the key is not bound or is bound to an incompatible type. Here's an example:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val tempFileName: String = configMap.getWithDefault[String]("tempFileName", "tmp.txt")
-   * </pre>
+   * }}}
    *
    * @param key the key with which the desired value should be associated
    * @param default a default value to return if the key is not found
-   * @param classTag an implicit <code>ClassTag</code> specifying the expected type for the desired value
+   * @param classTag an implicit `ClassTag` specifying the expected type for the desired value
    */
   def getWithDefault[V](key: String, default: => V)(implicit classTag: ClassTag[V]): V = {
     if (underlying.contains(key)) getRequired[V](key)
@@ -151,17 +143,16 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
   }
 
   /**
-   * <p>
-   * Returns the value bound to a key cast to the specified type <code>V</code>, or throws <code>TestCanceledException</code>
+   * Returns the value bound to a key cast to the specified type `V`, or throws `TestCanceledException`
    * if either the key is not bound or is bound to an incompatible type. Here's an example:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * val tempFileName: String = configMap.getRequired[String]("tempFileName")
-   * </pre>
+   * }}}
    *
    * @param key the key with which the desired value should be associated
-   * @param classTag an implicit <code>ClassTag</code> specifying the expected type for the desired value
+   * @param classTag an implicit `ClassTag` specifying the expected type for the desired value
    */
   def getRequired[V](key: String)(implicit classTag: ClassTag[V], pos: source.Position): V = {
     underlying.get(key) match {
@@ -190,21 +181,21 @@ class ConfigMap(underlying: Map[String, Any]) extends Map[String, Any] with MapL
 }
 
 /**
- * Companion object to class <code>ConfigMap</code> containing factory methods.
+ * Companion object to class `ConfigMap` containing factory methods.
  *
  * @author Bill Venners
  */
 object ConfigMap {
 
   /**
-   * Constructs a <code>ConfigMap</code> containing the passed key/value pairs.
+   * Constructs a `ConfigMap` containing the passed key/value pairs.
    *
-   * @param pairs zero to many key/value pairs with which to initialize a new <code>ConfigMap</code>.
+   * @param pairs zero to many key/value pairs with which to initialize a new `ConfigMap`.
    */
   def apply(pairs: (String, Any)*): ConfigMap = new ConfigMap(Map(pairs: _*))
 
   /**
-   * Constructs an empty <code>ConfigMap</code>.
+   * Constructs an empty `ConfigMap`.
    */
   def empty: ConfigMap = new ConfigMap(Map.empty)
 }

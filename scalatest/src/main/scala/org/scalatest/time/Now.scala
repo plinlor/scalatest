@@ -16,7 +16,7 @@
 package org.scalatest.time
 
 /**
- * Trait providing a <code>now</code> method that returns the current time in milliseconds
+ * Trait providing a `now` method that returns the current time in milliseconds
  * since January 1, 1970, 00:00:00 GMT.
  */
 trait Now {
@@ -29,7 +29,7 @@ trait Now {
 }
 
 /**
- * Companion object to trait <code>Now</code> that enables its members to be imported as
+ * Companion object to trait `Now` that enables its members to be imported as
  * an alternative to mixing them in.
  */
 object Now extends Now

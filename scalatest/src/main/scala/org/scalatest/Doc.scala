@@ -24,15 +24,14 @@ import collection.mutable.ListBuffer
 import java.util.ConcurrentModificationException
 
 /**
- * A <code>Doc</code> class that takes one XML node markup
- *  which will be returned from its <code>nestedSuites</code> method.
+ * A `Doc` class that takes one XML node markup
+ *  which will be returned from its `nestedSuites` method.
  *
- * <p>
  * For example, you can define a suite that always executes a list of
  * nested suites like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class StepsSuite extends Suites(
  *   new Step1Suite,
  *   new Step2Suite,
@@ -40,18 +39,17 @@ import java.util.ConcurrentModificationException
  *   new Step4Suite,
  *   new Step5Suite
  * )
- * </pre>
+ * }}}
  *
- * <p>
- * When <code>StepsSuite</code> is executed, it will execute its
- * nested suites in the passed order: <code>Step1Suite</code>, <code>Step2Suite</code>,
- * <code>Step3Suite</code>, <code>Step4Suite</code>, and <code>Step5Suite</code>.
- * </p>
+ * When `StepsSuite` is executed, it will execute its
+ * nested suites in the passed order: `Step1Suite`, `Step2Suite`,
+ * `Step3Suite`, `Step4Suite`, and `Step5Suite`.
+ * 
  *
- * @param suitesToNest a sequence of <code>Suite</code>s to nest.
+ * @param suitesToNest a sequence of `Suite`s to nest.
  *
- * @throws NullArgumentException if <code>suitesToNest</code>, or any suite
- * it contains, is <code>null</code>.
+ * @throws NullArgumentException if `suitesToNest`, or any suite
+ * it contains, is `null`.
  *
  * @author Bill Venners
  */

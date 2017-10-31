@@ -23,23 +23,22 @@ package org.scalatest
 /**
  * A sorter for the events of a run's distributed suites.
  *
- * <p>
- * This trait is used, for example, when <code>-PS</code> is passed to <a href="tools/Runner$.html"><code>Runner</code></a>, to sort the
+ * This trait is used, for example, when `-PS` is passed to <a href="tools/Runner$.html">`Runner`</a>, to sort the
  * events of distributed suites such that each suite's events are propagated together, with a timeout if an event takes too long.
- * </p>
+ * 
  */
 trait DistributedSuiteSorter {
   /**
     * This method is called before first test in a suite is distributed to execute
     *
-    * @param suiteId the <code>suiteId</code> for the suite that's starting to execute its tests
+    * @param suiteId the `suiteId` for the suite that's starting to execute its tests
     */
   def distributingTests(suiteId: String)
 
   /**
     * This method is called after all tests in the suite completed execution
     *
-    * @param suiteId the <code>suiteId</code> for the suite that's completed its tests execution
+    * @param suiteId the `suiteId` for the suite that's completed its tests execution
     */
   def completedTests(suiteId: String)
 }

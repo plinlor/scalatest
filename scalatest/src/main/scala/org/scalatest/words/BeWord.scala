@@ -35,29 +35,28 @@ import org.scalatest.enablers.Writability
 import org.scalatest.exceptions.NotAllowedException
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> or <a href="../MustMatchers.html"><code>MustMatchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> or <a href="../MustMatchers.html">`MustMatchers`</a> for an overview of
  * the matchers DSL.
  *
- * <p>
- * Class <code>BeWord</code> contains an <code>apply</code> method that takes a <code>Symbol</code>, which uses reflection
- * to find and access a <code>Boolean</code> property and determine if it is <code>true</code>.
- * If the symbol passed is <code>'empty</code>, for example, the <code>apply</code> method
+ * Class `BeWord` contains an `apply` method that takes a `Symbol`, which uses reflection
+ * to find and access a `Boolean` property and determine if it is `true`.
+ * If the symbol passed is `'empty`, for example, the `apply` method
  * will use reflection to look for a public Java field named
- * "empty", a public method named "empty", or a public method named "isEmpty". If a field, it must be of type <code>Boolean</code>.
- * If a method, it must take no parameters and return <code>Boolean</code>. If multiple candidates are found,
- * the <code>apply</code> method will select based on the following algorithm:
- * </p>
+ * "empty", a public method named "empty", or a public method named "isEmpty". If a field, it must be of type `Boolean`.
+ * If a method, it must take no parameters and return `Boolean`. If multiple candidates are found,
+ * the `apply` method will select based on the following algorithm:
+ * 
  * 
  * <table class="stTable">
  * <tr><th class="stHeadingCell">Field</th><th class="stHeadingCell">Method</th><th class="stHeadingCell">"is" Method</th><th class="stHeadingCell">Result</th></tr>
- * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Throws <code>TestFailedException</code>, because no candidates found</td></tr>
- * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell"><code>isEmpty()</code></td><td class="stTableCell">Invokes <code>isEmpty()</code></td></tr>
- * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell"><code>empty()</code></td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Invokes <code>empty()</code></td></tr>
- * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell"><code>empty()</code></td><td class="stTableCell"><code>isEmpty()</code></td><td class="stTableCell">Invokes <code>empty()</code> (this can occur when <code>BeanProperty</code> annotation is used)</td></tr>
- * <tr><td class="stTableCell"><code>empty</code></td><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Accesses field <code>empty</code></td></tr>
- * <tr><td class="stTableCell"><code>empty</code></td><td class="stTableCell">&nbsp;</td><td class="stTableCell"><code>isEmpty()</code></td><td class="stTableCell">Invokes <code>isEmpty()</code></td></tr>
- * <tr><td class="stTableCell"><code>empty</code></td><td class="stTableCell"><code>empty()</code></td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Invokes <code>empty()</code></td></tr>
- * <tr><td class="stTableCell"><code>empty</code></td><td class="stTableCell"><code>empty()</code></td><td class="stTableCell"><code>isEmpty()</code></td><td class="stTableCell">Invokes <code>empty()</code> (this can occur when <code>BeanProperty</code> annotation is used)</td></tr>
+ * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Throws `TestFailedException`, because no candidates found</td></tr>
+ * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">`isEmpty()`</td><td class="stTableCell">Invokes `isEmpty()`</td></tr>
+ * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">`empty()`</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Invokes `empty()`</td></tr>
+ * <tr><td class="stTableCell">&nbsp;</td><td class="stTableCell">`empty()`</td><td class="stTableCell">`isEmpty()`</td><td class="stTableCell">Invokes `empty()` (this can occur when `BeanProperty` annotation is used)</td></tr>
+ * <tr><td class="stTableCell">`empty`</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Accesses field `empty`</td></tr>
+ * <tr><td class="stTableCell">`empty`</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">`isEmpty()`</td><td class="stTableCell">Invokes `isEmpty()`</td></tr>
+ * <tr><td class="stTableCell">`empty`</td><td class="stTableCell">`empty()`</td><td class="stTableCell">&nbsp;</td><td class="stTableCell">Invokes `empty()`</td></tr>
+ * <tr><td class="stTableCell">`empty`</td><td class="stTableCell">`empty()`</td><td class="stTableCell">`isEmpty()`</td><td class="stTableCell">Invokes `empty()` (this can occur when `BeanProperty` annotation is used)</td></tr>
  * </table>
  * 
  * @author Bill Venners
@@ -68,27 +67,25 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be &lt; (7)
    *                  ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Note that the less than operator will be invoked on <code>be</code> in this expression, not
-   * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
-   * in the matchers DSL, because the less than operator has a higher precedence than <code>should</code>.
-   * Thus in the above case the first expression evaluated will be <code>be &lt; (7)</code>, which results
-   * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * Note that the less than operator will be invoked on `be` in this expression, not
+   * on a result of passing `be` to `should`, as with most other operators
+   * in the matchers DSL, because the less than operator has a higher precedence than `should`.
+   * Thus in the above case the first expression evaluated will be `be &lt; (7)`, which results
+   * in a matcher that is passed to `should`.
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not (be &lt; (7))
    *                       ^
-   * </pre>
+   * }}}
    **/
   def <[T : Ordering](right: T): Matcher[T] =
     new Matcher[T] {
@@ -107,27 +104,25 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be &gt; (7)
    *                  ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Note that the greater than operator will be invoked on <code>be</code> in this expression, not
-   * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
-   * in the matchers DSL, because the greater than operator has a higher precedence than <code>should</code>.
-   * Thus in the above case the first expression evaluated will be <code>be &gt; (7)</code>, which results
-   * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * Note that the greater than operator will be invoked on `be` in this expression, not
+   * on a result of passing `be` to `should`, as with most other operators
+   * in the matchers DSL, because the greater than operator has a higher precedence than `should`.
+   * Thus in the above case the first expression evaluated will be `be &gt; (7)`, which results
+   * in a matcher that is passed to `should`.
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not (be &gt; (7))
    *                       ^
-   * </pre>
+   * }}}
    **/
   def >[T : Ordering](right: T): Matcher[T] =
     new Matcher[T] {
@@ -146,27 +141,25 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be &lt;= (7)
    *                  ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Note that the less than or equal to operator will be invoked on <code>be</code> in this expression, not
-   * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
-   * in the matchers DSL, because the less than or equal to operator has a higher precedence than <code>should</code>.
-   * Thus in the above case the first expression evaluated will be <code>be &lt;= (7)</code>, which results
-   * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * Note that the less than or equal to operator will be invoked on `be` in this expression, not
+   * on a result of passing `be` to `should`, as with most other operators
+   * in the matchers DSL, because the less than or equal to operator has a higher precedence than `should`.
+   * Thus in the above case the first expression evaluated will be `be &lt;= (7)`, which results
+   * in a matcher that is passed to `should`.
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not (be &lt;= (7))
    *                       ^
-   * </pre>
+   * }}}
    **/
   def <=[T : Ordering](right: T): Matcher[T] =
     new Matcher[T] {
@@ -185,27 +178,25 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be &gt;= (7)
    *                  ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Note that the greater than or equal to operator will be invoked on <code>be</code> in this expression, not
-   * on a result of passing <code>be</code> to <code>should</code>, as with most other operators
-   * in the matchers DSL, because the greater than or equal to operator has a higher precedence than <code>should</code>.
-   * Thus in the above case the first expression evaluated will be <code>be &gt;= (7)</code>, which results
-   * in a matcher that is passed to <code>should</code>.
-   * </p>
+   * Note that the greater than or equal to operator will be invoked on `be` in this expression, not
+   * on a result of passing `be` to `should`, as with most other operators
+   * in the matchers DSL, because the greater than or equal to operator has a higher precedence than `should`.
+   * Thus in the above case the first expression evaluated will be `be &gt;= (7)`, which results
+   * in a matcher that is passed to `should`.
+   * 
    *
-   * <p>
    * This method also enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not (be &gt;= (7))
    *                       ^
-   * </pre>
+   * }}}
    **/
   def >=[T : Ordering](right: T): Matcher[T] =
     new Matcher[T] {
@@ -222,16 +213,15 @@ final class BeWord {
     }
 
   /**
-   * <strong>
+   * '''
    * The deprecation period for the "be ===" syntax has expired, and the syntax 
-   * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
+   * will now throw `NotAllowedException`.  Please use should equal, should ===, shouldEqual,
    * should be, or shouldBe instead.
-   * </strong>
+   * '''
    * 
-   * <p>
    * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
    * cases still compile, but silently wouldn't work.
-   * </p>
+   * 
    */
   @deprecated("The deprecation period for the be === syntax has expired. Please use should equal, should ===, shouldEqual, should be, or shouldBe instead.")
   def ===(right: Any)(implicit pos: source.Position): Matcher[Any] = {
@@ -242,10 +232,10 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * fileMock should not { be a ('file) }
    *                          ^
-   * </pre>
+   * }}}
    **/
   def a(right: Symbol)(implicit prettifier: Prettifier, pos: source.Position): Matcher[AnyRef] =
     new Matcher[AnyRef] {
@@ -255,13 +245,13 @@ final class BeWord {
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax, where <code>fileMock</code> is, for example, of type <code>File</code> and
-   * <code>file</code> refers to a <code>BePropertyMatcher[File]</code>:
+   * This method enables the following syntax, where `fileMock` is, for example, of type `File` and
+   * `file` refers to a `BePropertyMatcher[File]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * fileMock should not { be a (file) }
    *                          ^
-   * </pre>
+   * }}}
    **/
   def a[S <: AnyRef](bePropertyMatcher: BePropertyMatcher[S]): Matcher[S] =
     new Matcher[S] {
@@ -278,12 +268,12 @@ final class BeWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>negativeNumber</code> is, for example, of type <code>AMatcher</code>:
+   * This method enables the following syntax, where `negativeNumber` is, for example, of type `AMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 8 should not { be a (negativeNumber) }
    *                   ^
-   * </pre>
+   * }}}
    **/
   def a[S](aMatcher: AMatcher[S]): Matcher[S] = 
     new Matcher[S] {
@@ -295,10 +285,10 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * animal should not { be an ('elephant) }
    *                        ^
-   * </pre>
+   * }}}
    **/
   def an(right: Symbol)(implicit prettifier: Prettifier, pos: source.Position): Matcher[AnyRef] =
     new Matcher[AnyRef] {
@@ -308,13 +298,13 @@ final class BeWord {
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax, where <code>keyEvent</code> is, for example, of type <code>KeyEvent</code> and
-   * <code>actionKey</code> refers to a <code>BePropertyMatcher[KeyEvent]</code>:
+   * This method enables the following syntax, where `keyEvent` is, for example, of type `KeyEvent` and
+   * `actionKey` refers to a `BePropertyMatcher[KeyEvent]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * keyEvent should not { be an (actionKey) }
    *                          ^
-   * </pre>
+   * }}}
    **/
   def an[S <: AnyRef](bePropertyMatcher: BePropertyMatcher[S]): Matcher[S] =
     new Matcher[S] {
@@ -331,12 +321,12 @@ final class BeWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>oddNumber</code> is, for example, of type <code>AnMatcher</code>:
+   * This method enables the following syntax, where `oddNumber` is, for example, of type `AnMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 8 should not { be an (oddNumber) }
    *                   ^
-   * </pre>
+   * }}}
    **/
   def an[S](anMatcher: AnMatcher[S]): Matcher[S] = 
     new Matcher[S] {
@@ -347,10 +337,10 @@ final class BeWord {
   /**
    * This method enables the following syntax for the "primitive" numeric types: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * sevenDotOh should be (7.1 +- 0.2)
    *                      ^
-   * </pre>
+   * }}}
    **/
   def apply[U](spread: Spread[U]): Matcher[U] =
     new Matcher[U] {
@@ -368,10 +358,10 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be theSameInstancreAs (anotherObject)
    *                  ^
-   * </pre>
+   * }}}
    **/
   def theSameInstanceAs(right: AnyRef): Matcher[AnyRef] =
     new Matcher[AnyRef] {
@@ -388,10 +378,10 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be (true)
    *                  ^
-   * </pre>
+   * }}}
    **/
   def apply(right: Boolean): Matcher[Boolean] = 
     new Matcher[Boolean] {
@@ -408,10 +398,10 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be (null)
    *                  ^
-   * </pre>
+   * }}}
    **/
   def apply(o: Null): Matcher[AnyRef] = 
     new Matcher[AnyRef] {
@@ -432,10 +422,10 @@ final class BeWord {
   /* *
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * set should be ('empty)
    *               ^
-   * </pre>
+   * }}}
   def apply[T](right: AType[T]): Matcher[Any] =
     new Matcher[Any] {
       def apply(left: Any): MatchResult = 
@@ -453,10 +443,10 @@ final class BeWord {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * set should be ('empty)
    *               ^
-   * </pre>
+   * }}}
    **/
   def apply(right: Symbol)(implicit prettifier: Prettifier, pos: source.Position): Matcher[AnyRef] =
     new Matcher[AnyRef] {
@@ -466,13 +456,13 @@ final class BeWord {
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax, where <code>num</code> is, for example, of type <code>Int</code> and
-   * <code>odd</code> refers to a <code>BeMatcher[Int]</code>:
+   * This method enables the following syntax, where `num` is, for example, of type `Int` and
+   * `odd` refers to a `BeMatcher[Int]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * num should be (odd)
    *               ^
-   * </pre>
+   * }}}
    **/
   def apply[T](right: BeMatcher[T]): Matcher[T] =
     new Matcher[T] {
@@ -481,12 +471,12 @@ final class BeWord {
     }
 
   /**
-   * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
+   * This method enables the following syntax, where `open` refers to a `BePropertyMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * door should be (open)
    *                ^
-   * </pre>
+   * }}}
    **/
   def apply[T](bePropertyMatcher: BePropertyMatcher[T]): Matcher[T] =
     new Matcher[T] {
@@ -503,9 +493,9 @@ final class BeWord {
     }
 
   /**
-   * This method enables <code>be</code> to be used for equality comparison. Here are some examples: 
+   * This method enables `be` to be used for equality comparison. Here are some examples: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be (None)
    *                  ^
    * result should be (Some(1))
@@ -516,7 +506,7 @@ final class BeWord {
    *                  ^
    * sum should be (19)
    *               ^
-   * </pre>
+   * }}}
    **/
   def apply(right: Any): Matcher[Any] =
     new Matcher[Any] {
@@ -534,12 +524,12 @@ final class BeWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
+   * This method enables the following syntax, where `open` refers to a `BePropertyMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * List(1, 2, 3) should be (sorted)
    *                          ^
-   * </pre>
+   * }}}
    **/
   def apply(right: SortedWord): MatcherFactory1[Any, Sortable] = 
     new MatcherFactory1[Any, Sortable] {
@@ -560,12 +550,12 @@ final class BeWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>fraction</code> refers to a <code>PartialFunction</code>:
+   * This method enables the following syntax, where `fraction` refers to a `PartialFunction`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * fraction should (be definedAt (6) and be definedAt (8))
    *                     ^
-   * </pre>
+   * }}}
    **/
   def definedAt[A, U <: PartialFunction[A, _]](right: A): Matcher[U] = 
     new Matcher[U] {
@@ -582,20 +572,20 @@ final class BeWord {
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * a[Exception] should (be thrownBy { "hi".charAt(-1) })
    *                         ^
-   * </pre>
+   * }}}
    **/
   def thrownBy(code: => Unit) = new ResultOfBeThrownBy(Vector(() => code))
   
   /**
-   * This method enables the following syntax, where <code>fraction</code> refers to a <code>PartialFunction</code>:
+   * This method enables the following syntax, where `fraction` refers to a `PartialFunction`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * fraction should (be (definedAt (6)) and be (definedAt (8)))
    *                  ^
-   * </pre>
+   * }}}
    **/
   def apply[A, U <: PartialFunction[A, _]](resultOfDefinedAt: ResultOfDefinedAt[A]): Matcher[U] =
     new Matcher[U] {
@@ -612,32 +602,32 @@ final class BeWord {
   import language.experimental.macros
   
   /**
-   * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
+   * This method enables the following syntax, where `open` refers to a `BePropertyMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be (a [Book])
    *               ^
-   * </pre>
+   * }}}
    **/
   def apply(aType: ResultOfATypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.aTypeMatcherImpl
   
   /**
-   * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
+   * This method enables the following syntax, where `open` refers to a `BePropertyMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should be (an [Book])
    *               ^
-   * </pre>
+   * }}}
    **/
   def apply(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] = macro TypeMatcherMacro.anTypeMatcherImpl
   
   /**
-   * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
+   * This method enables the following syntax, where `open` refers to a `BePropertyMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should be (readable)
    *                ^
-   * </pre>
+   * }}}
    **/
   def apply(readable: ReadableWord): MatcherFactory1[Any, Readability] = 
     new MatcherFactory1[Any, Readability] {
@@ -658,12 +648,12 @@ final class BeWord {
     }
   
   /**
-   * This method enables the following syntax, where <code>open</code> refers to a <code>BePropertyMatcher</code>:
+   * This method enables the following syntax, where `open` refers to a `BePropertyMatcher`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should be (writable)
    *                 ^
-   * </pre>
+   * }}}
    **/
   def apply(writable: WritableWord): MatcherFactory1[Any, Writability] = 
     new MatcherFactory1[Any, Writability] {
@@ -686,10 +676,10 @@ final class BeWord {
   /**
    * This method enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * array should be (empty)
    *                 ^
-   * </pre>
+   * }}}
    **/
   def apply(empty: EmptyWord): MatcherFactory1[Any, Emptiness] = 
     new MatcherFactory1[Any, Emptiness] {
@@ -712,10 +702,10 @@ final class BeWord {
   /**
    * This method enables syntax such as the following:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * array should be (defined)
    *                 ^
-   * </pre>
+   * }}}
    **/
   def apply(defined: DefinedWord): MatcherFactory1[Any, Definition] = 
     new MatcherFactory1[Any, Definition] {

@@ -25,18 +25,18 @@ import tools.StringReporter.makeDurationString
 import tools.SuiteSortingReporter
 
 /**
- * A <code>Reporter</code> that dispatches test results to other <code>Reporter</code>s.
- * Attempts to dispatch each method invocation to each contained <code>Reporter</code>,
- * even if some <code>Reporter</code> methods throw <code>Exception</code>s. Catches
- * <code>Exception</code>s thrown by <code>Reporter</code> methods and prints error
+ * A `Reporter` that dispatches test results to other `Reporter`s.
+ * Attempts to dispatch each method invocation to each contained `Reporter`,
+ * even if some `Reporter` methods throw `Exception`s. Catches
+ * `Exception`s thrown by `Reporter` methods and prints error
  * messages to the standard error stream.
  *
- * The primary constructor creates a new <code>DispatchReporter</code> with specified <code>Reporter</code>s list.
- * Each object in the <code>reporters</code> list must implement <code>Reporter</code>.
+ * The primary constructor creates a new `DispatchReporter` with specified `Reporter`s list.
+ * Each object in the `reporters` list must implement `Reporter`.
  *
- * @param reporters the initial <code>Reporter</code>s list for this
- * <code>DispatchReporter</code>
- * @throws NullArgumentException if <code>reporters</code> is <code>null</code>.
+ * @param reporters the initial `Reporter`s list for this
+ * `DispatchReporter`
+ * @throws NullArgumentException if `reporters` is `null`.
  * @author Bill Venners
  */
 private[scalatest] class DispatchReporter(

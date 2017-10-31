@@ -31,41 +31,40 @@ import org.scalatest.exceptions.GeneratorDrivenPropertyCheckFailedException
 import org.scalatest.exceptions.StackDepth
 
 /**
- * Supertrait for <code>CheckerAsserting</code> typeclasses, which are used to implement and determine the result
- * type of [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]]'s <code>apply</code> and <code>forAll</code> method.
+ * Supertrait for `CheckerAsserting` typeclasses, which are used to implement and determine the result
+ * type of [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]]'s `apply` and `forAll` method.
  *
- * <p>
- * Currently, an [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]] expression will have result type <code>Assertion</code>, if the function passed has result type <code>Assertion</code>,
- * else it will have result type <code>Unit</code>.
- * </p>
+ * Currently, an [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]] expression will have result type `Assertion`, if the function passed has result type `Assertion`,
+ * else it will have result type `Unit`.
+ * 
  */
 trait CheckerAsserting[T] {
   /**
-   * The result type of the <code>check</code> method.
+   * The result type of the `check` method.
    */
   type Result
 
   /**
-   * Perform the property check using the given <code>Prop</code> and <code>Test.Parameters</code>.
+   * Perform the property check using the given `Prop` and `Test.Parameters`.
    *
-   * @param p the <code>Prop</code> to be used to check
-   * @param prms the <code>Test.Parameters</code> to be used to check
-   * @param prettifier the <code>Prettifier</code> to be used to prettify error message
-   * @param pos the <code>Position</code> of the caller site
+   * @param p the `Prop` to be used to check
+   * @param prms the `Test.Parameters` to be used to check
+   * @param prettifier the `Prettifier` to be used to prettify error message
+   * @param pos the `Position` of the caller site
    * @param argNames the list of argument names
-   * @return the <code>Result</code> of the property check.
+   * @return the `Result` of the property check.
    */
   def check(p: Prop, prms: Test.Parameters, prettifier: Prettifier, pos: source.Position, argNames: Option[List[String]] = None): Result
 }
 
 /**
-  * Class holding lowest priority <code>CheckerAsserting</code> implicit, which enables [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]] expressions that have result type <code>Unit</code>.
+  * Class holding lowest priority `CheckerAsserting` implicit, which enables [[org.scalatest.prop.GeneratorDrivenPropertyChecks GeneratorDrivenPropertyChecks]] expressions that have result type `Unit`.
   */
 abstract class UnitCheckerAsserting {
 
   /**
-   * Abstract subclass of <code>CheckerAsserting</code> that provides the bulk of the implementations of <code>CheckerAsserting</code>
-   * <code>check</code> method.
+   * Abstract subclass of `CheckerAsserting` that provides the bulk of the implementations of `CheckerAsserting`
+   * `check` method.
    */
   /* protected[scalatest]*/ abstract class CheckerAssertingImpl[T] extends CheckerAsserting[T] {
 

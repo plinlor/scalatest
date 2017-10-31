@@ -22,90 +22,85 @@ import org.scalatest.events.Event
  * suite of tests and presents those results in some way to the user. Instances of this trait can
  * be called "report functions" or "reporters."
  *
- * <p>
  * Reporters receive test results via fifteen events.
  * Each event is fired to pass a particular kind of information to
  * the reporter. The events are:
- * </p>
+ * 
  *
  * <ul>
- * <li><a href="events/DiscoveryStarting.html"><code>DiscoveryStarting</code></a></li>
- * <li><a href="events/DiscoveryCompleted.html"><code>DiscoveryCompleted</code></a></li>
- * <li><a href="events/RunStarting.html"><code>RunStarting</code></a></li>
- * <li><a href="events/RunStopped.html"><code>RunStopped</code></a></li>
- * <li><a href="events/RunAborted.html"><code>RunAborted</code></a></li>
- * <li><a href="events/RunCompleted.html"><code>RunCompleted</code></a></li>
- * <li><a href="events/ScopeOpened.html"><code>ScopeOpened</code></a></li>
- * <li><a href="events/ScopeClosed.html"><code>ScopeClosed</code></a></li>
- * <li><a href="events/ScopePending.html"><code>ScopePending</code></a></li>
- * <li><a href="events/TestStarting.html"><code>TestStarting</code></a></li>
- * <li><a href="events/TestSucceeded.html"><code>TestSucceeded</code></a></li>
- * <li><a href="events/TestFailed.html"><code>TestFailed</code></a></li>
- * <li><a href="events/TestCanceled.html"><code>TestCanceled</code></a></li>
- * <li><a href="events/TestIgnored.html"><code>TestIgnored</code></a></li>
- * <li><a href="events/TestPending.html"><code>TestPending</code></a></li>
- * <li><a href="events/SuiteStarting.html"><code>SuiteStarting</code></a></li>
- * <li><a href="events/SuiteCompleted.html"><code>SuiteCompleted</code></a></li>
- * <li><a href="events/SuiteAborted.html"><code>SuiteAborted</code></a></li>
- * <li><a href="events/InfoProvided.html"><code>InfoProvided</code></a></li>
- * <li><a href="events/MarkupProvided.html"><code>MarkupProvided</code></a></li>
- * <li><a href="events/AlertProvided.html"><code>AlertProvided</code></a></li>
- * <li><a href="events/NoteProvided.html"><code>NoteProvided</code></a></li>
+ * <li><a href="events/DiscoveryStarting.html">`DiscoveryStarting`</a></li>
+ * <li><a href="events/DiscoveryCompleted.html">`DiscoveryCompleted`</a></li>
+ * <li><a href="events/RunStarting.html">`RunStarting`</a></li>
+ * <li><a href="events/RunStopped.html">`RunStopped`</a></li>
+ * <li><a href="events/RunAborted.html">`RunAborted`</a></li>
+ * <li><a href="events/RunCompleted.html">`RunCompleted`</a></li>
+ * <li><a href="events/ScopeOpened.html">`ScopeOpened`</a></li>
+ * <li><a href="events/ScopeClosed.html">`ScopeClosed`</a></li>
+ * <li><a href="events/ScopePending.html">`ScopePending`</a></li>
+ * <li><a href="events/TestStarting.html">`TestStarting`</a></li>
+ * <li><a href="events/TestSucceeded.html">`TestSucceeded`</a></li>
+ * <li><a href="events/TestFailed.html">`TestFailed`</a></li>
+ * <li><a href="events/TestCanceled.html">`TestCanceled`</a></li>
+ * <li><a href="events/TestIgnored.html">`TestIgnored`</a></li>
+ * <li><a href="events/TestPending.html">`TestPending`</a></li>
+ * <li><a href="events/SuiteStarting.html">`SuiteStarting`</a></li>
+ * <li><a href="events/SuiteCompleted.html">`SuiteCompleted`</a></li>
+ * <li><a href="events/SuiteAborted.html">`SuiteAborted`</a></li>
+ * <li><a href="events/InfoProvided.html">`InfoProvided`</a></li>
+ * <li><a href="events/MarkupProvided.html">`MarkupProvided`</a></li>
+ * <li><a href="events/AlertProvided.html">`AlertProvided`</a></li>
+ * <li><a href="events/NoteProvided.html">`NoteProvided`</a></li>
  * </ul>
  *
- * <p>
  * Reporters may be implemented such that they only present some of the reported events to the user. For example, you could
- * define a reporter class that does nothing in response to <code>SuiteStarting</code> events.
- * Such a class would always ignore <code>SuiteStarting</code> events.
- * </p>
+ * define a reporter class that does nothing in response to `SuiteStarting` events.
+ * Such a class would always ignore `SuiteStarting` events.
+ * 
  *
- * <p>
- * The term <em>test</em> as used in the <code>TestStarting</code>, <code>TestSucceeded</code>,
- * and <code>TestFailed</code> event names
+ * The term ''test'' as used in the `TestStarting`, `TestSucceeded`,
+ * and `TestFailed` event names
  * is defined abstractly to enable a wide range of test implementations.
- * ScalaTest's style traits (subclasse of trait <a href="Suite.html"><code>Suite</code></a>) fire
- * <code>TestStarting</code> to indicate they are about to invoke one
- * of their tests, <code>TestSucceeded</code> to indicate a test returned normally,
- * and <code>TestFailed</code> to indicate a test completed abruptly with an exception.
- * Although the execution of a <code>Suite</code> subclass's tests will likely be a common event
+ * ScalaTest's style traits (subclasse of trait <a href="Suite.html">`Suite`</a>) fire
+ * `TestStarting` to indicate they are about to invoke one
+ * of their tests, `TestSucceeded` to indicate a test returned normally,
+ * and `TestFailed` to indicate a test completed abruptly with an exception.
+ * Although the execution of a `Suite` subclass's tests will likely be a common event
  * reported via the
- * <code>TestStarting</code>, <code>TestSucceeded</code>, and <code>TestFailed</code> events, because
+ * `TestStarting`, `TestSucceeded`, and `TestFailed` events, because
  * of the abstract definition of &ldquo;test&rdquo; used by the
  * the event classes, these events are not limited to this use. Information about any conceptual test
- * may be reported via the <code>TestStarting</code>, <code>TestSucceeded</code>, and
- * <code>TestFailed</code> events.
+ * may be reported via the `TestStarting`, `TestSucceeded`, and
+ * `TestFailed` events.
  *
- * <p>
- * Likewise, the term <em>suite</em> as used in the <code>SuiteStarting</code>, <code>SuiteAborted</code>,
- * and <code>SuiteCompleted</code> event names
+ * Likewise, the term ''suite'' as used in the `SuiteStarting`, `SuiteAborted`,
+ * and `SuiteCompleted` event names
  * is defined abstractly to enable a wide range of suite implementations.
- * Object <a href="tools/Runner$.html"><code>Runner</code></a> fires <code>SuiteStarting</code> to indicate it is about to invoke
- * <code>run</code> on a
- * <code>Suite</code>, <code>SuiteCompleted</code> to indicate a <code>Suite</code>'s
- * <code>run</code> method returned normally,
- * and <code>SuiteAborted</code> to indicate a <code>Suite</code>'s <code>run</code>
+ * Object <a href="tools/Runner$.html">`Runner`</a> fires `SuiteStarting` to indicate it is about to invoke
+ * `run` on a
+ * `Suite`, `SuiteCompleted` to indicate a `Suite`'s
+ * `run` method returned normally,
+ * and `SuiteAborted` to indicate a `Suite`'s `run`
  * method completed abruptly with an exception.
- * Similarly, class <code>Suite</code> fires <code>SuiteStarting</code> to indicate it is about to invoke
- * <code>run</code> on a
- * nested <code>Suite</code>, <code>SuiteCompleted</code> to indicate a nested <code>Suite</code>'s
- * <code>run</code> method returned normally,
- * and <code>SuiteAborted</code> to indicate a nested <code>Suite</code>'s <code>run</code>
+ * Similarly, class `Suite` fires `SuiteStarting` to indicate it is about to invoke
+ * `run` on a
+ * nested `Suite`, `SuiteCompleted` to indicate a nested `Suite`'s
+ * `run` method returned normally,
+ * and `SuiteAborted` to indicate a nested `Suite`'s `run`
  * method completed abruptly with an exception.
- * Although the execution of a <code>Suite</code>'s <code>run</code> method will likely be a
+ * Although the execution of a `Suite`'s `run` method will likely be a
  * common event reported via the
- * <code>SuiteStarting</code>, <code>SuiteAborted</code>, and <code>SuiteCompleted</code> events, because
+ * `SuiteStarting`, `SuiteAborted`, and `SuiteCompleted` events, because
  * of the abstract definition of "suite" used by the
  * event classes, these events are not limited to this use. Information about any conceptual suite
- * may be reported via the <code>SuiteStarting</code>, <code>SuiteAborted</code>, and
- * <code>SuiteCompleted</code> events.
+ * may be reported via the `SuiteStarting`, `SuiteAborted`, and
+ * `SuiteCompleted` events.
  *
- * <h2>Extensibility</h2>
+ * ==Extensibility==
  *
- * <p>
- * You can create classes that extend <code>Reporter</code> to report test results in custom ways, and to
+ * You can create classes that extend `Reporter` to report test results in custom ways, and to
  * report custom information passed as an event "payload."
- * <code>Reporter</code> classes can handle events in any manner, including doing nothing.
- * </p>
+ * `Reporter` classes can handle events in any manner, including doing nothing.
+ * 
  *
  * @author Bill Venners
  */

@@ -19,16 +19,15 @@ import org.scalactic.Requirements._
 import org.scalactic.exceptions.NullArgumentException
 
 /**
- * A <code>Suite</code> class that takes zero to many <code>Suite</code>s,
- * which will be returned from its <code>nestedSuites</code> method and
- * executed in &ldquo;stepwise&rdquo; fashion by its <code>runNestedSuites</code> method.
+ * A `Suite` class that takes zero to many `Suite`s,
+ * which will be returned from its `nestedSuites` method and
+ * executed in &ldquo;stepwise&rdquo; fashion by its `runNestedSuites` method.
  *
- * <p>
  * For example, you can define a suite that always executes a list of
  * nested suites like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class StepsSuite extends Stepwise(
  *   new Step1Suite,
  *   new Step2Suite,
@@ -36,28 +35,26 @@ import org.scalactic.exceptions.NullArgumentException
  *   new Step4Suite,
  *   new Step5Suite
  * )
- * </pre>
+ * }}}
  *
- * <p>
- * When <code>StepsSuite</code> is executed, regardless of whether a <a href="Distributor.html"><code>Distributor</code></a>
+ * When `StepsSuite` is executed, regardless of whether a <a href="Distributor.html">`Distributor`</a>
  * is passed, it will execute its
- * nested suites sequentially in the passed order: <code>Step1Suite</code>, <code>Step2Suite</code>,
- * <code>Step3Suite</code>, <code>Step4Suite</code>, and <code>Step5Suite</code>.
- * </p>
- *
- * <p>
- * The difference between <code>Stepwise</code> and <a href="Sequential.html"><code>Sequential</code></a>
- * is that although <code>Stepwise</code> executes its own nested suites sequentially, it passes
- * whatever distributor was passed to it to those nested suites. Thus the nested suites could run their own nested
- * suites and tests in parallel if that distributor is defined. By contrast, <code>Sequential</code> always
- * passes <code>None</code> for the distributor to the nested suites, so any and every test and nested suite 
- * contained within the nested suites passed to the <code>Sequential</code> construtor will be executed sequentially.
- * </p>
+ * nested suites sequentially in the passed order: `Step1Suite`, `Step2Suite`,
+ * `Step3Suite`, `Step4Suite`, and `Step5Suite`.
  * 
- * @param suitesToNest a sequence of <code>Suite</code>s to nest.
  *
- * @throws NullArgumentException if <code>suitesToNest</code>, or any suite
- * it contains, is <code>null</code>.
+ * The difference between `Stepwise` and <a href="Sequential.html">`Sequential`</a>
+ * is that although `Stepwise` executes its own nested suites sequentially, it passes
+ * whatever distributor was passed to it to those nested suites. Thus the nested suites could run their own nested
+ * suites and tests in parallel if that distributor is defined. By contrast, `Sequential` always
+ * passes `None` for the distributor to the nested suites, so any and every test and nested suite 
+ * contained within the nested suites passed to the `Sequential` construtor will be executed sequentially.
+ * 
+ * 
+ * @param suitesToNest a sequence of `Suite`s to nest.
+ *
+ * @throws NullArgumentException if `suitesToNest`, or any suite
+ * it contains, is `null`.
  *
  * @author Bill Venners
  */
@@ -71,7 +68,7 @@ class Stepwise(suitesToNest: Suite*) extends Suite with StepwiseNestedSuiteExecu
   }
 
   /**
-   * Returns an immutable <code>IndexedSeq</code> containing the suites passed to the constructor in
+   * Returns an immutable `IndexedSeq` containing the suites passed to the constructor in
    * the order they were passed.
    */
   override val nestedSuites: collection.immutable.IndexedSeq[Suite] = Vector.empty ++ suitesToNest
@@ -79,7 +76,7 @@ class Stepwise(suitesToNest: Suite*) extends Suite with StepwiseNestedSuiteExecu
   /**
    * Returns a user friendly string for this suite, composed of the
    * simple name of the class (possibly simplified further by removing dollar signs if added by the Scala interpeter) and, if this suite
-   * contains nested suites, the result of invoking <code>toString</code> on each
+   * contains nested suites, the result of invoking `toString` on each
    * of the nested suites, separated by commas and surrounded by parentheses.
    *
    * @return a user-friendly string for this suite
@@ -88,21 +85,20 @@ class Stepwise(suitesToNest: Suite*) extends Suite with StepwiseNestedSuiteExecu
 }
 
 /**
- * Companion object to class <code>Stepwise</code> that offers an <code>apply</code> factory method
- * for creating a <code>Stepwise</code> instance.
+ * Companion object to class `Stepwise` that offers an `apply` factory method
+ * for creating a `Stepwise` instance.
  *
- * <p>
  * One use case for this object is to run multiple specification-style suites in the Scala interpreter, like this:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; Stepwise(new MyFirstSuite, new MyNextSuite).execute()
- * </pre>
+ * }}}
  */
 object Stepwise {
 
   /**
-   * Factory method for creating a <code>Stepwise</code> instance.
+   * Factory method for creating a `Stepwise` instance.
    */
   def apply(suitesToNest: Suite*): Stepwise = new Stepwise(suitesToNest: _*)
 }

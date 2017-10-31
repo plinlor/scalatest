@@ -18,7 +18,7 @@ package org.scalatest.words
 import scala.reflect.ClassTag
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="../Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -28,10 +28,10 @@ final class ResultOfOfTypeInvocation[T](implicit ev: ClassTag[T]) {
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * book should have (length (220) (of [Book]))
    *                                 ^
-   * </pre>
+   * }}}
    */
   override def toString: String = "of [" + ev.runtimeClass.getName + "]"
 }

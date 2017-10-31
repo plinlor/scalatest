@@ -16,20 +16,20 @@
 package org.scalatest
 
 /**
- * Subtrait of <code>Reporter</code> that contains a <code>dispose</code> method for
+ * Subtrait of `Reporter` that contains a `dispose` method for
  * releasing any finite, non-memory resources, such as file handles, held by the
- * <code>Reporter</code>. <a href="tools/Runner$.html"><code>Runner</code></a> will invoke <code>dispose</code> on
- * any <code>ResourcefulReporter</code> when it no longer needs the <code>Reporter</code>.
+ * `Reporter`. <a href="tools/Runner$.html">`Runner`</a> will invoke `dispose` on
+ * any `ResourcefulReporter` when it no longer needs the `Reporter`.
  */
 trait ResourcefulReporter extends Reporter {
 
   /**
    * Release any finite, non-memory resources, such as file handles, held by this
-   * <code>Reporter</code>. Clients should call this method when they no longer need
-   * the <code>Reporter</code>, before releasing the last reference to the <code>Reporter</code>.
-   * After this method is invoked, the <code>Reporter</code> may be defunct, and therefore not
-   * usable anymore. If the <code>Reporter</code> holds no resources, it may do nothing when
-   * this method is invoked, however, in that case, it probably won't implement <code>ResourcefulReporter</code>.
+   * `Reporter`. Clients should call this method when they no longer need
+   * the `Reporter`, before releasing the last reference to the `Reporter`.
+   * After this method is invoked, the `Reporter` may be defunct, and therefore not
+   * usable anymore. If the `Reporter` holds no resources, it may do nothing when
+   * this method is invoked, however, in that case, it probably won't implement `ResourcefulReporter`.
    */
   def dispose()
 }

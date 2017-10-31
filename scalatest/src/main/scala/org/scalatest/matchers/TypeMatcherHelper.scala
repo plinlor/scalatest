@@ -23,20 +23,19 @@ import org.scalatest.words.{ResultOfAnTypeInvocation, ResultOfATypeInvocation}
 //import org.scalatest.words.{FactResultOfAnTypeInvocation, FactResultOfATypeInvocation}
 
 /**
- * <code>TypeMatcherHelper</code> is called by <code>TypeMatcherMacro</code> to support <code>a [Type]</code> and <code>an [Type]</code> syntax.
+ * `TypeMatcherHelper` is called by `TypeMatcherMacro` to support `a [Type]` and `an [Type]` syntax.
  *
- * <p>
  * This object needs to be public so that the macro-generated code can be compiled. It is expected that ScalaTest
- * users would ever need to use <code>TypeMatcherHelper</code> directly.
- * </p>
+ * users would ever need to use `TypeMatcherHelper` directly.
+ * 
  */
 object TypeMatcherHelper {
 
   /**
-   * Create a type matcher for the given <code>ResultOfATypeInvocation</code>.
+   * Create a type matcher for the given `ResultOfATypeInvocation`.
    *
-   * @param aType an instance of <code>ResultOfATypeInvocation</code>
-   * @return a type <code>Matcher</code>
+   * @param aType an instance of `ResultOfATypeInvocation`
+   * @return a type `Matcher`
    */
   def aTypeMatcher(aType: ResultOfATypeInvocation[_]): Matcher[Any] =
     new Matcher[Any] {
@@ -54,10 +53,10 @@ object TypeMatcherHelper {
     }
 
   /**
-   * Create a type matcher for the given <code>ResultOfAnTypeInvocation</code>.
+   * Create a type matcher for the given `ResultOfAnTypeInvocation`.
    *
-   * @param anType an instance of <code>ResultOfAnTypeInvocation</code>
-   * @return a type <code>Matcher</code>
+   * @param anType an instance of `ResultOfAnTypeInvocation`
+   * @return a type `Matcher`
    */
   def anTypeMatcher(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] =
     new Matcher[Any] {
@@ -75,10 +74,10 @@ object TypeMatcherHelper {
     }
 
   /**
-   * Create a negated type matcher for the given <code>ResultOfATypeInvocation</code>.
+   * Create a negated type matcher for the given `ResultOfATypeInvocation`.
    *
-   * @param aType an instance of <code>ResultOfATypeInvocation</code>
-   * @return a negated type <code>Matcher</code>
+   * @param aType an instance of `ResultOfATypeInvocation`
+   * @return a negated type `Matcher`
    */
   def notATypeMatcher(aType: ResultOfATypeInvocation[_]): Matcher[Any] =
     new Matcher[Any] {
@@ -96,10 +95,10 @@ object TypeMatcherHelper {
     }
 
   /**
-   * Create a negated type matcher for the given <code>ResultOfAnTypeInvocation</code>.
+   * Create a negated type matcher for the given `ResultOfAnTypeInvocation`.
    *
-   * @param anType an instance of <code>ResultOfAnTypeInvocation</code>
-   * @return a negated type <code>Matcher</code>
+   * @param anType an instance of `ResultOfAnTypeInvocation`
+   * @return a negated type `Matcher`
    */
   def notAnTypeMatcher(anType: ResultOfAnTypeInvocation[_]): Matcher[Any] =
     new Matcher[Any] {
@@ -117,11 +116,11 @@ object TypeMatcherHelper {
     }
 
   /**
-   * Check if the given <code>left</code> is an instance of the type as described in the given <code>ResultOfATypeInvocation</code>.
-   * A <code>TestFailedException</code> will be thrown if <code>left</code> is not an instance of the type given by <code>ResultOfATypeInvocation</code>.
+   * Check if the given `left` is an instance of the type as described in the given `ResultOfATypeInvocation`.
+   * A `TestFailedException` will be thrown if `left` is not an instance of the type given by `ResultOfATypeInvocation`.
    *
    * @param left the left-hand-side (LHS) to be checked for the type
-   * @param aType an instance of <code>ResultOfATypeInvocation</code>
+   * @param aType an instance of `ResultOfATypeInvocation`
    */
   def assertAType(left: Any, aType: ResultOfATypeInvocation[_], prettifier: Prettifier, pos: source.Position): org.scalatest.Assertion = {
     val clazz = aType.clazz
@@ -133,11 +132,11 @@ object TypeMatcherHelper {
   }
 
   /**
-   * Check if the given <code>left</code> is an instance of the type as described in the given <code>ResultOfATypeInvocation</code>.
-   * A <code>Fact.No</code> will be returned if <code>left</code> is not an instance of the type given by <code>ResultOfATypeInvocation</code>.
+   * Check if the given `left` is an instance of the type as described in the given `ResultOfATypeInvocation`.
+   * A `Fact.No` will be returned if `left` is not an instance of the type given by `ResultOfATypeInvocation`.
    *
    * @param left the left-hand-side (LHS) to be checked for the type
-   * @param aType an instance of <code>ResultOfATypeInvocation</code>
+   * @param aType an instance of `ResultOfATypeInvocation`
    */
   /*private[scalatest] def expectAType(left: Any, aType: ResultOfATypeInvocation[_], prettifier: Prettifier): org.scalatest.Fact = {
     val clazz = aType.clazz

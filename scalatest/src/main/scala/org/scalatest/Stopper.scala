@@ -18,11 +18,10 @@ package org.scalatest
 /**
  * Trait whose instances can accept a stop request and indicate whether a stop has already been requested.
  *
- * <p>
  * This is passed in
- * to the <code>run</code> method of <a href="Suite.html"><code>Suite</code></a>, so that running suites of tests can be
+ * to the `run` method of <a href="Suite.html">`Suite`</a>, so that running suites of tests can be
  * requested to stop early.
- * </p>
+ * 
  *
  * @author Bill Venners
  */
@@ -31,13 +30,12 @@ trait Stopper {
   /**
    * Indicates whether a stop has been requested.
    *
-   * <p>
    * Call this method
-   * to determine whether a running test should stop. The <code>run</code> method of any <code>Suite</code>, or
-   * code invoked by <code>run</code>, should periodically check the
-   * stop requested function. If <code>true</code>,
-   * the <code>run</code> method should interrupt its work and simply return.
-   * </p>
+   * to determine whether a running test should stop. The `run` method of any `Suite`, or
+   * code invoked by `run`, should periodically check the
+   * stop requested function. If `true`,
+   * the `run` method should interrupt its work and simply return.
+   * 
    *
    * @return true if a stop has been requested
    */
@@ -46,19 +44,18 @@ trait Stopper {
   /**
    * Request that the current run stop.
    *
-   * <p>
    * Invoking this method is like pulling the stop-request chord in a streetcar. It requests a stop, but in no
    * way forces a stop. The running suite of tests decides when and how (and if) to respond to a stop request.
-   * ScalaTest's style traits periodically check the <code>stopRequested</code> method of the passed <code>Stopper</code>,
+   * ScalaTest's style traits periodically check the `stopRequested` method of the passed `Stopper`,
    * and if a stop has been requested, terminates gracefully.
-   * </p>
+   * 
    */
   def requestStop()
 }
 
 /**
- * Companion object to Stopper that holds a factory method that produces a new <code>Stopper</code> whose
- * <code>stopRequested</code> method returns false until after its <code>requestStop</code> has been
+ * Companion object to Stopper that holds a factory method that produces a new `Stopper` whose
+ * `stopRequested` method returns false until after its `requestStop` has been
  * invoked.
  */
 object Stopper {
@@ -72,13 +69,12 @@ object Stopper {
   }
 
   /**
-   * Factory method that produces a new <code>Stopper</code> whose
-   * <code>stopRequested</code> method returns false until after its <code>requestStop</code> has been
+   * Factory method that produces a new `Stopper` whose
+   * `stopRequested` method returns false until after its `requestStop` has been
    * invoked.
    *
-   * <p>
-   * The <code>Stopper</code> returned by this method can be safely used by multiple threads concurrently.
-   * </p>
+   * The `Stopper` returned by this method can be safely used by multiple threads concurrently.
+   * 
    *
    * @return a new default stopper
    */

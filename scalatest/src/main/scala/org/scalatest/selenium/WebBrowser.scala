@@ -54,11 +54,11 @@ import org.scalactic.source
 /**
  * Trait that provides a domain specific language (DSL) for writing browser-based tests using <a href="http://seleniumhq.org">Selenium</a>.  
  *
- * To use ScalaTest's Selenium DSL, mix trait <code>WebBrowser</code> into your test class. This trait provides the DSL in its
- * entirety except for one missing piece: an implicit <code>org.openqa.selenium.WebDriver</code>. One way to provide the missing
+ * To use ScalaTest's Selenium DSL, mix trait `WebBrowser` into your test class. This trait provides the DSL in its
+ * entirety except for one missing piece: an implicit `org.openqa.selenium.WebDriver`. One way to provide the missing
  * implicit driver is to declare one as a member of your test class, like this:
  * 
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest._
  * import selenium._
  * import org.openqa.selenium._
@@ -75,16 +75,15 @@ import org.scalactic.source
  *     pageTitle should be ("Awesome Blog")
  *   }
  * }
- * </pre>
+ * }}}
  * 
- * <p>
- * For convenience, however, ScalaTest provides a <code>WebBrowser</code> subtrait containing an implicit <code>WebDriver</code> for each
+ * For convenience, however, ScalaTest provides a `WebBrowser` subtrait containing an implicit `WebDriver` for each
  * driver provided by Selenium. 
- * Thus a simpler way to use the <code>HtmlUnit</code> driver, for example, is to extend
- * ScalaTest's <a href="HtmlUnit.html"><code>HtmlUnit</code></a> trait, like this:
- * </p>
+ * Thus a simpler way to use the `HtmlUnit` driver, for example, is to extend
+ * ScalaTest's <a href="HtmlUnit.html">`HtmlUnit`</a> trait, like this:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * import org.scalatest._
  * import selenium._
  *
@@ -97,20 +96,19 @@ import org.scalactic.source
  *     pageTitle should be ("Awesome Blog")
  *   }
  * }
- * </pre>
+ * }}}
  * 
- * <p>
  * The web driver traits provided by ScalaTest are:
- * </p>
+ * 
  * 
  * <table style="border-collapse: collapse; border: 1px solid black">
- * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Driver</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong><code>WebBrowser</code> subtrait</strong></th></tr>
+ * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Driver'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''`WebBrowser` subtrait'''</th></tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
  * Google Chrome
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <a href="Chrome.html"><code>Chrome</code></a>
+ * <a href="Chrome.html">`Chrome`</a>
  * </td>
  * </tr>
  * <tr>
@@ -118,7 +116,7 @@ import org.scalactic.source
  * Mozilla Firefox
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <a href="Firefox.html"><code>Firefox</code></a>
+ * <a href="Firefox.html">`Firefox`</a>
  * </td>
  * </tr>
  * <tr>
@@ -126,7 +124,7 @@ import org.scalactic.source
  * HtmlUnit
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <a href="HtmlUnit.html"><code>HtmlUnit</code></a>
+ * <a href="HtmlUnit.html">`HtmlUnit`</a>
  * </td>
  * </tr>
  * <tr>
@@ -134,7 +132,7 @@ import org.scalactic.source
  * Microsoft Internet Explorer
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <a href="InternetExplorer.html"><code>InternetExplorer</code></a>
+ * <a href="InternetExplorer.html">`InternetExplorer`</a>
  * </td>
  * </tr>
  * <tr>
@@ -142,759 +140,703 @@ import org.scalactic.source
  * Apple Safari
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- * <a href="Safari.html"><code>Safari</code></a>
+ * <a href="Safari.html">`Safari`</a>
  * </td>
  * </tr>
  * </table>
  *
- * <h2>Navigation</h2>
+ * ==Navigation==
  *
- * <p>
  * You can ask the browser to retrieve a page (go to a URL) like this:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * go to "http://www.artima.com"
- * </pre>
+ * }}}
  * 
- * <p>
- * Note: If you are using the <em>page object pattern</em>, you can also go to a page using the <code>Page</code> instance, as
+ * Note: If you are using the ''page object pattern'', you can also go to a page using the `Page` instance, as
  * illustrated in the section on <a href="#pageObjects">page objects</a> below.
- * </p>
- *
- * <p>
- * Once you have retrieved a page, you can fill in and submit forms, query for the values of page elements, and make assertions.  
- * In the following example, selenium will go to <code>http://www.google.com</code>, fill in the text box with
- * <code>Cheese!</code>, press the submit button, and wait for result returned from an AJAX call:
- * </p>
  * 
- * <pre class="stHighlight">
+ *
+ * Once you have retrieved a page, you can fill in and submit forms, query for the values of page elements, and make assertions.  
+ * In the following example, selenium will go to `http://www.google.com`, fill in the text box with
+ * `Cheese!`, press the submit button, and wait for result returned from an AJAX call:
+ * 
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * go to "http://www.google.com"
  * click on "q"
  * enter("Cheese!")
  * submit()
  * // Google's search is rendered dynamically with JavaScript.
  * eventually { pageTitle should be ("Cheese! - Google Search") }
- * </pre>
+ * }}}
  * 
- * <p>
- * In the above example, the <code>"q"</code> used in &ldquo;<code>click on "q"</code>&rdquo; 
+ * In the above example, the `"q"` used in &ldquo;`click on "q"`&rdquo; 
  * can be either the id or name of an element. ScalaTest's Selenium DSL will try to lookup by id first. If it cannot find 
- * any element with an id equal to <code>&quot;q&quot;</code>, it will then try lookup by name <code>&quot;q&quot;</code>.
- * </p>
+ * any element with an id equal to `&quot;q&quot;`, it will then try lookup by name `&quot;q&quot;`.
  * 
- * <p>
+ * 
  * Alternatively, you can be more specific:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * click on id("q")   // to lookup by id "q" 
  * click on name("q") // to lookup by name "q" 
- * </pre>
+ * }}}
  * 
- * <p>
- * In addition to <code>id</code> and <code>name</code>, you can use the following approaches to lookup elements, just as you can do with
- * Selenium's <code>org.openqa.selenium.By</code> class:
- * </p>
+ * In addition to `id` and `name`, you can use the following approaches to lookup elements, just as you can do with
+ * Selenium's `org.openqa.selenium.By` class:
+ * 
  * 
  * <ul>
- *   <li><code>xpath</code></li>
- *   <li><code>className</code></li>
- *   <li><code>cssSelector</code></li>
- *   <li><code>linkText</code></li>
- *   <li><code>partialLinkText</code></li>
- *   <li><code>tagName</code></li>
+ *   <li>`xpath`</li>
+ *   <li>`className`</li>
+ *   <li>`cssSelector`</li>
+ *   <li>`linkText`</li>
+ *   <li>`partialLinkText`</li>
+ *   <li>`tagName`</li>
  * </ul>
  * 
- * <p>
  * For example, you can select by link text with:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * click on linkText("click here!")
- * </pre>
+ * }}}
  * 
- * <p>
- * If an element is not found via any form of lookup, evaluation will complete abruptly with a <code>TestFailedException</code>.
- * <p>
+ * If an element is not found via any form of lookup, evaluation will complete abruptly with a `TestFailedException`.
  *
- * <h2>Getting and setting input element values</h2>
+ * ==Getting and setting input element values==
  * 
- * <p>
  * ScalaTest's Selenium DSL provides a clear, simple syntax for accessing and updating the values of input elements such as
  * text fields, radio buttons, checkboxes, selection lists, and the input types introduced in HTML5. If a requested element is not found, or if it is found but is
  * not of the requested type, an exception will immediately result causing the test to fail.
- * <p>
  *
- * <p>
- * The most common way to access field value is through the <code>value</code> property, which is supported by the following
+ * The most common way to access field value is through the `value` property, which is supported by the following
  * input types:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
  * <tr>
  *   <th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">
- *     <strong>Tag Name</strong>
+ *     '''Tag Name'''
  *   </th>
  *   <th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">
- *     <strong>Input Type</strong>
+ *     '''Input Type'''
  *   </th>
  *   <th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">
- *     <strong>Lookup Method</strong>
+ *     '''Lookup Method'''
  *   </th>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>text</code>
+ *     `text`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>textField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>textarea</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>-</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>textArea</code>
+ *     `textField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `textarea`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>password</code>
+ *     `-`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>pwdField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>email</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>emailField</code>
+ *     `textArea`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>color</code>
+ *     `password`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>colorField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>date</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>dateField</code>
+ *     `pwdField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>datetime</code>
+ *     `email`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>dateTimeField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>datetime-local</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>dateTimeLocalField</code>
+ *     `emailField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>month</code>
+ *     `color`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>monthField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>number</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>numberField</code>
+ *     `colorField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>range</code>
+ *     `date`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>rangeField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>search</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>searchField</code>
+ *     `dateField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>tel</code>
+ *     `datetime`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>telField</code>
- *   </td>
- * </tr>
- * <tr>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>time</code>
- *   </td>
- *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>timeField</code>
+ *     `dateTimeField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>url</code>
+ *     `datetime-local`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>urlField</code>
+ *     `dateTimeLocalField`
  *   </td>
  * </tr>
  * <tr>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>input</code>
+ *     `input`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>week</code>
+ *     `month`
  *   </td>
  *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
- *     <code>weekField</code>
+ *     `monthField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `number`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `numberField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `range`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `rangeField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `search`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `searchField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `tel`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `telField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `time`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `timeField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `url`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `urlField`
+ *   </td>
+ * </tr>
+ * <tr>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `input`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `week`
+ *   </td>
+ *   <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+ *     `weekField`
  *   </td>
  * </tr>
  * </table>
  *
- * <p>
- * You can change a input field's value by assigning it via the <code>=</code> operator, like this:
- * </p>
+ * You can change a input field's value by assigning it via the `=` operator, like this:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * textField("q").value = "Cheese!"
- * </pre>
+ * }}}
  * 
- * <p>
- * And you can access a input field's value by simply invoking <code>value</code> on it:
- * </p>
+ * And you can access a input field's value by simply invoking `value` on it:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * textField("q").value should be ("Cheese!")
- * </pre>
+ * }}}
  * 
- * <p>
- * If the text field is empty, <code>value</code> will return an empty string (<code>""</code>).
- * </p>
+ * If the text field is empty, `value` will return an empty string (`""`).
  * 
- * <p>
- * You can use the same syntax with other type of input fields by replacing <code>textField</code> with <code>Lookup Method</code> listed in table above,
+ * 
+ * You can use the same syntax with other type of input fields by replacing `textField` with `Lookup Method` listed in table above,
  * for example to use text area:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * textArea("body").value = "I saw something cool today!"
  * textArea("body").value should be ("I saw something cool today!")
- * </pre>
+ * }}}
  * 
- * <p>
  * or with a password field:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * pwdField("secret").value = "Don't tell anybody!"
  * pwdField("secret").value should be ("Don't tell anybody!")
- * </pre>
+ * }}}
  *
- * <h3>Alternate Way for Data Entry</h3>
+ * ===Alternate Way for Data Entry===
  * 
- * <p>
- * An alternate way to enter data into a input fields is to use <code>enter</code> or <code>pressKeys</code>.
- * Although both of <code>enter</code> and <code>pressKeys</code> send characters to the active element, <code>pressKeys</code> can be used on any kind of
- * element, whereas <code>enter</code> can only be used on text entry fields, which include:
- * </p>
+ * An alternate way to enter data into a input fields is to use `enter` or `pressKeys`.
+ * Although both of `enter` and `pressKeys` send characters to the active element, `pressKeys` can be used on any kind of
+ * element, whereas `enter` can only be used on text entry fields, which include:
+ * 
  *
  * <ul>
- *   <li><code>textField</code></li>
- *   <li><code>textArea</code></li>
- *   <li><code>pwdField</code></li>
- *   <li><code>emailField</code></li>
- *   <li><code>searchField</code></li>
- *   <li><code>telField</code></li>
- *   <li><code>urlField</code></li>
+ *   <li>`textField`</li>
+ *   <li>`textArea`</li>
+ *   <li>`pwdField`</li>
+ *   <li>`emailField`</li>
+ *   <li>`searchField`</li>
+ *   <li>`telField`</li>
+ *   <li>`urlField`</li>
  * </ul>
  *
- * <p>
- * Another difference is that <code>enter</code> will clear the text field or area before sending the characters,
- * effectively replacing any currently existing text with the new text passed to <code>enter</code>. By contrast,
- * <code>pressKeys</code> does not do any clearing&#8212;it just appends more characters to any existing text.
- * You can backup with <code>pressKeys</code>, however, by sending explicit backspace characters, <code>"&#92;u0008"</code>.
- * </p>
+ * Another difference is that `enter` will clear the text field or area before sending the characters,
+ * effectively replacing any currently existing text with the new text passed to `enter`. By contrast,
+ * `pressKeys` does not do any clearing&#8212;it just appends more characters to any existing text.
+ * You can backup with `pressKeys`, however, by sending explicit backspace characters, `"&#92;u0008"`.
  * 
- * <p>
+ * 
  * To use these commands, you must first click on the input field you are interested in
  * to give it the focus. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * click on "q"
  * enter("Cheese!")
- * </pre>
+ * }}}
  * 
- * <p>
- * Here's a (contrived) example of using <code>pressKeys</code> with backspace to fix a typo:
- * </p>
+ * Here's a (contrived) example of using `pressKeys` with backspace to fix a typo:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * click on "q"              // q is the name or id of a text field or text area
  * enter("Cheesey!")         // Oops, meant to say Cheese!
  * pressKeys("&#92;u0008&#92;u0008") // Send two backspaces; now the value is Cheese
  * pressKeys("!")            // Send the missing exclamation point; now the value is Cheese!
- * </pre>
+ * }}}
  * 
- * <h3>Radio buttons</h3>
+ * ===Radio buttons===
  * 
- * <p>
  * Radio buttons work together in groups. For example, you could have a group of radio buttons, like this:
- * </p>
  * 
- * <pre>
+ * 
+ * {{{
  * &lt;input type="radio" id="opt1" name="group1" value="Option 1"&gt; Option 1&lt;/input&gt;
  * &lt;input type="radio" id="opt2" name="group1" value="Option 2"&gt; Option 2&lt;/input&gt;
  * &lt;input type="radio" id="opt3" name="group1" value="Option 3"&gt; Option 3&lt;/input&gt;
- * </pre>
+ * }}}
  * 
- * <p>
  * You can select an option in either of two ways:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * radioButtonGroup("group1").value = "Option 2"
  * radioButtonGroup("group1").selection = Some("Option 2")
- * </pre>
+ * }}}
  *
- * <p>
  * Likewise, you can read the currently selected value of a group of radio buttons in two ways:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * radioButtonGroup("group1").value should be ("Option 2")
  * radioButtonGroup("group1").selection should be (Some("Option 2"))
- * </pre>
+ * }}}
  * 
- * <p>
- * If the radio button has no selection at all, <code>selection</code> will return <code>None</code> whereas <code>value</code>
- * will throw a <code>TestFailedException</code>. By using <code>value</code>, you are indicating you expect a selection, and if there
+ * If the radio button has no selection at all, `selection` will return `None` whereas `value`
+ * will throw a `TestFailedException`. By using `value`, you are indicating you expect a selection, and if there
  * isn't a selection that should result in a failed test.
- * </p>
  * 
- * <p>
- * If you would like to work with <code>RadioButton</code> element directly, you can select it by calling <code>radioButton</code>:
- * </p>
  * 
- * <pre class="stHighlight">
+ * If you would like to work with `RadioButton` element directly, you can select it by calling `radioButton`:
+ * 
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * click on radioButton("opt1")
- * </pre>
+ * }}}
  * 
- * <p>
- * you can check if an option is selected by calling <code>isSelected</code>:
- * </p>
+ * you can check if an option is selected by calling `isSelected`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * radioButton("opt1").isSelected should be (true)
- * </pre>
+ * }}}
  * 
- * <p>
- * to get the value of radio button, you can call <code>value</code>:
- * </p>
+ * to get the value of radio button, you can call `value`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * radioButton("opt1").value should be ("Option 1")
- * </pre>
+ * }}}
  * 
- * <h3>Checkboxes</h3>
+ * ===Checkboxes===
  * 
- * <p>
  * A checkbox in one of two states: selected or cleared. Here's how you select a checkbox:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * checkbox("cbx1").select()
- * </pre>
+ * }}}
  * 
- * <p>
  * And here's how you'd clear one:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * checkbox("cbx1").clear()
- * </pre>
+ * }}}
  * 
- * <p>
- * You can access the current state of a checkbox with <code>isSelected</code>:
- * </p>
+ * You can access the current state of a checkbox with `isSelected`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * checkbox("cbx1").isSelected should be (true)
- * </pre>
+ * }}}
  * 
- * <h3>Single-selection dropdown lists</h3>
+ * ===Single-selection dropdown lists===
  * 
- * <p>
  * Given the following single-selection dropdown list:
- * </p>
  * 
- * <pre>
+ * 
+ * {{{
  * &lt;select id="select1"&gt;
  *  &lt;option value="option1"&gt;Option 1&lt;/option&gt;
  *  &lt;option value="option2"&gt;Option 2&lt;/option&gt;
  *  &lt;option value="option3"&gt;Option 3&lt;/option&gt;
  * &lt;/select&gt;
- * </pre>
+ * }}}
  * 
- * <p>
- * You could select <code>Option 2</code> in either of two ways:
- * </p>
+ * You could select `Option 2` in either of two ways:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * singleSel("select1").value = "option2"
  * singleSel("select1").selection = Some("option2")
- * </pre>
+ * }}}
  * 
- * <p>
- * To clear the selection, either invoke <code>clear</code> or set <code>selection</code> to <code>None</code>:
- * </p>
+ * To clear the selection, either invoke `clear` or set `selection` to `None`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * singleSel("select1").clear()
  * singleSel("select1").selection = None
- * </pre>
+ * }}}
  * 
- * <p>
  * You can read the currently selected value of a single-selection list in the same manner as radio buttons:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * singleSel("select1").value should be ("option2")
  * singleSel("select1").selection should be (Some("option2"))
- * </pre>
+ * }}}
  * 
- * <p>
- * If the single-selection list has no selection at all, <code>selection</code> will return <code>None</code> whereas <code>value</code>
- * will throw a <code>TestFailedException</code>. By using <code>value</code>, you are indicating you expect a selection, and if there
+ * If the single-selection list has no selection at all, `selection` will return `None` whereas `value`
+ * will throw a `TestFailedException`. By using `value`, you are indicating you expect a selection, and if there
  * isn't a selection that should result in a failed test.
- * </p>
  * 
- * <h3>Multiple-selection lists</h3>
  * 
- * <p>
+ * ===Multiple-selection lists===
+ * 
  * Given the following multiple-selection list:
- * </p>
  * 
- * <pre>
+ * 
+ * {{{
  * &lt;select name="select2" multiple="multiple"&gt;
  *  &lt;option value="option4"&gt;Option 4&lt;/option&gt;
  *  &lt;option value="option5"&gt;Option 5&lt;/option&gt;
  *  &lt;option value="option6"&gt;Option 6&lt;/option&gt;
  * &lt;/select&gt;
- * </pre>
+ * }}}
  * 
- * <p>
- * You could select <code>Option 5</code> and <code>Option 6</code> like this:
- * </p>
+ * You could select `Option 5` and `Option 6` like this:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * multiSel("select2").values = Seq("option5", "option6")
- * </pre>
+ * }}}
  * 
- * <p>
- * The previous command would essentially clear all selections first, then select <code>Option 5</code> and <code>Option 6</code>.
- * If instead you want to <em>not</em> clear any existing selection, just additionally select <code>Option 5</code> and <code>Option 6</code>,
- * you can use the <code>+=</code> operator, like this.
- * </p>
+ * The previous command would essentially clear all selections first, then select `Option 5` and `Option 6`.
+ * If instead you want to ''not'' clear any existing selection, just additionally select `Option 5` and `Option 6`,
+ * you can use the `+=` operator, like this.
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * multiSel("select2").values += "option5"
  * multiSel("select2").values += "option6"
- * </pre>
+ * }}}
  * 
- * <p>
- * To clear a specific option, pass its name to <code>clear</code>:
- * </p>
+ * To clear a specific option, pass its name to `clear`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * multiSel("select2").clear("option5")
- * </pre>
+ * }}}
  * 
- * <p>
- * To clear all selections, call <code>clearAll</code>:
- * </p>
+ * To clear all selections, call `clearAll`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * multiSel("select2").clearAll()
- * </pre>
+ * }}}
  * 
- * <p>
- * You can access the current selections with <code>values</code>, which returns an immutable <code>IndexedSeq[String]</code>:
- * </p>
+ * You can access the current selections with `values`, which returns an immutable `IndexedSeq[String]`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * multiSel("select2").values should have size 2
  * multiSel("select2").values(0) should be ("option5")
  * multiSel("select2").values(1) should be ("option6")
- * </pre>
+ * }}}
  * 
- * <h3>Clicking and submitting</h3>
+ * ===Clicking and submitting===
  * 
- * <p>
- * You can click on any element with &ldquo;<code>click on</code>&rdquo; as shown previously:
- * </p>
+ * You can click on any element with &ldquo;`click on`&rdquo; as shown previously:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * click on "aButton"
  * click on name("aTextField")
- * </pre>
+ * }}}
  * 
- * <p>
- * If the requested element is not found, <code>click on</code> will throw an exception, failing the test.
- * </p>
+ * If the requested element is not found, `click on` will throw an exception, failing the test.
  * 
- * <p>
+ * 
  * Clicking on a input element will give it the focus. If current focus is in on an input element within a form, you can submit the form by 
- * calling <code>submit</code>:
- * </p>
+ * calling `submit`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * submit()
- * </pre>
+ * }}}
  * 
- * <h2>Switching</h2>
+ * ==Switching==
  * 
- * <p>
  * You can switch to a popup alert bo using the following code:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * switch to alertBox
- * </pre>
+ * }}}
  * 
- * <p>
  * to switch to a frame, you could:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * switch to frame(0) // switch by index
  * switch to frame("name") // switch by name
- * </pre>
+ * }}}
  * 
- * <p>
  * If you have reference to a window handle (can be obtained from calling windowHandle/windowHandles), you can switch to a particular 
  * window by:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * switch to window(windowHandle)
- * </pre>
+ * }}}
  * 
- * <p>
  * You can also switch to active element and default content:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * switch to activeElement
  * switch to defaultContent
- * </pre>
+ * }}}
  * 
- * <h2>Navigation history</h2>
+ * ==Navigation history==
  * 
- * <p>
- * In real web browser, you can press the 'Back' button to go back to previous page.  To emulate that action in your test, you can call <code>goBack</code>:
- * </p>
+ * In real web browser, you can press the 'Back' button to go back to previous page.  To emulate that action in your test, you can call `goBack`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * goBack()
- * </pre>
+ * }}}
  * 
- * <p>
  * To emulate the 'Forward' button, you can call:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * goForward()
- * </pre>
+ * }}}
  * 
  * And to refresh or reload the current page, you can call:
  * 
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * reloadPage()
- * </pre>
+ * }}}
  * 
- * <h2>Cookies!</h2>
+ * ==Cookies!==
  * 
- * <p>To create a new cookie, you'll say:</p>
+ * <p>To create a new cookie, you'll say:
  * 
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * add cookie ("cookie_name", "cookie_value")
- * </pre>
+ * }}}
  * 
- * <p>
  * to read a cookie value, you do:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * cookie("cookie_name").value should be ("cookie_value") // If value is undefined, throws TFE right then and there. Never returns null.
- * </pre>
+ * }}}
  * 
- * <p>
  * In addition to the common use of name-value cookie, you can pass these extra fields when creating the cookie, available ways are:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * cookie(name: String, value: String)
  * cookie(name: String, value: String, path: String)
  * cookie(name: String, value: String, path: String, expiry: Date)
  * cookie(name: String, value: String, path: String, expiry: Date, domain: String)
  * cookie(name: String, value: String, path: String, expiry: Date, domain: String, secure: Boolean)
- * </pre>
+ * }}}
  * 
  * and to read those extra fields:
  * 
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * cookie("cookie_name").value   // Read cookie's value
  * cookie("cookie_name").path    // Read cookie's path
  * cookie("cookie_name").expiry  // Read cookie's expiry
  * cookie("cookie_name").domain  // Read cookie's domain
  * cookie("cookie_name").isSecure  // Read cookie's isSecure flag
- * </pre>
+ * }}}
  * 
- * <p>
  * In order to delete a cookie, you could use the following code: 
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * delete cookie "cookie_name"
- * </pre>
+ * }}}
  * 
- * <p>
  * or to delete all cookies in the same domain:-
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * delete all cookies
- * </pre>
+ * }}}
  * 
- * To get the underlying Selenium cookie, you can use <code>underlying</code>:
+ * To get the underlying Selenium cookie, you can use `underlying`:
  * 
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * cookie("cookie_name").underlying.validate()  // call the validate() method on underlying Selenium cookie
- * </pre>
+ * }}}
  * 
- * <h2>Other useful element properties</h2>
+ * ==Other useful element properties==
  * 
- * <p>
- * All element types (<code>textField</code>, <code>textArea</code>, <code>radioButton</code>, <code>checkbox</code>, <code>singleSel</code>, <code>multiSel</code>) 
+ * All element types (`textField`, `textArea`, `radioButton`, `checkbox`, `singleSel`, `multiSel`) 
  * support the following useful properties:
- * </p>
+ * 
  * 
  * <table style="border-collapse: collapse; border: 1px solid black">
- * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Method</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Description</strong></th></tr>
+ * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Method'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Description'''</th></tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>location</code>
+ * `location`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * The XY location of the top-left corner of this <code>Element</code>.
+ * The XY location of the top-left corner of this `Element`.
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>size</code>
+ * `size`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * The width/height size of this <code>Element</code>.
- * </td>
- * </tr>
- * <tr>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>isDisplayed</code>
- * </td>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * Indicates whether this <code>Element</code> is displayed.
+ * The width/height size of this `Element`.
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>isEnabled</code>
+ * `isDisplayed`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * Indicates whether this <code>Element</code> is enabled.
- * </td>
- * </tr>
- * <tr>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>isSelected</code>
- * </td>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * Indicates whether this <code>Element</code> is selected.
+ * Indicates whether this `Element` is displayed.
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>tagName</code>
+ * `isEnabled`
+ * </td>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * Indicates whether this `Element` is enabled.
+ * </td>
+ * </tr>
+ * <tr>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `isSelected`
+ * </td>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * Indicates whether this `Element` is selected.
+ * </td>
+ * </tr>
+ * <tr>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `tagName`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
  * The tag name of this element.
@@ -902,157 +844,143 @@ import org.scalactic.source
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>underlying</code>
+ * `underlying`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * The underlying <code>WebElement</code> wrapped by this <code>Element</code>.
- * </td>
- * </tr>
- * <tr>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>attribute(name: String)</code>
- * </td>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * The attribute value of the given attribute name of this element, wrapped in a <code>Some</code>, or <code>None</code> if no
- * such attribute exists on this <code>Element</code>.
+ * The underlying `WebElement` wrapped by this `Element`.
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>text</code>
+ * `attribute(name: String)`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * Returns the visible (<em>i.e.</em>, not hidden by CSS) text of this element, including sub-elements, without any leading or trailing whitespace.
+ * The attribute value of the given attribute name of this element, wrapped in a `Some`, or `None` if no
+ * such attribute exists on this `Element`.
+ * </td>
+ * </tr>
+ * <tr>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `text`
+ * </td>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * Returns the visible (''i.e.'', not hidden by CSS) text of this element, including sub-elements, without any leading or trailing whitespace.
  * </td>
  * </tr>
  * </table>
  * 
- * <h2>Implicit wait</h2>
+ * ==Implicit wait==
  * 
- * <p>
- * To set Selenium's implicit wait timeout, you can call the <code>implicitlyWait</code> method:
- * </p>
+ * To set Selenium's implicit wait timeout, you can call the `implicitlyWait` method:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * implicitlyWait(Span(10, Seconds))
- * </pre>
+ * }}}
  * 
- * <p>
  * Invoking this method sets the amount of time the driver will wait when searching for an element that is not immediately present. For
- * more information, see the documentation for method <code>implicitlyWait</code>.
- * </p>
+ * more information, see the documentation for method `implicitlyWait`.
+ * 
  *
- * <h2>Page source and current URL</h2>
+ * ==Page source and current URL==
  * 
- * <p>
  * It is possible to get the html source of currently loaded page, using:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * pageSource
- * </pre>
+ * }}}
  * 
- * <p>
  * and if needed, get the current URL of currently loaded page:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * currentUrl
- * </pre>
+ * }}}
  * 
- * <h2>Screen capture</h2>
+ * ==Screen capture==
  * 
- * <p>
  * You can capture screen using the following code:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * val file = capture
- * </pre>
+ * }}}
  * 
- * <p>
  * By default, the captured image file will be saved in temporary folder (returned by java.io.tmpdir property), with random file name 
  * ends with .png extension.  You can specify a fixed file name:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * capture to "MyScreenShot.png"
- * </pre>
+ * }}}
  * 
- * <p>
  * or
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * capture to "MyScreenShot"
- * </pre>
+ * }}}
  * 
- * <p>
- * Both will result in a same file name <code>MyScreenShot.png</code>.
- * </p>
+ * Both will result in a same file name `MyScreenShot.png`.
  * 
- * <p>
+ * 
  * You can also change the target folder screenshot file is written to, by saying:
- * </p>
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * setCaptureDir("/home/your_name/screenshots")
- * </pre>
+ * }}}
  * 
- * <p>
- * If you want to capture a screenshot when something goes wrong (e.g. test failed), you can use <code>withScreenshot</code>:
- * </p>
+ * If you want to capture a screenshot when something goes wrong (e.g. test failed), you can use `withScreenshot`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * withScreenshot {
  *   assert("Gold" == "Silver", "Expected gold, but got silver")
  * }
- * </pre>
+ * }}}
  * 
- * <p>
  * In case the test code fails, you'll see the screenshot location appended to the error message, for example:
- * </p>
  * 
- * <pre>
+ * 
+ * {{{
  * Expected gold but got silver; screenshot capture in /tmp/AbCdEfGhIj.png
- * </pre>
+ * }}}
  * 
  * <a name="pageObjects"></a>
- * <h2>Using the page object pattern</h2>
+ * ==Using the page object pattern==
  *
- * <p>
- * If you use the page object pattern, mixing trait <code>Page</code> into your page classes will allow you to use the <code>go to</code> 
+ * If you use the page object pattern, mixing trait `Page` into your page classes will allow you to use the `go to` 
  * syntax with your page objects. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class HomePage extends Page {
  *   val url = "http://localhost:9000/index.html"
  * }
  *
  * val homePage = new HomePage
  * go to homePage
- * </pre>
+ * }}}
  *
- * <h2>Executing JavaScript</h2>
+ * ==Executing JavaScript==
  *
- * <p>
- * To execute arbitrary JavaScript, for example, to test some JavaScript functions on your page, pass it to <code>executeScript</code>:
- * </p>
+ * To execute arbitrary JavaScript, for example, to test some JavaScript functions on your page, pass it to `executeScript`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * go to (host + "index.html")
  * val result1 = executeScript("return document.title;")
  * result1 should be ("Test Title")
  * val result2 = executeScript("return 'Hello ' + arguments[0]", "ScalaTest")
  * result2 should be ("Hello ScalaTest")
- * </pre>
+ * }}}
  *
- * <p>
- * To execute an asynchronous bit of JavaScript, pass it to <code>executeAsyncScript</code>. You can set the script timeout with <code>setScriptTimeout</code>:
- * </p>
+ * To execute an asynchronous bit of JavaScript, pass it to `executeAsyncScript`. You can set the script timeout with `setScriptTimeout`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val script = """
  *   var callback = arguments[arguments.length - 1];
  *   window.setTimeout(function() {callback('Hello ScalaTest')}, 500);
@@ -1060,122 +988,117 @@ import org.scalactic.source
  * setScriptTimeout(1 second)
  * val result = executeAsyncScript(script)
  * result should be ("Hello ScalaTest")
- * </pre>
+ * }}}
  *
- * <h2>Querying for elements</h2>
+ * ==Querying for elements==
  *
- * <p>
- * You can query for arbitrary elements via <code>find</code> and <code>findAll</code>. The <code>find</code> method returns the first matching element, wrapped in a <code>Some</code>,
- * or <code>None</code> if no element is found. The <code>findAll</code> method returns an immutable <code>IndexedSeq</code> of all matching elements. If no elements match the query, <code>findAll</code>
- * returns an empty <code>IndexedSeq</code>. These methods allow you to perform rich queries using <code>for</code> expressions. Here are some examples:
- * </p>
+ * You can query for arbitrary elements via `find` and `findAll`. The `find` method returns the first matching element, wrapped in a `Some`,
+ * or `None` if no element is found. The `findAll` method returns an immutable `IndexedSeq` of all matching elements. If no elements match the query, `findAll`
+ * returns an empty `IndexedSeq`. These methods allow you to perform rich queries using `for` expressions. Here are some examples:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * val ele: Option[Element] = find("q")
  *
  * val eles: colection.immutable.IndexedSeq[Element] = findAll(className("small"))
  * for (e <- eles; if e.tagName != "input")
  *   e should be ('displayed)
  * val textFields = eles filter { tf.isInstanceOf[TextField] }
- * </pre>
+ * }}}
  *
- * <h2>Cleaning up</h2>
+ * ==Cleaning up==
  * 
- * <p>
- * To close the current browser window, and exit the driver if the current window was the only one remaining, use <code>close</code>:
- * </p>
+ * To close the current browser window, and exit the driver if the current window was the only one remaining, use `close`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * close()
- * </pre>
+ * }}}
  * 
- * <p>
- * To close all windows, and exit the driver, use <code>quit</code>:
- * </p>
+ * To close all windows, and exit the driver, use `quit`:
  * 
- * <pre class="stHighlight">
+ * 
+ * {{{  <!-- class="stHighlight" -->
  * quit()
- * </pre>
+ * }}}
  * 
  * <a name="alternateForms"></a>
- * <h2>Alternate forms</h2>
+ * ==Alternate forms==
  * 
- * <p>
- * Although statements like &ldquo;<code>delete all cookies</code>&rdquo; fit well with matcher statements
- * like &ldquo;<code>title should be ("Cheese!")</code>&rdquo;, they do not fit as well
+ * Although statements like &ldquo;`delete all cookies`&rdquo; fit well with matcher statements
+ * like &ldquo;`title should be ("Cheese!")`&rdquo;, they do not fit as well
  * with the simple method call form of assertions. If you prefer, you can avoid operator notation
  * and instead use alternatives that take the form of plain-old method calls. Here's an example:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * goTo("http://www.google.com")
  * clickOn("q")
  * textField("q").value = "Cheese!"
  * submit()
  * // Google's search is rendered dynamically with JavaScript.
  * eventually(assert(pageTitle === "Cheese! - Google Search"))
- * </pre>
+ * }}}
  * 
- * <p>
  * Here's a table showing the complete list of alternatives:
- * </p>
+ * 
  *
  * <table style="border-collapse: collapse; border: 1px solid black">
- * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>operator notation</strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>method call</strong></th></tr>
+ * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''operator notation'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''method call'''</th></tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>go to (host + "index.html")</code>
+ * `go to (host + "index.html")`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>goTo(host + "index.html")</code>
+ * `goTo(host + "index.html")`
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>click on "aButton"</code>
+ * `click on "aButton"`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>clickOn("aButton")</code>
- * </td>
- * </tr>
- * <tr>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>switch to activeElement</code>
- * </td>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>switchTo(activeElement)</code>
+ * `clickOn("aButton")`
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>add cookie ("cookie_name", "cookie_value")</code>
+ * `switch to activeElement`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>addCookie("cookie_name", "cookie_value")</code>
- * </td>
- * </tr>
- * <tr>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>delete cookie "cookie_name"</code>
- * </td>
- * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>deleteCookie("cookie_name")</code>
+ * `switchTo(activeElement)`
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>delete all cookies</code>
+ * `add cookie ("cookie_name", "cookie_value")`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>deleteAllCookies()</code>
+ * `addCookie("cookie_name", "cookie_value")`
  * </td>
  * </tr>
  * <tr>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>capture to "MyScreenShot"</code>
+ * `delete cookie "cookie_name"`
  * </td>
  * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
- * <code>captureTo("MyScreenShot")</code>
+ * `deleteCookie("cookie_name")`
+ * </td>
+ * </tr>
+ * <tr>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `delete all cookies`
+ * </td>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `deleteAllCookies()`
+ * </td>
+ * </tr>
+ * <tr>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `capture to "MyScreenShot"`
+ * </td>
+ * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: left">
+ * `captureTo("MyScreenShot")`
  * </td>
  * </tr>
  * </table>
@@ -1196,107 +1119,99 @@ trait WebBrowser {
   case class Dimension(width: Int, height: Int)
 
   /**
-   * Wrapper class for a Selenium <code>WebElement</code>.
+   * Wrapper class for a Selenium `WebElement`.
    *
-   * <p>
-   * This class provides idiomatic Scala access to the services of an underlying <code>WebElement</code>.
-   * You can access the wrapped <code>WebElement</code> via the <code>underlying</code> method.
-   * </p>
+   * This class provides idiomatic Scala access to the services of an underlying `WebElement`.
+   * You can access the wrapped `WebElement` via the `underlying` method.
+   * 
    */
   sealed trait Element {
 
     /**
-     * The XY location of the top-left corner of this <code>Element</code>.
+     * The XY location of the top-left corner of this `Element`.
      *
-     * <p>
-     * This invokes <code>getLocation</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This invokes `getLocation` on the underlying `WebElement`.
+     * 
      *
      * @return the location of the top-left corner of this element on the page
      */
     def location: Point = Point(underlying.getLocation.getX, underlying.getLocation.getY)
 
     /**
-     * The width/height size of this <code>Element</code>.
+     * The width/height size of this `Element`.
      *
-     * <p>
-     * This invokes <code>getSize</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This invokes `getSize` on the underlying `WebElement`.
+     * 
      *
      * @return the size of the element on the page
      */
     def size: Dimension = Dimension(underlying.getSize.getWidth, underlying.getSize.getHeight)
 
     /**
-     * Indicates whether this <code>Element</code> is displayed.
+     * Indicates whether this `Element` is displayed.
      *
-     * <p>
-     * This invokes <code>isDisplayed</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This invokes `isDisplayed` on the underlying `WebElement`.
+     * 
      *
-     * @return <code>true</code> if the element is currently displayed
+     * @return `true` if the element is currently displayed
      */
     def isDisplayed: Boolean = underlying.isDisplayed
 
     /**
-     * Indicates whether this <code>Element</code> is enabled.
+     * Indicates whether this `Element` is enabled.
      *
-     * <p>
-     * This invokes <code>isEnabled</code> on the underlying <code>WebElement</code>, which
-     * will generally return <code>true</code> for everything but disabled input elements.
-     * </p>
+     * This invokes `isEnabled` on the underlying `WebElement`, which
+     * will generally return `true` for everything but disabled input elements.
+     * 
      *
-     * @return <code>true</code> if the element is currently enabled
+     * @return `true` if the element is currently enabled
      */
     def isEnabled: Boolean = underlying.isEnabled
 
     /**
-     * Indicates whether this <code>Element</code> is selected.
+     * Indicates whether this `Element` is selected.
      *
-     * <p>
-     * This method, which invokes <code>isSelected</code> on the underlying <code>WebElement</code>,
+     * This method, which invokes `isSelected` on the underlying `WebElement`,
      * is relevant only for input elements such as checkboxes, options in a single- or multiple-selection
-     * list box, and radio buttons. For any other element it will simply return <code>false</code>.
-     * </p>
+     * list box, and radio buttons. For any other element it will simply return `false`.
+     * 
      *
-     * @return <code>true</code> if the element is currently selected or checked
+     * @return `true` if the element is currently selected or checked
      */
     def isSelected: Boolean = underlying.isSelected
 
     /**
      * The tag name of this element.
      *
-     * <p>
-     * This method invokes <code>getTagName</code> on the underlying <code>WebElement</code>.
-     * Note it returns the name of the tag, not the value of the of the <code>name</code> attribute.
-     * For example, it will return will return <code>"input"</code> for the element
-     * <code>&lt;input name="city" /&gt;</code>, not <code>"city"</code>.
-     * </p>
+     * This method invokes `getTagName` on the underlying `WebElement`.
+     * Note it returns the name of the tag, not the value of the of the `name` attribute.
+     * For example, it will return will return `"input"` for the element
+     * `&lt;input name="city" /&gt;`, not `"city"`.
+     * 
      *
      * @return the tag name of this element
      */
     def tagName: String = underlying.getTagName
 
     /**
-     * The underlying <code>WebElement</code> wrapped by this <code>Element</code>
+     * The underlying `WebElement` wrapped by this `Element`
      */
     val underlying: WebElement
     
     /**
-     * The attribute value of the given attribute name of this element, wrapped in a <code>Some</code>, or <code>None</code> if no
-     * such attribute exists on this <code>Element</code>.
+     * The attribute value of the given attribute name of this element, wrapped in a `Some`, or `None` if no
+     * such attribute exists on this `Element`.
      *
-     * <p>
-     * This method invokes <code>getAttribute</code> on the underlying <code>WebElement</code>, passing in the
-     * specified <code>name</code>.
-     * </p>
+     * This method invokes `getAttribute` on the underlying `WebElement`, passing in the
+     * specified `name`.
+     * 
      *
-     * @return the attribute with the given name, wrapped in a <code>Some</code>, else <code>None</code>
+     * @return the attribute with the given name, wrapped in a `Some`, else `None`
      */
     def attribute(name: String): Option[String] = Option(underlying.getAttribute(name))
 
     /**
-     * Returns the visible (<em>i.e.</em>, not hidden by CSS) text of this element, including sub-elements, without any leading or trailing whitespace.
+     * Returns the visible (''i.e.'', not hidden by CSS) text of this element, including sub-elements, without any leading or trailing whitespace.
      *
      * @return the visible text enclosed by this element, or an empty string, if the element encloses no visible text
      */
@@ -1306,8 +1221,8 @@ trait WebBrowser {
     }
 
     /**
-     * Returns the result of invoking <code>equals</code> on the underlying <code>Element</code>, passing
-     * in the specified <code>other</code> object.
+     * Returns the result of invoking `equals` on the underlying `Element`, passing
+     * in the specified `other` object.
      *
      * @param other the object with which to compare for equality
      *
@@ -1316,14 +1231,14 @@ trait WebBrowser {
     override def equals(other: Any): Boolean = underlying == other
 
     /**
-     * Returns the result of invoking <code>hashCode</code> on the underlying <code>Element</code>.
+     * Returns the result of invoking `hashCode` on the underlying `Element`.
      *
      * @return a hash code for this object
      */
     override def hashCode: Int = underlying.hashCode
 
     /**
-     * Returns the result of invoking <code>toString</code> on the underlying <code>Element</code>.
+     * Returns the result of invoking `toString` on the underlying `Element`.
      *
      * @return a string representation of this object
      */
@@ -1333,21 +1248,19 @@ trait WebBrowser {
   // fluentLinium has a doubleClick. Wonder how they are doing that?
 
   /**
-   * Wrapper class for a Selenium <code>Cookie</code>.
+   * Wrapper class for a Selenium `Cookie`.
    *
-   * <p>
-   * This class provides idiomatic Scala access to the services of an underlying <code>Cookie</code>.
-   * You can access the wrapped <code>Cookie</code> via the <code>underlying</code> method.
-   * </p>
+   * This class provides idiomatic Scala access to the services of an underlying `Cookie`.
+   * You can access the wrapped `Cookie` via the `underlying` method.
+   * 
    */
   final class WrappedCookie(val underlying: Cookie) {
 
     /**
      * The domain to which this cookie is visible.
      *
-     * <p>
-     * This invokes <code>getDomain</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * This invokes `getDomain` on the underlying `Cookie`.
+     * 
      *
      * @return the domain of this cookie
      */
@@ -1356,9 +1269,8 @@ trait WebBrowser {
     /**
      * The expire date of this cookie.
      *
-     * <p>
-     * This invokes <code>getExpiry</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * This invokes `getExpiry` on the underlying `Cookie`.
+     * 
      *
      * @return the expire date of this cookie
      */
@@ -1367,9 +1279,8 @@ trait WebBrowser {
     /**
      * The name of this cookie.
      *
-     * <p>
-     * This invokes <code>getName</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * This invokes `getName` on the underlying `Cookie`.
+     * 
      *
      * @return the name of this cookie
      */
@@ -1378,9 +1289,8 @@ trait WebBrowser {
     /**
      * The path of this cookie.
      *
-     * <p>
-     * This invokes <code>getPath</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * This invokes `getPath` on the underlying `Cookie`.
+     * 
      *
      * @return the path of this cookie
      */
@@ -1389,9 +1299,8 @@ trait WebBrowser {
     /**
      * The value of this cookie.
      *
-     * <p>
-     * This invokes <code>getValue</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * This invokes `getValue` on the underlying `Cookie`.
+     * 
      *
      * @return the value of this cookie
      */
@@ -1400,21 +1309,19 @@ trait WebBrowser {
     /**
      * Indicates whether the cookie requires a secure connection.
      *
-     * <p>
-     * This invokes <code>isSecure</code> on the underlying <code>Cookie</code>.
-     * </p>
+     * This invokes `isSecure` on the underlying `Cookie`.
+     * 
      *
      * @return true if this cookie requires a secure connection.
      */
     def secure: Boolean = underlying.isSecure
 
     /**
-     * Returns the result of invoking <code>equals</code> on the underlying <code>Cookie</code>, passing
-     * in the specified <code>other</code> object.
+     * Returns the result of invoking `equals` on the underlying `Cookie`, passing
+     * in the specified `other` object.
      *
-     * <p>
-     * Two Selenium <code>Cookie</code>s are considered equal if their name and values are equal.
-     * </p>
+     * Two Selenium `Cookie`s are considered equal if their name and values are equal.
+     * 
      *
      * @param other the object with which to compare for equality
      *
@@ -1423,14 +1330,14 @@ trait WebBrowser {
     override def equals(other: Any): Boolean = underlying == other
 
     /**
-     * Returns the result of invoking <code>hashCode</code> on the underlying <code>Cookie</code>.
+     * Returns the result of invoking `hashCode` on the underlying `Cookie`.
      *
      * @return a hash code for this object
      */
     override def hashCode: Int = underlying.hashCode
 
     /**
-     * Returns the result of invoking <code>toString</code> on the underlying <code>Cookie</code>.
+     * Returns the result of invoking `toString` on the underlying `Cookie`.
      *
      * @return a string representation of this object
      */
@@ -1438,65 +1345,62 @@ trait WebBrowser {
   }
 
   /**
-   * This class is part of the ScalaTest's Selenium DSL. Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a>
+   * This class is part of the ScalaTest's Selenium DSL. Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a>
    * for an overview of the Selenium DSL.
    */
   class CookiesNoun
 
   /**
    * This field supports cookie deletion in ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This field enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * delete all cookies
    *            ^
-   * </pre>
+   * }}}
    */
   val cookies = new CookiesNoun
   
   /**
    * This sealed abstract class supports switching in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
-   * One subclass of <code>SwitchTarget</code> exists for each kind of target that
+   * One subclass of `SwitchTarget` exists for each kind of target that
    * can be switched to: active element, alert box, default content, frame (indentified by index,
    * name or id, or enclosed element), and window.
-   * </p>
+   * 
    */
   sealed abstract class SwitchTarget[T] {
 
     /**
      * Abstract method implemented by subclasses that represent "targets" to which the user can switch.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit position: source.Position): T
   }
 
   /**
    * This class supports switching to the currently active element in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to activeElement
    *           ^
-   * </pre>
+   * }}}
    */
   final class ActiveElementTarget extends SwitchTarget[Element] {
 
     /**
      * Switches the driver to the currently active element.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit position: source.Position): Element = {
       createTypedElement(driver.switchTo.activeElement, position)
@@ -1505,23 +1409,22 @@ trait WebBrowser {
 
   /**
    * This class supports switching to the alert box in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to alertBox
    *           ^
-   * </pre>
+   * }}}
    */
   final class AlertTarget extends SwitchTarget[Alert] {
 
     /**
      * Switches the driver to the currently active alert box.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit position: source.Position): Alert = {
       driver.switchTo.alert
@@ -1530,23 +1433,22 @@ trait WebBrowser {
 
   /**
    * This class supports switching to the default content in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to defaultContent
    *           ^
-   * </pre>
+   * }}}
    */
   final class DefaultContentTarget extends SwitchTarget[WebDriver] {
 
     /**
      * Switches the driver to the default content
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit position: source.Position): WebDriver = {
       driver.switchTo.defaultContent
@@ -1555,23 +1457,22 @@ trait WebBrowser {
  
   /**
    * This class supports switching to a frame by index in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to frame(0)
    *           ^
-   * </pre>
+   * }}}
    */
   final class FrameIndexTarget(index: Int) extends SwitchTarget[WebDriver] {
 
     /**
      * Switches the driver to the frame at the index that was passed to the constructor.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit pos: source.Position): WebDriver =
       try {
@@ -1589,23 +1490,22 @@ trait WebBrowser {
 
   /**
    * This class supports switching to a frame by name or ID in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to frame("name")
    *           ^
-   * </pre>
+   * }}}
    */
   final class FrameNameOrIdTarget(nameOrId: String) extends SwitchTarget[WebDriver] {
 
     /**
      * Switches the driver to the frame with the name or ID that was passed to the constructor.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit pos: source.Position): WebDriver =
       try {
@@ -1623,14 +1523,14 @@ trait WebBrowser {
 
   /**
    * This class supports switching to a frame by web element in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    */
   final class FrameWebElementTarget(webElement: WebElement) extends SwitchTarget[WebDriver] {
 
     /**
-     * Switches the driver to the frame containing the <code>WebElement</code> that was passed to the constructor.
+     * Switches the driver to the frame containing the `WebElement` that was passed to the constructor.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit pos: source.Position): WebDriver =
       try {
@@ -1648,14 +1548,14 @@ trait WebBrowser {
   
   /**
    * This class supports switching to a frame by element in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    */
   final class FrameElementTarget(element: Element) extends SwitchTarget[WebDriver] {
 
     /**
-     * Switches the driver to the frame containing the <code>Element</code> that was passed to the constructor.
+     * Switches the driver to the frame containing the `Element` that was passed to the constructor.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit pos: source.Position): WebDriver =
       try {
@@ -1673,23 +1573,22 @@ trait WebBrowser {
 
   /**
    * This class supports switching to a window by name or handle in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to window(windowHandle)
    *           ^
-   * </pre>
+   * }}}
    */
   final class WindowTarget(nameOrHandle: String) extends SwitchTarget[WebDriver] {
 
     /**
      * Switches the driver to the window with the name or ID that was passed to the constructor.
      *
-     * @param driver the <code>WebDriver</code> with which to perform the switch
+     * @param driver the `WebDriver` with which to perform the switch
      */
     def switch(driver: WebDriver)(implicit pos: source.Position): WebDriver =
       try {
@@ -1738,18 +1637,17 @@ trait WebBrowser {
   
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * textField("q").value should be ("Cheese!")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a text field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a text field
+   * @param underlying the `WebElement` representing a text field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a text field
    */
   final class TextField(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     
@@ -1763,9 +1661,8 @@ trait WebBrowser {
     /**
      * Gets this text field's value.
      *
-     * <p>
-     * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This method invokes `getAttribute("value")` on the underlying `WebElement`.
+     * 
      *
      * @return the text field's value
      */
@@ -1789,18 +1686,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * textArea("q").value should be ("Cheese!")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a text area
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a text area
+   * @param underlying the `WebElement` representing a text area
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a text area
    */
   final class TextArea(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     if(!isTextArea(underlying))
@@ -1813,9 +1709,8 @@ trait WebBrowser {
     /**
      * Gets this text area's value.
      *
-     * <p>
-     * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This method invokes `getAttribute("value")` on the underlying `WebElement`.
+     * 
      *
      * @return the text area's value
      */
@@ -1839,18 +1734,17 @@ trait WebBrowser {
   
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * pwdField("q").value should be ("Cheese!")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a password field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a password field
+   * @param underlying the `WebElement` representing a password field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a password field
    */
   final class PasswordField(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     
@@ -1864,9 +1758,8 @@ trait WebBrowser {
     /**
      * Gets this password field's value.
      *
-     * <p>
-     * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This method invokes `getAttribute("value")` on the underlying `WebElement`.
+     * 
      *
      * @return the password field's value
      */
@@ -1903,9 +1796,8 @@ trait WebBrowser {
     /**
      * Gets this field's value.
      *
-     * <p>
-     * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This method invokes `getAttribute("value")` on the underlying `WebElement`.
+     * 
      *
      * @return the field's value
      */
@@ -1935,18 +1827,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * emailField("q").value should be ("foo@bar.com")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a email field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a email field
+   * @param underlying the `WebElement` representing a email field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a email field
    */
   final class EmailField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isEmailField, "email")(pos)
@@ -1954,18 +1845,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * colorField("q").value should be ("Cheese!")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a color field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a color field
+   * @param underlying the `WebElement` representing a color field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a color field
    */
   final class ColorField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isColorField, "color")(pos)
@@ -1973,18 +1863,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * dateField("q").value should be ("2003-03-01")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a date field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a date field
+   * @param underlying the `WebElement` representing a date field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a date field
    */
   final class DateField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isDateField, "date")(pos)
@@ -1992,18 +1881,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * dateTimeField("q").value should be ("2003-03-01T12:13:14")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a datetime field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a datetime field
+   * @param underlying the `WebElement` representing a datetime field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a datetime field
    */
   final class DateTimeField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isDateTimeField, "datetime")(pos)
@@ -2011,18 +1899,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * dateTimeLocalField("q").value should be ("2003-03-01T12:13:14")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a datetime-local field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a datetime-local field
+   * @param underlying the `WebElement` representing a datetime-local field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a datetime-local field
    */
   final class DateTimeLocalField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isDateTimeLocalField, "datetime-local")(pos)
@@ -2030,18 +1917,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * monthField("q").value should be ("2003-04")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a month field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a month field
+   * @param underlying the `WebElement` representing a month field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a month field
    */
   final class MonthField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isMonthField, "month")(pos)
@@ -2049,18 +1935,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * numberField("q").value should be ("1.3")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a number field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a number field
+   * @param underlying the `WebElement` representing a number field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a number field
    */
   final class NumberField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isNumberField, "number")(pos)
@@ -2068,18 +1953,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * rangeField("q").value should be ("1.3")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a range field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a range field
+   * @param underlying the `WebElement` representing a range field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a range field
    */
   final class RangeField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isRangeField, "range")(pos)
@@ -2087,18 +1971,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * searchField("q").value should be ("google")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a search field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a search field
+   * @param underlying the `WebElement` representing a search field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a search field
    */
   final class SearchField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isSearchField, "search")(pos)
@@ -2106,18 +1989,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * telField("q").value should be ("911-911-9191")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a tel field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a tel field
+   * @param underlying the `WebElement` representing a tel field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a tel field
    */
   final class TelField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isTelField, "tel")(pos)
@@ -2125,18 +2007,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * timeField("q").value should be ("12:13:14")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a time field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a time field
+   * @param underlying the `WebElement` representing a time field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a time field
    */
   final class TimeField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isTimeField, "time")(pos)
@@ -2144,18 +2025,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * urlField("q").value should be ("http://google.com")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a url field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a url field
+   * @param underlying the `WebElement` representing a url field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a url field
    */
   final class UrlField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isUrlField, "url")(pos)
@@ -2163,18 +2043,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * weekField("q").value should be ("1996-W16")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a week field
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a week field
+   * @param underlying the `WebElement` representing a week field
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a week field
    */
   final class WeekField(val underlying: WebElement)(implicit pos: source.Position) extends Element with ValueElement {
     checkCorrectType(isWeekField, "week")(pos)
@@ -2182,18 +2061,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * radioButton(id("opt1")).value should be ("Option 1!")
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a text area
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a text area
+   * @param underlying the `WebElement` representing a text area
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a text area
    */
   final class RadioButton(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     if(!isRadioButton(underlying))
@@ -2205,9 +2083,8 @@ trait WebBrowser {
     /**
      * Gets this radio button's value.
      *
-     * <p>
-     * Invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * Invokes `getAttribute("value")` on the underlying `WebElement`.
+     * 
      *
      * @return the radio button's value
      */
@@ -2216,17 +2093,16 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * radioButtonGroup("group1").value should be ("Option 2")
-   * </pre>
+   * }}}
    *
-   * @throws TestFailedExeption if no radio button with the passed <code>groupName</code> are found
+   * @throws TestFailedExeption if no radio button with the passed `groupName` are found
    */
   final class RadioButtonGroup(groupName: String, driver: WebDriver)(implicit pos: source.Position) {
 
@@ -2240,7 +2116,7 @@ trait WebBrowser {
                    )
 
     /**
-     * Returns the value of this group's selected radio button, or throws <code>TestFailedException</code> if no
+     * Returns the value of this group's selected radio button, or throws `TestFailedException` if no
      * radio button in this group is selected.
      *
      * @return the value of this group's selected radio button
@@ -2257,10 +2133,10 @@ trait WebBrowser {
     }
 
     /**
-     * Returns the value of this group's selected radio button, wrapped in a <code>Some</code>, or <code>None</code>, if no
+     * Returns the value of this group's selected radio button, wrapped in a `Some`, or `None`, if no
      * radio button in this group is selected.
      *
-     * @return the value of this group's selected radio button, wrapped in a <code>Some</code>, else <code>None</code>
+     * @return the value of this group's selected radio button, wrapped in a `Some`, else `None`
      */
     def selection: Option[String] = {
       groupElements.find(_.isSelected) match {
@@ -2293,18 +2169,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * checkbox("cbx1").select()
-   * </pre>
+   * }}}
    *
-   * @param underlying the <code>WebElement</code> representing a checkbox
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a checkbox
+   * @param underlying the `WebElement` representing a checkbox
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a checkbox
    */
   final class Checkbox(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     if(!isCheckBox(underlying))
@@ -2333,9 +2208,8 @@ trait WebBrowser {
     /**
      * Gets this checkbox's value.
      *
-     * <p>
-     * This method invokes <code>getAttribute("value")</code> on the underlying <code>WebElement</code>.
-     * </p>
+     * This method invokes `getAttribute("value")` on the underlying `WebElement`.
+     * 
      *
      * @return the checkbox's value
      */
@@ -2344,49 +2218,44 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * multiSel("select2").values += "option5"
    *                            ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Instances of this class are returned from the <code>values</code> method of <code>MultiSel</code>.
-   * <code>MultiSelOptionSeq</code> is an immutable <code>IndexedSeq[String]</code> that wraps an underlying immutable <code>IndexedSeq[String]</code> and adds two
-   * methods, <code>+</code> and <code>-</code>, to facilitate the <code>+=</code> syntax for setting additional options
-   * of the <code>MultiSel</code>. The Scala compiler will rewrite:
-   * </p>
+   * Instances of this class are returned from the `values` method of `MultiSel`.
+   * `MultiSelOptionSeq` is an immutable `IndexedSeq[String]` that wraps an underlying immutable `IndexedSeq[String]` and adds two
+   * methods, `+` and `-`, to facilitate the `+=` syntax for setting additional options
+   * of the `MultiSel`. The Scala compiler will rewrite:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * multiSel("select2").values += "option5"
-   * </pre>
+   * }}}
    *
-   * <p>
    * To:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * multiSel("select2").values = multiSel("select2").values + "option5"
-   * </pre>
+   * }}}
    *
-   * <p>
-   * Thus, first a new <code>MultiSelOptionSeq</code> is created by invoking the <code>+</code> method on the <code>MultiSelOptionSeq</code>
-   * returned by <code>values</code>, and that result is passed to the <code>values_=</code> method.
-   * </p>
+   * Thus, first a new `MultiSelOptionSeq` is created by invoking the `+` method on the `MultiSelOptionSeq`
+   * returned by `values`, and that result is passed to the `values_=` method.
+   * 
    *
-   * <p>
-   * For symmetry, this class also offers a <code>-</code> method, which can be used to deselect an option, like this:
-   * </p>
+   * For symmetry, this class also offers a `-` method, which can be used to deselect an option, like this:
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * multiSel("select2").values -= "option5"
    *                            ^
-   * </pre>
+   * }}}
    *
    */
   class MultiSelOptionSeq(underlying: collection.immutable.IndexedSeq[String]) extends collection.immutable.IndexedSeq[String] {
@@ -2394,21 +2263,19 @@ trait WebBrowser {
     /**
      * Selects an element by its index in the sequence.
      *
-     * <p>
-     * This method invokes <code>apply</code> on the underlying immutable <code>IndexedSeq[String]</code>, passing in <code>idx</code>, and returns the result.
-     * </p>
+     * This method invokes `apply` on the underlying immutable `IndexedSeq[String]`, passing in `idx`, and returns the result.
+     * 
      *
      * @param idx the index to select
-     * @return the element of this sequence at index <code>idx</code>, where 0 indicates the first element
+     * @return the element of this sequence at index `idx`, where 0 indicates the first element
      */
     def apply(idx: Int): String = underlying.apply(idx)
 
     /**
      * The length of this sequence.
      *
-     * <p>
-     * This method invokes <code>length</code> on the underlying immutable <code>IndexedSeq[String]</code> and returns the result.
-     * </p>
+     * This method invokes `length` on the underlying immutable `IndexedSeq[String]` and returns the result.
+     * 
      *
      * @return the number of elements in this sequence
      */
@@ -2417,14 +2284,13 @@ trait WebBrowser {
     /**
      * Appends a string element to this sequence, if it doesn't already exist in the sequence.
      *
-     * <p>
      * If the string element already exists in this sequence, this method returns itself. If not,
-     * this method returns a new <code>MultiSelOptionSeq</code> with the passed value appended to the
-     * end of the original <code>MultiSelOptionSeq</code>.
-     * </p>
+     * this method returns a new `MultiSelOptionSeq` with the passed value appended to the
+     * end of the original `MultiSelOptionSeq`.
+     * 
      *
      * @param the string element to append to this sequence
-     * @return a <code>MultiSelOptionSeq</code> that contains the passed string value
+     * @return a `MultiSelOptionSeq` that contains the passed string value
      */
     def +(value: String): MultiSelOptionSeq = {
       if (!underlying.contains(value))
@@ -2436,14 +2302,13 @@ trait WebBrowser {
     /**
      * Removes a string element to this sequence, if it already exists in the sequence.
      *
-     * <p>
      * If the string element does not already exist in this sequence, this method returns itself. If the element
-     * is contained in this sequence, this method returns a new <code>MultiSelOptionSeq</code> with the passed value
-     * removed from the the original <code>MultiSelOptionSeq</code>, leaving any other elements in the same order.
-     * </p>
+     * is contained in this sequence, this method returns a new `MultiSelOptionSeq` with the passed value
+     * removed from the the original `MultiSelOptionSeq`, leaving any other elements in the same order.
+     * 
      *
      * @param the string element to append to this sequence
-     * @return a <code>MultiSelOptionSeq</code> that contains the passed string value
+     * @return a `MultiSelOptionSeq` that contains the passed string value
      */
     def -(value: String): MultiSelOptionSeq = {
       if (underlying.contains(value))
@@ -2455,18 +2320,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * singleSel.clear()
-   * </pre>
+   * }}}
    *
-   * @param underlying a <code>WebElement</code> representing a single selection list
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a single selection list
+   * @param underlying a `WebElement` representing a single selection list
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a single selection list
    */
   class SingleSel(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     if(underlying.getTagName.toLowerCase != "select")
@@ -2484,10 +2348,10 @@ trait WebBrowser {
                    )
     
     /**
-     * Returns the value of this single selection list, wrapped in a <code>Some</code>, or <code>None</code>, if this single
+     * Returns the value of this single selection list, wrapped in a `Some`, or `None`, if this single
      * selection list has no currently selected value.
      *
-     * @return the value of this single selection list, wrapped in a <code>Some</code>, else <code>None</code>
+     * @return the value of this single selection list, wrapped in a `Some`, else `None`
      */
     def selection = {
       val first = select.getFirstSelectedOption
@@ -2498,7 +2362,7 @@ trait WebBrowser {
     }
     
     /**
-     * Gets this single selection list's selected value, or throws <code>TestFailedException</code> if no value is currently selected.
+     * Gets this single selection list's selected value, or throws `TestFailedException` if no value is currently selected.
      *
      * @return the single selection list's value
      * @throws TestFailedException if the single selection list has no selected value
@@ -2538,18 +2402,17 @@ trait WebBrowser {
 
   /**
    * This class is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * multiSel("select2").clear("option5")
-   * </pre>
+   * }}}
    *
-   * @param underlying a <code>WebElement</code> representing a multiple selection list
-   * @throws TestFailedExeption if the passed <code>WebElement</code> does not represent a multiple selection list
+   * @param underlying a `WebElement` representing a multiple selection list
+   * @throws TestFailedExeption if the passed `WebElement` does not represent a multiple selection list
    */
   class MultiSel(val underlying: WebElement)(implicit pos: source.Position) extends Element {
     if(underlying.getTagName.toLowerCase != "select")
@@ -2578,12 +2441,11 @@ trait WebBrowser {
     /**
      * Gets all selected values of this multiple selection list.
      *
-     * <p>
      * If the multiple selection list has no selections, ths method will
-     * return an empty <code>IndexedSeq</code>.
-     * </p>
+     * return an empty `IndexedSeq`.
+     * 
      *
-     * @return An <code>IndexedSeq</code> containing the currently selected values
+     * @return An `IndexedSeq` containing the currently selected values
      */
     def values: MultiSelOptionSeq = {
       val elementSeq = Vector.empty ++ select.getAllSelectedOptions.asScala
@@ -2591,15 +2453,14 @@ trait WebBrowser {
     }
 
     /**
-     * Clears any existing selections then sets all values contained in the passed <code>collection.Seq[String]</code>.
+     * Clears any existing selections then sets all values contained in the passed `collection.Seq[String]`.
      *
-     * <p>
-     * In other words, the <code>values_=</code> method <em>replaces</em> the current selections, if any, with
-     * new selections defined by the passed <code>Seq[String]</code>.
-     * </p>
+     * In other words, the `values_=` method ''replaces'' the current selections, if any, with
+     * new selections defined by the passed `Seq[String]`.
+     * 
      *
-     * @param values a <code>Seq</code> of string values to select
-     * @throws TestFailedException if a value contained in the passed <code>Seq[String]</code> is not
+     * @param values a `Seq` of string values to select
+     * @throws TestFailedException if a value contained in the passed `Seq[String]` is not
      *         among this multiple selection list's values.
      */
     def values_=(values: collection.Seq[String])(implicit pos: source.Position): Unit = {
@@ -2629,52 +2490,49 @@ trait WebBrowser {
   
   /**
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * go to "http://www.artima.com"
    * ^
-   * </pre>
+   * }}}
    */
   object go {
 
     /**
      * Sends the browser to the passed URL.
      *
-     * <p>
      * This method enables syntax such as the following:
-     * </p>
+     * 
      *
-     * <pre class="stHighlight">
+     * {{{  <!-- class="stHighlight" -->
      * go to "http://www.artima.com"
      *    ^
-     * </pre>
+     * }}}
      *
      * @param url the URL to which to send the browser
-     * @param driver the <code>WebDriver</code> with which to drive the browser
+     * @param driver the `WebDriver` with which to drive the browser
      */
     def to(url: String)(implicit driver: WebDriver): Unit = {
       driver.get(url)
     }
 
     /**
-     * Sends the browser to the URL contained in the passed <code>Page</code> object.
+     * Sends the browser to the URL contained in the passed `Page` object.
      *
-     * <p>
      * This method enables syntax such as the following:
-     * </p>
+     * 
      *
-     * <pre class="stHighlight">
+     * {{{  <!-- class="stHighlight" -->
      * go to homePage
      *    ^
-     * </pre>
+     * }}}
      *
-     * @param page the <code>Page</code> object containing the URL to which to send the browser
-     * @param driver the <code>WebDriver</code> with which to drive the browser
+     * @param page the `Page` object containing the URL to which to send the browser
+     * @param driver the `WebDriver` with which to drive the browser
      */
     def to(page: Page)(implicit driver: WebDriver): Unit = {
       driver.get(page.url)
@@ -2684,34 +2542,32 @@ trait WebBrowser {
   /**
    * Sends the browser to the passed URL.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * goTo("http://www.artima.com")
-   * </pre>
+   * }}}
    *
    * @param url the URL to which to send the browser
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def goTo(url: String)(implicit driver: WebDriver): Unit = {
     go to url
   }
   
   /**
-   * Sends the browser to the URL contained in the passed <code>Page</code> object.
+   * Sends the browser to the URL contained in the passed `Page` object.
    *
-   * <p>
    * Here's an example:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * goTo(homePage)
-   * </pre>
+   * }}}
    *
-   * @param page the <code>Page</code> object containing the URL to which to send the browser
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param page the `Page` object containing the URL to which to send the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def goTo(page: Page)(implicit driver: WebDriver): Unit = {
     go to page
@@ -2720,7 +2576,7 @@ trait WebBrowser {
   /**
    * Closes the current browser window, and exits the driver if the current window was the only one remaining.
    *
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def close()(implicit driver: WebDriver): Unit = {
     driver.close()
@@ -2729,7 +2585,7 @@ trait WebBrowser {
   /**
    * Returns the title of the current page, or the empty string if the current page has no title.
    *
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    * @return the current page's title, or the empty string if the current page has no title
    */
   def pageTitle(implicit driver: WebDriver): String = {
@@ -2740,11 +2596,10 @@ trait WebBrowser {
   /**
    * Returns the source of the current page.
    *
-   * <p>
-   * This method invokes <code>getPageSource</code> on the passed <code>WebDriver</code> and returns the result.
-   * </p>
+   * This method invokes `getPageSource` on the passed `WebDriver` and returns the result.
+   * 
    *
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    * @return the source of the current page
    */
   def pageSource(implicit driver: WebDriver): String = driver.getPageSource
@@ -2752,57 +2607,53 @@ trait WebBrowser {
   /**
    * Returns the URL of the current page.
    *
-   * <p>
-   * This method invokes <code>getCurrentUrl</code> on the passed <code>WebDriver</code> and returns the result.
-   * </p>
+   * This method invokes `getCurrentUrl` on the passed `WebDriver` and returns the result.
+   * 
    *
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    * @return the URL of the current page
    */
   def currentUrl(implicit driver: WebDriver): String = driver.getCurrentUrl
   
   /**
    * This trait is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * Subclasses of this trait define different ways of querying for elements, enabling
    * syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on id("q")
    *          ^
-   * </pre>
+   * }}}
    */
   sealed trait Query extends Product with Serializable {
 
     /**
-     * The Selenium <code>By</code> for this query.
+     * The Selenium `By` for this query.
      */
     val by: By
 
     /**
      * The query string for this query.
      *
-     * <p>
-     * For example, the query string for <code>id("q")</code> is <code>"q"</code>.
-     * </p>
+     * For example, the query string for `id("q")` is `"q"`.
+     * 
      */
     val queryString: String
 
     /**
-     * Returns the first <code>Element</code> selected by this query, or throws <code>TestFailedException</code>
-     * if no <code>Element</code> is selected.
+     * Returns the first `Element` selected by this query, or throws `TestFailedException`
+     * if no `Element` is selected.
      *
-     * <p>
-     * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
-     * For example, if this query selects a text field, the class of the returned <code>Element</code> will
-     * be <code>TextField</code>.
-     * </p>
+     * The class of the `Element` returned will be a subtype of `Element` if appropriate.
+     * For example, if this query selects a text field, the class of the returned `Element` will
+     * be `TextField`.
+     * 
      *
-     * @param driver the <code>WebDriver</code> with which to drive the browser
-     * @return the <code>Element</code> selected by this query
+     * @param driver the `WebDriver` with which to drive the browser
+     * @return the `Element` selected by this query
      * @throws TestFailedException if nothing is selected by this query
      */
     def element(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Element = {
@@ -2822,18 +2673,17 @@ trait WebBrowser {
     }
     
     /**
-     * Returns the first <code>Element</code> selected by this query, wrapped in a <code>Some</code>, or <code>None</code>
-     * if no <code>Element</code> is selected.
+     * Returns the first `Element` selected by this query, wrapped in a `Some`, or `None`
+     * if no `Element` is selected.
      *
-     * <p>
-     * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
-     * For example, if this query selects a text field, the class of the returned <code>Element</code> will
-     * be <code>TextField</code>.
-     * </p>
+     * The class of the `Element` returned will be a subtype of `Element` if appropriate.
+     * For example, if this query selects a text field, the class of the returned `Element` will
+     * be `TextField`.
+     * 
      *
-     * @param driver the <code>WebDriver</code> with which to drive the browser
-     * @return the <code>Element</code> selected by this query, wrapped in a <code>Some</code>, or <code>None</code> if
-     *   no <code>Element</code> is selected
+     * @param driver the `WebDriver` with which to drive the browser
+     * @return the `Element` selected by this query, wrapped in a `Some`, or `None` if
+     *   no `Element` is selected
      */
     def findElement(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Option[Element] =
       try {
@@ -2844,30 +2694,27 @@ trait WebBrowser {
       }
 
     /**
-     * Returns an <code>Iterator</code> over all <code>Element</code>s selected by this query.
+     * Returns an `Iterator` over all `Element`s selected by this query.
      *
-     * <p>
-     * The class of the <code>Element</code>s produced by the returned <code>Iterator</code> will be a
-     * subtypes of <code>Element</code> if appropriate.  For example, if an <code>Element</code>representing
-     * a text field is returned by the <code>Iterator</code>, the class of the returned <code>Element</code> will
-     * be <code>TextField</code>.
-     * </p>
+     * The class of the `Element`s produced by the returned `Iterator` will be a
+     * subtypes of `Element` if appropriate.  For example, if an `Element`representing
+     * a text field is returned by the `Iterator`, the class of the returned `Element` will
+     * be `TextField`.
+     * 
      *
-     * <p>
-     * If no <code>Elements</code> are selected by this query, this method will return an empty <code>Iterator</code> will be returned.
-     * <p>
+     * If no `Elements` are selected by this query, this method will return an empty `Iterator` will be returned.
      *
-     * @param driver the <code>WebDriver</code> with which to drive the browser
-     * @return the <code>Iterator</code> over all <code>Element</code>s selected by this query
+     * @param driver the `WebDriver` with which to drive the browser
+     * @return the `Iterator` over all `Element`s selected by this query
      */
     def findAllElements(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Iterator[Element] = driver.findElements(by).asScala.toIterator.map { e => createTypedElement(e, pos) }
     
     /**
-     * Returns the first <code>WebElement</code> selected by this query, or throws <code>TestFailedException</code>
-     * if no <code>WebElement</code> is selected.
+     * Returns the first `WebElement` selected by this query, or throws `TestFailedException`
+     * if no `WebElement` is selected.
      *
-     * @param driver the <code>WebDriver</code> with which to drive the browser
-     * @return the <code>WebElement</code> selected by this query
+     * @param driver the `WebDriver` with which to drive the browser
+     * @return the `WebElement` selected by this query
      * @throws TestFailedException if nothing is selected by this query
      */
     def webElement(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): WebElement = {
@@ -2890,14 +2737,13 @@ trait WebBrowser {
   /**
    * An ID query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on id("q")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -2906,14 +2752,13 @@ trait WebBrowser {
   /**
    * A name query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on name("q")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -2922,14 +2767,13 @@ trait WebBrowser {
   /**
    * An XPath query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on xpath("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -2939,14 +2783,13 @@ trait WebBrowser {
   /**
    * A class name query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on className("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -2955,14 +2798,13 @@ trait WebBrowser {
   /**
    * A CSS selector query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on cssSelector("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -2971,14 +2813,13 @@ trait WebBrowser {
   /**
    * A link text query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on linkText("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -2987,14 +2828,13 @@ trait WebBrowser {
   /**
    * A partial link text query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on partialLinkText("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3003,14 +2843,13 @@ trait WebBrowser {
   /**
    * A tag name query.
    *
-   * <p>
    * This class enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on tagName("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3019,14 +2858,13 @@ trait WebBrowser {
   /**
    * Returns an ID query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on id("q")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3035,14 +2873,13 @@ trait WebBrowser {
   /**
    * Returns a name query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on name("q")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3051,14 +2888,13 @@ trait WebBrowser {
   /**
    * Returns an XPath query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on xpath("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3067,14 +2903,13 @@ trait WebBrowser {
   /**
    * Returns a class name query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on className("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3083,14 +2918,13 @@ trait WebBrowser {
   /**
    * Returns a CSS selector query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on cssSelector("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3099,14 +2933,13 @@ trait WebBrowser {
   /**
    * Returns a link text query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on linkText("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3115,14 +2948,13 @@ trait WebBrowser {
   /**
    * Returns a partial link text query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on partialLinkText("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3131,14 +2963,13 @@ trait WebBrowser {
   /**
    * Returns a tag name query.
    *
-   * <p>
    * This method enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on tagName("???")
    *          ^
-   * </pre>
+   * }}}
    *
    * @param queryString the query string for this query.
    */
@@ -3194,41 +3025,38 @@ trait WebBrowser {
   
 // XXX
   /**
-   * Finds and returns the first element selected by the specified <code>Query</code>, wrapped
-   * in a <code>Some</code>, or <code>None</code> if no element is selected.
+   * Finds and returns the first element selected by the specified `Query`, wrapped
+   * in a `Some`, or `None` if no element is selected.
    *
-   * <p>
-   * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
-   * For example, if the query selects a text field, the class of the returned <code>Element</code> will
-   * be <code>TextField</code>.
-   * </p>
+   * The class of the `Element` returned will be a subtype of `Element` if appropriate.
+   * For example, if the query selects a text field, the class of the returned `Element` will
+   * be `TextField`.
+   * 
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @return the <code>Element</code> selected by this query, wrapped in a <code>Some</code>, or <code>None</code> if
-   *   no <code>Element</code> is selected
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @return the `Element` selected by this query, wrapped in a `Some`, or `None` if
+   *   no `Element` is selected
    */
   def find(query: Query)(implicit driver: WebDriver): Option[Element] = query.findElement
 
   /**
    * Finds and returns the first element selected by the specified string ID or name, wrapped
-   * in a <code>Some</code>, or <code>None</code> if no element is selected. YYY
+   * in a `Some`, or `None` if no element is selected. YYY
    *
-   * <p>
    * This method will try to lookup by id first. If it cannot find 
-   * any element with an id equal to the specified <code>queryString</code>, it will then try lookup by name.
-   * </p>
+   * any element with an id equal to the specified `queryString`, it will then try lookup by name.
+   * 
    *
-   * <p>
-   * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
-   * For example, if the query selects a text field, the class of the returned <code>Element</code> will
-   * be <code>TextField</code>.
-   * </p>
+   * The class of the `Element` returned will be a subtype of `Element` if appropriate.
+   * For example, if the query selects a text field, the class of the returned `Element` will
+   * be `TextField`.
+   * 
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @return the <code>Element</code> selected by this query, wrapped in a <code>Some</code>, or <code>None</code> if
-   *   no <code>Element</code> is selected
+   * @param driver the `WebDriver` with which to drive the browser
+   * @return the `Element` selected by this query, wrapped in a `Some`, or `None` if
+   *   no `Element` is selected
    */
   def find(queryString: String)(implicit driver: WebDriver): Option[Element] = 
     new IdQuery(queryString).findElement match {
@@ -3240,42 +3068,37 @@ trait WebBrowser {
     }
 
   /**
-   * Returns an <code>Iterator</code> over all <code>Element</code>s selected by this query.
+   * Returns an `Iterator` over all `Element`s selected by this query.
    *
-   * <p>
-   * The class of the <code>Element</code>s produced by the returned <code>Iterator</code> will be a
-   * subtypes of <code>Element</code> if appropriate.  For example, if an <code>Element</code>representing
-   * a text field is returned by the <code>Iterator</code>, the class of the returned <code>Element</code> will
-   * be <code>TextField</code>.
-   * </p>
+   * The class of the `Element`s produced by the returned `Iterator` will be a
+   * subtypes of `Element` if appropriate.  For example, if an `Element`representing
+   * a text field is returned by the `Iterator`, the class of the returned `Element` will
+   * be `TextField`.
+   * 
    *
-   * <p>
-   * If no <code>Elements</code> are selected by this query, this method will return an empty <code>Iterator</code> will be returned.
-   * <p>
+   * If no `Elements` are selected by this query, this method will return an empty `Iterator` will be returned.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @return the <code>Iterator</code> over all <code>Element</code>s selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @return the `Iterator` over all `Element`s selected by this query
    */
   def findAll(query: Query)(implicit driver: WebDriver): Iterator[Element] = query.findAllElements
 
   /**
-   * Returns an <code>Iterator</code> over all <code>Element</code>s selected by the specified string ID or name 
+   * Returns an `Iterator` over all `Element`s selected by the specified string ID or name 
    *
-   * <p>
    * This method will try to lookup by id first. If it cannot find 
-   * any element with an id equal to the specified <code>queryString</code>, it will then try lookup by name.
-   * </p>
+   * any element with an id equal to the specified `queryString`, it will then try lookup by name.
+   * 
    *
-   * <p>
-   * The class of the <code>Element</code> returned will be a subtype of <code>Element</code> if appropriate.
-   * For example, if the query selects a text field, the class of the returned <code>Element</code> will
-   * be <code>TextField</code>.
-   * </p>
+   * The class of the `Element` returned will be a subtype of `Element` if appropriate.
+   * For example, if the query selects a text field, the class of the returned `Element` will
+   * be `TextField`.
+   * 
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @return the <code>Iterator</code> over all <code>Element</code>s selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @return the `Iterator` over all `Element`s selected by this query
    */
   def findAll(queryString: String)(implicit driver: WebDriver): Iterator[Element] = {
     val byIdItr = new IdQuery(queryString).findAllElements
@@ -3295,514 +3118,513 @@ trait WebBrowser {
   }
   
   /**
-   * Finds and returns the first <code>TextField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TextField</code>.
+   * Finds and returns the first `TextField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `TextField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TextField</code>
-   * @return the <code>TextField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TextField`
+   * @return the `TextField` selected by this query
    */
   def textField(query: Query)(implicit driver: WebDriver, pos: source.Position): TextField = new TextField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>TextField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TextField</code>.
+   * Finds and returns the first `TextField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `TextField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TextField</code>
-   * @return the <code>TextField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TextField`
+   * @return the `TextField` selected by this query
    */
   def textField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): TextField =
     tryQueries(queryString)(q => new TextField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>TextArea</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TextArea</code>.
+   * Finds and returns the first `TextArea` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `TextArea`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TextArea</code>
-   * @return the <code>TextArea</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TextArea`
+   * @return the `TextArea` selected by this query
    */
   def textArea(query: Query)(implicit driver: WebDriver, pos: source.Position) = new TextArea(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>TextArea</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TextArea</code>.
+   * Finds and returns the first `TextArea` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `TextArea`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TextArea</code>
-   * @return the <code>TextArea</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TextArea`
+   * @return the `TextArea` selected by this query
    */
   def textArea(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): TextArea =
     tryQueries(queryString)(q => new TextArea(q.webElement)(pos))
     
   /**
-   * Finds and returns the first <code>PasswordField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>PasswordField</code>.
+   * Finds and returns the first `PasswordField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `PasswordField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>PasswordField</code>
-   * @return the <code>PasswordField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `PasswordField`
+   * @return the `PasswordField` selected by this query
    */
   def pwdField(query: Query)(implicit driver: WebDriver, pos: source.Position): PasswordField = new PasswordField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>PasswordField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>PasswordField</code>.
+   * Finds and returns the first `PasswordField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `PasswordField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>PasswordField</code>
-   * @return the <code>PasswordField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `PasswordField`
+   * @return the `PasswordField` selected by this query
    */
   def pwdField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): PasswordField =
     tryQueries(queryString)(q => new PasswordField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>EmailField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>EmailField</code>.
+   * Finds and returns the first `EmailField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `EmailField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>EmailField</code>
-   * @return the <code>EmailField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `EmailField`
+   * @return the `EmailField` selected by this query
    */
   def emailField(query: Query)(implicit driver: WebDriver, pos: source.Position): EmailField = new EmailField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>EmailField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>EmailField</code>.
+   * Finds and returns the first `EmailField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `EmailField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>EmailField</code>
-   * @return the <code>EmailField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `EmailField`
+   * @return the `EmailField` selected by this query
    */
   def emailField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): EmailField =
     tryQueries(queryString)(q => new EmailField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>ColorField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>ColorField</code>.
+   * Finds and returns the first `ColorField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `ColorField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>ColorField</code>
-   * @return the <code>ColorField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `ColorField`
+   * @return the `ColorField` selected by this query
    */
   def colorField(query: Query)(implicit driver: WebDriver, pos: source.Position): ColorField = new ColorField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>ColorField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>ColorField</code>.
+   * Finds and returns the first `ColorField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `ColorField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>ColorField</code>
-   * @return the <code>ColorField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `ColorField`
+   * @return the `ColorField` selected by this query
    */
   def colorField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): ColorField =
     tryQueries(queryString)(q => new ColorField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>DateField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>DateField</code>.
+   * Finds and returns the first `DateField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `DateField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>DateField</code>
-   * @return the <code>DateField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `DateField`
+   * @return the `DateField` selected by this query
    */
   def dateField(query: Query)(implicit driver: WebDriver, pos: source.Position): DateField = new DateField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>DateField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>DateField</code>.
+   * Finds and returns the first `DateField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `DateField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>DateField</code>
-   * @return the <code>DateField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `DateField`
+   * @return the `DateField` selected by this query
    */
   def dateField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): DateField =
     tryQueries(queryString)(q => new DateField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>DateTimeField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>DateTimeField</code>.
+   * Finds and returns the first `DateTimeField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `DateTimeField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>DateTimeField</code>
-   * @return the <code>DateTimeField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `DateTimeField`
+   * @return the `DateTimeField` selected by this query
    */
   def dateTimeField(query: Query)(implicit driver: WebDriver, pos: source.Position): DateTimeField = new DateTimeField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>DateTimeField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>DateTimeField</code>.
+   * Finds and returns the first `DateTimeField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `DateTimeField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>DateTimeField</code>
-   * @return the <code>DateTimeField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `DateTimeField`
+   * @return the `DateTimeField` selected by this query
    */
   def dateTimeField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): DateTimeField =
     tryQueries(queryString)(q => new DateTimeField(q.webElement)(pos))
 
   /**
-   * Finds and returns the first <code>DateTimeLocalField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>DateTimeLocalField</code>.
+   * Finds and returns the first `DateTimeLocalField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `DateTimeLocalField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>DateTimeLocalField</code>
-   * @return the <code>DateTimeLocalField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `DateTimeLocalField`
+   * @return the `DateTimeLocalField` selected by this query
    */
   def dateTimeLocalField(query: Query)(implicit driver: WebDriver, pos: source.Position): DateTimeLocalField = new DateTimeLocalField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>DateTimeLocalField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>DateTimeLocalField</code>.
+   * Finds and returns the first `DateTimeLocalField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `DateTimeLocalField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>DateTimeLocalField</code>
-   * @return the <code>DateTimeLocalField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `DateTimeLocalField`
+   * @return the `DateTimeLocalField` selected by this query
    */
   def dateTimeLocalField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): DateTimeLocalField =
     tryQueries(queryString)(q => new DateTimeLocalField(q.webElement)(pos))
 
   /**
-   * Finds and returns the first <code>MonthField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>MonthField</code>.
+   * Finds and returns the first `MonthField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `MonthField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>MonthField</code>
-   * @return the <code>MonthField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `MonthField`
+   * @return the `MonthField` selected by this query
    */
   def monthField(query: Query)(implicit driver: WebDriver, pos: source.Position): MonthField = new MonthField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>MonthField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>MonthField</code>.
+   * Finds and returns the first `MonthField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `MonthField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>MonthField</code>
-   * @return the <code>MonthField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `MonthField`
+   * @return the `MonthField` selected by this query
    */
   def monthField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): MonthField =
     tryQueries(queryString)(q => new MonthField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>NumberField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>NumberField</code>.
+   * Finds and returns the first `NumberField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `NumberField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>NumberField</code>
-   * @return the <code>NumberField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `NumberField`
+   * @return the `NumberField` selected by this query
    */
   def numberField(query: Query)(implicit driver: WebDriver, pos: source.Position): NumberField = new NumberField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>NumberField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>NumberField</code>.
+   * Finds and returns the first `NumberField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `NumberField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>NumberField</code>
-   * @return the <code>NumberField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `NumberField`
+   * @return the `NumberField` selected by this query
    */
   def numberField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): NumberField =
     tryQueries(queryString)(q => new NumberField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>RangeField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>RangeField</code>.
+   * Finds and returns the first `RangeField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `RangeField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>RangeField</code>
-   * @return the <code>RangeField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `RangeField`
+   * @return the `RangeField` selected by this query
    */
   def rangeField(query: Query)(implicit driver: WebDriver, pos: source.Position): RangeField = new RangeField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>RangeField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>RangeField</code>.
+   * Finds and returns the first `RangeField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `RangeField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>RangeField</code>
-   * @return the <code>RangeField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `RangeField`
+   * @return the `RangeField` selected by this query
    */
   def rangeField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): RangeField =
     tryQueries(queryString)(q => new RangeField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>SearchField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>SearchField</code>.
+   * Finds and returns the first `SearchField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `SearchField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>SearchField</code>
-   * @return the <code>SearchField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `SearchField`
+   * @return the `SearchField` selected by this query
    */
   def searchField(query: Query)(implicit driver: WebDriver, pos: source.Position): SearchField = new SearchField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>SearchField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>SearchField</code>.
+   * Finds and returns the first `SearchField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `SearchField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>SearchField</code>
-   * @return the <code>SearchField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `SearchField`
+   * @return the `SearchField` selected by this query
    */
   def searchField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): SearchField =
     tryQueries(queryString)(q => new SearchField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>TelField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TelField</code>.
+   * Finds and returns the first `TelField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `TelField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TelField</code>
-   * @return the <code>TelField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TelField`
+   * @return the `TelField` selected by this query
    */
   def telField(query: Query)(implicit driver: WebDriver, pos: source.Position): TelField = new TelField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>TelField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TelField</code>.
+   * Finds and returns the first `TelField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `TelField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TelField</code>
-   * @return the <code>TelField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TelField`
+   * @return the `TelField` selected by this query
    */
   def telField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): TelField =
     tryQueries(queryString)(q => new TelField(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>TimeField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TimeField</code>.
+   * Finds and returns the first `TimeField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `TimeField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TimeField</code>
-   * @return the <code>TimeField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TimeField`
+   * @return the `TimeField` selected by this query
    */
   def timeField(query: Query)(implicit driver: WebDriver, pos: source.Position): TimeField = new TimeField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>TimeField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>TimeField</code>.
+   * Finds and returns the first `TimeField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `TimeField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>TimeField</code>
-   * @return the <code>TimeField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `TimeField`
+   * @return the `TimeField` selected by this query
    */
   def timeField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): TimeField =
     tryQueries(queryString)(q => new TimeField(q.webElement)(pos))
 
   /**
-   * Finds and returns the first <code>UrlField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>UrlField</code>.
+   * Finds and returns the first `UrlField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `UrlField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>UrlField</code>
-   * @return the <code>UrlField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `UrlField`
+   * @return the `UrlField` selected by this query
    */
   def urlField(query: Query)(implicit driver: WebDriver, pos: source.Position): UrlField = new UrlField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>UrlField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>UrlField</code>.
+   * Finds and returns the first `UrlField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `UrlField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>UrlField</code>
-   * @return the <code>UrlField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `UrlField`
+   * @return the `UrlField` selected by this query
    */
   def urlField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): UrlField =
     tryQueries(queryString)(q => new UrlField(q.webElement)(pos))
 
   /**
-   * Finds and returns the first <code>WeekField</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>WeekField</code>.
+   * Finds and returns the first `WeekField` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `WeekField`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>WeekField</code>
-   * @return the <code>WeekField</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `WeekField`
+   * @return the `WeekField` selected by this query
    */
   def weekField(query: Query)(implicit driver: WebDriver, pos: source.Position): WeekField = new WeekField(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>WeekField</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>WeekField</code>.
+   * Finds and returns the first `WeekField` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `WeekField`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>WeekField</code>
-   * @return the <code>WeekField</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `WeekField`
+   * @return the `WeekField` selected by this query
    */
   def weekField(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): WeekField =
     tryQueries(queryString)(q => new WeekField(q.webElement)(pos))
 
   /**
-   * Finds and returns <code>RadioButtonGroup</code> selected by the specified group name, throws <code>TestFailedException</code> if 
-   * no element with the specified group name is found, or found any element with the specified group name but not a <code>RadioButton</code>
+   * Finds and returns `RadioButtonGroup` selected by the specified group name, throws `TestFailedException` if 
+   * no element with the specified group name is found, or found any element with the specified group name but not a `RadioButton`
    * 
    * @param groupName the group name with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if no element with the specified group name is found, or found any element with the specified group name but not a <code>RadioButton</code>
-   * @return the <code>RadioButtonGroup</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if no element with the specified group name is found, or found any element with the specified group name but not a `RadioButton`
+   * @return the `RadioButtonGroup` selected by this query
    */
   def radioButtonGroup(groupName: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]) = new RadioButtonGroup(groupName, driver)(pos)
   
   /**
-   * Finds and returns the first <code>RadioButton</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>RadioButton</code>.
+   * Finds and returns the first `RadioButton` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `RadioButton`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>RadioButton</code>
-   * @return the <code>RadioButton</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `RadioButton`
+   * @return the `RadioButton` selected by this query
    */
   def radioButton(query: Query)(implicit driver: WebDriver, pos: source.Position) = new RadioButton(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>RadioButton</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>RadioButton</code>.
+   * Finds and returns the first `RadioButton` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `RadioButton`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>RadioButton</code>
-   * @return the <code>RadioButton</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `RadioButton`
+   * @return the `RadioButton` selected by this query
    */
   def radioButton(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): RadioButton =
     tryQueries(queryString)(q => new RadioButton(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>Checkbox</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>Checkbox</code>.
+   * Finds and returns the first `Checkbox` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `Checkbox`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>Checkbox</code>
-   * @return the <code>Checkbox</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `Checkbox`
+   * @return the `Checkbox` selected by this query
    */
   def checkbox(query: Query)(implicit driver: WebDriver, pos: source.Position) = new Checkbox(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>Checkbox</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>Checkbox</code>.
+   * Finds and returns the first `Checkbox` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `Checkbox`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>Checkbox</code>
-   * @return the <code>Checkbox</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `Checkbox`
+   * @return the `Checkbox` selected by this query
    */
   def checkbox(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Checkbox =
     tryQueries(queryString)(q => new Checkbox(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>SingleSel</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>SingleSel</code>.
+   * Finds and returns the first `SingleSel` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `SingleSel`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>SingleSel</code>
-   * @return the <code>SingleSel</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `SingleSel`
+   * @return the `SingleSel` selected by this query
    */
   def singleSel(query: Query)(implicit driver: WebDriver, pos: source.Position) = new SingleSel(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>SingleSel</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>SingleSel</code>.
+   * Finds and returns the first `SingleSel` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `SingleSel`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>SingleSel</code>
-   * @return the <code>SingleSel</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `SingleSel`
+   * @return the `SingleSel` selected by this query
    */
   def singleSel(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): SingleSel =
     tryQueries(queryString)(q => new SingleSel(q.webElement)(pos))
   
   /**
-   * Finds and returns the first <code>MultiSel</code> selected by the specified <code>Query</code>, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>MultiSel</code>.
+   * Finds and returns the first `MultiSel` selected by the specified `Query`, throws `TestFailedException` 
+   * if element not found or the found element is not a `MultiSel`.
    *
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>MultiSel</code>
-   * @return the <code>MultiSel</code> selected by this query
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `MultiSel`
+   * @return the `MultiSel` selected by this query
    */
   def multiSel(query: Query)(implicit driver: WebDriver, pos: source.Position) = new MultiSel(query.webElement)(pos)
   
   /**
-   * Finds and returns the first <code>MultiSel</code> selected by the specified string ID or name, throws <code>TestFailedException</code> 
-   * if element not found or the found element is not a <code>MultiSel</code>.
+   * Finds and returns the first `MultiSel` selected by the specified string ID or name, throws `TestFailedException` 
+   * if element not found or the found element is not a `MultiSel`.
    *
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @throws TestFailedException if element not found or found element is not a <code>MultiSel</code>
-   * @return the <code>MultiSel</code> selected by this query
+   * @param driver the `WebDriver` with which to drive the browser
+   * @throws TestFailedException if element not found or found element is not a `MultiSel`
+   * @return the `MultiSel` selected by this query
    */
   def multiSel(queryString: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): MultiSel =
     tryQueries(queryString)(q => new MultiSel(q.webElement)(pos))
     
   /**
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * click on "aButton"
    * ^
-   * </pre>
+   * }}}
    */
   object click {
     /**
-     * Click on the specified <code>WebElement</code>
+     * Click on the specified `WebElement`
      * 
-     * @param element the <code>WebElement</code> to click on
+     * @param element the `WebElement` to click on
      */
     def on(element: WebElement): Unit = {
       element.click()
     }
     
     /**
-     * Click on the first <code>Element</code> selected by the specified <code>Query</code>
+     * Click on the first `Element` selected by the specified `Query`
      * 
-     * @param query the <code>Query</code> with which to search
-     * @param driver the <code>WebDriver</code> with which to drive the browser
+     * @param query the `Query` with which to search
+     * @param driver the `WebDriver` with which to drive the browser
      */
     def on(query: Query)(implicit driver: WebDriver): Unit = {
       query.webElement.click()
     }
   
     /**
-     * Click on the first <code>Element</code> selected by the specified string ID or name
+     * Click on the first `Element` selected by the specified string ID or name
      * 
      * @param queryString the string with which to search, first by ID then by name
-     * @param driver the <code>WebDriver</code> with which to drive the browser
+     * @param driver the `WebDriver` with which to drive the browser
      */
     def on(queryString: String)(implicit driver: WebDriver): Unit = {
       // stack depth is not correct if just call the button("...") directly.
@@ -3811,9 +3633,9 @@ trait WebBrowser {
     }
     
     /**
-     * Click on the specified <code>Element</code>
+     * Click on the specified `Element`
      * 
-     * @param element the <code>Element</code> to click on
+     * @param element the `Element` to click on
      */
     def on(element: Element): Unit = {
       element.underlying.click()
@@ -3821,38 +3643,38 @@ trait WebBrowser {
   }
   
   /**
-   * Click on the specified <code>WebElement</code>
+   * Click on the specified `WebElement`
    * 
-   * @param element the <code>WebElement</code> to click on
+   * @param element the `WebElement` to click on
    */
   def clickOn(element: WebElement): Unit = {
     click on element
   }
   
   /**
-   * Click on the first <code>Element</code> selected by the specified <code>Query</code>
+   * Click on the first `Element` selected by the specified `Query`
    * 
-   * @param query the <code>Query</code> with which to search
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param query the `Query` with which to search
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def clickOn(query: Query)(implicit driver: WebDriver): Unit = {
     click on query
   }
   
   /**
-   * Click on the first <code>Element</code> selected by the specified string ID or name
+   * Click on the first `Element` selected by the specified string ID or name
    * 
    * @param queryString the string with which to search, first by ID then by name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def clickOn(queryString: String)(implicit driver: WebDriver): Unit = {
     click on queryString
   }
   
   /**
-   * Click on the specified <code>Element</code>
+   * Click on the specified `Element`
    * 
-   * @param element the <code>Element</code> to click on
+   * @param element the `Element` to click on
    */
   def clickOn(element: Element): Unit = {
     click on element
@@ -3863,7 +3685,7 @@ trait WebBrowser {
    * in a form or underlying WebDriver encounters problem when submitting the form.  If this causes the current page to change, 
    * this call will block until the new page is loaded.
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    * @throws TestFailedException if current active element is not in a form or underlying WebDriver encounters problem when submitting the form.
    */
   def submit()(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
@@ -3891,23 +3713,20 @@ trait WebBrowser {
   /**
    * Sets the amount of time the driver should wait when searching for an element that is not immediately present.
    *
-   * <p>
    * When searching for requested elements, Selenium will poll the page until the requested element (or at least one of multiple requested
    * elements) is found or this "implicit wait" timeout has expired.
-   * If the timeout expires, Selenium will throw <code>NoSuchElementException</code>, which ScalaTest's Selenium DSL will wrap in a <code>TestFailedException</code>.
-   * </p>
+   * If the timeout expires, Selenium will throw `NoSuchElementException`, which ScalaTest's Selenium DSL will wrap in a `TestFailedException`.
+   * 
    *
-   * <p>
-   * You can alternatively set this timeout to zero and use ScalaTest's <code>eventually</code> construct.
-   * </p>
+   * You can alternatively set this timeout to zero and use ScalaTest's `eventually` construct.
+   * 
    *
-   * <p>
-   * This method invokes <code>manage.timeouts.implicitlyWait</code> on the passed <code>WebDriver</code>. See the documentation of Selenium's
-   * <code>WebDriver#Timeouts</code> interface for more information.
-   * </p>
+   * This method invokes `manage.timeouts.implicitlyWait` on the passed `WebDriver`. See the documentation of Selenium's
+   * `WebDriver#Timeouts` interface for more information.
+   * 
    *
    * @param timeout the time span to implicitly wait
-   * @param driver the <code>WebDriver</code> on which to set the implicit wait
+   * @param driver the `WebDriver` on which to set the implicit wait
    */
   def implicitlyWait(timeout: Span)(implicit driver: WebDriver): Unit = {
     driver.manage.timeouts.implicitlyWait(timeout.totalNanos, TimeUnit.NANOSECONDS)
@@ -3916,7 +3735,7 @@ trait WebBrowser {
   /**
    * Close all windows, and exit the driver.
    * 
-   * @param driver the <code>WebDriver</code> on which to quit. 
+   * @param driver the `WebDriver` on which to quit. 
    */
   def quit()(implicit driver: WebDriver): Unit = {
     driver.quit()
@@ -3925,37 +3744,36 @@ trait WebBrowser {
   /**
    * Get an opaque handle to current active window that uniquely identifies it within the implicit driver instance.
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def windowHandle(implicit driver: WebDriver): String = driver.getWindowHandle
   
   /**
    * Get a set of window handles which can be used to iterate over all open windows
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def windowHandles(implicit driver: WebDriver): Set[String] = driver.getWindowHandles.asScala.toSet
   
   /**
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * switch to alertBox
    * ^
-   * </pre>
+   * }}}
    */
   object switch {
     /**
-     * Switch to the specified <code>SwitchTarget</code>
+     * Switch to the specified `SwitchTarget`
      * 
-     * @param target the <code>SwitchTarget</code> to switch to
-     * @param driver the <code>WebDriver</code> with which to drive the browser
-     * @return instance of specified <code>SwitchTarget</code>'s type parameter
+     * @param target the `SwitchTarget` to switch to
+     * @param driver the `WebDriver` with which to drive the browser
+     * @return instance of specified `SwitchTarget`'s type parameter
      */
     def to[T](target: SwitchTarget[T])(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): T = {
       target.switch(driver)(pos)
@@ -3964,61 +3782,57 @@ trait WebBrowser {
   
   /**
    * This value supports switching to the currently active element in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to activeElement
    *           ^
-   * </pre>
+   * }}}
    */
   val activeElement = new ActiveElementTarget()
   
   /**
    * This value supports switching to the alert box in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to alertBox
    *           ^
-   * </pre>
+   * }}}
    */
   val alertBox = new AlertTarget()
   
   /**
    * This value supports switching to the default content in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to defaultContent
    *           ^
-   * </pre>
+   * }}}
    */
   val defaultContent = new DefaultContentTarget()
   
   /**
    * This method supports switching to a frame by index in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to frame(0)
    *           ^
-   * </pre>
+   * }}}
    * 
    * @param index the index of frame to switch to
    * @return a FrameIndexTarget instance
@@ -4027,16 +3841,15 @@ trait WebBrowser {
   
   /**
    * This method supports switching to a frame by name or ID in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to frame("name")
    *           ^
-   * </pre>
+   * }}}
    * 
    * @param nameOrId name or ID of the frame to switch to
    * @return a FrameNameOrIdTarget instance
@@ -4045,43 +3858,42 @@ trait WebBrowser {
   
   /**
    * This method supports switching to a frame by web element in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    * 
-   * @param element <code>WebElement</code> which is contained in the frame to switch to
+   * @param element `WebElement` which is contained in the frame to switch to
    * @return a FrameWebElementTarget instance
    */
   def frame(element: WebElement) = new FrameWebElementTarget(element)
   
   /**
    * This method supports switching to a frame by element in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    * 
-   * @param element <code>Element</code> which is contained in the frame to switch to
+   * @param element `Element` which is contained in the frame to switch to
    * @return a FrameElementTarget instance
    */
   def frame(element: Element) = new FrameElementTarget(element)
   
   /**
-   * This method supports switching to a frame by <code>Query</code> in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * This method supports switching to a frame by `Query` in ScalaTest's Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    * 
-   * @param query <code>Query</code> used to select <code>WebElement</code> which is contained in the frame to switch to 
+   * @param query `Query` used to select `WebElement` which is contained in the frame to switch to 
    * @return a FrameWebElementTarget instance
    */
   def frame(query: Query)(implicit driver: WebDriver) = new FrameWebElementTarget(query.webElement)
   
   /**
    * This class supports switching to a window by name or handle in ScalaTest's Selenium DSL.
-   * Please see the documentation for <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * Please see the documentation for <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This class is enables the following syntax:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * switch to window(windowHandle)
    *           ^
-   * </pre>
+   * }}}
    * 
    * @param nameOrHandle name or window handle of the window to switch to
    * @return a WindowTarget instance
@@ -4089,18 +3901,18 @@ trait WebBrowser {
   def window(nameOrHandle: String) = new WindowTarget(nameOrHandle)
   
   /**
-   * Switch to the specified <code>SwitchTarget</code>
+   * Switch to the specified `SwitchTarget`
    * 
-   * @param target the <code>SwitchTarget</code> to switch to
-   * @param driver the <code>WebDriver</code> with which to drive the browser
-   * @return instance of specified <code>SwitchTarget</code>'s type parameter
+   * @param target the `SwitchTarget` to switch to
+   * @param driver the `WebDriver` with which to drive the browser
+   * @return instance of specified `SwitchTarget`'s type parameter
    */
   def switchTo[T](target: SwitchTarget[T])(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): T = switch to target
   
   /**
    * Go back to previous page.
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def goBack()(implicit driver: WebDriver): Unit = {
     driver.navigate.back()
@@ -4109,7 +3921,7 @@ trait WebBrowser {
   /**
    * Go forward to next page.
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def goForward()(implicit driver: WebDriver): Unit = {
     driver.navigate.forward()
@@ -4118,7 +3930,7 @@ trait WebBrowser {
   /**
    * Reload the current page.
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def reloadPage()(implicit driver: WebDriver): Unit = {
     driver.navigate.refresh()
@@ -4126,16 +3938,15 @@ trait WebBrowser {
   
   /**
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * add cookie("aName", "aValue") 
    * ^
-   * </pre>
+   * }}}
    */
   object add {
     private def addCookie(cookie: Cookie)(implicit driver: WebDriver): Unit = {
@@ -4152,7 +3963,7 @@ trait WebBrowser {
      * @param expiry cookie's expiry data
      * @param domain cookie's domain name
      * @param secure whether this cookie is secured.
-     * @param driver the <code>WebDriver</code> with which to drive the browser 
+     * @param driver the `WebDriver` with which to drive the browser 
      */
     def cookie(name: String, value: String, path: String = "/", expiry: Date = null, domain: String = null, secure: Boolean = false)(implicit driver: WebDriver): Unit = { 
       addCookie(new Cookie(name, value, domain, path, expiry, secure))
@@ -4184,19 +3995,18 @@ trait WebBrowser {
   
   /**
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * delete cookie "aName" 
    * ^
    * 
    * delete all cookies
    * ^
-   * </pre>
+   * }}}
    */
   object delete {
     private def deleteCookie(name: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
@@ -4214,7 +4024,7 @@ trait WebBrowser {
      * Delete cookie with the specified name from web browser, throws TestFailedException if the specified cookie does not exists.
      * 
      * @param name cookie's name
-     * @param driver the <code>WebDriver</code> with which to drive the browser
+     * @param driver the `WebDriver` with which to drive the browser
      */
     def cookie(name: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
       deleteCookie(name)
@@ -4223,7 +4033,7 @@ trait WebBrowser {
     /**
      * Delete all cookies in the current domain from web browser.
      * 
-     * @param driver the <code>WebDriver</code> with which to drive the browser
+     * @param driver the `WebDriver` with which to drive the browser
      */
     def all(cookies: CookiesNoun)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
       driver.manage.deleteAllCookies()
@@ -4239,7 +4049,7 @@ trait WebBrowser {
      * @param expiry cookie's expiry data
      * @param domain cookie's domain name
      * @param secure whether this cookie is secured.
-     * @param driver the <code>WebDriver</code> with which to drive the browser 
+     * @param driver the `WebDriver` with which to drive the browser 
      */
   def addCookie(name: String, value: String, path: String = "/", expiry: Date = null, domain: String = null, secure: Boolean = false)(implicit driver: WebDriver): Unit = {
     add cookie (name, value, path, expiry, domain, secure)
@@ -4249,7 +4059,7 @@ trait WebBrowser {
    * Delete cookie with the specified name from web browser, throws TestFailedException if the specified cookie does not exists.
    * 
    * @param name cookie's name
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def deleteCookie(name: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
     delete cookie name
@@ -4258,7 +4068,7 @@ trait WebBrowser {
   /**
    * Delete all cookies in the current domain from web browser.
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    */
   def deleteAllCookies()(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
     delete all cookies
@@ -4267,32 +4077,31 @@ trait WebBrowser {
   /**
    * Check if screenshot is supported
    * 
-   * @param driver the <code>WebDriver</code> with which to drive the browser
+   * @param driver the `WebDriver` with which to drive the browser
    * @return true if screenshot is supported, false otherwise
    */
   def isScreenshotSupported(implicit driver: WebDriver): Boolean = driver.isInstanceOf[TakesScreenshot]
   
   /**
    * This object is part of ScalaTest's Selenium DSL. Please see the documentation for
-   * <a href="WebBrowser.html"><code>WebBrowser</code></a> for an overview of the Selenium DSL.
+   * <a href="WebBrowser.html">`WebBrowser`</a> for an overview of the Selenium DSL.
    *
-   * <p>
    * This object enables syntax such as the following:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * capture
    * ^
    * 
    * capture to "MyScreenshot.png" 
    * ^
-   * </pre>
+   * }}}
    */
   object capture {
     
     /**
      * Capture screenshot and save it as the specified name (if file name does not end with .png, it will be extended automatically) in capture directory, 
-     * which by default is system property's java.io.tmpdir.  You can change capture directory by calling <code>setCaptureDir</code>
+     * which by default is system property's java.io.tmpdir.  You can change capture directory by calling `setCaptureDir`
      * 
      * @param fileName screenshot file name, if does not end with .png, it will be extended automatically
      */
@@ -4330,7 +4139,7 @@ trait WebBrowser {
     
     /**
      * Capture screenshot and save it in capture directory, which by default is system property's java.io.tmpdir.  
-     * You can change capture directory by calling <code>setCaptureDir</code>
+     * You can change capture directory by calling `setCaptureDir`
      */
     def apply()(implicit driver: WebDriver): File = {
       driver match {
@@ -4349,7 +4158,7 @@ trait WebBrowser {
   
   /**
    * Capture screenshot and save it as the specified name (if file name does not end with .png, it will be extended automatically) in capture directory, 
-   * which by default is system property's java.io.tmpdir.  You can change capture directory by calling <code>setCaptureDir</code>
+   * which by default is system property's java.io.tmpdir.  You can change capture directory by calling `setCaptureDir`
    * 
    * @param fileName screenshot file name, if does not end with .png, it will be extended automatically
    */
@@ -4376,12 +4185,12 @@ trait WebBrowser {
   }
   
   /**
-   * Execute the given function, if <code>ModifiableMessage</code> exception is thrown from the given function, 
+   * Execute the given function, if `ModifiableMessage` exception is thrown from the given function, 
    * a screenshot will be captured automatically into capture directory, which by default is system property's java.io.tmpdir.  
-   * You can change capture directory by calling <code>setCaptureDir</code>
+   * You can change capture directory by calling `setCaptureDir`
    * 
    * @param fun function to execute
-   * @return the value returned by <code>fun</code>
+   * @return the value returned by `fun`
    */
   def withScreenshot[T](fun: => T)(implicit driver: WebDriver): T = {
     try {
@@ -4404,13 +4213,11 @@ trait WebBrowser {
   /**
    * Executes JavaScript in the context of the currently selected frame or window.  The script fragment provided will be executed as the body of an anonymous function. 
    * 
-   * <p>
-   * Within the script, you can use <code>document</code> to refer to the current document. Local variables will not be available once the script has finished executing, but global variables will.
-   * </p>
+   * Within the script, you can use `document` to refer to the current document. Local variables will not be available once the script has finished executing, but global variables will.
    * 
-   * <p>
+   * 
    * To return a value (e.g. if the script contains a return statement), then the following steps will be taken:
-   * </p>
+   * 
    * 
    * <ol>
    *   <li>For an HTML element, this method returns a WebElement</li>
@@ -4422,13 +4229,12 @@ trait WebBrowser {
    *   <li>Unless the value is null or there is no return value, in which null is returned</li>
    * </ol>
    *
-   * <p>
    * Script arguments must be a number, boolean, String, WebElement, or a List of any combination of these. An exception will
    * be thrown if the arguments do not meet these criteria. The arguments will be made available to the JavaScript via the "arguments" variable.
    * (Note that although this behavior is specified by <a href="http://selenium.googlecode.com/git/docs/api/java/org/openqa/selenium/JavascriptExecutor.html">Selenium's JavascriptExecutor Javadoc</a>,
-   * it may still be possible for the underlying <code>JavascriptExecutor</code> implementation to return an objects of other types.
-   * For example, <code>HtmlUnit</code> has been observed to return a <code>java.util.Map</code> for a Javascript object.)
-   * </p>
+   * it may still be possible for the underlying `JavascriptExecutor` implementation to return an objects of other types.
+   * For example, `HtmlUnit` has been observed to return a `java.util.Map` for a Javascript object.)
+   * 
    * 
    * @param script the JavaScript to execute
    * @param args the arguments to the script, may be empty
@@ -4445,9 +4251,8 @@ trait WebBrowser {
    * scripts executed with this method must explicitly signal they are finished by invoking the provided callback. This callback is always injected into 
    * the executed function as the last argument.
    * 
-   * <p>
    * The first argument passed to the callback function will be used as the script's result. This value will be handled as follows: 
-   * </p>
+   * 
    * 
    * <ol> 
    *   <li>For an HTML element, this method returns a WebElement</li>
@@ -4458,13 +4263,12 @@ trait WebBrowser {
    *   <li>Unless the value is null or there is no return value, in which null is returned</li>
    * </ol>
    * 
-   * <p>
    * Script arguments must be a number, boolean, String, WebElement, or a List of any combination of these. An exception will 
    * be thrown if the arguments do not meet these criteria. The arguments will be made available to the JavaScript via the "arguments" variable.
    * (Note that although this behavior is specified by <a href="http://selenium.googlecode.com/git/docs/api/java/org/openqa/selenium/JavascriptExecutor.html">Selenium's JavascriptExecutor Javadoc</a>,
-   * it may still be possible for the underlying <code>JavascriptExecutor</code> implementation to return an objects of other types.
-   * For example, <code>HtmlUnit</code> has been observed to return a <code>java.util.Map</code> for a Javascript object.)
-   * </p>
+   * it may still be possible for the underlying `JavascriptExecutor` implementation to return an objects of other types.
+   * For example, `HtmlUnit` has been observed to return a `java.util.Map` for a Javascript object.)
+   * 
    * 
    * @param script the JavaScript to execute
    * @param args the arguments to the script, may be empty
@@ -4487,10 +4291,10 @@ trait WebBrowser {
 
   // Clears the text field or area, then presses the passed keys
   /**
-   * Clears the current active <code>TextField</code> or <code>TextArea</code>, and presses the passed keys.  
-   * Throws <code>TestFailedException</code> if current active is not <code>TextField</code> or <code>TextArea</code>.
+   * Clears the current active `TextField` or `TextArea`, and presses the passed keys.  
+   * Throws `TestFailedException` if current active is not `TextField` or `TextArea`.
    * 
-   * @param value keys to press in current active <code>TextField</code> or <code>TextArea</code>
+   * @param value keys to press in current active `TextField` or `TextArea`
    */
   def enter(value: String)(implicit driver: WebDriver, pos: source.Position = implicitly[source.Position]): Unit = {
     val ae = switch to activeElement
@@ -4523,74 +4327,70 @@ trait WebBrowser {
 }
 
 /**
- * Companion object that facilitates the importing of <code>WebBrowser</code> members as 
- * an alternative to mixing it in. One use case is to import <code>WebBrowser</code> members so you can use
+ * Companion object that facilitates the importing of `WebBrowser` members as 
+ * an alternative to mixing it in. One use case is to import `WebBrowser` members so you can use
  * them in the Scala interpreter.
  */
 object WebBrowser extends WebBrowser
 
 /**
- * Trait declaring a <code>webDriver</code> field that enables tests to be abstracted across different kinds of <code>WebDriver</code>s.
+ * Trait declaring a `webDriver` field that enables tests to be abstracted across different kinds of `WebDriver`s.
  *
- * <p>
  * This trait enables you to place tests that you want to run in multiple browsers in a trait with a self type of
- * <code>WebBrowser with Driver</code>, like this:
- * </p>
+ * `WebBrowser with Driver`, like this:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * trait MyBrowserTests {
  *   this: WebBrowser with Driver =&gt;
  *   // Your browser tests
  * }
- * </pre>
+ * }}}
  *
  * Then you can create concrete subclasses for each actual browser you want to run those tests in:
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class MyBrowserTestsWithChrome extends MyBrowserTests with Chrome
  * class MyBrowserTestsWithSafari extends MyBrowserTests with Safari
  * class MyBrowserTestsWithInternetExplorer extends MyBrowserTests with InternetExplorer
  * class MyBrowserTestsWithFirefox extends MyBrowserTests with Firefox
- * </pre>
+ * }}}
  */
 trait Driver { this: WebBrowser =>
 
   /**
-   * An implicit <code>WebDriver</code>.
+   * An implicit `WebDriver`.
    *
-   * <p>
-   * This abstract field is implemented by subtraits <code>HtmlUnit</code>, <code>FireFox</code>, <code>Safari</code>, <code>Chrome</code>,
-   * and <code>InternetExplorer</code>.
-   * </p>
+   * This abstract field is implemented by subtraits `HtmlUnit`, `FireFox`, `Safari`, `Chrome`,
+   * and `InternetExplorer`.
+   * 
    */
   implicit val webDriver: WebDriver
 }
 
 /**
- * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for HTMLUnit (an <code>org.openqa.selenium.htmlunit.HtmlUnitDriver</code>), with JavaScript
+ * `WebBrowser` subtrait that defines an implicit `WebDriver` for HTMLUnit (an `org.openqa.selenium.htmlunit.HtmlUnitDriver`), with JavaScript
  * enabled by default.
  *
- * <p>
  * Note: You can disable JavaScript with:
- * </p>
+ * 
  *
- * <pre>
+ * {{{
  * webDriver.setJavascriptEnabled(false)
- * </pre>
+ * }}}
  */
 trait HtmlUnit extends WebBrowser with Driver with ScreenshotCapturer {
 
   /**
-   * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for HTMLUnit (an <code>org.openqa.selenium.htmlunit.HtmlUnitDriver</code>), with JavaScript
+   * `WebBrowser` subtrait that defines an implicit `WebDriver` for HTMLUnit (an `org.openqa.selenium.htmlunit.HtmlUnitDriver`), with JavaScript
    * enabled by default.
    *
-   * <p>
    * Note: You can disable JavaScript with:
-   * </p>
+   * 
    *
-   * <pre>
+   * {{{
    * webDriver.setJavascriptEnabled(false)
-   * </pre>
+   * }}}
    */
   implicit val webDriver = new HtmlUnitDriver()
 
@@ -4605,40 +4405,37 @@ trait HtmlUnit extends WebBrowser with Driver with ScreenshotCapturer {
 }
 
 /**
- * Companion object that facilitates the importing of <code>HtmlUnit</code> members as 
- * an alternative to mixing it in. One use case is to import <code>HtmlUnit</code> members so you can use
+ * Companion object that facilitates the importing of `HtmlUnit` members as 
+ * an alternative to mixing it in. One use case is to import `HtmlUnit` members so you can use
  * them in the Scala interpreter.
  */
 object HtmlUnit extends HtmlUnit
 
 /**
- * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Firefox (an <code>org.openqa.selenium.firefox.FirefoxDriver</code>).
+ * `WebBrowser` subtrait that defines an implicit `WebDriver` for Firefox (an `org.openqa.selenium.firefox.FirefoxDriver`).
  *
- * <p>
- * The <code>FirefoxDriver</code> uses the <code>FirefoxProfile</code> defined as <code>firefoxProfile</code>. By default this is just a <code>new FirefoxProfile</code>.
- * You can mutate this object to modify the profile, or override <code>firefoxProfile</code>.
- * </p>
+ * The `FirefoxDriver` uses the `FirefoxProfile` defined as `firefoxProfile`. By default this is just a `new FirefoxProfile`.
+ * You can mutate this object to modify the profile, or override `firefoxProfile`.
+ * 
  */
 trait Firefox extends WebBrowser with Driver with ScreenshotCapturer {
 
   /**
-   * The <code>FirefoxProfile</code> passed to the constructor of the <code>FirefoxDriver</code> returned by <code>webDriver</code>.
+   * The `FirefoxProfile` passed to the constructor of the `FirefoxDriver` returned by `webDriver`.
    *
-   * <p>
-   * The <code>FirefoxDriver</code> uses the <code>FirefoxProfile</code> defined as <code>firefoxProfile</code>. By default this is just a <code>new FirefoxProfile</code>.
-   * You can mutate this object to modify the profile, or override <code>firefoxProfile</code>.
-   * </p>
+   * The `FirefoxDriver` uses the `FirefoxProfile` defined as `firefoxProfile`. By default this is just a `new FirefoxProfile`.
+   * You can mutate this object to modify the profile, or override `firefoxProfile`.
+   * 
    */
   val firefoxProfile = new FirefoxProfile()
 
   /**
-   * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Firefox (an <code>org.openqa.selenium.firefox.FirefoxDriver</code>), with a default
+   * `WebBrowser` subtrait that defines an implicit `WebDriver` for Firefox (an `org.openqa.selenium.firefox.FirefoxDriver`), with a default
    * Firefox profile.
    *
-   * <p>
-   * The <code>FirefoxDriver</code> uses the <code>FirefoxProfile</code> defined as <code>firefoxProfile</code>. By default this is just a <code>new FirefoxProfile</code>.
-   * You can mutate this object to modify the profile, or override <code>firefoxProfile</code>.
-   * </p>
+   * The `FirefoxDriver` uses the `FirefoxProfile` defined as `firefoxProfile`. By default this is just a `new FirefoxProfile`.
+   * You can mutate this object to modify the profile, or override `firefoxProfile`.
+   * 
    */
   implicit val webDriver: WebDriver = new FirefoxDriver(firefoxProfile)
 
@@ -4651,18 +4448,18 @@ trait Firefox extends WebBrowser with Driver with ScreenshotCapturer {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Firefox</code> members as 
- * an alternative to mixing it in. One use case is to import <code>Firefox</code> members so you can use
+ * Companion object that facilitates the importing of `Firefox` members as 
+ * an alternative to mixing it in. One use case is to import `Firefox` members so you can use
  * them in the Scala interpreter.
  */
 object Firefox extends Firefox
 
 /**
- * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Safari (an <code>org.openqa.selenium.safari.SafariDriver</code>).
+ * `WebBrowser` subtrait that defines an implicit `WebDriver` for Safari (an `org.openqa.selenium.safari.SafariDriver`).
  */
 trait Safari extends WebBrowser with Driver with ScreenshotCapturer {
   /**
-   * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Safari (an <code>org.openqa.selenium.safari.SafariDriver</code>).
+   * `WebBrowser` subtrait that defines an implicit `WebDriver` for Safari (an `org.openqa.selenium.safari.SafariDriver`).
    */
   implicit val webDriver = new SafariDriver()
 
@@ -4675,18 +4472,18 @@ trait Safari extends WebBrowser with Driver with ScreenshotCapturer {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Safari</code> members as 
- * an alternative to mixing it in. One use case is to import <code>Safari</code> members so you can use
+ * Companion object that facilitates the importing of `Safari` members as 
+ * an alternative to mixing it in. One use case is to import `Safari` members so you can use
  * them in the Scala interpreter.
  */
 object Safari extends Safari
 
 /**
- * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Chrome (an <code>org.openqa.selenium.chrome.ChromeDriver</code>).
+ * `WebBrowser` subtrait that defines an implicit `WebDriver` for Chrome (an `org.openqa.selenium.chrome.ChromeDriver`).
  */
 trait Chrome extends WebBrowser with Driver with ScreenshotCapturer {
   /**
-   * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Chrome (an <code>org.openqa.selenium.chrome.ChromeDriver</code>).
+   * `WebBrowser` subtrait that defines an implicit `WebDriver` for Chrome (an `org.openqa.selenium.chrome.ChromeDriver`).
    */
   implicit val webDriver = new ChromeDriver()
 
@@ -4699,18 +4496,18 @@ trait Chrome extends WebBrowser with Driver with ScreenshotCapturer {
 }
 
 /**
- * Companion object that facilitates the importing of <code>Chrome</code> members as 
- * an alternative to mixing it in. One use case is to import <code>Chrome</code> members so you can use
+ * Companion object that facilitates the importing of `Chrome` members as 
+ * an alternative to mixing it in. One use case is to import `Chrome` members so you can use
  * them in the Scala interpreter.
  */
 object Chrome extends Chrome
 
 /**
- * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Internet Explorer (an <code>org.openqa.selenium.ie.InternetExplorerDriver</code>).
+ * `WebBrowser` subtrait that defines an implicit `WebDriver` for Internet Explorer (an `org.openqa.selenium.ie.InternetExplorerDriver`).
  */
 trait InternetExplorer extends WebBrowser with Driver with ScreenshotCapturer {
   /**
-   * <code>WebBrowser</code> subtrait that defines an implicit <code>WebDriver</code> for Internet Explorer (an <code>org.openqa.selenium.ie.InternetExplorerDriver</code>).
+   * `WebBrowser` subtrait that defines an implicit `WebDriver` for Internet Explorer (an `org.openqa.selenium.ie.InternetExplorerDriver`).
    */
   implicit val webDriver = new InternetExplorerDriver()
 
@@ -4723,8 +4520,8 @@ trait InternetExplorer extends WebBrowser with Driver with ScreenshotCapturer {
 }
 
 /**
- * Companion object that facilitates the importing of <code>InternetExplorer</code> members as 
- * an alternative to mixing it in. One use case is to import <code>InternetExplorer</code> members so you can use
+ * Companion object that facilitates the importing of `InternetExplorer` members as 
+ * an alternative to mixing it in. One use case is to import `InternetExplorer` members so you can use
  * them in the Scala interpreter.
  */
 object InternetExplorer extends InternetExplorer

@@ -50,7 +50,7 @@ import scala.annotation.tailrec
 import org.scalatest.exceptions.NotAllowedException
 
 /**
- * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html"><code>Matchers</code></a> for an overview of
+ * This class is part of the ScalaTest matchers DSL. Please see the documentation for <a href="Matchers.html">`Matchers`</a> for an overview of
  * the matchers DSL.
  *
  * @author Bill Venners
@@ -60,10 +60,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not equal (7)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def equal(right: Any)(implicit equality: Equality[T]): Assertion = {
     if (equality.areEqual(left, right) != shouldBeTrue)
@@ -75,10 +75,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be (7)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(right: Any): Assertion = {
     if ((left == right) != shouldBeTrue)
@@ -90,10 +90,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be &lt;= (7)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(comparison: ResultOfLessThanOrEqualToComparison[T]): Assertion = {
     if (comparison(left) != shouldBeTrue)
@@ -105,10 +105,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be &gt;= (7)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(comparison: ResultOfGreaterThanOrEqualToComparison[T]): Assertion = {
     if (comparison(left) != shouldBeTrue)
@@ -120,10 +120,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be &lt; (7)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(comparison: ResultOfLessThanComparison[T]): Assertion = {
     if (comparison(left) != shouldBeTrue)
@@ -135,10 +135,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be &gt; (7)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(comparison: ResultOfGreaterThanComparison[T]): Assertion = {
     if (comparison(left) != shouldBeTrue)
@@ -148,16 +148,15 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * <strong>
+   * '''
    * The deprecation period for the "be ===" syntax has expired, and the syntax 
-   * will now throw <code>NotAllowedException</code>.  Please use should equal, should ===, shouldEqual,
+   * will now throw `NotAllowedException`.  Please use should equal, should ===, shouldEqual,
    * should be, or shouldBe instead.
-   * </strong>
+   * '''
    *
-   * <p>
    * Note: usually syntax will be removed after its deprecation period. This was left in because otherwise the syntax could in some
    * cases still compile, but silently wouldn't work.
-   * </p>
+   * 
    */
   @deprecated("The deprecation period for the be === syntax has expired. Please use should equal, should ===, shouldEqual, should be, or shouldBe instead.")
   def be(comparison: TripleEqualsInvocation[_]): Matcher[Any] = {
@@ -165,13 +164,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * This method enables the following syntax, where <code>odd</code> refers to
-   * a <code>BeMatcher[Int]</code>:
+   * This method enables the following syntax, where `odd` refers to
+   * a `BeMatcher[Int]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 2 should not be (odd)
    *              ^
-   * </pre>
+   * }}}
    **/
   def be(beMatcher: BeMatcher[T]): Assertion = {
     val result = beMatcher(left)
@@ -182,13 +181,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
   
   /**
-   * This method enables the following syntax, where <code>positiveNumber</code> refers to
-   * an <code>AMatcher[Int]</code>:
+   * This method enables the following syntax, where `positiveNumber` refers to
+   * an `AMatcher[Int]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 2 should not be a (positiveNumber)
    *              ^
-   * </pre>
+   * }}}
    **/
   def be(resultOfAWordToAMatcherApplication: ResultOfAWordToAMatcherApplication[T]): Assertion = {
     val aMatcher = resultOfAWordToAMatcherApplication.aMatcher
@@ -200,13 +199,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
   
   /**
-   * This method enables the following syntax, where <code>oddNumber</code> refers to
-   * an <code>AnMatcher[Int]</code>:
+   * This method enables the following syntax, where `oddNumber` refers to
+   * an `AnMatcher[Int]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * 2 should not be an (oddNumber)
    *              ^
-   * </pre>
+   * }}}
    **/
   def be(resultOfAnWordToAnMatcherApplication: ResultOfAnWordToAnMatcherApplication[T]): Assertion = {
     val anMatcher = resultOfAnWordToAnMatcherApplication.anMatcher
@@ -222,30 +221,30 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be a [Book]
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(aType: ResultOfATypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertATypeShouldBeTrueImpl
   
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not be a [Book]
    *                   ^
-   * </pre>
+   * }}}
    **/
   def be(anType: ResultOfAnTypeInvocation[_]): Assertion = macro TypeMatcherMacro.assertAnTypeShouldBeTrueImpl
 
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * sevenDotOh should not be (6.5 +- 0.2)
    *                       ^
-   * </pre>
+   * }}}
    **/
   def be(spread: Spread[T]): Assertion = {
     if (spread.isWithin(left) != shouldBeTrue)
@@ -257,10 +256,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * partialFun should not be definedAt ("apple")
    *                       ^
-   * </pre>
+   * }}}
    **/
   def be[U](resultOfDefinedAt: ResultOfDefinedAt[U])(implicit ev: T <:< PartialFunction[U, _]): Assertion = {
     if (left.isDefinedAt(resultOfDefinedAt.right) != shouldBeTrue)
@@ -272,10 +271,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * sevenDotOh should not equal (6.5 +- 0.2)
    *                       ^
-   * </pre>
+   * }}}
    **/
   def equal(spread: Spread[T]): Assertion = {
     if (spread.isWithin(left) != shouldBeTrue)
@@ -287,10 +286,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not equal null
    *                   ^
-   * </pre>
+   * }}}
    **/
   def equal(right: Null): Assertion = {
     if ((left == null) != shouldBeTrue)
@@ -300,8 +299,8 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * Enables parentheses to be placed around <code>length (N)</code> in expressions of the
-   * form: <code>should not have (length (N))</code>.
+   * Enables parentheses to be placed around `length (N)` in expressions of the
+   * form: `should not have (length (N))`.
    */
   def have(resultOfLengthWordApplication: ResultOfLengthWordApplication)(implicit len: Length[T]): Assertion = {
     val right = resultOfLengthWordApplication.expectedLength
@@ -313,8 +312,8 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   }
 
   /**
-   * Enables parentheses to be placed around <code>size (N)</code> in expressions of the
-   * form: <code>should not have (size (N))</code>.
+   * Enables parentheses to be placed around `size (N)` in expressions of the
+   * form: `should not have (size (N))`.
    */
   def have(resultOfSizeWordApplication: ResultOfSizeWordApplication)(implicit sz: Size[T]): Assertion = {
     val right = resultOfSizeWordApplication.expectedSize
@@ -344,13 +343,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   // 1 1 | 1 | 0
   // 
   /**
-   * This method enables the following syntax, where <code>badBook</code> is, for example, of type <code>Book</code> and
-   * <code>title ("One Hundred Years of Solitude")</code> results in a <code>HavePropertyMatcher[Book]</code>:
+   * This method enables the following syntax, where `badBook` is, for example, of type `Book` and
+   * `title ("One Hundred Years of Solitude")` results in a `HavePropertyMatcher[Book]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * book should not have (title ("One Hundred Years of Solitude"))
    *                 ^
-   * </pre>
+   * }}}
    **/
   def have(firstPropertyMatcher: HavePropertyMatcher[T, _], propertyMatchers: HavePropertyMatcher[T, _]*): Assertion = {
 
@@ -449,10 +448,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * object should not contain (null)
    *                   ^
-   * </pre>
+   * }}}
    **/
   def contain(nullValue: Null)(implicit containing: Containing[T]): Assertion = {
     if (containing.contains(left, null) != shouldBeTrue)
@@ -464,10 +463,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * object should not contain ("one")
    *                   ^
-   * </pre>
+   * }}}
    **/
   def contain(expectedElement: Any)(implicit containing: Containing[T]): Assertion = {
     val right = expectedElement
@@ -480,10 +479,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * map should not be (null)
    *                ^
-   * </pre>
+   * }}}
    **/
   def be(o: Null)(implicit ev: T <:< AnyRef): Assertion = {
     if ((left == null) != shouldBeTrue)
@@ -496,10 +495,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * stack should not be ('empty)
    *                  ^
-   * </pre>
+   * }}}
    **/
   def be(symbol: Symbol)(implicit toAnyRef: T <:< AnyRef, prettifier: Prettifier, pos: source.Position): Assertion = {
     val matcherResult = matchSymbolToPredicateMethod(toAnyRef(left), symbol, false, false, prettifier, pos)
@@ -511,13 +510,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax, where <code>stack</code> is, for example, of type <code>Stack</code> and
-   * <code>empty</code> refers to a <code>BePropertyMatcher[Stack]</code>:
+   * This method enables the following syntax, where `stack` is, for example, of type `Stack` and
+   * `empty` refers to a `BePropertyMatcher[Stack]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * stack should not be (empty)
    *                      ^
-   * </pre>
+   * }}}
    **/
   def be(bePropertyMatcher: BePropertyMatcher[T])(implicit ev: T <:< AnyRef): Assertion = {
     val result = bePropertyMatcher(left)
@@ -531,10 +530,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * notFileMock should not be a ('file)
    *                        ^
-   * </pre>
+   * }}}
    **/
   def be(resultOfAWordApplication: ResultOfAWordToSymbolApplication)(implicit toAnyRef: T <:< AnyRef, prettifier: Prettifier, pos: source.Position): Assertion = {
     val matcherResult = matchSymbolToPredicateMethod(toAnyRef(left), resultOfAWordApplication.symbol, true, true, prettifier, pos)
@@ -546,13 +545,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax, where <code>notFileMock</code> is, for example, of type <code>File</code> and
-   * <code>file</code> refers to a <code>BePropertyMatcher[File]</code>:
+   * This method enables the following syntax, where `notFileMock` is, for example, of type `File` and
+   * `file` refers to a `BePropertyMatcher[File]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * notFileMock should not be a (file)
    *                        ^
-   * </pre>
+   * }}}
    **/
   def be[U >: T](resultOfAWordApplication: ResultOfAWordToBePropertyMatcherApplication[U])(implicit ev: T <:< AnyRef): Assertion = {
     val result = resultOfAWordApplication.bePropertyMatcher(left)
@@ -566,10 +565,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * keyEvent should not be an ('actionKey)
    *                     ^
-   * </pre>
+   * }}}
    **/
   def be(resultOfAnWordApplication: ResultOfAnWordToSymbolApplication)(implicit toAnyRef: T <:< AnyRef, prettifier: Prettifier, pos: source.Position): Assertion = {
     val matcherResult = matchSymbolToPredicateMethod(toAnyRef(left), resultOfAnWordApplication.symbol, true, false, prettifier, pos)
@@ -581,13 +580,13 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   // SKIP-SCALATESTJS-END
 
   /**
-   * This method enables the following syntax, where <code>keyEvent</code> is, for example, of type <code>KeyEvent</code> and
-   * <code>actionKey</code> refers to a <code>BePropertyMatcher[KeyEvent]</code>:
+   * This method enables the following syntax, where `keyEvent` is, for example, of type `KeyEvent` and
+   * `actionKey` refers to a `BePropertyMatcher[KeyEvent]`:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * keyEvent should not be an (actionKey)
    *                     ^
-   * </pre>
+   * }}}
    **/
   def be[U >: T](resultOfAnWordApplication: ResultOfAnWordToBePropertyMatcherApplication[U])(implicit ev: T <:< AnyRef): Assertion = {
     val result = resultOfAnWordApplication.bePropertyMatcher(left)
@@ -600,10 +599,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * otherString should not be theSameInstanceAs (string)
    *                        ^
-   * </pre>
+   * }}}
    **/
   def be(resultOfSameInstanceAsApplication: ResultOfTheSameInstanceAsApplication)(implicit toAnyRef: T <:< AnyRef): Assertion = {
     if ((resultOfSameInstanceAsApplication.right eq toAnyRef(left)) != shouldBeTrue)
@@ -615,10 +614,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * xs should not be sorted
    *                  ^
-   * </pre>
+   * }}}
    **/
   def be[U](sortedWord: SortedWord)(implicit sortable: Sortable[T]): Assertion = {
     if (sortable.isSorted(left) != shouldBeTrue)
@@ -630,10 +629,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should not be readable
    *                    ^
-   * </pre>
+   * }}}
    **/
   def be[U](readableWord: ReadableWord)(implicit readability: Readability[T]): Assertion = {
     if (readability.isReadable(left) != shouldBeTrue)
@@ -645,10 +644,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * file should not be writable
    *                    ^
-   * </pre>
+   * }}}
    **/
   def be[U](writableWord: WritableWord)(implicit writability: Writability[T]): Assertion = {
     if (writability.isWritable(left) != shouldBeTrue)
@@ -660,10 +659,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * list should not be empty
    *                    ^
-   * </pre>
+   * }}}
    **/
   def be[U](emptyWord: EmptyWord)(implicit emptiness: Emptiness[T]): Assertion = {
     if (emptiness.isEmpty(left) != shouldBeTrue)
@@ -675,10 +674,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * option should not be defined
    *                      ^
-   * </pre>
+   * }}}
    **/
   def be[U](definedWord: DefinedWord)(implicit definition: Definition[T]): Assertion = {
     if (definition.isDefined(left) != shouldBeTrue)
@@ -960,15 +959,14 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not fullyMatch regex ("""(-)?(\d+)(\.\d*)?""")
    *                   ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
-   * or a <code>scala.util.matching.Regex</code>.
-   * </p>
+   * The regular expression passed following the `regex` token can be either a `String`
+   * or a `scala.util.matching.Regex`.
+   * 
    */
   def fullyMatch(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = fullyMatchRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
@@ -981,15 +979,14 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not include regex ("wo.ld")
    *                   ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
-   * or a <code>scala.util.matching.Regex</code>.
-   * </p>
+   * The regular expression passed following the `regex` token can be either a `String`
+   * or a `scala.util.matching.Regex`.
+   * 
    */
   def include(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = includeRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
@@ -1002,10 +999,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not include ("world")
    *                   ^
-   * </pre>
+   * }}}
    **/
   def include(expectedSubstring: String)(implicit ev: T <:< String): Assertion = {
     if ((left.indexOf(expectedSubstring) >= 0) != shouldBeTrue)
@@ -1017,15 +1014,14 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * string should not startWith regex ("Hel*o")
    *                   ^
-   * </pre>
+   * }}}
    *
-   * <p>
-   * The regular expression passed following the <code>regex</code> token can be either a <code>String</code>
-   * or a <code>scala.util.matching.Regex</code>.
-   * </p>
+   * The regular expression passed following the `regex` token can be either a `String`
+   * or a `scala.util.matching.Regex`.
+   * 
    */
   def startWith(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = startWithRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
@@ -1038,10 +1034,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "eight" should not startWith ("1.7")
    *                    ^
-   * </pre>
+   * }}}
    **/
   def startWith(expectedSubstring: String)(implicit ev: T <:< String): Assertion = {
     if ((left.indexOf(expectedSubstring) == 0) != shouldBeTrue)
@@ -1053,10 +1049,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * greeting should not endWith regex ("wor.d")
    *                     ^
-   * </pre>
+   * }}}
    **/
   def endWith(resultOfRegexWordApplication: ResultOfRegexWordApplication)(implicit ev: T <:< String): Assertion = {
     val result = endWithRegexWithGroups(left, resultOfRegexWordApplication.regex, resultOfRegexWordApplication.groups)
@@ -1069,10 +1065,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax: 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * "eight" should not endWith ("1.7")
    *                    ^
-   * </pre>
+   * }}}
    **/
   def endWith(expectedSubstring: String)(implicit ev: T <:< String): Assertion = {
     if ((left endsWith expectedSubstring) != shouldBeTrue)
@@ -1086,10 +1082,10 @@ final class ResultOfNotWordForAny[T](val left: T, val shouldBeTrue: Boolean, val
   /**
    * This method enables the following syntax:
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * result should not matchPattern { case Person("Bob", _) => }
    *                   ^
-   * </pre>
+   * }}}
    **/
   def matchPattern(right: PartialFunction[Any, _]) = macro MatchPatternMacro.matchPattern
   

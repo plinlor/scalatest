@@ -20,37 +20,36 @@ import org.scalatest.exceptions.DiscardedEvaluationException
 import scala.concurrent.Future
 
 /**
-  * Supertrait for <code>WheneverAsserting</code> typeclasses, which are used to implement and determine the result
-  * type of [[org.scalatest.prop.Whenever Whenever]]'s <code>whenever</code> method.
+  * Supertrait for `WheneverAsserting` typeclasses, which are used to implement and determine the result
+  * type of [[org.scalatest.prop.Whenever Whenever]]'s `whenever` method.
   *
-  * <p>
-  * Currently, an [[org.scalatest.prop.Whenever Whenever]] expression will have result type <code>Assertion</code>, if the function passed has result type <code>Assertion</code>,
-  * else it will have result type <code>Unit</code>.
-  * </p>
+  * Currently, an [[org.scalatest.prop.Whenever Whenever]] expression will have result type `Assertion`, if the function passed has result type `Assertion`,
+  * else it will have result type `Unit`.
+  * 
   */
 trait WheneverAsserting[T] {
   /**
-    * The result type of the <code>whenever</code> method.
+    * The result type of the `whenever` method.
     */
   type Result
 
   /**
-    * Implementation method for [[org.scalatest.prop.Whenever Whenever]]'s <code>whenever</code> syntax.
+    * Implementation method for [[org.scalatest.prop.Whenever Whenever]]'s `whenever` syntax.
     *
-    * @param condition the boolean condition that determines whether <code>whenever</code> will evaluate the
-    *    <code>fun</code> function (<code>condition</code> is true) or throws <code>DiscardedEvaluationException</code> (<code>condition</code> is false)
-    * @param fun the function to evaluate if the specified <code>condition</code> is true
+    * @param condition the boolean condition that determines whether `whenever` will evaluate the
+    *    `fun` function (`condition` is true) or throws `DiscardedEvaluationException` (`condition` is false)
+    * @param fun the function to evaluate if the specified `condition` is true
     */
   def whenever(condition: Boolean)(fun: => T): Result
 }
 
 /**
-  * Class holding lowest priority <code>WheneverAsserting</code> implicit, which enables [[org.scalatest.prop.Whenever Whenever]] expressions that have result type <code>Unit</code>.
+  * Class holding lowest priority `WheneverAsserting` implicit, which enables [[org.scalatest.prop.Whenever Whenever]] expressions that have result type `Unit`.
   */
 abstract class UnitWheneverAsserting {
 
   /**
-    * Provides support of [[org.scalatest.enablers.WheneverAsserting WheneverAsserting]] for Unit.  Return <code>Unit</code> when the check succeeds,
+    * Provides support of [[org.scalatest.enablers.WheneverAsserting WheneverAsserting]] for Unit.  Return `Unit` when the check succeeds,
     * but throw [[org.scalatest.exceptions.DiscardedEvaluationException DiscardedEvaluationException]]
     * when check fails.
     */
@@ -67,8 +66,8 @@ abstract class UnitWheneverAsserting {
 }
 
 /**
-  * Abstract class that in the future will hold an intermediate priority <code>WheneverAsserting</code> implicit, which will enable inspector expressions
-  * that have result type <code>Expectation</code>, a more composable form of assertion that returns a result instead of throwing an exception when it fails.
+  * Abstract class that in the future will hold an intermediate priority `WheneverAsserting` implicit, which will enable inspector expressions
+  * that have result type `Expectation`, a more composable form of assertion that returns a result instead of throwing an exception when it fails.
   */
 abstract class ExpectationWheneverAsserting extends UnitWheneverAsserting {
   /*private[scalatest] implicit def assertingNatureOfExpectation: WheneverAsserting[Expectation] { type Result = Expectation } = {

@@ -16,17 +16,16 @@
 package org.scalatest.enablers
 
 /**
- * Supertrait for <code>Length</code> typeclasses.
+ * Supertrait for `Length` typeclasses.
  *
- * <p>
- * Trait <code>Length</code> is a typeclass trait for objects that can be queried for length.
- * Objects of type T for which an implicit <code>Length[T]</code> is available can be used
- * with the <code>should have length</code> syntax.
+ * Trait `Length` is a typeclass trait for objects that can be queried for length.
+ * Objects of type T for which an implicit `Length[T]` is available can be used
+ * with the `should have length` syntax.
  * In other words, this trait enables you to use the length checking
- * syntax with arbitrary objects. As an example, the following <code>Bridge</code> class:
- * </p>
+ * syntax with arbitrary objects. As an example, the following `Bridge` class:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; import org.scalatest._
  * import org.scalatest._
  *
@@ -38,14 +37,13 @@ package org.scalatest.enablers
  *
  * scala&gt; case class Bridge(span: Int)
  * defined class Bridge
- * </pre>
+ * }}}
  *
- * <p>
- * Out of the box you can't use the <code>should have length</code> syntax with <code>Bridge</code>,
+ * Out of the box you can't use the `should have length` syntax with `Bridge`,
  * because ScalaTest doesn't know that a bridge's span means its length:
- * </p>
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; val bridge = new Bridge(2000)
  * bridge: Bridge = Bridge(2000)
  *
@@ -54,26 +52,24 @@ package org.scalatest.enablers
  *     parameter len: org.scalatest.enablers.Length[Bridge]
  *       bridge should have length 2000
  *                          ^
- * </pre>
+ * }}}
  *
- * <p>
- * You can teach this to ScalaTest, however, by defining an implicit <code>Length[Bridge]</code>.
- * </p>
+ * You can teach this to ScalaTest, however, by defining an implicit `Length[Bridge]`.
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; implicit val lengthOfBridge: Length[Bridge] =
  *      |   new Length[Bridge] {
  *      |     def lengthOf(b: Bridge): Long = b.span
  *      |   }
  * lengthOfBridge: org.scalatest.enablers.Length[Bridge] = $anon$1@3fa27a4a
- * </pre>
+ * }}}
  *
- * <p>
- * With the implicit <code>Length[Bridge]</code> in scope, you can now use ScalaTest's <code>should have length</code>
- * syntax with <code>Bridge</code> instances:
- * </p>
+ * With the implicit `Length[Bridge]` in scope, you can now use ScalaTest's `should have length`
+ * syntax with `Bridge` instances:
+ * 
  *
- * <pre class="stREPL">
+ * {{{  <!-- class="stREPL" -->
  * scala&gt; bridge should have length 2000
  * res4: org.scalatest.Assertion = Succeeded
  * 
@@ -83,7 +79,7 @@ package org.scalatest.enablers
  *   at org.scalatest.MatchersHelper$.indicateFailure(MatchersHelper.scala:366)
  *   at org.scalatest.Matchers$ResultOfHaveWordForExtent.length(Matchers.scala:2720)
  *   ... 43 elided
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
@@ -99,30 +95,30 @@ trait Length[T] {
 }
 
 /**
- * Companion object for <code>Length</code> that provides implicit implementations for the following types:
+ * Companion object for `Length` that provides implicit implementations for the following types:
  *
  * <ul>
- * <li><code>scala.collection.GenSeq</code></li>
- * <li><code>String</code></li>
- * <li><code>Array</code></li>
- * <li><code>java.util.Collection</code></li>
- * <li>arbitary object with a <code>length()</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a parameterless <code>length</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a <code>getLength()</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a parameterless <code>getLength</code> method that returns <code>Int</code></li>
- * <li>arbitary object with a <code>length()</code> method that returns <code>Long</code></li>
- * <li>arbitary object with a parameterless <code>length</code> method that returns <code>Long</code></li>
- * <li>arbitary object with a <code>getLength()</code> method that returns <code>Long</code></li>
- * <li>arbitary object with a parameterless <code>getLength</code> method that returns <code>Long</code></li>
+ * <li>`scala.collection.GenSeq`</li>
+ * <li>`String`</li>
+ * <li>`Array`</li>
+ * <li>`java.util.Collection`</li>
+ * <li>arbitary object with a `length()` method that returns `Int`</li>
+ * <li>arbitary object with a parameterless `length` method that returns `Int`</li>
+ * <li>arbitary object with a `getLength()` method that returns `Int`</li>
+ * <li>arbitary object with a parameterless `getLength` method that returns `Int`</li>
+ * <li>arbitary object with a `length()` method that returns `Long`</li>
+ * <li>arbitary object with a parameterless `length` method that returns `Long`</li>
+ * <li>arbitary object with a `getLength()` method that returns `Long`</li>
+ * <li>arbitary object with a parameterless `getLength` method that returns `Long`</li>
  * </ul>
  */
 object Length {
 
   /**
-   * Enable <code>Length</code> implementation for <code>java.util.List</code>
+   * Enable `Length` implementation for `java.util.List`
    *
-   * @tparam JLIST any subtype of <code>java.util.List</code>
-   * @return <code>Length[JLIST]</code> that supports <code>java.util.List</code> in <code>have length</code> syntax
+   * @tparam JLIST any subtype of `java.util.List`
+   * @return `Length[JLIST]` that supports `java.util.List` in `have length` syntax
    */
   implicit def lengthOfJavaList[JLIST <: java.util.List[_]]: Length[JLIST] = 
     new Length[JLIST] {
@@ -130,10 +126,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for <code>scala.collection.GenSeq</code>
+   * Enable `Length` implementation for `scala.collection.GenSeq`
    *
-   * @tparam SEQ any subtype of <code>scala.collection.GenSeq</code>
-   * @return <code>Length[SEQ]</code> that supports <code>scala.collection.GenSeq</code> in <code>have length</code> syntax
+   * @tparam SEQ any subtype of `scala.collection.GenSeq`
+   * @return `Length[SEQ]` that supports `scala.collection.GenSeq` in `have length` syntax
    */
   implicit def lengthOfGenSeq[SEQ <: scala.collection.GenSeq[_]]: Length[SEQ] = 
     new Length[SEQ] {
@@ -141,10 +137,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for <code>Array</code>
+   * Enable `Length` implementation for `Array`
    *
-   * @tparam E the type of the element in the <code>Array</code>
-   * @return <code>Length[Array[E]]</code> that supports <code>Array</code> in <code>have length</code> syntax
+   * @tparam E the type of the element in the `Array`
+   * @return `Length[Array[E]]` that supports `Array` in `have length` syntax
    */
   implicit def lengthOfArray[E]: Length[Array[E]] = 
     new Length[Array[E]] {
@@ -152,9 +148,9 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for <code>String</code>
+   * Enable `Length` implementation for `String`
    *
-   * @return <code>Length[String]</code> that supports <code>String</code> in <code>have length</code> syntax
+   * @return `Length[String]` that supports `String` in `have length` syntax
    */
   implicit val lengthOfString: Length[String] = 
     new Length[String] {
@@ -164,10 +160,10 @@ object Length {
   import scala.language.reflectiveCalls
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with <code>length()</code> method that returns <code>Int</code>.
+   * Enable `Length` implementation for arbitary object with `length()` method that returns `Int`.
    *
-   * @tparam T any type with <code>length()</code> method that returns <code>Int</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with `length()` method that returns `Int`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithLengthMethodForInt[T <: AnyRef { def length(): Int}]: Length[T] = 
     new Length[T] {
@@ -175,10 +171,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with parameterless <code>length</code> method that returns <code>Int</code>.
+   * Enable `Length` implementation for arbitary object with parameterless `length` method that returns `Int`.
    *
-   * @tparam T any type with parameterless <code>length</code> method that returns <code>Int</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with parameterless `length` method that returns `Int`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithParameterlessLengthMethodForInt[T <: AnyRef { def length: Int}]: Length[T] = 
     new Length[T] {
@@ -186,10 +182,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with <code>getLength()</code> method that returns <code>Int</code>.
+   * Enable `Length` implementation for arbitary object with `getLength()` method that returns `Int`.
    *
-   * @tparam T any type with <code>getLength()</code> method that returns <code>Int</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with `getLength()` method that returns `Int`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithGetLengthMethodForInt[T <: AnyRef { def getLength(): Int}]: Length[T] = 
     new Length[T] {
@@ -197,10 +193,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with parameterless <code>getLength</code> method that returns <code>Int</code>.
+   * Enable `Length` implementation for arbitary object with parameterless `getLength` method that returns `Int`.
    *
-   * @tparam T any type with parameterless <code>getLength</code> method that returns <code>Int</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with parameterless `getLength` method that returns `Int`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithParameterlessGetLengthMethodForInt[T <: AnyRef { def getLength: Int}]: Length[T] = 
     new Length[T] {
@@ -208,10 +204,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with <code>length()</code> method that returns <code>Long</code>.
+   * Enable `Length` implementation for arbitary object with `length()` method that returns `Long`.
    *
-   * @tparam T any type with <code>length()</code> method that returns <code>Long</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with `length()` method that returns `Long`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithLengthMethodForLong[T <: AnyRef { def length(): Long}]: Length[T] = 
     new Length[T] {
@@ -219,10 +215,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with parameterless <code>length</code> method that returns <code>Long</code>.
+   * Enable `Length` implementation for arbitary object with parameterless `length` method that returns `Long`.
    *
-   * @tparam T any type with parameterless <code>length</code> method that returns <code>Long</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with parameterless `length` method that returns `Long`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithParameterlessLengthMethodForLong[T <: AnyRef { def length: Long}]: Length[T] = 
     new Length[T] {
@@ -230,10 +226,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with <code>getLength()</code> method that returns <code>Long</code>.
+   * Enable `Length` implementation for arbitary object with `getLength()` method that returns `Long`.
    *
-   * @tparam T any type with <code>getLength()</code> method that returns <code>Long</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with `getLength()` method that returns `Long`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithGetLengthMethodForLong[T <: AnyRef { def getLength(): Long}]: Length[T] = 
     new Length[T] {
@@ -241,10 +237,10 @@ object Length {
     }
 
   /**
-   * Enable <code>Length</code> implementation for arbitary object with parameterless <code>getLength</code> method that returns <code>Long</code>.
+   * Enable `Length` implementation for arbitary object with parameterless `getLength` method that returns `Long`.
    *
-   * @tparam T any type with parameterless <code>getLength</code> method that returns <code>Long</code>
-   * @return <code>Length[T]</code> that supports <code>T</code> in <code>have length</code> syntax
+   * @tparam T any type with parameterless `getLength` method that returns `Long`
+   * @return `Length[T]` that supports `T` in `have length` syntax
    */
   implicit def lengthOfAnyRefWithParameterlessGetLengthMethodForLong[T <: AnyRef { def getLength: Long}]: Length[T] = 
     new Length[T] {

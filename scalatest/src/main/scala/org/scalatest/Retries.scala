@@ -21,30 +21,27 @@ import org.scalatest.concurrent.SleepHelper
 import time.Span
 
 /**
- * Provides methods that can be used in <code>withFixture</code> implementations to retry tests in various scenarios.
+ * Provides methods that can be used in `withFixture` implementations to retry tests in various scenarios.
  *
- * <p>
- * Trait <code>Retries</code> is intended to help you deal with &ldquo;flickers&rdquo;&mdash;tests that usually pass, but
+ * Trait `Retries` is intended to help you deal with &ldquo;flickers&rdquo;&mdash;tests that usually pass, but
  * occasionally fail. The best way to deal with such tests is to fix them so they always pass. Sometimes, however, this is
  * not practical. In such cases, flickers can waste your time by forcing you to investigate test failures that turn
  * out to be flickers. Or worse, like the boy who cried wolf, the flickers may train you an your colleagues to not pay attention
  * to failures such that you don't notice real problems, at least not in a timely manner.
- * </p>
+ * 
  *
- * <p>
- * Trait <code>Retries</code> offers methods that will retry a failed and/or canceled test once, on the same thread,
- * with or without a delay. These methods take a block that results in <a href="Outcome.html"><code>Outcome</code></a>,
- * and are intended to be used in <code>withFixture</code> methods. You should be very selective about which tests you
+ * Trait `Retries` offers methods that will retry a failed and/or canceled test once, on the same thread,
+ * with or without a delay. These methods take a block that results in <a href="Outcome.html">`Outcome`</a>,
+ * and are intended to be used in `withFixture` methods. You should be very selective about which tests you
  * retry, retrying those for which you have good evidence to conclude they are flickers. Thus it is recommended you
- * only retry tests that are tagged with <code>Retryable</code>, and only tag tests as such once they have flickered
+ * only retry tests that are tagged with `Retryable`, and only tag tests as such once they have flickered
  * consistently for a while, and only after you invested a reasonable effort into fixing them properly.
- * </p>
+ * 
  *
- * <p>
- * Here's an example showing how you might use <code>Retries</code>:
- * </p>
+ * Here's an example showing how you might use `Retries`:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * package org.scalatest.examples.tagobjects.retryable
  * 
  * import org.scalatest._
@@ -63,139 +60,137 @@ import time.Span
  *     assert(Set.empty.size === 0)
  *   }
  * }
- * </pre>
+ * }}}
  */
 trait Retries {
 
   /**
-   * Retries the given block immediately (with no delay) if the <a href="Outcome.html"><code>Outcome</code></a> of executing
-   * the block is either <a href="Failed.html"><code>Failed</code></a> or <a href="Canceled.html"><code>Canceled</code></a>.
+   * Retries the given block immediately (with no delay) if the <a href="Outcome.html">`Outcome`</a> of executing
+   * the block is either <a href="Failed.html">`Failed`</a> or <a href="Canceled.html">`Canceled`</a>.
    *
-   * <p>
    * The behavior of this method is defined in the table below. The first two rows show the main "retry" behavior: if
-   * executing the block initially fails, and on retry it succeeds, the result is <code>Canceled</code>. The purpose of this is
+   * executing the block initially fails, and on retry it succeeds, the result is `Canceled`. The purpose of this is
    * to deal with "flickering" tests by downgrading a failure that succeeds on retry to a cancelation.
-   * Or, if executing the block initially results in <code>Canceled</code>, and on retry it succeeds, the result
-   * is <code>Succeeded</code>. The purpose of this is to deal with tests that intermittently cancel by ignoring a cancelation that
+   * Or, if executing the block initially results in `Canceled`, and on retry it succeeds, the result
+   * is `Succeeded`. The purpose of this is to deal with tests that intermittently cancel by ignoring a cancelation that
    * succeeds on retry.
-   * </p>
+   * 
    *
-   * <p>
-   * In the table below, if the &ldquo;Retry <code>Outcome</code>&rdquo; has just a dash, the block is not retried.
+   * In the table below, if the &ldquo;Retry `Outcome`&rdquo; has just a dash, the block is not retried.
    * Otherwise, the block is retried on the same thread, with no delay.
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
-   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>First <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Retry <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Result</strong></th></tr>
+   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''First `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Retry `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Result'''</th></tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code> (the <code>Succeeded</code> and <code>Failed</code> are
-   *     discarded; the exception from the <code>Failed</code> is the cause of the exception in the <code>Canceled</code>)
+   * `Canceled` (the `Succeeded` and `Failed` are
+   *     discarded; the exception from the `Failed` is the cause of the exception in the `Canceled`)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (the <code>Canceled</code> is discarded)
+   * `Succeeded` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (no retry)
+   * `Succeeded` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code> (no retry)
+   * `Pending` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Failed</code> (the second <code>Failed</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Pending</code> is discarded)
+   * the first `Failed` (the second `Failed` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Canceled</code> (the second <code>Canceled</code> is discarded)
+   * the `Failed` (the `Pending` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Canceled</code> (the <code>Pending</code> is discarded)
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
+   * the first `Canceled` (the second `Canceled` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Pending`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Canceled` (the `Pending` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Failed`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * </table>
@@ -205,135 +200,133 @@ trait Retries {
   def withRetry(blk: => Outcome): Outcome = withRetry(Span.Zero)(blk)
 
   /**
-   * Retries the given block with a given delay if the <a href="Outcome.html"><code>Outcome</code></a> of executing
-   * the block is either <a href="Failed.html"><code>Failed</code></a> or <a href="Canceled.html"><code>Canceled</code></a>.
+   * Retries the given block with a given delay if the <a href="Outcome.html">`Outcome`</a> of executing
+   * the block is either <a href="Failed.html">`Failed`</a> or <a href="Canceled.html">`Canceled`</a>.
    *
-   * <p>
    * The behavior of this method is defined in the table below. The first two rows show the main "retry" behavior: if
-   * executing the block initially fails, and on retry it succeeds, the result is <code>Canceled</code>. The purpose of this is
+   * executing the block initially fails, and on retry it succeeds, the result is `Canceled`. The purpose of this is
    * to deal with "flickering" tests by downgrading a failure that succeeds on retry
    * to a cancelation.
-   * Or, if executing the block initially results in <code>Canceled</code>, and on retry it succeeds, the result
-   * is <code>Succeeded</code>. The purpose of this is to deal with tests that intermittently cancel by ignoring a cancelation that
+   * Or, if executing the block initially results in `Canceled`, and on retry it succeeds, the result
+   * is `Succeeded`. The purpose of this is to deal with tests that intermittently cancel by ignoring a cancelation that
    * succeeds on retry.
-   * </p>
+   * 
    *
-   * <p>
-   * In the table below, if the &ldquo;Retry <code>Outcome</code>&rdquo; has just a dash, the block is not retried.
+   * In the table below, if the &ldquo;Retry `Outcome`&rdquo; has just a dash, the block is not retried.
    * Otherwise, the block is retried on the same thread, after sleeping the given delay.
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
-   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>First <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Retry <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Result</strong></th></tr>
+   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''First `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Retry `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Result'''</th></tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code> (the <code>Succeeded</code> and <code>Failed</code> are
-   *     discarded; the exception from the <code>Failed</code> is the cause of the exception in the <code>Canceled</code>)
+   * `Canceled` (the `Succeeded` and `Failed` are
+   *     discarded; the exception from the `Failed` is the cause of the exception in the `Canceled`)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (the <code>Canceled</code> is discarded)
+   * `Succeeded` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (no retry)
+   * `Succeeded` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code> (no retry)
+   * `Pending` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Failed</code> (the second <code>Failed</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Pending</code> is discarded)
+   * the first `Failed` (the second `Failed` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Canceled</code> (the second <code>Canceled</code> is discarded)
+   * the `Failed` (the `Pending` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Canceled</code> (the <code>Pending</code> is discarded)
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
+   * the first `Canceled` (the second `Canceled` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Pending`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Canceled` (the `Pending` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Failed`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * </table>
@@ -360,99 +353,97 @@ trait Retries {
   }
 
   /**
-   * Retries the given block immediately (with no delay) if the <a href="Outcome.html"><code>Outcome</code></a> of executing
-   * the block is <a href="Failed.html"><code>Failed</code></a>.
+   * Retries the given block immediately (with no delay) if the <a href="Outcome.html">`Outcome`</a> of executing
+   * the block is <a href="Failed.html">`Failed`</a>.
    *
-   * <p>
    * The behavior of this method is defined in the table below. The first row shows the main "retry" behavior: if
-   * executing the block initially fails, and on retry it succeeds, the result is <code>Canceled</code>. The purpose of this is
+   * executing the block initially fails, and on retry it succeeds, the result is `Canceled`. The purpose of this is
    * to deal with "flickering" tests by downgrading a failure that succeeds on retry
    * to a cancelation.
-   * </p>
+   * 
    *
-   * <p>
-   * In the table below, if the &ldquo;Retry <code>Outcome</code>&rdquo; has just a dash, the block is not retried.
+   * In the table below, if the &ldquo;Retry `Outcome`&rdquo; has just a dash, the block is not retried.
    * Otherwise, the block is retried on the same thread, with no delay.
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
-   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>First <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Retry <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Result</strong></th></tr>
+   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''First `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Retry `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Result'''</th></tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code> (the <code>Succeeded</code> and <code>Failed</code> are
-   *     discarded; the exception from the <code>Failed</code> is the cause of the exception in the <code>Canceled</code>)
+   * `Canceled` (the `Succeeded` and `Failed` are
+   *     discarded; the exception from the `Failed` is the cause of the exception in the `Canceled`)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (no retry)
+   * `Succeeded` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code> (no retry)
+   * `Pending` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Canceled</code> (no retry)
+   * the `Canceled` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Failed</code> (the second <code>Failed</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Pending</code> is discarded)
+   * the first `Failed` (the second `Failed` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
+   * the `Failed` (the `Pending` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Failed`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * </table>
@@ -462,99 +453,97 @@ trait Retries {
   def withRetryOnFailure(blk: => Outcome): Outcome = withRetryOnFailure(Span.Zero)(blk)
 
   /**
-   * Retries the given block immediately with the given delay if the <a href="Outcome.html"><code>Outcome</code></a> of executing
-   * the block is <a href="Failed.html"><code>Failed</code></a>.
+   * Retries the given block immediately with the given delay if the <a href="Outcome.html">`Outcome`</a> of executing
+   * the block is <a href="Failed.html">`Failed`</a>.
    *
-   * <p>
    * The behavior of this method is defined in the table below. The first row shows the main "retry" behavior: if
-   * executing the block initially fails, and on retry it succeeds, the result is <code>Canceled</code>. The purpose of this is
+   * executing the block initially fails, and on retry it succeeds, the result is `Canceled`. The purpose of this is
    * to deal with "flickering" tests by downgrading a failure that succeeds on retry
    * to a cancelation.
-   * </p>
+   * 
    *
-   * <p>
-   * In the table below, if the &ldquo;Retry <code>Outcome</code>&rdquo; has just a dash, the block is not retried.
+   * In the table below, if the &ldquo;Retry `Outcome`&rdquo; has just a dash, the block is not retried.
    * Otherwise, the block is retried on the same thread, after the given delay.
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
-   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>First <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Retry <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Result</strong></th></tr>
+   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''First `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Retry `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Result'''</th></tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code> (the <code>Succeeded</code> and <code>Failed</code> are
-   *     discarded; the exception from the <code>Failed</code> is the cause of the exception in the <code>Canceled</code>)
+   * `Canceled` (the `Succeeded` and `Failed` are
+   *     discarded; the exception from the `Failed` is the cause of the exception in the `Canceled`)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (no retry)
+   * `Succeeded` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code> (no retry)
+   * `Pending` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Canceled</code> (no retry)
+   * the `Canceled` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Failed</code> (the second <code>Failed</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Pending</code> is discarded)
+   * the first `Failed` (the second `Failed` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
+   * the `Failed` (the `Pending` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Failed`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * </table>
@@ -577,98 +566,96 @@ trait Retries {
   }
 
   /**
-   * Retries the given block immediately (with no delay) if the <a href="Outcome.html"><code>Outcome</code></a> of executing
-   * the block is <a href="Canceled.html"><code>Canceled</code></a>.
+   * Retries the given block immediately (with no delay) if the <a href="Outcome.html">`Outcome`</a> of executing
+   * the block is <a href="Canceled.html">`Canceled`</a>.
    *
-   * <p>
    * The behavior of this method is defined in the table below. The first row shows the main "retry" behavior: if
-   * executing the block initially results in <code>Canceled</code>, and on retry it succeeds, the result is <code>Succeeded</code>.
+   * executing the block initially results in `Canceled`, and on retry it succeeds, the result is `Succeeded`.
    * The purpose of this is to deal with tests that intermittently cancel by ignoring a cancelation that
    * succeeds on retry.
-   * </p>
+   * 
    *
-   * <p>
-   * In the table below, if the &ldquo;Retry <code>Outcome</code>&rdquo; has just a dash, the block is not retried.
+   * In the table below, if the &ldquo;Retry `Outcome`&rdquo; has just a dash, the block is not retried.
    * Otherwise, the block is retried on the same thread, with no delay.
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
-   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>First <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Retry <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Result</strong></th></tr>
+   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''First `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Retry `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Result'''</th></tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Succeeded</code> (the <code>Canceled</code> is discarded)
+   * the `Succeeded` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (no retry)
+   * `Succeeded` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code> (no retry)
+   * `Pending` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code> (no retry)
+   * `Failed` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Canceled</code> (the second <code>Canceled</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Canceled</code> (the <code>Pending</code> is discarded)
+   * the first `Canceled` (the second `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
+   * the `Canceled` (the `Pending` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Failed`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * </table>
@@ -678,98 +665,96 @@ trait Retries {
   def withRetryOnCancel(blk: => Outcome): Outcome = withRetryOnCancel(Span.Zero)(blk)
 
   /**
-   * Retries the given block after the given delay if the <a href="Outcome.html"><code>Outcome</code></a> of executing
-   * the block is <a href="Canceled.html"><code>Canceled</code></a>.
+   * Retries the given block after the given delay if the <a href="Outcome.html">`Outcome`</a> of executing
+   * the block is <a href="Canceled.html">`Canceled`</a>.
    *
-   * <p>
    * The behavior of this method is defined in the table below. The first row shows the main "retry" behavior: if
-   * executing the block initially results in <code>Canceled</code>, and on retry it succeeds, the result is <code>Succeeded</code>.
+   * executing the block initially results in `Canceled`, and on retry it succeeds, the result is `Succeeded`.
    * The purpose of this is to deal with tests that intermittently cancel by ignoring a cancelation that
    * succeeds on retry.
-   * </p>
+   * 
    *
-   * <p>
-   * In the table below, if the &ldquo;Retry <code>Outcome</code>&rdquo; has just a dash, the block is not retried.
+   * In the table below, if the &ldquo;Retry `Outcome`&rdquo; has just a dash, the block is not retried.
    * Otherwise, the block is retried on the same thread, after the given delay.
-   * </p>
+   * 
    *
    * <table style="border-collapse: collapse; border: 1px solid black">
-   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>First <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Retry <code>Outcome</code></strong></th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black"><strong>Result</strong></th></tr>
+   * <tr><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''First `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Retry `Outcome`'''</th><th style="background-color: #CCCCCC; border-width: 1px; padding: 3px; text-align: center; border: 1px solid black">'''Result'''</th></tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Succeeded</code> (the <code>Canceled</code> is discarded)
+   * the `Succeeded` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code>
+   * `Succeeded`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Succeeded</code> (no retry)
+   * `Succeeded` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code> (no retry)
+   * `Pending` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Failed`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
    * &mdash;
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code> (no retry)
+   * `Failed` (no retry)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the first <code>Canceled</code> (the second <code>Canceled</code> is discarded)
-   * </td>
-   * </tr>
-   * <tr>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Pending</code>
-   * </td>
-   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Canceled</code> (the <code>Pending</code> is discarded)
+   * the first `Canceled` (the second `Canceled` is discarded)
    * </td>
    * </tr>
    * <tr>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Canceled</code>
+   * `Canceled`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * <code>Failed</code>
+   * `Pending`
    * </td>
    * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
-   * the <code>Failed</code> (the <code>Canceled</code> is discarded)
+   * the `Canceled` (the `Pending` is discarded)
+   * </td>
+   * </tr>
+   * <tr>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Canceled`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * `Failed`
+   * </td>
+   * <td style="border-width: 1px; padding: 3px; border: 1px solid black; text-align: center">
+   * the `Failed` (the `Canceled` is discarded)
    * </td>
    * </tr>
    * </table>
@@ -794,30 +779,29 @@ trait Retries {
   }
 
   /**
-   * Indicates whether the test described by the given <code>TestData</code> includes the
-   * tag <code>org.scalatest.tags.Retryable</code>.
+   * Indicates whether the test described by the given `TestData` includes the
+   * tag `org.scalatest.tags.Retryable`.
    *
-   * <p>
    * This method provides an easy way to selectively retry just tests that are flickering. You can
-   * annotated such problematic tests with <code>Retryable</code>, and just retry those. Here's
+   * annotated such problematic tests with `Retryable`, and just retry those. Here's
    * what it might look like:
-   * </p>
+   * 
    *
-   * <pre class="stHighlight">
+   * {{{  <!-- class="stHighlight" -->
    * override def withFixture(test: NoArgTest) = {
    *   if (isRetryable(test))
    *     withRetry { super.withFixture(test) }
    *   else
    *     super.withFixture(test)
    * }
-   * </pre>
+   * }}}
    *
    */
   def isRetryable(testData: TestData): Boolean = testData.tags.exists(_ == "org.scalatest.tags.Retryable")
 }
 
 /**
- * Companion object to trait <code>Retries</code> that enables its members to be imported as an 
+ * Companion object to trait `Retries` that enables its members to be imported as an 
  * alternative to mixing them in.
  */
 object Retries extends Retries

@@ -27,8 +27,8 @@ import org.scalatest.events._
 import PrintReporter._
 
 /**
- * A <code>Reporter</code> that prints test status information to
- * a <code>Writer</code>, <code>OutputStream</code>, or file.
+ * A `Reporter` that prints test status information to
+ * a `Writer`, `OutputStream`, or file.
  *
  * @author Bill Venners
  */
@@ -60,13 +60,13 @@ private[scalatest] abstract class PrintReporter(
 ) {
 
   /**
-  * Construct a <code>PrintReporter</code> with passed
-  * <code>OutputStream</code>. Information about events reported to instances of this
-  * class will be written to the <code>OutputStream</code> using the
+  * Construct a `PrintReporter` with passed
+  * `OutputStream`. Information about events reported to instances of this
+  * class will be written to the `OutputStream` using the
   * default character encoding.
   *
-  * @param os the <code>OutputStream</code> to which to print reported info
-  * @throws NullArgumentException if passed <code>os</code> reference is <code>null</code>
+  * @param os the `OutputStream` to which to print reported info
+  * @throws NullArgumentException if passed `os` reference is `null`
   */
   def this( // Used by subclasses StandardOutReporter and StandardErrReporter
     os: OutputStream,
@@ -103,13 +103,13 @@ private[scalatest] abstract class PrintReporter(
 
   // SKIP-SCALATESTJS-START
   /**
-  * Construct a <code>PrintReporter</code> with passed
-  * <code>String</code> file name. Information about events reported to instances of this
+  * Construct a `PrintReporter` with passed
+  * `String` file name. Information about events reported to instances of this
   * class will be written to the specified file using the
   * default character encoding.
   *
-  * @param filename the <code>String</code> name of the file to which to print reported info
-  * @throws NullArgumentException if passed <code>filename</code> reference is <code>null</code>
+  * @param filename the `String` name of the file to which to print reported info
+  * @throws NullArgumentException if passed `filename` reference is `null`
   * @throws IOException if unable to open the specified file for writing
   */
   def this( // Used by subclass FileReporter

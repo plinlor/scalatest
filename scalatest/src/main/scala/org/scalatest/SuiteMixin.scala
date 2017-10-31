@@ -17,29 +17,27 @@ package org.scalatest
 
 
 /**
- * Trait defining abstract "lifecycle" methods that are implemented in <a href="Suite.html#lifecycle-methods"><code>Suite</code></a> and can
+ * Trait defining abstract "lifecycle" methods that are implemented in <a href="Suite.html#lifecycle-methods">`Suite`</a> and can
  * be overridden in stackable modification traits.
  *
- * <p>
- * The main purpose of <code>SuiteMixin</code> is to differentiate core <code>Suite</code>
- * style traits, such as <a href="Spec.html"><code>Spec</code></a>, <a href="FunSuite.html"><code>FunSuite</code></a>, and <a href="FunSpec.html"><code>FunSpec</code></a> from stackable
- * modification traits for <code>Suite</code>s such as <a href="BeforeAndAfterEach.html"><code>BeforeAndAfterEach</code></a>, <a href="OneInstancePerTest.html"><code>OneInstancePerTest</code></a>,
- * and <a href="SequentialNestedSuiteExecution.html"><code>SequentialNestedSuiteExecution</code></a>. Because these stackable traits extend <code>SuiteMixin</code>
- * instead of <code>Suite</code>, you can't define a suite by simply extending one of the stackable traits:
- * </p>
+ * The main purpose of `SuiteMixin` is to differentiate core `Suite`
+ * style traits, such as <a href="Spec.html">`Spec`</a>, <a href="FunSuite.html">`FunSuite`</a>, and <a href="FunSpec.html">`FunSpec`</a> from stackable
+ * modification traits for `Suite`s such as <a href="BeforeAndAfterEach.html">`BeforeAndAfterEach`</a>, <a href="OneInstancePerTest.html">`OneInstancePerTest`</a>,
+ * and <a href="SequentialNestedSuiteExecution.html">`SequentialNestedSuiteExecution`</a>. Because these stackable traits extend `SuiteMixin`
+ * instead of `Suite`, you can't define a suite by simply extending one of the stackable traits:
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class MySuite extends BeforeAndAfterEach // Won't compile
- * </pre>
+ * }}}
  *
- * <p>
- * Instead, you need to extend a core <code>Suite</code> trait and mix the stackable <code>BeforeAndAfterEach</code> trait
+ * Instead, you need to extend a core `Suite` trait and mix the stackable `BeforeAndAfterEach` trait
  * into that, like this:
- * </p>
+ * 
  *
- * <pre class="stHighlight">
+ * {{{  <!-- class="stHighlight" -->
  * class MySuite extends FunSuite with BeforeAndAfterEach // Compiles fine
- * </pre>
+ * }}}
  *
  * @author Bill Venners
  */
@@ -48,34 +46,34 @@ trait SuiteMixin { this: Suite =>
   /**
    * Runs this suite of tests.
    *
-   * @param testName an optional name of one test to execute. If <code>None</code>, all relevant tests should be executed.
-   *                 I.e., <code>None</code> acts like a wildcard that means execute all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to execute. If `None`, all relevant tests should be executed.
+   *                 I.e., `None` acts like a wildcard that means execute all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests and nested suites started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullArgumentException if any passed parameter is <code>null</code>.
+   * @throws NullArgumentException if any passed parameter is `null`.
    */
   def run(testName: Option[String], args: Args): Status
 
   /**
    * Runs zero to many of this suite's nested suites.
    *
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all nested suites started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullArgumentException if <code>args</code> is <code>null</code>.
+   * @throws NullArgumentException if `args` is `null`.
    */
   protected def runNestedSuites(args: Args): Status
 
   /**
    * Runs zero to many of this suite's tests.
    *
-   * @param testName an optional name of one test to run. If <code>None</code>, all relevant tests should be run.
-   *                 I.e., <code>None</code> acts like a wildcard that means run all relevant tests in this <code>Suite</code>.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
+   * @param testName an optional name of one test to run. If `None`, all relevant tests should be run.
+   *                 I.e., `None` acts like a wildcard that means run all relevant tests in this `Suite`.
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when all tests started by this method have completed, and whether or not a failure occurred.
    *
-   * @throws NullArgumentException if either <code>testName</code> or <code>args</code> is <code>null</code>.
+   * @throws NullArgumentException if either `testName` or `args` is `null`.
    */
   protected def runTests(testName: Option[String], args: Args): Status
 
@@ -83,10 +81,10 @@ trait SuiteMixin { this: Suite =>
    * Runs a test.
    *
    * @param testName the name of one test to execute.
-   * @param args the <code>Args</code> for this run
-   * @return a <code>Status</code> object that indicates when the test started by this method has completed, and whether or not it failed .
+   * @param args the `Args` for this run
+   * @return a `Status` object that indicates when the test started by this method has completed, and whether or not it failed .
    *
-   * @throws NullArgumentException if any of <code>testName</code> or <code>args</code> is <code>null</code>.
+   * @throws NullArgumentException if any of `testName` or `args` is `null`.
    */
   protected def runTest(
     testName: String,
@@ -94,83 +92,78 @@ trait SuiteMixin { this: Suite =>
   ): Status
 
   /**
-   * A user-friendly suite name for this <code>Suite</code>.
+   * A user-friendly suite name for this `Suite`.
    *
-   * <p>
    * This trait's
    * implementation of this method returns the simple name of this object's class. This
-   * trait's implementation of <code>runNestedSuites</code> calls this method to obtain a
-   * name for <code>Report</code>s to pass to the <code>suiteStarting</code>, <code>suiteCompleted</code>,
-   * and <code>suiteAborted</code> methods of the <code>Reporter</code>.
-   * </p>
+   * trait's implementation of `runNestedSuites` calls this method to obtain a
+   * name for `Report`s to pass to the `suiteStarting`, `suiteCompleted`,
+   * and `suiteAborted` methods of the `Reporter`.
+   * 
    *
-   * @return this <code>Suite</code> object's suite name.
+   * @return this `Suite` object's suite name.
    */
   def suiteName: String
 
   /**
-   * A string ID for this <code>Suite</code> that is intended to be unique among all suites reported during a run.
+   * A string ID for this `Suite` that is intended to be unique among all suites reported during a run.
    *
-   * <p>
-   * The suite ID is <em>intended</em> to be unique, because ScalaTest does not enforce that it is unique. If it is not
+   * The suite ID is ''intended'' to be unique, because ScalaTest does not enforce that it is unique. If it is not
    * unique, then you may not be able to uniquely identify a particular test of a particular suite. This ability is used,
    * for example, to dynamically tag tests as having failed in the previous run when rerunning only failed tests.
-   * </p>
+   * 
    *
-   * @return this <code>Suite</code> object's ID.
+   * @return this `Suite` object's ID.
    */
   def suiteId: String
 
   /**
-   * Provides a <code>TestData</code> instance for the passed test name, given the passed config map.
+   * Provides a `TestData` instance for the passed test name, given the passed config map.
    *
-   * <p>
-   * This method is used to obtain a <code>TestData</code> instance to pass to <code>withFixture(NoArgTest)</code>
-   * and <code>withFixture(OneArgTest)</code> and the <code>beforeEach</code> and <code>afterEach</code> methods
-   * of trait <code>BeforeAndAfterEach</code>.
-   * </p>
+   * This method is used to obtain a `TestData` instance to pass to `withFixture(NoArgTest)`
+   * and `withFixture(OneArgTest)` and the `beforeEach` and `afterEach` methods
+   * of trait `BeforeAndAfterEach`.
+   * 
    *
-   * @param testName the name of the test for which to return a <code>TestData</code> instance
-   * @param theConfigMap the config map to include in the returned <code>TestData</code>
-   * @return a <code>TestData</code> instance for the specified test, which includes the specified config map
+   * @param testName the name of the test for which to return a `TestData` instance
+   * @param theConfigMap the config map to include in the returned `TestData`
+   * @return a `TestData` instance for the specified test, which includes the specified config map
    */
   def testDataFor(testName: String, theConfigMap: ConfigMap): TestData
 
   /**
-  * A <code>Set</code> of test names. If this <code>Suite</code> contains no tests, this method returns an empty <code>Set</code>.
+  * A `Set` of test names. If this `Suite` contains no tests, this method returns an empty `Set`.
   *
-  * <p>
-  * Although subclass and subtrait implementations of this method may return a <code>Set</code> whose iterator produces <code>String</code>
+  * Although subclass and subtrait implementations of this method may return a `Set` whose iterator produces `String`
   * test names in a well-defined order, the contract of this method does not required a defined order. Subclasses are free to
   * implement this method and return test names in either a defined or undefined order.
-  * </p>
+  * 
   */
   def testNames: Set[String]
 
   /**
-  * An immutable <code>IndexedSeq</code> of this <code>SuiteMixin</code> object's nested <code>Suite</code>s. If this <code>SuiteMixin</code> contains no nested <code>Suite</code>s,
-  * this method returns an empty <code>IndexedSeq</code>.
+  * An immutable `IndexedSeq` of this `SuiteMixin` object's nested `Suite`s. If this `SuiteMixin` contains no nested `Suite`s,
+  * this method returns an empty `IndexedSeq`.
   */
   def nestedSuites: collection.immutable.IndexedSeq[Suite]
 
   /**
-   * A <code>Map</code> whose keys are <code>String</code> names of tagged tests and
-   * whose associated values are the <code>Set</code> of tag names for the test. If a test has no associated tags, its name
-   * does not appear as a key in the returned <code>Map</code>. If this <code>Suite</code> contains no tests with tags, this
-   * method returns an empty <code>Map</code>.
+   * A `Map` whose keys are `String` names of tagged tests and
+   * whose associated values are the `Set` of tag names for the test. If a test has no associated tags, its name
+   * does not appear as a key in the returned `Map`. If this `Suite` contains no tests with tags, this
+   * method returns an empty `Map`.
    *
-   * <p>
    * Subclasses may override this method to define and/or discover tags in a custom manner, but overriding method implementations
-   * should never return an empty <code>Set</code> as a value. If a test has no tags, its name should not appear as a key in the
-   * returned <code>Map</code>.
-   * </p>
+   * should never return an empty `Set` as a value. If a test has no tags, its name should not appear as a key in the
+   * returned `Map`.
+   * 
    */
   def tags: Map[String, Set[String]]
 
   /**
-   * The total number of tests that are expected to run when this <code>Suite</code>'s <code>run</code> method is invoked.
+   * The total number of tests that are expected to run when this `Suite`'s `run` method is invoked.
    *
-   * @param filter a <code>Filter</code> with which to filter tests to count based on their tags
+   * @param filter a `Filter` with which to filter tests to count based on their tags
    */
   def expectedTestCount(filter: Filter): Int
   
@@ -182,11 +175,10 @@ trait SuiteMixin { this: Suite =>
   /**
    * This suite's style name.
    *
-   * <p>
    * This lifecycle method provides a string that is used to determine whether this suite object's
    * style is one of the <a href="tools/Runner$.html#specifyingChosenStyles">chosen styles</a> for
    * the project.
-   * </p>
+   * 
    */
   val styleName: String
 }

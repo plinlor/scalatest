@@ -20,13 +20,12 @@ trait TestSuiteMixin extends SuiteMixin { this: TestSuite =>
   /**
    * Runs the passed test function with a fixture established by this method.
    *
-   * <p>
    * This method should set up the fixture needed by the tests of the
    * current suite, invoke the test function, and if needed, perform any clean
-   * up needed after the test completes. Because the <code>NoArgTest</code> function
+   * up needed after the test completes. Because the `NoArgTest` function
    * passed to this method takes no parameters, preparing the fixture will require
    * side effects, such as initializing an external database.
-   * </p>
+   * 
    *
    * @param test the no-arg test function to run with a fixture
    */
